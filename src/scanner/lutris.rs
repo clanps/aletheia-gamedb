@@ -12,7 +12,7 @@ impl Scanner for LutrisScanner {
             .map(PathBuf::from).unwrap()
             .join(".config"), PathBuf::from)
             .join("lutris")
-            .join("games");
+            .join("games"); // TODO: Support Flatpak
 
         if !lutris_config_dir.exists() {
             return games;
