@@ -1,0 +1,73 @@
+AI Limit:
+  files:
+    windows:
+      - "{LocalLow}/SenseGames/AILIMIT/Archive/*.sav"
+"All in Abyss: Judge the Fake":
+  files:
+    windows:
+      - "{LocalLow}/AllianceArts/All in Abyss/SaveData/*/GameData/*.sav"
+Killer Frequency:
+  files:
+    windows:
+      - "{LocalLow}/Team17/KillerFrequency/*/*.sav"
+MiSide:
+  files:
+    windows:
+      - "{LocalLow}/AIHASTO/MiSideFull/Save"
+Mouthwashing:
+  files:
+    windows:
+      - "{GameRoot}/Mouthwashing_Data_SaveFiles"
+Resident Evil Revelations:
+  files:
+    windows:
+      - "{SteamUserData}/222480/remote"
+Resident Evil Revelations 2:
+  files:
+    windows:
+      - "{SteamUserData}/287290/remote"
+"Saints Row®: The Third™ Remastered":
+  files:
+    windows:
+      - "{LocalAppData}/GOG.com/Galaxy/Applications/53610945248137475/Storage/Shared/Files/*.sr3s_pc"
+      - "{SteamUserData}/978300/remote/*.sr3s_pc"
+Resident Evil Village:
+  files:
+    windows:
+      - "{SteamUserData}/1196590/remote/win64_save"
+Stardew Valley:
+  files:
+    linux:
+      - "{XDGConfig}/StardewValley/Saves"
+    windows:
+      - "{AppData}/StardewValley/Saves"
+The Lego Movie Videogame:
+  files:
+    windows:
+      - "{SteamUserData}/267530/remote/savedgames"
+"The Stanley Parable: Ultra Deluxe":
+  files:
+    linux:
+      - "{XDGConfig}/unity3d/Crows Crows Crows/The Stanley Parable_ Ultra Deluxe"
+    windows:
+      - "{LocalLow}/unity3d/Crows Crows Crows/The Stanley Parable_ Ultra Deluxe"
+Unleashed Recompiled:
+  files:
+    linux:
+      - "{XDGConfig}/UnleashedRecomp/save"
+    windows:
+      - "{AppData}/UnleashedRecomp/save"
+Yakuza 0:
+  files:
+    windows:
+      - "{LocalAppData}/GOG.com/Galaxy/Applications/5966314534907843/Storage/Shared/Files"
+      - "{SteamUserData}/638970/remote"
+Yakuza Kiwami:
+  files:
+    windows:
+      - "{LocalAppData}/GOG.com/Galaxy/Applications/56296604923139714/Storage/Shared/Files"
+      - "{SteamUserData}/834530/remote"
+"Yu-Gi-Oh! Legacy of the Duelist: Link Evolution":
+  files:
+    windows:
+      - "{SteamUserData}/1150640/remote/*.dat"
