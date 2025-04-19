@@ -2,8 +2,8 @@ pub mod lutris;
 
 #[derive(Debug)]
 pub struct Game {
-    name: String,
-    directory: String
+    pub name: String,
+    pub directory: String
 }
 
 pub trait Scanner {
