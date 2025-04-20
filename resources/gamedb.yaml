@@ -6,18 +6,92 @@ AI Limit:
   files:
     windows:
       - "{LocalLow}/AllianceArts/All in Abyss/SaveData/*/GameData/*.sav"
+Borderlands:
+  files:
+    windows:
+      - "{Documents}/My Games/Borderlands/SaveData"
+Borderlands 2:
+  files:
+    linux:
+      - "{XDGData}/aspyr-media/borderlands 2/willowgame/savedata"
+    windows:
+      - "{Documents}/My Games/Borderlands 2/WillowGame/SaveData"
+Borderlands 2 VR:
+  files:
+    windows:
+      - "{Documents}/My Games/Borderlands 2 VR/WillowGame/SaveData"
 Crystar:
   files:
     windows:
       - "{SteamUserData}/981750/remote"
+"Danganronpa Another Episode: Ultra Despair Girls":
+  files:
+    windows:
+      - "{Documents}/My Games/DanganAnother"
+"Danganronpa: Trigger Happy Havoc":
+  files:
+    linux:
+      - "{XDGData}/Danganronpa"
+    windows:
+      - "{Documents}/My Games/Danganronpa"
+"Danganronpa 2: Goodbye Despair":
+  files:
+    linux:
+      - "{XDGData}/Danganronpa2"
+    windows:
+      - "{Documents}/My Games/Danganronpa2"
+"Danganronpa V3: Killing Harmony":
+  files:
+    windows:
+      - "{SteamUserData}/567640/remote"
 Dark Souls Remastered:
   files:
     windows:
       - "{Documents}/NBGI/DARK SOULS REMASTERED"
+Dead Island:
+  files:
+    windows:
+      - "{SteamUserData}/91310/remote/out"
+Dead Island 2:
+  files:
+    windows:
+      - "{LocalAppdata}/DeadIslandSteam/Saved/SaveGames"
+Dead Rising:
+  files:
+    windows:
+      - "{SteamUserData}/427190/remote"
+Dead Rising 2:
+  files:
+    windows:
+      - "{Documents}/My Games/Dead Rising 2/saves"
+"Dead Rising 2: Off the Record":
+  files:
+    windows:
+      - "{Documents}/My Games/Dead Rising 2 Off The Record/saves"
+Dead Rising 3:
+  files:
+    windows:
+      - "{Documents}/My Games/Dead Rising 3/saves"
+Dead Rising 4:
+  files:
+    windows:
+      - "{Documents}/My Games/Dead Rising 4/saves"
 Elden Ring:
   files:
     windows:
       - "{AppData}/EldenRing/*"
+Fallout 3:
+  files:
+    windows:
+      - "{Documents}/My Games/Fallout3/Saves"
+Fallout 4:
+  files:
+    windows:
+      - "{Documents}/My Games/Fallout4/Saves"
+Fallout 4 VR:
+  files:
+    windows:
+      - "{Documents}/My Games/Fallout4VR/Saves"
 Ghostwire Tokyo:
   files:
     windows:
@@ -89,12 +163,20 @@ Resident Evil Village:
   files:
     windows:
       - "{SteamUserData}/1196590/remote/win64_save"
+Scrap Mechanic:
+  files:
+    windows:
+      - "{AppData}/Axolot Games/Scrap Mechanic"
 Stardew Valley:
   files:
     linux:
       - "{XDGConfig}/StardewValley/Saves"
     windows:
       - "{AppData}/StardewValley/Saves"
+The Forest:
+  files:
+    windows:
+      - "{LocalLow}/SKS/TheForest"
 The Lego Movie Videogame:
   files:
     windows:
@@ -125,6 +207,10 @@ Yakuza Kiwami 2:
   files:
     windows:
       - "{AppData}/Sega/YakuzaKiwami2/*"
+Youtubers Life:
+  files:
+    windows:
+      - "{Documents}/U-Play online/Youtubers Life/Saves/*.yls"
 "Yu-Gi-Oh! Legacy of the Duelist: Link Evolution":
   files:
     windows:
