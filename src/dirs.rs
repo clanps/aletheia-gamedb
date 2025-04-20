@@ -22,13 +22,14 @@ pub fn expand_path(path: &str, prefix: Option<&PathBuf>) -> PathBuf {
         let documents = users.join("Documents");
 
         path
-            .replace("{AppData}", &app_data.display().to_string())
-            .replace("{Documents}", &documents.display().to_string())
+            .replace("{AppData}", &app_data.to_string_lossy())
+            .replace("{Documents}", &documents.to_string_lossy())
             .replace("{Home}", &users.display().to_string())
-            .replace("{LocalAppData}", &app_data.join("Local").display().to_string())
-            .replace("{LocalLow}", &app_data.join("LocalLow").display().to_string())
+            .replace("{LocalAppData}", &app_data.join("Local").to_string_lossy())
+            .replace("{LocalLow}", &app_data.join("LocalLow").to_string_lossy())
             .replace("{SteamUserData}", "{SteamUserData}") // TODO
-            .replace("{XDGConfig}", &config().display().to_string())
+            .replace("{XDGConfig}", &config().to_string_lossy())
+            // TODO: XDGData
             .into()
     } else {
         todo!("Windows path expansion")
