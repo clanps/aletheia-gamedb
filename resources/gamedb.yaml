@@ -14,6 +14,10 @@ Dark Souls Remastered:
   files:
     windows:
       - "{Documents}/NBGI/DARK SOULS REMASTERED"
+Elden Ring:
+  files:
+    windows:
+      - "{AppData}/EldenRing/*"
 Ghostwire Tokyo:
   files:
     windows:
