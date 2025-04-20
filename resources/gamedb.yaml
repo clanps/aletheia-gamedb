@@ -30,6 +30,40 @@ Mouthwashing:
   files:
     windows:
       - "{GameRoot}/Mouthwashing_Data_SaveFiles"
+NEKOPALIVE:
+  files:
+    windows:
+      - "{LocalAppData}/Nekopara/Saved/Saved/SaveGames/Nekopara.sav"
+NEKOPARA Extra:
+  files:
+    windows:
+      - "{AppData}/NEKO WORKs/nekopara_extra"
+      - "{Documents}/NEKO WORKs/nekopara_extra"
+NEKOPARA Vol. 0:
+  files:
+    windows:
+      - "{AppData}/NekoWorks/nekopara_vo0"
+      - "{Documents}/NekoWorks/nekopara_vol0"
+NEKOPARA Vol. 1:
+  files:
+    windows:
+      - "{AppData}/NEKO WORKs/nekopara_vol"
+      - "{Documents}/NEKO WORKs/nekopara_vol1"
+NEKOPARA Vol. 2:
+  files:
+    windows:
+      - "{AppData}/NekoWorks/nekopara_vol2"
+      - "{Documents}/NEKO WORKs/nekopara_vol2"
+NEKOPARA Vol. 3:
+  files:
+    windows:
+      - "{AppData}/NEKO WORKs/nekopara3"
+      - "{Documents}/NEKO WORKs/nekopara_vol3"
+NEKOPARA Vol. 4:
+  files:
+    windows:
+      - "{AppData}/NEKO WORKs/nekopara4"
+      - "{Documents}/NEKO WORKs/nekopara_vol4"
 Resident Evil Revelations:
   files:
     windows:
