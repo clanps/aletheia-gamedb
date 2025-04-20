@@ -113,6 +113,10 @@ Yakuza Kiwami:
     windows:
       - "{LocalAppData}/GOG.com/Galaxy/Applications/56296604923139714/Storage/Shared/Files"
       - "{SteamUserData}/834530/remote"
+Yakuza Kiwami 2:
+  files:
+    windows:
+      - "{AppData}/Sega/YakuzaKiwami2/*"
 "Yu-Gi-Oh! Legacy of the Duelist: Link Evolution":
   files:
     windows:
