@@ -22,6 +22,10 @@ Ghostwire Tokyo:
   files:
     windows:
       - "{Home}/Saved Games/TangoGameworks/GhostWire Tokyo (STEAM)/Saved/SavedGames"
+Hi-Fi RUSH:
+  files:
+    windows:
+      - "{Home}/Saved Games/TangoGameworks/HI-FI RUSH (STEAM)/Saved/SaveGames"
 Killer Frequency:
   files:
     windows:
