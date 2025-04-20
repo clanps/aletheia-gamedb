@@ -30,15 +30,15 @@ pub fn expand_path(path: &str, prefix: Option<&PathBuf>) -> PathBuf {
     if cfg!(unix) {
         let wine_prefix = prefix.unwrap();
         let drive_c = wine_prefix.join("drive_c");
-        let users = drive_c.join("users").join("*");
-        let windows_app_data = users.join("AppData");
-        let documents = users.join("Documents");
+        let user = drive_c.join("users").join(std::env::var_os("USER").unwrap());
+        let windows_app_data = user.join("AppData");
+        let documents = user.join("Documents");
         let linux_app_data = app_data();
 
         path
             .replace("{AppData}", &windows_app_data.to_string_lossy())
             .replace("{Documents}", &documents.to_string_lossy())
-            .replace("{Home}", &users.display().to_string())
+            .replace("{Home}", &user.to_string_lossy())
             .replace("{LocalAppData}", &windows_app_data.join("Local").to_string_lossy())
             .replace("{LocalLow}", &windows_app_data.join("LocalLow").to_string_lossy())
             .replace("{SteamUserData}", &linux_app_data.join("Steam/userdata/*").to_string_lossy())
