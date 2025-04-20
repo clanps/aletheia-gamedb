@@ -33,7 +33,7 @@ impl Scanner for LutrisScanner {
             let name = &yml["name"].as_str().unwrap();
             let directory = &yml["game"]["prefix"].as_str().unwrap();
 
-            games.push(Game { name: (*name).to_string(), directory: (*directory).to_string() });
+            games.push(Game { name: (*name).to_string(), directory: directory.into() });
         }
 
         games

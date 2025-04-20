@@ -9,19 +9,7 @@ pub struct Config {
 
 impl Config {
     pub fn load() -> Self {
-        let dir = if cfg!(unix) {
-            std::env::var_os("XDG_CONFIG_HOME")
-                .map_or_else(|| std::env::var_os("HOME")
-                .map(PathBuf::from).unwrap()
-                .join(".config"), PathBuf::from)
-                .join("aletheia")
-        } else {
-            std::env::var_os("APPDATA")
-                .map(PathBuf::from)
-                .unwrap()
-                .join("aletheia")
-        };
-
+        let dir = crate::dirs::config().join("aletheia");
         let config_path = dir.join("config.json");
 
         if Path::exists(&config_path) {

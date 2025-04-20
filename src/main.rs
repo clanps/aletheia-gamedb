@@ -2,14 +2,14 @@
 
 mod commands;
 mod config;
-mod manifest;
+mod dirs;
+mod gamedb;
 mod scanner;
 
 use commands::Command;
 
 fn main() {
     config::Config::load();
-    manifest::download();
 
     let mut args = std::env::args();
     let cmd = args.nth(1).expect("No command given.");
