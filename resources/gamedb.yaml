@@ -1,7 +1,16 @@
+Agents of Mayhem:
+  files:
+    windows:
+      - "{SteamUserData}/304530/remote"
 AI Limit:
   files:
     windows:
       - "{LocalLow}/SenseGames/AILIMIT/Archive/*.sav"
+"AI: The Somnium Files":
+  files:
+    windows:
+      - "{AppData}/SpikeChunsoft/AI The Somnium Files/PSYNCAUTOSAVE"
+      - "{AppData}/SpikeChunsoft/AI The Somnium Files/PSYNCDEF*"
 "All in Abyss: Judge the Fake":
   files:
     windows:
@@ -20,6 +29,10 @@ Borderlands 2 VR:
   files:
     windows:
       - "{Documents}/My Games/Borderlands 2 VR/WillowGame/SaveData"
+Craftopia:
+  files:
+    windows:
+      - "{LocalLow}/PocketPair/Craftopia/Save"
 Crystar:
   files:
     windows:
@@ -76,6 +89,20 @@ Dead Rising 4:
   files:
     windows:
       - "{Documents}/My Games/Dead Rising 4/saves"
+"Disney Epic Mickey 2: The Power of Two":
+  files:
+    windows:
+      - "{AppData}/Disney Interactive Studios/Epic Mickey 2/Save"
+"DRAGON BALL Z: KAKAROT":
+  files:
+    windows:
+      - "{SteamUserData}/851850/remote"
+Dying Light:
+  files:
+    # TODO: Linux
+    windows:
+      - "{Documents}/DyingLight/out/save"
+      - "{Documents}/Dying Light/out/save"
 Elden Ring:
   files:
     windows:
@@ -96,14 +123,26 @@ Ghostwire Tokyo:
   files:
     windows:
       - "{Home}/Saved Games/TangoGameworks/GhostWire Tokyo (STEAM)/Saved/SavedGames"
+Gotham Knights:
+  files:
+    windows:
+      - "{LocalAppData}/WB Games/Gotham Knights/Steam/Saved/SaveGames"
 Hi-Fi RUSH:
   files:
     windows:
       - "{Home}/Saved Games/TangoGameworks/HI-FI RUSH (STEAM)/Saved/SaveGames"
+High on Life:
+  files:
+    windows:
+      - "{LocalAppData}/Oregon/Saved/SaveGames"
 Killer Frequency:
   files:
     windows:
       - "{LocalLow}/Team17/KillerFrequency/*/*.sav"
+Metro 2033 Redux:
+  files:
+    windows:
+      - "{Documents}/4A Games/Metro 2033"
 MiSide:
   files:
     windows:
@@ -112,6 +151,10 @@ Mouthwashing:
   files:
     windows:
       - "{GameRoot}/Mouthwashing_Data_SaveFiles"
+My Friend Pedro:
+  files:
+    windows:
+      - "{LocalLow}/DeadToast Entertainment/My Friend Pedro_ Blood Bullets Bananas/Save data"
 NEKOPALIVE:
   files:
     windows:
@@ -146,6 +189,18 @@ NEKOPARA Vol. 4:
     windows:
       - "{AppData}/NEKO WORKs/nekopara4"
       - "{Documents}/NEKO WORKs/nekopara_vol4"
+Persona 5 Royal:
+  files:
+    windows:
+      - "{AppData}/SEGA/P5R/Steam"
+Planet Coaster:
+  files:
+    windows:
+      - "{Home}/Saved Games/Frontier Developments/Planet Coaster/*/Saves"
+Quantum Break:
+  files:
+    windows:
+      - "{LocalAppData}/QuantumBreak"
 Resident Evil Revelations:
   files:
     windows:
@@ -163,16 +218,57 @@ Resident Evil Village:
   files:
     windows:
       - "{SteamUserData}/1196590/remote/win64_save"
+Rise of the Tomb Raider:
+  files:
+    # TODO: Linux
+    windows:
+      - "{SteamUserData}/391220/remote"
+Severed Steel:
+  files:
+    windows:
+      - "{LocalAppData}/ThankYouVeryCool/Saved/SaveGames"
 Scrap Mechanic:
   files:
     windows:
       - "{AppData}/Axolot Games/Scrap Mechanic"
+Sonic Frontiers:
+  files:
+    windows:
+      - "{AppData}/SEGA/SonicFrontiers/steam"
 Stardew Valley:
   files:
     linux:
       - "{XDGConfig}/StardewValley/Saves"
     windows:
       - "{AppData}/StardewValley/Saves"
+Stray:
+  files:
+    windows:
+      - "{LocalAppData}/Hk_project/Saved/SaveGames"
+"Sword Art Online: Fatal Bullet":
+  files:
+    windows:
+      - "{SteamUserData}/626690/remote"
+Sunset Overdrive:
+  files:
+    windows:
+      - "{LocalAppData}/Sunset/Saves"
+SWORD ART ONLINE Alicization Lycoris:
+  files:
+    windows:
+      - "{SteamUserData}/1009290/remote"
+SWORD ART ONLINE Last Recollection:
+  files:
+    windows:
+      - "{LocalAppData}/BANDAI NAMCO Entertainment/SAO Last Recollection/Saved/SaveGames"
+The Evil Within:
+  files:
+    windows:
+      - "{LocalAppData}/Saved Games/TangoGameworks/The Evil Within/base/savegame"
+The Evil Within 2:
+  files:
+    windows:
+      - "{LocalAppData}/Saved Games/TangoGameworks/The Evil Within 2/base/savegame"
 The Forest:
   files:
     windows:
@@ -187,6 +283,10 @@ The Lego Movie Videogame:
       - "{XDGConfig}/unity3d/Crows Crows Crows/The Stanley Parable_ Ultra Deluxe"
     windows:
       - "{LocalLow}/unity3d/Crows Crows Crows/The Stanley Parable_ Ultra Deluxe"
+The Quarry:
+  files:
+    windows:
+      - "{LocalAppData}/TheQuarry/Saved/SaveGames"
 Unleashed Recompiled:
   files:
     linux:
