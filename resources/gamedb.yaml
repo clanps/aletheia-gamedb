@@ -1,7 +1,7 @@
 Agents of Mayhem:
   files:
     windows:
-      - "{SteamUserData}/304530/remote"
+      - "{SteamUserData}/304530/remote/*"
 AI Limit:
   files:
     windows:
@@ -18,91 +18,91 @@ AI Limit:
 Borderlands:
   files:
     windows:
-      - "{Documents}/My Games/Borderlands/SaveData"
+      - "{Documents}/My Games/Borderlands/SaveData/*"
 Borderlands 2:
   files:
     linux:
-      - "{XDGData}/aspyr-media/borderlands 2/willowgame/savedata"
+      - "{XDGData}/aspyr-media/borderlands 2/willowgame/savedata/*"
     windows:
-      - "{Documents}/My Games/Borderlands 2/WillowGame/SaveData"
+      - "{Documents}/My Games/Borderlands 2/WillowGame/SaveData/*"
 Borderlands 2 VR:
   files:
     windows:
-      - "{Documents}/My Games/Borderlands 2 VR/WillowGame/SaveData"
+      - "{Documents}/My Games/Borderlands 2 VR/WillowGame/SaveData/*"
 Craftopia:
   files:
     windows:
-      - "{LocalLow}/PocketPair/Craftopia/Save"
+      - "{LocalLow}/PocketPair/Craftopia/Save/*"
 Crystar:
   files:
     windows:
-      - "{SteamUserData}/981750/remote"
+      - "{SteamUserData}/981750/remote/*"
 "Danganronpa Another Episode: Ultra Despair Girls":
   files:
     windows:
-      - "{Documents}/My Games/DanganAnother"
+      - "{Documents}/My Games/DanganAnother/*"
 "Danganronpa: Trigger Happy Havoc":
   files:
     linux:
-      - "{XDGData}/Danganronpa"
+      - "{XDGData}/Danganronpa/*"
     windows:
-      - "{Documents}/My Games/Danganronpa"
+      - "{Documents}/My Games/Danganronpa/*"
 "Danganronpa 2: Goodbye Despair":
   files:
     linux:
-      - "{XDGData}/Danganronpa2"
+      - "{XDGData}/Danganronpa2/*"
     windows:
-      - "{Documents}/My Games/Danganronpa2"
+      - "{Documents}/My Games/Danganronpa2/*"
 "Danganronpa V3: Killing Harmony":
   files:
     windows:
-      - "{SteamUserData}/567640/remote"
+      - "{SteamUserData}/567640/remote/*"
 Dark Souls Remastered:
   files:
     windows:
-      - "{Documents}/NBGI/DARK SOULS REMASTERED"
+      - "{Documents}/NBGI/DARK SOULS REMASTERED/*"
 Dead Island:
   files:
     windows:
-      - "{SteamUserData}/91310/remote/out"
+      - "{SteamUserData}/91310/remote/out/*"
 Dead Island 2:
   files:
     windows:
-      - "{LocalAppdata}/DeadIslandSteam/Saved/SaveGames"
+      - "{LocalAppdata}/DeadIslandSteam/Saved/SaveGames/*"
 Dead Rising:
   files:
     windows:
-      - "{SteamUserData}/427190/remote"
+      - "{SteamUserData}/427190/remote/*"
 Dead Rising 2:
   files:
     windows:
-      - "{Documents}/My Games/Dead Rising 2/saves"
+      - "{Documents}/My Games/Dead Rising 2/saves/*"
 "Dead Rising 2: Off the Record":
   files:
     windows:
-      - "{Documents}/My Games/Dead Rising 2 Off The Record/saves"
+      - "{Documents}/My Games/Dead Rising 2 Off The Record/saves/*"
 Dead Rising 3:
   files:
     windows:
-      - "{Documents}/My Games/Dead Rising 3/saves"
+      - "{Documents}/My Games/Dead Rising 3/saves/*"
 Dead Rising 4:
   files:
     windows:
-      - "{Documents}/My Games/Dead Rising 4/saves"
+      - "{Documents}/My Games/Dead Rising 4/saves/*"
 "Disney Epic Mickey 2: The Power of Two":
   files:
     windows:
-      - "{AppData}/Disney Interactive Studios/Epic Mickey 2/Save"
+      - "{AppData}/Disney Interactive Studios/Epic Mickey 2/Save/*"
 "DRAGON BALL Z: KAKAROT":
   files:
     windows:
-      - "{SteamUserData}/851850/remote"
+      - "{SteamUserData}/851850/remote/*"
 Dying Light:
   files:
     # TODO: Linux
     windows:
-      - "{Documents}/DyingLight/out/save"
-      - "{Documents}/Dying Light/out/save"
+      - "{Documents}/DyingLight/out/save/*"
+      - "{Documents}/Dying Light/out/save/*"
 Elden Ring:
   files:
     windows:
@@ -110,51 +110,55 @@ Elden Ring:
 Fallout 3:
   files:
     windows:
-      - "{Documents}/My Games/Fallout3/Saves"
+      - "{Documents}/My Games/Fallout3/Saves/*"
 Fallout 4:
   files:
     windows:
-      - "{Documents}/My Games/Fallout4/Saves"
+      - "{Documents}/My Games/Fallout4/Saves/*"
 Fallout 4 VR:
   files:
     windows:
-      - "{Documents}/My Games/Fallout4VR/Saves"
+      - "{Documents}/My Games/Fallout4VR/Saves/*"
 Ghostwire Tokyo:
   files:
     windows:
-      - "{Home}/Saved Games/TangoGameworks/GhostWire Tokyo (STEAM)/Saved/SavedGames"
+      - "{Home}/Saved Games/TangoGameworks/GhostWire Tokyo (STEAM)/Saved/SavedGames/*"
 Gotham Knights:
   files:
     windows:
-      - "{LocalAppData}/WB Games/Gotham Knights/Steam/Saved/SaveGames"
+      - "{LocalAppData}/WB Games/Gotham Knights/Steam/Saved/SaveGames/*"
 Hi-Fi RUSH:
   files:
     windows:
-      - "{Home}/Saved Games/TangoGameworks/HI-FI RUSH (STEAM)/Saved/SaveGames"
+      - "{Home}/Saved Games/TangoGameworks/HI-FI RUSH (STEAM)/Saved/SaveGames/*"
 High on Life:
   files:
     windows:
-      - "{LocalAppData}/Oregon/Saved/SaveGames"
+      - "{LocalAppData}/Oregon/Saved/SaveGames/*"
 Killer Frequency:
   files:
     windows:
       - "{LocalLow}/Team17/KillerFrequency/*/*.sav"
+Marvel's Guardians of the Galaxy:
+  files:
+    windows:
+      - "{SteamUserData}/1088850/remote/*"
 Metro 2033 Redux:
   files:
     windows:
-      - "{Documents}/4A Games/Metro 2033"
+      - "{Documents}/4A Games/Metro 2033/*"
 MiSide:
   files:
     windows:
-      - "{LocalLow}/AIHASTO/MiSideFull/Save"
+      - "{LocalLow}/AIHASTO/MiSideFull/Save/*"
 Mouthwashing:
   files:
     windows:
-      - "{GameRoot}/Mouthwashing_Data_SaveFiles"
+      - "{GameRoot}/Mouthwashing_Data_SaveFiles/*"
 My Friend Pedro:
   files:
     windows:
-      - "{LocalLow}/DeadToast Entertainment/My Friend Pedro_ Blood Bullets Bananas/Save data"
+      - "{LocalLow}/DeadToast Entertainment/My Friend Pedro_ Blood Bullets Bananas/Save data/*"
 NEKOPALIVE:
   files:
     windows:
@@ -162,53 +166,53 @@ NEKOPALIVE:
 NEKOPARA Extra:
   files:
     windows:
-      - "{AppData}/NEKO WORKs/nekopara_extra"
-      - "{Documents}/NEKO WORKs/nekopara_extra"
+      - "{AppData}/NEKO WORKs/nekopara_extra/*"
+      - "{Documents}/NEKO WORKs/nekopara_extra/*"
 NEKOPARA Vol. 0:
   files:
     windows:
-      - "{AppData}/NekoWorks/nekopara_vo0"
-      - "{Documents}/NekoWorks/nekopara_vol0"
+      - "{AppData}/NekoWorks/nekopara_vo0/*"
+      - "{Documents}/NekoWorks/nekopara_vol0/*"
 NEKOPARA Vol. 1:
   files:
     windows:
-      - "{AppData}/NEKO WORKs/nekopara_vol"
-      - "{Documents}/NEKO WORKs/nekopara_vol1"
+      - "{AppData}/NEKO WORKs/nekopara_vol/*"
+      - "{Documents}/NEKO WORKs/nekopara_vol1/*"
 NEKOPARA Vol. 2:
   files:
     windows:
-      - "{AppData}/NekoWorks/nekopara_vol2"
-      - "{Documents}/NEKO WORKs/nekopara_vol2"
+      - "{AppData}/NekoWorks/nekopara_vol2/*"
+      - "{Documents}/NEKO WORKs/nekopara_vol2/*"
 NEKOPARA Vol. 3:
   files:
     windows:
-      - "{AppData}/NEKO WORKs/nekopara3"
-      - "{Documents}/NEKO WORKs/nekopara_vol3"
+      - "{AppData}/NEKO WORKs/nekopara3/*"
+      - "{Documents}/NEKO WORKs/nekopara_vol3/*"
 NEKOPARA Vol. 4:
   files:
     windows:
-      - "{AppData}/NEKO WORKs/nekopara4"
-      - "{Documents}/NEKO WORKs/nekopara_vol4"
+      - "{AppData}/NEKO WORKs/nekopara4/*"
+      - "{Documents}/NEKO WORKs/nekopara_vol4/*"
 Persona 5 Royal:
   files:
     windows:
-      - "{AppData}/SEGA/P5R/Steam"
+      - "{AppData}/SEGA/P5R/Steam/*"
 Planet Coaster:
   files:
     windows:
-      - "{Home}/Saved Games/Frontier Developments/Planet Coaster/*/Saves"
+      - "{Home}/Saved Games/Frontier Developments/Planet Coaster/*/Saves/*"
 Quantum Break:
   files:
     windows:
-      - "{LocalAppData}/QuantumBreak"
+      - "{LocalAppData}/QuantumBreak/*"
 Resident Evil Revelations:
   files:
     windows:
-      - "{SteamUserData}/222480/remote"
+      - "{SteamUserData}/222480/remote/*"
 Resident Evil Revelations 2:
   files:
     windows:
-      - "{SteamUserData}/287290/remote"
+      - "{SteamUserData}/287290/remote/*"
 "Saints Row®: The Third™ Remastered":
   files:
     windows:
@@ -217,92 +221,92 @@ Resident Evil Revelations 2:
 Resident Evil Village:
   files:
     windows:
-      - "{SteamUserData}/1196590/remote/win64_save"
+      - "{SteamUserData}/1196590/remote/win64_save/*"
 Rise of the Tomb Raider:
   files:
     # TODO: Linux
     windows:
-      - "{SteamUserData}/391220/remote"
+      - "{SteamUserData}/391220/remote/*"
 Severed Steel:
   files:
     windows:
-      - "{LocalAppData}/ThankYouVeryCool/Saved/SaveGames"
+      - "{LocalAppData}/ThankYouVeryCool/Saved/SaveGames/*"
 Scrap Mechanic:
   files:
     windows:
-      - "{AppData}/Axolot Games/Scrap Mechanic"
+      - "{AppData}/Axolot Games/Scrap Mechanic/*"
 Sonic Frontiers:
   files:
     windows:
-      - "{AppData}/SEGA/SonicFrontiers/steam"
+      - "{AppData}/SEGA/SonicFrontiers/steam/*"
 Stardew Valley:
   files:
     linux:
-      - "{XDGConfig}/StardewValley/Saves"
+      - "{XDGConfig}/StardewValley/Saves/*"
     windows:
-      - "{AppData}/StardewValley/Saves"
+      - "{AppData}/StardewValley/Saves/*"
 Stray:
   files:
     windows:
-      - "{LocalAppData}/Hk_project/Saved/SaveGames"
+      - "{LocalAppData}/Hk_project/Saved/SaveGames/*"
 "Sword Art Online: Fatal Bullet":
   files:
     windows:
-      - "{SteamUserData}/626690/remote"
+      - "{SteamUserData}/626690/remote/*"
 Sunset Overdrive:
   files:
     windows:
-      - "{LocalAppData}/Sunset/Saves"
+      - "{LocalAppData}/Sunset/Saves/*"
 SWORD ART ONLINE Alicization Lycoris:
   files:
     windows:
-      - "{SteamUserData}/1009290/remote"
+      - "{SteamUserData}/1009290/remote/*"
 SWORD ART ONLINE Last Recollection:
   files:
     windows:
-      - "{LocalAppData}/BANDAI NAMCO Entertainment/SAO Last Recollection/Saved/SaveGames"
+      - "{LocalAppData}/BANDAI NAMCO Entertainment/SAO Last Recollection/Saved/SaveGames/*"
 The Evil Within:
   files:
     windows:
-      - "{LocalAppData}/Saved Games/TangoGameworks/The Evil Within/base/savegame"
+      - "{LocalAppData}/Saved Games/TangoGameworks/The Evil Within/base/savegame/*"
 The Evil Within 2:
   files:
     windows:
-      - "{LocalAppData}/Saved Games/TangoGameworks/The Evil Within 2/base/savegame"
+      - "{LocalAppData}/Saved Games/TangoGameworks/The Evil Within 2/base/savegame/*"
 The Forest:
   files:
     windows:
-      - "{LocalLow}/SKS/TheForest"
+      - "{LocalLow}/SKS/TheForest/*"
 The Lego Movie Videogame:
   files:
     windows:
-      - "{SteamUserData}/267530/remote/savedgames"
+      - "{SteamUserData}/267530/remote/savedgames/*"
 "The Stanley Parable: Ultra Deluxe":
   files:
     linux:
-      - "{XDGConfig}/unity3d/Crows Crows Crows/The Stanley Parable_ Ultra Deluxe"
+      - "{XDGConfig}/unity3d/Crows Crows Crows/The Stanley Parable_ Ultra Deluxe/*"
     windows:
-      - "{LocalLow}/unity3d/Crows Crows Crows/The Stanley Parable_ Ultra Deluxe"
+      - "{LocalLow}/unity3d/Crows Crows Crows/The Stanley Parable_ Ultra Deluxe/*"
 The Quarry:
   files:
     windows:
-      - "{LocalAppData}/TheQuarry/Saved/SaveGames"
+      - "{LocalAppData}/TheQuarry/Saved/SaveGames/*"
 Unleashed Recompiled:
   files:
     linux:
-      - "{XDGConfig}/UnleashedRecomp/save"
+      - "{XDGConfig}/UnleashedRecomp/save/*"
     windows:
-      - "{AppData}/UnleashedRecomp/save"
+      - "{AppData}/UnleashedRecomp/save/*"
 Yakuza 0:
   files:
     windows:
-      - "{LocalAppData}/GOG.com/Galaxy/Applications/5966314534907843/Storage/Shared/Files"
-      - "{SteamUserData}/638970/remote"
+      - "{LocalAppData}/GOG.com/Galaxy/Applications/5966314534907843/Storage/Shared/Files/*"
+      - "{SteamUserData}/638970/remote/*"
 Yakuza Kiwami:
   files:
     windows:
-      - "{LocalAppData}/GOG.com/Galaxy/Applications/56296604923139714/Storage/Shared/Files"
-      - "{SteamUserData}/834530/remote"
+      - "{LocalAppData}/GOG.com/Galaxy/Applications/56296604923139714/Storage/Shared/Files/*"
+      - "{SteamUserData}/834530/remote/*"
 Yakuza Kiwami 2:
   files:
     windows:
