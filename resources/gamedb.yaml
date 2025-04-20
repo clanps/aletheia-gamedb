@@ -201,6 +201,14 @@ Planet Coaster:
   files:
     windows:
       - "{Home}/Saved Games/Frontier Developments/Planet Coaster/*/Saves/*"
+Prototype:
+  files:
+    windows:
+      - "{Documents}/Prototype/slot-*.bin"
+Prototype 2:
+  files:
+    windows:
+      - "{Documents}/Activision/Prototype 2/slot-*.bin"
 Quantum Break:
   files:
     windows:
