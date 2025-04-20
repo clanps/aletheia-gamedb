@@ -27,7 +27,7 @@ pub struct Backup;
 impl Command for Backup { 
     fn run(_args: std::env::Args) {
         let game_db = crate::gamedb::parse();
-        let lutris_games = LutrisScanner::get_games();
+        let lutris_games = LutrisScanner::get_games().unwrap();
 
         for game in lutris_games {
             if !game_db.contains_key(&game.name) {

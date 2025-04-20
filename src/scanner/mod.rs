@@ -7,5 +7,5 @@ pub struct Game {
 }
 
 pub trait Scanner {
-    fn get_games() -> Vec<Game>;
+    fn get_games() -> anyhow::Result<Vec<Game>>;
 }
