@@ -55,7 +55,7 @@ pub fn expand_path(path: &str, prefix: Option<&PathBuf>) -> PathBuf {
             .replace("{Home}", &home.to_string_lossy())
             .replace("{LocalAppData}", &app_data.join("Local").to_string_lossy())
             .replace("{LocalLow}", &app_data.join("LocalLow").to_string_lossy())
-            .replace("{SteamUserData}", "C:/Program Files (x86)/Steam/userdata")
+            .replace("{SteamUserData}", "C:/Program Files (x86)/Steam/userdata/*")
             .into()
     }
 }
