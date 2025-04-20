@@ -6,6 +6,18 @@ AI Limit:
   files:
     windows:
       - "{LocalLow}/AllianceArts/All in Abyss/SaveData/*/GameData/*.sav"
+Crystar:
+  files:
+    windows:
+      - "{SteamUserData}/981750/remote"
+Dark Souls Remastered:
+  files:
+    windows:
+      - "{Documents}/NBGI/DARK SOULS REMASTERED"
+Ghostwire Tokyo:
+  files:
+    windows:
+      - "{Home}/Saved Games/TangoGameworks/GhostWire Tokyo (STEAM)/Saved/SavedGames"
 Killer Frequency:
   files:
     windows:
