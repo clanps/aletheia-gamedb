@@ -46,6 +46,16 @@ pub fn expand_path(path: &str, prefix: Option<&PathBuf>) -> PathBuf {
             .replace("{XDGData}", &linux_app_data.to_string_lossy())
             .into()
     } else {
-        todo!("Windows path expansion")
+        let app_data = config();
+        let home = std::env::var_os("USERPROFILE").map(PathBuf::from).unwrap();
+
+        path
+            .replace("{AppData}", &app_data.to_string_lossy())
+            .replace("{Documents}", &home.join("Documents").to_string_lossy())
+            .replace("{Home}", &home.to_string_lossy())
+            .replace("{LocalAppData}", &app_data.join("Local").to_string_lossy())
+            .replace("{LocalLow}", &app_data.join("LocalLow").to_string_lossy())
+            .replace("{SteamUserData}", "C:/Program Files (x86)/Steam/userdata")
+            .into()
     }
 }
