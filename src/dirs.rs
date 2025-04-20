@@ -1,6 +1,6 @@
 use std::path::PathBuf;
 
-pub fn config() -> std::path::PathBuf {
+pub fn config() -> PathBuf {
     if cfg!(unix) {
         std::env::var_os("XDG_CONFIG_HOME")
             .map_or_else(|| std::env::var_os("HOME")
@@ -13,23 +13,37 @@ pub fn config() -> std::path::PathBuf {
     }
 }
 
+pub fn app_data() -> PathBuf {
+    if cfg!(unix) {
+        std::env::var_os("XDG_DATA_HOME")
+            .map_or_else(|| std::env::var_os("HOME")
+            .map(PathBuf::from).unwrap()
+            .join(".local/share"), PathBuf::from)
+    } else {
+        std::env::var_os("LOCALAPPDATA")
+            .map(PathBuf::from)
+            .unwrap()
+    }
+}
+
 pub fn expand_path(path: &str, prefix: Option<&PathBuf>) -> PathBuf {
     if cfg!(unix) {
         let wine_prefix = prefix.unwrap();
         let drive_c = wine_prefix.join("drive_c");
         let users = drive_c.join("users").join("*");
-        let app_data = users.join("AppData");
+        let windows_app_data = users.join("AppData");
         let documents = users.join("Documents");
+        let linux_app_data = app_data();
 
         path
-            .replace("{AppData}", &app_data.to_string_lossy())
+            .replace("{AppData}", &windows_app_data.to_string_lossy())
             .replace("{Documents}", &documents.to_string_lossy())
             .replace("{Home}", &users.display().to_string())
-            .replace("{LocalAppData}", &app_data.join("Local").to_string_lossy())
-            .replace("{LocalLow}", &app_data.join("LocalLow").to_string_lossy())
-            .replace("{SteamUserData}", "{SteamUserData}") // TODO
+            .replace("{LocalAppData}", &windows_app_data.join("Local").to_string_lossy())
+            .replace("{LocalLow}", &windows_app_data.join("LocalLow").to_string_lossy())
+            .replace("{SteamUserData}", &linux_app_data.join("Steam/userdata/*").to_string_lossy())
             .replace("{XDGConfig}", &config().to_string_lossy())
-            // TODO: XDGData
+            .replace("{XDGData}", &linux_app_data.to_string_lossy())
             .into()
     } else {
         todo!("Windows path expansion")
