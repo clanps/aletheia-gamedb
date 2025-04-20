@@ -9,6 +9,7 @@ lto = true
 strip = true
 
 [dependencies]
+glob = "0.3.2"
 reqwest = { version = "0.12.15", features = ["blocking"] }
 serde = { version = "1.0.219", features = ["derive"] }
 serde_json = "1.0.140"
