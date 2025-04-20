@@ -2,7 +2,9 @@ use crate::dirs::config;
 use crate::scanner::lutris::LutrisScanner;
 use crate::scanner::Scanner;
 use super::Command;
+use std::fs::{copy, create_dir_all};
 use std::path::PathBuf;
+use glob::glob;
 
 pub struct Backup;
 
@@ -17,12 +19,20 @@ impl Command for Backup {
                 continue;
             }
 
+            let backup_folder = PathBuf::from(format!("backups/{}", game.name));
+            create_dir_all(&backup_folder).expect(&format!("Failed to backup {}.", game.name));
+
             let game_entry = game_db.get(&game.name).unwrap();
 
             if let Some(windows_paths) = &game_entry.files.windows {
                 for path in windows_paths {
                     let expanded = expand_path(path, Some(&game.directory));
-                    println!("{expanded:?}");
+                    let found_paths = glob(&expanded.to_string_lossy()).unwrap();
+
+                    for file in found_paths {
+                        let file_path = file.unwrap();
+                        copy(&file_path, backup_folder.clone().join(file_path.file_name().unwrap())).unwrap();
+                    }
                 }
             }
         }
@@ -33,7 +43,7 @@ fn expand_path(path: &str, prefix: Option<&PathBuf>) -> PathBuf {
     if cfg!(unix) {
         let wine_prefix = prefix.unwrap();
         let drive_c = wine_prefix.join("drive_c");
-        let users = drive_c.join("users").join("*");
+        let users = drive_c.join("users").join("*"); // TODO: Ignore steamuser
         let app_data = users.join("AppData");
         let documents = users.join("Documents");
 
