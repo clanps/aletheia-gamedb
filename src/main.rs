@@ -19,6 +19,8 @@ fn main() {
 
     match cmd.as_str() {
         "backup" => commands::backup::Backup::run(args, &config),
+        #[cfg(feature = "updater")]
+        "update" => commands::update::Update::run(args, &config),
         _ => eprintln!("Command not found.")
     }
 }
