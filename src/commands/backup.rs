@@ -1,26 +1,13 @@
 use crate::config::Config;
 use crate::dirs::{expand_path, shrink_path};
+use crate::gamedb::{GameInfo, FileMetadata};
 use crate::scanner::lutris::LutrisScanner;
 use crate::scanner::Scanner;
 use super::Command;
 use std::fs::{copy, create_dir_all, File, metadata, read_to_string, write};
 use std::path::PathBuf;
-use serde::{Deserialize, Serialize};
 use glob::glob;
 use sha2::{Sha512, Digest};
-
-#[derive(Deserialize, Serialize)]
-struct GameInfo {
-    name: String,
-    files: Vec<FileMetadata>
-}
-
-#[derive(Clone, Deserialize, Serialize)]
-struct FileMetadata {
-    hash: String,
-    path: String,
-    size: u64
-}
 
 pub struct Backup;
 

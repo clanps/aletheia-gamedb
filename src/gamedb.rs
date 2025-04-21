@@ -1,6 +1,7 @@
 use crate::dirs::cache;
 use std::fs::{create_dir_all, read_to_string, write};
 use std::path::Path;
+use serde::{Deserialize, Serialize};
 
 const GAMEDB_YAML: &str = include_str!("../resources/gamedb.yaml");
 
@@ -11,15 +12,28 @@ pub enum UpdaterResult {
     UpToDate
 }
 
-#[derive(Debug, serde::Deserialize)]
+#[derive(Debug, Deserialize)]
 pub struct GameDbEntry {
     pub files: GameFiles
 }
 
-#[derive(Debug, serde::Deserialize)]
+#[derive(Debug, Deserialize)]
 pub struct GameFiles {
     pub windows: Option<Vec<String>>,
     pub linux: Option<Vec<String>>
+}
+
+#[derive(Deserialize, Serialize)]
+pub struct GameInfo {
+    pub name: String,
+    pub files: Vec<FileMetadata>
+}
+
+#[derive(Clone, Deserialize, Serialize)]
+pub struct FileMetadata {
+    pub hash: String,
+    pub path: String,
+    pub size: u64
 }
 
 pub fn parse() -> std::collections::HashMap<String, GameDbEntry> {
