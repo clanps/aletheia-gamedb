@@ -3,6 +3,7 @@
 mod commands;
 mod config;
 mod dirs;
+mod file;
 mod gamedb;
 mod scanner;
 

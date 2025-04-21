@@ -1,13 +1,13 @@
 use crate::config::Config;
 use crate::dirs::{expand_path, shrink_path};
+use crate::file::hash_file;
 use crate::gamedb::{GameInfo, FileMetadata};
 use crate::scanner::lutris::LutrisScanner;
 use crate::scanner::Scanner;
 use super::Command;
-use std::fs::{copy, create_dir_all, File, metadata, read_to_string, write};
+use std::fs::{copy, create_dir_all, metadata, read_to_string, write};
 use std::path::PathBuf;
 use glob::glob;
-use sha2::{Sha512, Digest};
 
 pub struct Backup;
 
@@ -88,15 +88,6 @@ impl Command for Backup {
             write(&manifest_path, serde_yaml::to_string(&game_metadata).unwrap()).unwrap();
         }
     }
-}
-
-fn hash_file(file_path: &PathBuf) -> String {
-    let mut file_content = File::open(file_path).unwrap();
-    let mut hasher = Sha512::new();
-
-    std::io::copy(&mut file_content, &mut hasher).unwrap();
-
-    format!("{:x}", hasher.finalize())
 }
 
 fn process_file(file_path: &PathBuf, dest: &PathBuf, prefix: Option<&PathBuf>) -> FileMetadata {

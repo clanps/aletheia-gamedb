@@ -1,0 +1,10 @@
+use sha2::{Sha512, Digest};
+
+pub fn hash_file(file_path: &std::path::PathBuf) -> String {
+    let mut file_content = std::fs::File::open(file_path).unwrap();
+    let mut hasher = Sha512::new();
+
+    std::io::copy(&mut file_content, &mut hasher).unwrap();
+
+    format!("{:x}", hasher.finalize())
+}
