@@ -123,6 +123,12 @@ Dying Light 2:
   files:
     windows:
       - "{SteamUserData}/534380/remote/out/save/*"
+Elden Bling:
+  files:
+    windows:
+      - "{LocalLow}/Team SNEED/EldenBling/permaflags/*"
+      - "{LocalLow}/Team SNEED/EldenBling/saved-inventories/*"
+      - "{LocalLow}/Team SNEED/EldenBling/SaveFile.es3"
 Elden Ring:
   files:
     windows:
