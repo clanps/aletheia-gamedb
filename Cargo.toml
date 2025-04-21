@@ -2,6 +2,7 @@
 name = "aletheia"
 version = "0.1.0"
 edition = "2024"
+license-file = "LICENSE"
 
 [profile.release]
 opt-level = 3
