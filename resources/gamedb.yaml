@@ -103,6 +103,10 @@ Dying Light:
     windows:
       - "{Documents}/DyingLight/out/save/*"
       - "{Documents}/Dying Light/out/save/*"
+Dying Light 2:
+  files:
+    windows:
+      - "{SteamUserData}/534380/remote/out/save/*"
 Elden Ring:
   files:
     windows:
@@ -135,6 +139,14 @@ High on Life:
   files:
     windows:
       - "{LocalAppData}/Oregon/Saved/SaveGames/*"
+Hogwarts Legacy:
+  files:
+    windows:
+      - "{LocalAppData}/Hogwarts Legacy/Saved/SaveGames/*"
+Judgment:
+  files:
+    windows:
+      - "{AppData}/Sega/Judgment/Steam/*"
 Killer Frequency:
   files:
     windows:
