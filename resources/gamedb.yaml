@@ -19,6 +19,10 @@ Alan Wake 2:
   files:
     windows:
       - "{LocalAppData}/Remedy/AlanWake2/*"
+A Way Out:
+  files:
+    windows:
+      - "{Documents}/My Games/A Way Out/Saves/*"
 Borderlands:
   files:
     windows:
@@ -135,6 +139,15 @@ Fallout 4 VR:
   files:
     windows:
       - "{Documents}/My Games/Fallout4VR/Saves/*"
+Ghostrunner:
+  files:
+    windows:
+      - "{LocalAppData}/Ghostrunner/Saved/SaveGames/*"
+      - "{LocalAppData}/Ghostrunner/Saved/save.data"
+Ghostrunner 2:
+  files:
+    windows:
+      - "{LocalAppData}/Ghostrunner2/Saved/SaveGames/*"
 Ghostwire Tokyo:
   files:
     windows:
@@ -163,6 +176,10 @@ Judgment:
   files:
     windows:
       - "{AppData}/Sega/Judgment/Steam/*"
+JUMP FORCE:
+  files:
+    windows:
+      - "{SteamUserData}/816020/remote/*"
 Killer Frequency:
   files:
     windows:
@@ -175,6 +192,18 @@ Marvel's Guardians of the Galaxy:
   files:
     windows:
       - "{LocalAppData}/RainCodePlus/Saved/SaveGames/*"
+"Marvel's Spider-Man: Miles Morales":
+  files:
+    windows:
+      - "{Documents}/Marvel's Spider-Man Miles Morales/*"
+Marvel's Spider-Man 2:
+  files:
+    windows:
+      - "{Documents}/Marvel's Spider-Man 2/*"
+Marvel’s Spider-Man Remastered:
+  files:
+    windows:
+      - "{Documents}/Marvel's Spider-Man Remastered/*"
 Metro 2033 Redux:
   files:
     windows:
@@ -225,6 +254,10 @@ NEKOPARA Vol. 4:
     windows:
       - "{AppData}/NEKO WORKs/nekopara4/*"
       - "{Documents}/NEKO WORKs/nekopara_vol4/*"
+Palworld:
+  files:
+    windows:
+      - "{LocalAppData}/Pal/Saved/SaveGames/*"
 Persona 3 Reload:
   files:
     windows:
