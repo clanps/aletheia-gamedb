@@ -12,7 +12,10 @@ fn main() {
     config::Config::load();
 
     let mut args = std::env::args();
-    let cmd = args.nth(1).expect("No command given.");
+    let cmd = args.nth(1).unwrap_or_else(|| {
+        eprintln!("No command given.");
+        std::process::exit(1);
+    });
 
     match cmd.as_str() {
         "backup" => commands::backup::Backup::run(args),
