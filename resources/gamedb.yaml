@@ -33,6 +33,10 @@ Craftopia:
   files:
     windows:
       - "{LocalLow}/PocketPair/Craftopia/Save/*"
+"Crash Bandicoot 4: It's About Time":
+  files:
+    windows:
+      - "{LocalAppData}/CrashBandicoot4/Saved/SaveGames"
 Crystar:
   files:
     windows:
