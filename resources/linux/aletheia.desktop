@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Aletheia
+Comment=Game save backup tool
+Exec=aletheia
+Terminal=true
+Keywords=backup
