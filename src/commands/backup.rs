@@ -117,7 +117,7 @@ fn process_file(file_path: &PathBuf, dest: &PathBuf, prefix: Option<&PathBuf>) -
     copy(file_path, dest).unwrap();
 
     FileMetadata {
-        path: shrink_path(file_path.to_string_lossy().to_string().as_str(), prefix).to_string_lossy().to_string(),
+        path: shrink_path(&file_path.to_string_lossy(), prefix).to_string_lossy().to_string(),
         hash: hash_file(file_path),
         size: metadata(file_path).unwrap().len()
     }
