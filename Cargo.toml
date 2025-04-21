@@ -1,6 +1,8 @@
 [package]
 name = "aletheia"
 version = "0.1.0"
+authors = "Spencer"
+description = "Game save backup tool"
 edition = "2024"
 license-file = "LICENSE"
 
