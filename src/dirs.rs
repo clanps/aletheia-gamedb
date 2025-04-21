@@ -59,3 +59,26 @@ pub fn expand_path(path: &str, prefix: Option<&PathBuf>) -> PathBuf {
             .into()
     }
 }
+
+pub fn shrink_path(path: &str, prefix: Option<&PathBuf>) -> PathBuf {
+    if cfg!(unix) {
+        let wine_prefix = prefix.unwrap();
+        let drive_c = wine_prefix.join("drive_c");
+        let user = drive_c.join("users").join(std::env::var_os("USER").unwrap());
+        let windows_app_data = user.join("AppData");
+        let linux_app_data = app_data();
+
+        path
+            .replace(&*windows_app_data.join("Local").to_string_lossy(), "{LocalAppData}")
+            .replace(&*windows_app_data.join("LocalLow").to_string_lossy(), "{LocalLow}")
+            .replace(&*windows_app_data.to_string_lossy(), "{AppData}")
+            .replace(&*user.join("Documents").to_string_lossy(), "{Documents}")
+            .replace(&*user.to_string_lossy(), "{Home}")
+            .replace(&*linux_app_data.join("Steam/userdata/*").to_string_lossy(), "{SteamUserData}")
+            .replace(&*config().to_string_lossy(), "{XDGConfig}")
+            .replace(&*linux_app_data.to_string_lossy(), "{XDGData}")
+            .into()
+    } else {
+        todo!("Windows path implementation.");
+    }
+}
