@@ -69,8 +69,8 @@ pub fn shrink_path(path: &str, prefix: Option<&PathBuf>) -> PathBuf {
         let linux_app_data = app_data();
 
         path
-            .replace(&*windows_app_data.join("Local").to_string_lossy(), "{LocalAppData}")
             .replace(&*windows_app_data.join("LocalLow").to_string_lossy(), "{LocalLow}")
+            .replace(&*windows_app_data.join("Local").to_string_lossy(), "{LocalAppData}")
             .replace(&*windows_app_data.to_string_lossy(), "{AppData}")
             .replace(&*user.join("Documents").to_string_lossy(), "{Documents}")
             .replace(&*user.to_string_lossy(), "{Home}")
@@ -83,8 +83,8 @@ pub fn shrink_path(path: &str, prefix: Option<&PathBuf>) -> PathBuf {
         let home = std::env::var_os("USERPROFILE").map(PathBuf::from).unwrap();
 
         path
-            .replace(&*app_data.join("Local").to_string_lossy(), "{LocalAppData}")
             .replace(&*app_data.join("LocalLow").to_string_lossy(), "{LocalLow}")
+            .replace(&*app_data.join("Local").to_string_lossy(), "{LocalAppData}")
             .replace(&*app_data.to_string_lossy(), "{AppData}")
             .replace(&*home.join("Documents").to_string_lossy(), "{Documents}")
             .replace(&*home.to_string_lossy(), "{Home}")
