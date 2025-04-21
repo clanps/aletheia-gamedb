@@ -3,7 +3,6 @@ use crate::dirs::{expand_path, shrink_path};
 use crate::scanner::lutris::LutrisScanner;
 use crate::scanner::Scanner;
 use super::Command;
-use std::collections::HashMap;
 use std::fs::{copy, create_dir_all, File, metadata, read_to_string, write};
 use std::path::PathBuf;
 use serde::{Deserialize, Serialize};
@@ -46,14 +45,6 @@ impl Command for Backup {
                 None
             };
 
-            let existing_files_map: HashMap<String, FileMetadata> = if let Some(manifest) = &existing_manifest {
-                manifest.files.iter()
-                    .map(|metadata| (metadata.path.clone(), metadata.clone()))
-                    .collect()
-            } else {
-                HashMap::new()
-            };
-
             create_dir_all(&backup_folder).expect(&format!("Failed to backup {}.", game.name));
 
             let game_entry = game_db.get(&game.name).unwrap();
@@ -68,10 +59,13 @@ impl Command for Backup {
                         let file_path = file.unwrap();
                         let file_path_str = file_path.to_string_lossy().to_string();
                         let file_hash = hash_file(&file_path);
-
-                        let file_changed = match existing_files_map.get(&file_path_str) {
-                            Some(metadata) => metadata.hash != file_hash,
-                            None => true
+                        let file_changed = if let Some(manifest) = &existing_manifest {
+                            match manifest.files.iter().find(|m| m.path == file_path_str) {
+                                Some(metadata) => metadata.hash != file_hash,
+                                None => true
+                            }
+                        } else {
+                            true
                         };
 
                         if file_changed {
@@ -84,7 +78,12 @@ impl Command for Backup {
                             game_files.push(file_metadata);
                             changed = true;
                         } else {
-                            game_files.push(existing_files_map.get(&file_path_str).unwrap().clone());
+                            let existing_metadata = existing_manifest.as_ref().unwrap().files
+                                .iter()
+                                .find(|m| m.path == file_path_str)
+                                .unwrap();
+
+                            game_files.push(existing_metadata.to_owned());
                         }
                     }
                 }
