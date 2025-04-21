@@ -15,6 +15,10 @@ AI Limit:
   files:
     windows:
       - "{LocalLow}/AllianceArts/All in Abyss/SaveData/*/GameData/*.sav"
+Alan Wake 2:
+  files:
+    windows:
+      - "{LocalAppData}/Remedy/AlanWake2/*"
 Borderlands:
   files:
     windows:
@@ -37,6 +41,10 @@ Craftopia:
   files:
     windows:
       - "{LocalAppData}/CrashBandicoot4/Saved/SaveGames"
+Crash Bandicoot N. Sane Trilogy:
+  files:
+    windows:
+      - "{AppData}/Crash Bandicoot(TM) N. Sane Trilogy"
 Crystar:
   files:
     windows:
@@ -135,6 +143,10 @@ Gotham Knights:
   files:
     windows:
       - "{LocalAppData}/WB Games/Gotham Knights/Steam/Saved/SaveGames/*"
+Heavy Rain:
+  files:
+    windows:
+      - "{Home}/Saved Games/HeavyRain/*"
 Hi-Fi RUSH:
   files:
     windows:
@@ -159,6 +171,10 @@ Marvel's Guardians of the Galaxy:
   files:
     windows:
       - "{SteamUserData}/1088850/remote/*"
+"Master Detective Archives: Rain Code Plus":
+  files:
+    windows:
+      - "{LocalAppData}/RainCodePlus/Saved/SaveGames/*"
 Metro 2033 Redux:
   files:
     windows:
@@ -209,6 +225,14 @@ NEKOPARA Vol. 4:
     windows:
       - "{AppData}/NEKO WORKs/nekopara4/*"
       - "{Documents}/NEKO WORKs/nekopara_vol4/*"
+Persona 3 Reload:
+  files:
+    windows:
+      - "{AppData}/SEGA/P3R/*"
+Persona 4 Golden:
+  files:
+    windows:
+      - "{SteamUserData}/1113000/remote/*"
 Persona 5 Royal:
   files:
     windows:
@@ -263,6 +287,16 @@ Sonic Frontiers:
   files:
     windows:
       - "{AppData}/SEGA/SonicFrontiers/steam/*"
+SUPERHOT:
+  files:
+    linux:
+      - "{XDGConfig}/unity3d/SUPERHOT_Team/SUPERHOT/super.hot"
+    windows:
+      - "{LocalLow}/SUPERHOT_Team/SUPERHOT/*"
+Split Fiction:
+  files:
+    windows:
+      - "{LocalAppData}/SplitFiction/SaveData.Split"
 Stardew Valley:
   files:
     linux:
@@ -289,6 +323,10 @@ SWORD ART ONLINE Last Recollection:
   files:
     windows:
       - "{LocalAppData}/BANDAI NAMCO Entertainment/SAO Last Recollection/Saved/SaveGames/*"
+The Casting of Frank Stone:
+  files:
+    windows:
+      - "{LocalAppData}/TheCastingofFrankStone/Saved/*"
 The Evil Within:
   files:
     windows:
@@ -315,6 +353,10 @@ The Quarry:
   files:
     windows:
       - "{LocalAppData}/TheQuarry/Saved/SaveGames/*"
+Tormented Souls:
+  files:
+    windows:
+      - "{LocalLow}/duale-abstractd/Tormented Souls Release/Saves/*"
 Unleashed Recompiled:
   files:
     linux:
