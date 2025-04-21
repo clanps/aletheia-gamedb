@@ -1,5 +1,17 @@
 use std::path::PathBuf;
 
+pub fn cache() -> PathBuf {
+    if cfg!(unix) {
+        std::env::var_os("XDG_CACHE_HOME")
+            .map_or_else(|| std::env::var_os("HOME")
+            .map(PathBuf::from).unwrap()
+            .join(".cache"), PathBuf::from)
+            .join("aletheia")
+    } else {
+        config().join("aletheia/cache")
+    }
+}
+
 pub fn config() -> PathBuf {
     if cfg!(unix) {
         std::env::var_os("XDG_CONFIG_HOME")
