@@ -1,3 +1,4 @@
+use crate::config::Config;
 use crate::dirs::{expand_path, shrink_path};
 use crate::scanner::lutris::LutrisScanner;
 use crate::scanner::Scanner;
@@ -25,7 +26,7 @@ struct FileMetadata {
 pub struct Backup;
 
 impl Command for Backup { 
-    fn run(_args: std::env::Args) {
+    fn run(_args: std::env::Args, config: &Config) {
         let game_db = crate::gamedb::parse();
         let lutris_games = LutrisScanner::get_games().unwrap();
 
@@ -35,7 +36,7 @@ impl Command for Backup {
                 continue;
             }
 
-            let backup_folder = PathBuf::from(format!("backups/{}", game.name));
+            let backup_folder = PathBuf::from(&config.save_dir).join(&game.name);
             let manifest_path = backup_folder.join("aletheia_manifest.yaml");
             let mut changed = false;
             let existing_manifest = if manifest_path.exists() {

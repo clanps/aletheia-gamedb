@@ -9,7 +9,7 @@ mod scanner;
 use commands::Command;
 
 fn main() {
-    config::Config::load();
+    let config = config::Config::load();
 
     let mut args = std::env::args();
     let cmd = args.nth(1).unwrap_or_else(|| {
@@ -18,7 +18,7 @@ fn main() {
     });
 
     match cmd.as_str() {
-        "backup" => commands::backup::Backup::run(args),
+        "backup" => commands::backup::Backup::run(args, &config),
         _ => eprintln!("Command not found.")
     }
 }
