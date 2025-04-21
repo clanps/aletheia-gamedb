@@ -1,4 +1,4 @@
-use crate::dirs::expand_path;
+use crate::dirs::{expand_path, shrink_path};
 use crate::scanner::lutris::LutrisScanner;
 use crate::scanner::Scanner;
 use super::Command;
@@ -74,7 +74,12 @@ impl Command for Backup {
                         };
 
                         if file_changed {
-                            let file_metadata = process_file(&file_path, &backup_folder.clone().join(file_path.file_name().unwrap()));
+                            let file_metadata = process_file(
+                                &file_path,
+                                &backup_folder.clone().join(file_path.file_name().unwrap()),
+                                Some(&game.directory)
+                            );
+
                             game_files.push(file_metadata);
                             changed = true;
                         } else {
@@ -107,11 +112,11 @@ fn hash_file(file_path: &PathBuf) -> String {
     format!("{:x}", hasher.finalize())
 }
 
-fn process_file(file_path: &PathBuf, dest: &PathBuf) -> FileMetadata {
+fn process_file(file_path: &PathBuf, dest: &PathBuf, prefix: Option<&PathBuf>) -> FileMetadata {
     copy(file_path, dest).unwrap();
 
     FileMetadata {
-        path: file_path.to_string_lossy().to_string(),
+        path: shrink_path(file_path.to_string_lossy().to_string().as_str(), prefix).to_string_lossy().to_string(),
         hash: hash_file(file_path),
         size: metadata(file_path).unwrap().len()
     }
