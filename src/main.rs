@@ -1,4 +1,6 @@
 #![warn(clippy::pedantic)]
+#![warn(clippy::if_then_some_else_none)]
+// #![warn(clippy::indexing_slicing)]
 
 mod commands;
 mod config;

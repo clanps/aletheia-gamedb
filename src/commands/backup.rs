@@ -25,12 +25,10 @@ impl Command for Backup {
             let backup_folder = PathBuf::from(&config.save_dir).join(&game.name);
             let manifest_path = backup_folder.join("aletheia_manifest.yaml");
             let mut changed = false;
-            let existing_manifest = if manifest_path.exists() {
+            let existing_manifest = manifest_path.exists().then(|| {
                 let content = read_to_string(&manifest_path).unwrap();
-                Some(serde_yaml::from_str::<GameInfo>(&content).unwrap())
-            } else {
-                None
-            };
+                serde_yaml::from_str::<GameInfo>(&content).unwrap()
+            });
 
             create_dir_all(&backup_folder).expect(&format!("Failed to backup {}.", game.name));
 
