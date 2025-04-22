@@ -1,0 +1,27 @@
+app-id: moe.spencer.Aletheia
+runtime: org.freedesktop.Platform
+runtime-version: '24.08'
+sdk: org.freedesktop.Sdk
+sdk-extensions:
+  - org.freedesktop.Sdk.Extension.rust-stable
+
+build-options:
+  append-path: /usr/lib/sdk/rust-stable/bin
+  build-args:
+    - --share=network
+
+finish-args:
+  # Used to detect Lutris games and their save files
+  - --filesystem=~/.var/app/net.lutris.Lutris:ro
+
+command: aletheia
+
+modules:
+  - name: aletheia
+    buildsystem: simple
+    build-commands:
+      - cargo build --release
+      - install -Dm755 target/release/aletheia /app/bin/aletheia
+    sources:
+      - type: dir
+        path: ../
