@@ -72,12 +72,12 @@ impl Command for Backup {
             }
 
             let game_metadata = GameInfo {
-                name: game.name.clone(),
+                name: game.name,
                 files: game_files
             };
 
             write(&manifest_path, serde_yaml::to_string(&game_metadata).unwrap()).unwrap();
-            println!("Backed up {}.", game.name);
+            println!("Backed up {}.", game_metadata.name);
         }
     }
 }
