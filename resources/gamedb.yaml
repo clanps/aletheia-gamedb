@@ -198,6 +198,19 @@ Killer Frequency:
   files:
     windows:
       - "{LocalLow}/Team17/KillerFrequency/*/*.sav"
+"Like a Dragon: Infinite Wealth":
+  files:
+    windows:
+      - "{AppData}/Sega/LikeADragon8/Steam/*"
+"Like a Dragon: Pirate Yakuza in Hawaii":
+  files:
+    windows:
+      - "{AppData}/Sega/LikeADragonPirates/Steam/*"
+"Like a Dragon Gaiden: The Man Who Erased His Name":
+  files:
+    windows:
+      - "{AppData}/Sega/LikeADragonGaiden/Steam"
+      - "{AppData}/Sega/LikeADragonGaiden/WindowsStore"
 Marvel's Guardians of the Galaxy:
   files:
     windows:
