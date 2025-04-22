@@ -54,15 +54,19 @@ fn restore_game(game_dir: &Path, game_name: &str, lutris_games: &[crate::scanner
 
     let mut restored = false;
 
+    for file in &manifest.files {
+        let src_file = game_dir.join(PathBuf::from(&file.path).file_name().unwrap());
+
+        if !src_file.exists() || hash_file(&src_file) != file.hash {
+            eprintln!("{} is missing or corrupted.", src_file.file_name().unwrap().to_string_lossy());
+            return;
+        }
+    }
+
     for file in manifest.files {
         let expanded = expand_path(&file.path, Some(&game.directory));
         let src_file = game_dir.join(PathBuf::from(&file.path).file_name().unwrap());
         
-        if !src_file.exists() || hash_file(&src_file) != file.hash {
-            eprintln!("{} is missing or corrupted.", src_file.file_name().unwrap().to_string_lossy());
-            continue;
-        }
-
         if expanded.exists() && hash_file(&expanded) == file.hash {
             continue;
         }
