@@ -1,5 +1,5 @@
+use crate::dirs::{config, app_data};
 use std::fs::{File, read_dir};
-use std::path::PathBuf;
 use super::{Game, Scanner};
 use anyhow::{Context, Result};
 
@@ -8,16 +8,16 @@ pub struct LutrisScanner;
 impl Scanner for LutrisScanner {
     fn get_games() -> Result<Vec<Game>> {
         let mut games = vec![];
-        let lutris_config_dir = std::env::var_os("XDG_CONFIG_HOME")
-            .map_or_else(|| std::env::var_os("HOME")
-            .map(PathBuf::from).unwrap()
-            .join(".config"), PathBuf::from)
-            .join("lutris")
-            .join("games"); // TODO: Support Flatpak
+        let lutris_config_dir_deprecated = config().join("lutris/games");
+        let lutris_config_dir_new = app_data().join("lutris/games"); // TODO: Support Flatpak
 
-        if !lutris_config_dir.exists() {
+        let lutris_config_dir = if lutris_config_dir_deprecated.exists() {
+            lutris_config_dir_deprecated
+        } else if lutris_config_dir_new.exists() {
+            lutris_config_dir_new
+        } else {
             return Ok(games);
-        }
+        };
 
         let game_configs = read_dir(lutris_config_dir)?;
 
