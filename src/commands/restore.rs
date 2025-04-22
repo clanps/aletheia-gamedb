@@ -70,6 +70,11 @@ fn restore_game(game_dir: &PathBuf, game_name: &str, lutris_games: &Vec<crate::s
             continue;
         }
 
+        let expanded_parent = expanded.parent().unwrap();
+        if !&expanded_parent.exists() {
+            std::fs::create_dir_all(&expanded_parent).unwrap();
+        }
+
         std::fs::copy(&src_file, &expanded).unwrap();
         restored = true;
     }
