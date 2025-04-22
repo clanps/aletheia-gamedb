@@ -1,4 +1,4 @@
-use crate::dirs::{config, app_data};
+use crate::dirs::{config, app_data, home};
 use std::fs::{File, read_dir};
 use super::{Game, Scanner};
 use anyhow::{Context, Result};
@@ -9,12 +9,15 @@ impl Scanner for LutrisScanner {
     fn get_games() -> Result<Vec<Game>> {
         let mut games = vec![];
         let lutris_config_dir_deprecated = config().join("lutris/games");
-        let lutris_config_dir_new = app_data().join("lutris/games"); // TODO: Support Flatpak
+        let lutris_config_dir_new = app_data().join("lutris/games");
+        let lutris_config_dir_flatpak = home().join(".var/app/net.lutris.Lutris/data/lutris/games");
 
         let lutris_config_dir = if lutris_config_dir_deprecated.exists() {
             lutris_config_dir_deprecated
         } else if lutris_config_dir_new.exists() {
             lutris_config_dir_new
+        } else if lutris_config_dir_flatpak.exists() {
+            lutris_config_dir_flatpak
         } else {
             return Ok(games);
         };
