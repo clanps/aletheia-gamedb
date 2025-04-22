@@ -4,7 +4,7 @@ use crate::file::hash_file;
 use crate::scanner::lutris::LutrisScanner;
 use crate::scanner::Scanner;
 use super::Command;
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
 pub struct Restore;
 
@@ -28,7 +28,7 @@ impl Command for Restore {
             let game_name = game_dir.file_name().unwrap().to_string_lossy();
 
             if !game_dir.join("aletheia_manifest.yaml").exists() {
-                eprintln!("{} is missing a manifest file.", game_name);
+                eprintln!("{game_name} is missing a manifest file.");
                 continue;
             }
 
@@ -37,16 +37,13 @@ impl Command for Restore {
     }
 }
 
-fn restore_game(game_dir: &PathBuf, game_name: &str, lutris_games: &Vec<crate::scanner::Game>) {
-    let game = match lutris_games.iter().find(|g| g.name == game_name) {
-        Some(game) => game,
-        None => {
-            println!("{game_name} was not found in Lutris.");
-            return;
-        }
+fn restore_game(game_dir: &Path, game_name: &str, lutris_games: &[crate::scanner::Game]) {
+    let Some(game) = lutris_games.iter().find(|g| g.name == game_name) else {
+        println!("{game_name} was not found in Lutris.");
+        return;
     };
 
-    let manifest_content = std::fs::read_to_string(&game_dir.join("aletheia_manifest.yaml")).unwrap();
+    let manifest_content = std::fs::read_to_string(game_dir.join("aletheia_manifest.yaml")).unwrap();
     let manifest = match serde_yaml::from_str::<crate::gamedb::GameInfo>(&manifest_content) {
         Ok(manifest) => manifest,
         Err(_e) => {
@@ -72,7 +69,7 @@ fn restore_game(game_dir: &PathBuf, game_name: &str, lutris_games: &Vec<crate::s
 
         let expanded_parent = expanded.parent().unwrap();
         if !&expanded_parent.exists() {
-            std::fs::create_dir_all(&expanded_parent).unwrap();
+            std::fs::create_dir_all(expanded_parent).unwrap();
         }
 
         std::fs::copy(&src_file, &expanded).unwrap();
