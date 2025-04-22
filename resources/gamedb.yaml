@@ -73,6 +73,14 @@ Crystar:
   files:
     windows:
       - "{SteamUserData}/567640/remote/*"
+Dark Souls II:
+  files:
+    windows:
+      - "{AppData}/DarkSoulsII/*/DARKSII0000.sl2"
+Dark Souls III:
+  files:
+    windows:
+      - "{AppData}/DarkSoulsIII/*/DS30000.sl2"
 Dark Souls Remastered:
   files:
     windows:
