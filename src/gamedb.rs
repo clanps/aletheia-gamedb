@@ -61,16 +61,12 @@ pub fn update() -> anyhow::Result<UpdaterResult> {
 
     create_dir_all(cache_dir)?;
 
-    let previous_etag = if Path::exists(&etag_path) {
-        Some(read_to_string(&etag_path).unwrap())
-    } else {
-        None
-    };
+    let previous_etag = Path::exists(&etag_path).then(|| read_to_string(&etag_path).unwrap());
 
     let client = reqwest::blocking::Client::new();
     let mut request = client.get("https://git.usesarchbtw.lol/Spencer/aletheia/raw/branch/master/resources/gamedb.yaml");
 
-    if let Some(etag) = &previous_etag {
+    if let Some(ref etag) = previous_etag {
         request = request.header(reqwest::header::IF_NONE_MATCH, etag);
     }
 
@@ -86,7 +82,7 @@ pub fn update() -> anyhow::Result<UpdaterResult> {
 
     let current_etag = response.headers()
         .get(reqwest::header::ETAG)
-        .map(|etag| etag.to_str().unwrap().to_string());
+        .map(|etag| etag.to_str().unwrap().to_owned());
 
     write(&gamedb_path, response.bytes()?)?;
     write(&etag_path, current_etag.unwrap())?;

@@ -37,7 +37,7 @@ impl Command for Backup {
             let game_entry = game_db.get(&game.name).unwrap();
             let mut game_files: Vec<FileMetadata> = vec![];
 
-            if let Some(windows_paths) = &game_entry.files.windows {
+            if let Some(ref windows_paths) = game_entry.files.windows {
                 for path in windows_paths {
                     let expanded = expand_path(path, Some(&game.directory));
                     let found_paths = glob(&expanded.to_string_lossy()).unwrap();
@@ -46,14 +46,7 @@ impl Command for Backup {
                         let file_path = file.unwrap();
                         let file_path_str = file_path.to_string_lossy().to_string();
                         let file_hash = hash_file(&file_path);
-                        let file_changed = if let Some(manifest) = &existing_manifest {
-                            match manifest.files.iter().find(|m| m.path == file_path_str) {
-                                Some(metadata) => metadata.hash != file_hash,
-                                None => true
-                            }
-                        } else {
-                            true
-                        };
+                        let file_changed = existing_manifest.as_ref().is_none_or(|manifest| manifest.files.iter().find(|m| m.path == file_path_str).is_none_or(|metadata| metadata.hash != file_hash));
 
                         if file_changed {
                             let file_metadata = process_file(
