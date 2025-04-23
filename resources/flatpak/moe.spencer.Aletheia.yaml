@@ -7,12 +7,21 @@ sdk-extensions:
 
 build-options:
   append-path: /usr/lib/sdk/rust-stable/bin
+  env:
+    CARGO_HOME: /run/build/aletheia/cargo
   build-args:
     - --share=network
 
 finish-args:
-  # Used to detect Lutris games and their save files
-  - --filesystem=~/.var/app/net.lutris.Lutris:ro
+  # Used to display UI
+  - --socket=wayland
+  - --socket=fallback-x11
+  # Used to download GameDB updates
+  - --share=network
+  # Used for GPU acceleration
+  - --device=dri
+  # Used to detect and restore Lutris games and their save files
+  - --filesystem=~/.var/app/net.lutris.Lutris
 
 command: aletheia
 
