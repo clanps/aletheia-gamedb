@@ -23,6 +23,20 @@ A Way Out:
   files:
     windows:
       - "{Documents}/My Games/A Way Out/Saves/*"
+BioShock:
+  files:
+    windows:
+      - "{Documents}/Bioshock/SaveGames/*"
+BioShock 2:
+  files:
+    windows:
+      - "{Documents}/Bioshock2/SaveGames/*"
+      - "{AppData}/Bioshock2Steam/*.profile"
+BioShock Infinite:
+  files:
+    windows:
+      - "{Documents}/My Games/BioShock Infinite/XGame/SaveData/*"
+      - "{SteamUserData}/8870/*"
 Borderlands:
   files:
     windows:
