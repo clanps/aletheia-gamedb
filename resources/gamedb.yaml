@@ -167,7 +167,7 @@ Fallout 4 VR:
   files:
     windows:
       - "{Documents}/My Games/Fallout4VR/Saves/*"
-Fallout: New Vegas:
+"Fallout: New Vegas":
   files:
     windows:
       - "{Documents}/My Games/FalloutNV/Saves/*"
