@@ -1,0 +1,14 @@
+import { LineEdit } from "std-widgets.slint";
+
+export component SearchBar {
+  in property <string> placeholder_text;
+  callback changed(string);
+
+  LineEdit {
+    width: 100%;
+    placeholder-text: root.placeholder_text;
+    edited(str) => {
+      root.changed(str);
+    }
+  }
+}

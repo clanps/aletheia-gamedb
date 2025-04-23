@@ -1,0 +1,65 @@
+import { Button } from "std-widgets.slint";
+import { SearchBar } from "../components/search_bar.slint";
+import { UiGame } from "../structs/ui_game.slint";
+
+export global BackupScreenLogic {
+  in property <[UiGame]> filtered_games: [];
+  callback filter(string);
+}
+
+export component Backup {
+  in property <[UiGame]> games: [];
+  callback search_changed(string);
+  width: 50%;
+
+  VerticalLayout {
+    spacing: 16px;
+
+    Text {
+      text: @tr("Select games to backup");
+      font-size: 20px;
+      font-weight: 500;
+    }
+
+    SearchBar {
+      placeholder-text: @tr("Search games...");
+      changed(text) => {
+        BackupScreenLogic.filter(text);
+      }
+    }
+
+    VerticalLayout {
+      spacing: 8px;
+
+      // for game in games: Rectangle {
+      for game in BackupScreenLogic.filtered_games: Rectangle {
+        background: game.selected ? #585870 : #383848;
+        border-radius: 4px;
+
+        HorizontalLayout {
+          padding: 12px;
+          spacing: 16px;
+
+          Text {
+            text: game.name;
+            font-size: 16px;
+            color: white;
+          }
+
+          Text {
+            text: game.backup_size;
+            font-size: 14px;
+            color: #a0a0a0;
+            horizontal-alignment: right;
+          }
+        }
+
+        TouchArea {
+          clicked => {
+            game.selected = !game.selected;
+          }
+        }
+      }
+    }
+  }
+}

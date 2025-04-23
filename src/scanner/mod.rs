@@ -1,6 +1,6 @@
 pub mod lutris;
 
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub struct Game {
     pub name: String,
     pub directory: std::path::PathBuf
