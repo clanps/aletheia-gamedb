@@ -3,5 +3,5 @@ Type=Application
 Name=Aletheia
 Comment=Game save backup tool
 Exec=aletheia
-Terminal=true
+Terminal=false
 Keywords=backup
