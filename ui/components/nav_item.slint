@@ -17,6 +17,7 @@ export component NavItem inherits Rectangle {
   }
 
   touch_area := TouchArea {
+    mouse-cursor: pointer;
     clicked => { root.clicked() }
   }
 
