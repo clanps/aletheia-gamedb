@@ -8,7 +8,7 @@ sdk-extensions:
 build-options:
   append-path: /usr/lib/sdk/rust-stable/bin
   env:
-    CARGO_HOME: /run/build/aletheia/cargo
+    CARGO_HOME: ${FLATPAK_BUILDER_BUILDDIR}/cargo
   build-args:
     - --share=network
 
@@ -30,7 +30,9 @@ modules:
     buildsystem: simple
     build-commands:
       - cargo build --release
-      - install -Dm755 target/release/aletheia /app/bin/aletheia
+      - install -Dm755 target/release/aletheia ${FLATPAK_DEST}/bin/aletheia
     sources:
       - type: dir
-        path: ../
+        path: ../../
+    post-install:
+      - install -Dm644 ${FLATPAK_BUILDER_BUILDDIR}/resources/linux/aletheia.desktop ${FLATPAK_DEST}/share/applications/moe.spencer.Aletheia.desktop
