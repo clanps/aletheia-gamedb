@@ -36,3 +36,4 @@ modules:
         path: ../../
     post-install:
       - install -Dm644 ${FLATPAK_BUILDER_BUILDDIR}/resources/linux/aletheia.desktop ${FLATPAK_DEST}/share/applications/moe.spencer.Aletheia.desktop
+      - install -Dm644 ${FLATPAK_BUILDER_BUILDDIR}/resources/linux/moe.spencer.Aletheia.metainfo.xml ${FLATPAK_DEST}/share/metainfo/moe.spencer.Aletheia.metainfo.xml

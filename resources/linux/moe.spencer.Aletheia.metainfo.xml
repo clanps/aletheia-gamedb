@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>moe.spencer.Aletheia</id>
+  
+  <name>Aletheia</name>
+  <summary>Game save backup tool</summary>
+
+  <developer id="moe.spencer">
+    <name>Spencer</name>
+  </developer>
+
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>AGPL-3.0-only</project_license>
+  
+  <description>
+    <p>Aletheia is a cross-platform game save sync tool for multiple game launchers.</p>
+  </description>
+  
+  <launchable type="desktop-id">moe.spencer.Aletheia.desktop</launchable>
+</component>
