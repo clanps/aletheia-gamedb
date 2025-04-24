@@ -1,0 +1,32 @@
+import { UiGame } from "../structs/ui_game.slint";
+
+export component GameCard inherits Rectangle {
+  in property <UiGame> game;
+  property <bool> selected: true;
+
+  background: selected ? #585870 : #383848;
+  border-radius: 4px;
+  height: 44px;
+
+  HorizontalLayout {
+    padding: 12px;
+    spacing: 16px;
+
+    Text {
+      text: game.name;
+      font-size: 16px;
+      color: white;
+    }
+
+    Text {
+      text: game.backup_size;
+      font-size: 14px;
+      color: #a0a0a0;
+      horizontal-alignment: right;
+    }
+  }
+
+  TouchArea {
+    clicked => { root.selected = !root.selected; }
+  }
+}

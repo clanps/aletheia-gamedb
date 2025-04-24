@@ -1,4 +1,5 @@
 import { ScrollView } from "std-widgets.slint";
+import { GameCard } from "../components/game_card.slint";
 import { SearchBar } from "../components/search_bar.slint";
 import { UiGame } from "../structs/ui_game.slint";
 
@@ -34,35 +35,7 @@ export component Backup {
       VerticalLayout {
         spacing: 8px;
 
-        for game in BackupScreenLogic.filtered_games: Rectangle {
-          background: game.selected ? #585870 : #383848;
-          border-radius: 4px;
-          height: 44px;
-
-          HorizontalLayout {
-            padding: 12px;
-            spacing: 16px;
-
-            Text {
-              text: game.name;
-              font-size: 16px;
-              color: white;
-            }
-
-            Text {
-              text: game.backup_size;
-              font-size: 14px;
-              color: #a0a0a0;
-              horizontal-alignment: right;
-            }
-          }
-
-          TouchArea {
-            clicked => {
-              game.selected = !game.selected;
-            }
-          }
-        }
+        for game in BackupScreenLogic.filtered_games: GameCard { game: game; }
       }
     }
   }
