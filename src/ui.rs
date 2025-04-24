@@ -10,8 +10,9 @@ use slint::{Model, ModelRc, VecModel};
 pub fn run() {
     let app = App::new().unwrap();
     let app_weak = app.as_weak();
+    let game_logic = app.global::<GameLogic>();
 
-    app.on_refresh_games(move || {
+    game_logic.on_refresh_games(move || {
         let app = app_weak.upgrade().unwrap();
 
         let mut games = LutrisScanner::get_games().unwrap();
@@ -48,6 +49,6 @@ pub fn run() {
         }
     });
 
-    app.invoke_refresh_games();
+    game_logic.invoke_refresh_games();
     app.run().unwrap();
 }

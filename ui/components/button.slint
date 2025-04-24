@@ -3,6 +3,7 @@
 
 export component Button {
   in property <string> text;
+  callback clicked();
 
   Rectangle {
     border-radius: 4px;
@@ -19,6 +20,7 @@ export component Button {
 
     TouchArea {
       mouse-cursor: pointer;
+      clicked => { root.clicked(); }
     }
   }
 }

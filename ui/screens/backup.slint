@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 
 import { ScrollView } from "std-widgets.slint";
+import { GameLogic } from "../app_logic.slint";
 import { Button } from "../components/button.slint";
 import { GameCard } from "../components/game_card.slint";
 import { SearchBar } from "../components/search_bar.slint";
@@ -35,6 +36,7 @@ export component Backup {
         text: @tr("Refresh");
         height: 40px;
         width: 160px;
+        clicked => { GameLogic.refresh_games(); }
       }
     }
   }
