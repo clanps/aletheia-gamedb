@@ -1,0 +1,24 @@
+// SPDX-FileCopyrightText: 2025 Spencer
+// SPDX-License-Identifier: AGPL-3.0-only
+
+export component Button {
+  in property <string> text;
+
+  Rectangle {
+    border-radius: 4px;
+    background: #7678ed;
+
+    Text {
+      text: root.text;
+      color: white;
+      font-size: 14px;
+      font-weight: 600;
+      horizontal-alignment: center;
+      vertical-alignment: center;
+    }
+
+    TouchArea {
+      mouse-cursor: pointer;
+    }
+  }
+}

@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 
 import { ScrollView } from "std-widgets.slint";
+import { Button } from "../components/button.slint";
 import { GameCard } from "../components/game_card.slint";
 import { SearchBar } from "../components/search_bar.slint";
 import { UiGame } from "../structs/ui_game.slint";
@@ -16,7 +17,29 @@ export component Backup {
   width: 50%;
   height: 100%;
 
-  VerticalLayout {
+  if (BackupScreenLogic.filtered_games.length == 0): VerticalLayout {
+    alignment: center;
+    spacing: 16px;
+
+    Text {
+      text: @tr("No games found");
+      font-size: 20px;
+      font-weight: 600;
+      horizontal-alignment: center;
+    }
+
+    HorizontalLayout {
+      alignment: center;
+
+      Button {
+        text: @tr("Refresh");
+        height: 40px;
+        width: 160px;
+      }
+    }
+  }
+
+  if (BackupScreenLogic.filtered_games.length > 0): VerticalLayout {
     spacing: 16px;
 
     Text {
