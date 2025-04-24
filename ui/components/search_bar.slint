@@ -1,17 +1,43 @@
 // SPDX-FileCopyrightText: 2025 Spencer
 // SPDX-License-Identifier: AGPL-3.0-only
 
-import { LineEdit } from "std-widgets.slint";
-
 export component SearchBar {
   in property <string> placeholder_text;
+  out property <bool> has_focus: input.has-focus;
+  out property <string> text: input.text;
   callback changed(string);
 
-  LineEdit {
+  min-height: 30px;
+  min-width: 100px;
+  horizontal-stretch: 1;
+
+  Rectangle {
+    border-radius: 4px;
+    border-width: 1px;
+    border-color: root.has_focus ? #7678ed : #585870;
+    background: #383848;
     width: 100%;
-    placeholder-text: root.placeholder_text;
-    edited(str) => {
-      root.changed(str);
+    height: 100%;
+
+    HorizontalLayout {
+      padding: 5px;
+      spacing: 5px;
+
+      input := TextInput {
+        horizontal-stretch: 1;
+        single-line: true;
+        font-size: 14px;
+        color: white;
+
+        if (self.text == ""): Text {
+          text: root.placeholder_text;
+          color: #a0a0a0;
+          font-size: 14px;
+          opacity: 0.8;
+        }
+
+        edited => { root.changed(self.text); }
+      }
     }
   }
 }
