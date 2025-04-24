@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2025 Spencer
+// SPDX-License-Identifier: AGPL-3.0-only
+
 use crate::dirs::{config, app_data, home};
 use std::fs::{File, read_dir};
 use super::{Game, Scanner};

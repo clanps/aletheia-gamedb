@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2025 Spencer
+// SPDX-License-Identifier: AGPL-3.0-only
+
 use sha2::{Sha512, Digest};
 
 pub fn hash_file(file_path: &std::path::PathBuf) -> String {

@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2025 Spencer
+// SPDX-License-Identifier: AGPL-3.0-only
+
 use std::fs::{create_dir_all, read_to_string, write};
 use std::path::{Path, PathBuf};
 
