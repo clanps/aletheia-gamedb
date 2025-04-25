@@ -339,7 +339,7 @@ Resident Evil Revelations 2:
   files:
     windows:
       - "{SteamUserData}/287290/remote/*"
-"Saints Row®: The Third™ Remastered":
+Saints Row The Third Remastered:
   files:
     windows:
       - "{LocalAppData}/GOG.com/Galaxy/Applications/53610945248137475/Storage/Shared/Files/*.sr3s_pc"
