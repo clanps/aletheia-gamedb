@@ -7,13 +7,15 @@ export component NavItem inherits Rectangle {
   callback clicked();
 
   border-radius: 4px;
-  background: root.active ? #7678ed : #383850;
+  background: root.active ? #7c7cff : #2f2f49;
   height: 40px;
 
   Text {
     text: root.text;
-    color: root.active ? white : #eeeeee;
+    color: white;
+    font-family: "Inter";
     font-weight: root.active ? 700 : 400;
+    opacity: root.active ? 100% : 50%;
   }
 
   touch_area := TouchArea {
@@ -23,7 +25,7 @@ export component NavItem inherits Rectangle {
 
   states [
     hover when touch_area.has-hover: {
-      background: root.active ? #7678ed : #4c4c68;
+      background: root.active ? #5656bc : #3e3e5e;
       in { animate background { duration: 150ms; } }
       out { animate background { duration: 150ms; } }
     }
