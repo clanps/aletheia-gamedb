@@ -4,9 +4,7 @@
 use crate::config::Config;
 use crate::dirs::{expand_path, shrink_path};
 use crate::file::hash_file;
-use crate::gamedb::{GameInfo, FileMetadata};
-use crate::scanner::lutris::LutrisScanner;
-use crate::scanner::Scanner;
+use crate::gamedb::{self, GameInfo, FileMetadata};
 use super::Command;
 use std::fs::{copy, create_dir_all, metadata, read_to_string, write};
 use std::path::PathBuf;
@@ -16,15 +14,9 @@ pub struct Backup;
 
 impl Command for Backup { 
     fn run(_args: std::env::Args, config: &Config) {
-        let game_db = crate::gamedb::parse();
-        let lutris_games = LutrisScanner::get_games().unwrap();
+        let game_db = gamedb::parse();
 
-        for game in lutris_games {
-            if !game_db.contains_key(&game.name) {
-                println!("Skipping {}: Not found in GameDB", game.name);
-                continue;
-            }
-
+        for game in gamedb::get_installed_games() {
             let backup_folder = PathBuf::from(&config.save_dir).join(&game.name);
             let manifest_path = backup_folder.join("aletheia_manifest.yaml");
             let mut changed = false;

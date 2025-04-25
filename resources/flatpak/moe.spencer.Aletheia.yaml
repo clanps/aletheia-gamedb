@@ -20,8 +20,10 @@ finish-args:
   - --share=network
   # Used for GPU acceleration
   - --device=dri
-  # Used to detect and restore Lutris games and their save files
+  # Used to detect and restore Lutris save files
   - --filesystem=~/.var/app/net.lutris.Lutris
+  # Used to detect and restore Steam save files
+  - --filesystem=~/.var/app/com.valvesoftware.Steam
 
 command: aletheia
 

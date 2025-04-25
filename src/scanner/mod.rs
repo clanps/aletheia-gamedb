@@ -1,7 +1,9 @@
 // SPDX-FileCopyrightText: 2025 Spencer
 // SPDX-License-Identifier: AGPL-3.0-only
 
+#[cfg(unix)]
 pub mod lutris;
+pub mod steam;
 
 #[derive(Clone, Debug)]
 pub struct Game {

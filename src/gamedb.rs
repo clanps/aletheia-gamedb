@@ -2,9 +2,14 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 
 use crate::dirs::cache;
+use crate::scanner::{Game, Scanner};
+use crate::scanner::steam::SteamScanner;
 use std::fs::{create_dir_all, read_to_string, write};
 use std::path::Path;
 use serde::{Deserialize, Serialize};
+
+#[cfg(unix)]
+use crate::scanner::lutris::LutrisScanner;
 
 const GAMEDB_YAML: &str = include_str!("../resources/gamedb.yaml");
 
@@ -53,6 +58,18 @@ pub fn parse() -> std::collections::HashMap<String, GameDbEntry> {
     }
 
     serde_yaml::from_str(GAMEDB_YAML).expect("Failed to parse GameDB.")
+}
+
+pub fn get_installed_games() -> Vec<Game> {
+    let db = parse();
+    let mut games = vec![];
+
+    #[cfg(unix)]
+    games.extend(LutrisScanner::get_games().unwrap());
+
+    games.extend(SteamScanner::get_games().unwrap());
+
+    games.into_iter().filter(|game| db.contains_key(&game.name)).collect()
 }
 
 #[cfg(feature = "updater")]

@@ -3,8 +3,7 @@
 
 slint::include_modules!();
 
-use crate::scanner::lutris::LutrisScanner;
-use crate::scanner::Scanner;
+use crate::gamedb;
 use slint::{Model, ModelRc, VecModel};
 
 pub fn run() {
@@ -15,7 +14,7 @@ pub fn run() {
     game_logic.on_refresh_games(move || {
         let app = app_weak.upgrade().unwrap();
 
-        let mut games = LutrisScanner::get_games().unwrap();
+        let mut games = gamedb::get_installed_games();
         games.sort_by(|a, b| a.name.to_lowercase().cmp(&b.name.to_lowercase()));
 
         let ui_games: Vec<UiGame> = games.into_iter().map(|g| UiGame {
