@@ -397,10 +397,22 @@ Sunset Overdrive:
   files:
     windows:
       - "{LocalAppData}/Sunset/Saves/*"
+"Sword Art Online Re: Hollow Fragment":
+  files:
+    windows:
+      - "{SteamUserData}/638650/remote/*"
 "Sword Art Online: Fatal Bullet":
   files:
     windows:
       - "{SteamUserData}/626690/remote/*"
+"Sword Art Online: Hollow Realization Deluxe Edition":
+  files:
+    windows:
+      - "{SteamUserData}/607890/remote/*"
+"Sword Art Online: Lost Song":
+  files:
+    windows:
+      - "{SteamUserData}/840720/remote/*"
 The Casting of Frank Stone:
   files:
     windows:
