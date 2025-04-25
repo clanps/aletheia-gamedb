@@ -28,7 +28,7 @@ pub struct GameDbEntry {
 #[derive(Debug, Deserialize)]
 pub struct GameFiles {
     pub windows: Option<Vec<String>>,
-    #[allow(unused)] // Will be used in the future when native linux games are supported
+    #[allow(unused, reason = "Will be used in the future when native linux games are supported")]
     pub linux: Option<Vec<String>>
 }
 

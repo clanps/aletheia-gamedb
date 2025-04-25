@@ -1,9 +1,10 @@
 // SPDX-FileCopyrightText: 2025 Spencer
 // SPDX-License-Identifier: AGPL-3.0-only
 
-#![warn(clippy::pedantic)]
-#![warn(clippy::if_then_some_else_none)]
-// #![warn(clippy::indexing_slicing)]
+#![deny(clippy::pedantic)]
+#![deny(clippy::if_then_some_else_none)]
+#![deny(clippy::allow_attributes_without_reason)]
+#![deny(clippy::string_to_string)]
 
 mod commands;
 mod config;
