@@ -12,10 +12,10 @@ export component SearchBar {
   horizontal-stretch: 1;
 
   Rectangle {
-    border-radius: 4px;
+    border-radius: 10px;
     border-width: 1px;
-    border-color: root.has_focus ? #7678ed : #585870;
-    background: #383848;
+    border-color: root.has_focus ? #27273a : #18182040;
+    background: #1e1e2e;
     width: 100%;
     height: 100%;
 
@@ -23,17 +23,28 @@ export component SearchBar {
       padding: 5px;
       spacing: 5px;
 
+      Image {
+        source: @image-url("../assets/search.svg");
+        opacity: 75%;
+      }
+
       input := TextInput {
         horizontal-stretch: 1;
         single-line: true;
+        font-family: "Inter";
         font-size: 14px;
+        font-weight: 400;
         color: white;
+        opacity: 65%;
+        vertical-alignment: center;
 
         if (self.text == ""): Text {
           text: root.placeholder_text;
-          color: #a0a0a0;
+          color: #ffffff80;
+          font-family: "Inter";
           font-size: 14px;
-          opacity: 0.8;
+          font-weight: 400;
+          opacity: 50%;
         }
 
         edited => { root.changed(self.text); }
