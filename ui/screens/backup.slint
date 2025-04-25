@@ -18,7 +18,7 @@ export component Backup {
   width: 50%;
   height: 100%;
 
-  if (BackupScreenLogic.filtered_games.length == 0): VerticalLayout {
+  if (GameLogic.games.length == 0): VerticalLayout {
     alignment: center;
     spacing: 16px;
 
@@ -41,7 +41,7 @@ export component Backup {
     }
   }
 
-  if (BackupScreenLogic.filtered_games.length > 0): VerticalLayout {
+  if (GameLogic.games.length > 0): VerticalLayout {
     padding: 16px;
     spacing: 16px;
 

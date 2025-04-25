@@ -9,9 +9,8 @@ use slint::{Model, ModelRc, VecModel};
 pub fn run() {
     let app = App::new().unwrap();
     let app_weak = app.as_weak();
-    let game_logic = app.global::<GameLogic>();
 
-    game_logic.on_refresh_games(move || {
+    app.global::<GameLogic>().on_refresh_games(move || {
         let app = app_weak.upgrade().unwrap();
 
         let mut games = gamedb::get_installed_games();
@@ -24,7 +23,7 @@ pub fn run() {
         }).collect();
 
         let games_model = ModelRc::new(std::rc::Rc::new(VecModel::from(ui_games)));
-        app.set_games(games_model.clone());
+        app.global::<GameLogic>().set_games(games_model.clone());
         app.global::<BackupScreenLogic>().set_filtered_games(games_model);
     });
 
@@ -33,7 +32,7 @@ pub fn run() {
 
         move |query| {
             let app = app_weak.upgrade().unwrap();
-            let games = app.get_games();
+            let games = app.global::<GameLogic>().get_games();
 
             if query.is_empty() {
                 app.global::<BackupScreenLogic>().set_filtered_games(games);
@@ -48,6 +47,6 @@ pub fn run() {
         }
     });
 
-    game_logic.invoke_refresh_games();
+    app.global::<GameLogic>().invoke_refresh_games();
     app.run().unwrap();
 }

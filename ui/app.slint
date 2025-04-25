@@ -10,7 +10,6 @@ import { UiGame } from "./structs/ui_game.slint";
 export { BackupScreenLogic, GameLogic }
 
 export component App inherits Window {
-  in property <[UiGame]> games: [];
   property <string> current_screen: "backup";
 
   preferred-width: 1280px;
