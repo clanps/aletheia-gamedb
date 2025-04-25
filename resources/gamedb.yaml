@@ -1,7 +1,8 @@
-Agents of Mayhem:
+A Way Out:
   files:
     windows:
-      - "{SteamUserData}/304530/remote/*"
+      - "{Documents}/Bioshock2/SaveGames/*"
+      - "{AppData}/Bioshock2Steam/*.profile"
 AI Limit:
   files:
     windows:
@@ -11,18 +12,18 @@ AI Limit:
     windows:
       - "{AppData}/SpikeChunsoft/AI The Somnium Files/PSYNCAUTOSAVE"
       - "{AppData}/SpikeChunsoft/AI The Somnium Files/PSYNCDEF*"
-"All in Abyss: Judge the Fake":
+Agents of Mayhem:
   files:
     windows:
-      - "{LocalLow}/AllianceArts/All in Abyss/SaveData/*/GameData/*.sav"
+      - "{SteamUserData}/304530/remote/*"
 Alan Wake 2:
   files:
     windows:
       - "{LocalAppData}/Remedy/AlanWake2/*"
-A Way Out:
+"All in Abyss: Judge the Fake":
   files:
     windows:
-      - "{Documents}/My Games/A Way Out/Saves/*"
+      - "{LocalLow}/AllianceArts/All in Abyss/SaveData/*/GameData/*.sav"
 BioShock:
   files:
     windows:
@@ -67,26 +68,30 @@ Crystar:
   files:
     windows:
       - "{SteamUserData}/981750/remote/*"
-"Danganronpa Another Episode: Ultra Despair Girls":
+"DRAGON BALL Z: KAKAROT":
   files:
     windows:
-      - "{Documents}/My Games/DanganAnother/*"
-"Danganronpa: Trigger Happy Havoc":
-  files:
-    linux:
-      - "{XDGData}/Danganronpa/*"
-    windows:
-      - "{Documents}/My Games/Danganronpa/*"
+      - "{SteamUserData}/851850/remote/*"
 "Danganronpa 2: Goodbye Despair":
   files:
     linux:
       - "{XDGData}/Danganronpa2/*"
     windows:
       - "{Documents}/My Games/Danganronpa2/*"
+"Danganronpa Another Episode: Ultra Despair Girls":
+  files:
+    windows:
+      - "{Documents}/My Games/DanganAnother/*"
 "Danganronpa V3: Killing Harmony":
   files:
     windows:
       - "{SteamUserData}/567640/remote/*"
+"Danganronpa: Trigger Happy Havoc":
+  files:
+    linux:
+      - "{XDGData}/Danganronpa/*"
+    windows:
+      - "{Documents}/My Games/Danganronpa/*"
 Dark Souls II:
   files:
     windows:
@@ -131,10 +136,6 @@ Dead Rising 4:
   files:
     windows:
       - "{AppData}/Disney Interactive Studios/Epic Mickey 2/Save/*"
-"DRAGON BALL Z: KAKAROT":
-  files:
-    windows:
-      - "{SteamUserData}/851850/remote/*"
 Dying Light:
   files:
     # TODO: Linux
@@ -204,18 +205,23 @@ Hogwarts Legacy:
   files:
     windows:
       - "{LocalAppData}/Hogwarts Legacy/Saved/SaveGames/*"
-Judgment:
-  files:
-    windows:
-      - "{AppData}/Sega/Judgment/Steam/*"
 JUMP FORCE:
   files:
     windows:
       - "{SteamUserData}/816020/remote/*"
+Judgment:
+  files:
+    windows:
+      - "{AppData}/Sega/Judgment/Steam/*"
 Killer Frequency:
   files:
     windows:
       - "{LocalLow}/Team17/KillerFrequency/*/*.sav"
+"Like a Dragon Gaiden: The Man Who Erased His Name":
+  files:
+    windows:
+      - "{AppData}/Sega/LikeADragonGaiden/Steam/*"
+      - "{AppData}/Sega/LikeADragonGaiden/WindowsStore/*"
 "Like a Dragon: Infinite Wealth":
   files:
     windows:
@@ -224,23 +230,10 @@ Killer Frequency:
   files:
     windows:
       - "{AppData}/Sega/LikeADragonPirates/Steam/*"
-"Like a Dragon Gaiden: The Man Who Erased His Name":
-  files:
-    windows:
-      - "{AppData}/Sega/LikeADragonGaiden/Steam/*"
-      - "{AppData}/Sega/LikeADragonGaiden/WindowsStore/*"
 Marvel's Guardians of the Galaxy:
   files:
     windows:
       - "{SteamUserData}/1088850/remote/*"
-"Master Detective Archives: Rain Code Plus":
-  files:
-    windows:
-      - "{LocalAppData}/RainCodePlus/Saved/SaveGames/*"
-"Marvel's Spider-Man: Miles Morales":
-  files:
-    windows:
-      - "{Documents}/Marvel's Spider-Man Miles Morales/*"
 Marvel's Spider-Man 2:
   files:
     windows:
@@ -248,7 +241,15 @@ Marvel's Spider-Man 2:
 Marvel's Spider-Man Remastered:
   files:
     windows:
-      - "{Documents}/Marvel's Spider-Man Remastered/*"
+      - "{Documents}/Marvel''s Spider-Man Remastered/*"
+"Marvel's Spider-Man: Miles Morales":
+  files:
+    windows:
+      - "{Documents}/Marvel's Spider-Man Miles Morales/*"
+"Master Detective Archives: Rain Code Plus":
+  files:
+    windows:
+      - "{LocalAppData}/RainCodePlus/Saved/SaveGames/*"
 Metro 2033 Redux:
   files:
     windows:
@@ -339,38 +340,45 @@ Resident Evil Revelations 2:
   files:
     windows:
       - "{SteamUserData}/287290/remote/*"
-Saints Row The Third Remastered:
-  files:
-    windows:
-      - "{LocalAppData}/GOG.com/Galaxy/Applications/53610945248137475/Storage/Shared/Files/*.sr3s_pc"
-      - "{SteamUserData}/978300/remote/*.sr3s_pc"
 Resident Evil Village:
   files:
     windows:
       - "{SteamUserData}/1196590/remote/win64_save/*"
 Rise of the Tomb Raider:
   files:
-    # TODO: Linux
     windows:
       - "{SteamUserData}/391220/remote/*"
-Severed Steel:
-  files:
-    windows:
-      - "{LocalAppData}/ThankYouVeryCool/Saved/SaveGames/*"
-Scrap Mechanic:
-  files:
-    windows:
-      - "{AppData}/Axolot Games/Scrap Mechanic/*"
-Sonic Frontiers:
-  files:
-    windows:
-      - "{AppData}/SEGA/SonicFrontiers/steam/*"
 SUPERHOT:
   files:
     linux:
       - "{XDGConfig}/unity3d/SUPERHOT_Team/SUPERHOT/super.hot"
     windows:
       - "{LocalLow}/SUPERHOT_Team/SUPERHOT/*"
+SWORD ART ONLINE Alicization Lycoris:
+  files:
+    windows:
+      - "{SteamUserData}/1009290/remote/*"
+SWORD ART ONLINE Last Recollection:
+  files:
+    windows:
+      - "{LocalAppData}/BANDAI NAMCO Entertainment/SAO LastRecollection/Saved/SaveGames/*"
+Saints Row The Third Remastered:
+  files:
+    windows:
+      - "{LocalAppData}/GOG.com/Galaxy/Applications/53610945248137475/Storage/Shared/Files/*.sr3s_pc"
+      - "{SteamUserData}/978300/remote/*.sr3s_pc"
+Scrap Mechanic:
+  files:
+    windows:
+      - "{AppData}/Axolot Games/Scrap Mechanic/*"
+Severed Steel:
+  files:
+    windows:
+      - "{LocalAppData}/ThankYouVeryCool/Saved/SaveGames/*"
+Sonic Frontiers:
+  files:
+    windows:
+      - "{AppData}/SEGA/SonicFrontiers/steam/*"
 Split Fiction:
   files:
     windows:
@@ -385,22 +393,14 @@ Stray:
   files:
     windows:
       - "{LocalAppData}/Hk_project/Saved/SaveGames/*"
-"Sword Art Online: Fatal Bullet":
-  files:
-    windows:
-      - "{SteamUserData}/626690/remote/*"
 Sunset Overdrive:
   files:
     windows:
       - "{LocalAppData}/Sunset/Saves/*"
-SWORD ART ONLINE Alicization Lycoris:
+"Sword Art Online: Fatal Bullet":
   files:
     windows:
-      - "{SteamUserData}/1009290/remote/*"
-SWORD ART ONLINE Last Recollection:
-  files:
-    windows:
-      - "{LocalAppData}/BANDAI NAMCO Entertainment/SAO Last Recollection/Saved/SaveGames/*"
+      - "{SteamUserData}/626690/remote/*"
 The Casting of Frank Stone:
   files:
     windows:
@@ -421,16 +421,16 @@ The Lego Movie Videogame:
   files:
     windows:
       - "{SteamUserData}/267530/remote/savedgames/*"
+The Quarry:
+  files:
+    windows:
+      - "{LocalAppData}/TheQuarry/Saved/SaveGames/*"
 "The Stanley Parable: Ultra Deluxe":
   files:
     linux:
       - "{XDGConfig}/unity3d/Crows Crows Crows/The Stanley Parable_ Ultra Deluxe/*"
     windows:
       - "{LocalLow}/unity3d/Crows Crows Crows/The Stanley Parable_ Ultra Deluxe/*"
-The Quarry:
-  files:
-    windows:
-      - "{LocalAppData}/TheQuarry/Saved/SaveGames/*"
 Tormented Souls:
   files:
     windows:
