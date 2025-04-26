@@ -15,7 +15,7 @@ export global BackupScreenLogic {
 
 export component Backup {
   callback search_changed(string);
-  width: 50%;
+  width: 100%;
   height: 100%;
 
   if (GameLogic.games.length == 0): VerticalLayout {
@@ -42,13 +42,18 @@ export component Backup {
   }
 
   if (GameLogic.games.length > 0): VerticalLayout {
+    alignment: start;
     padding: 16px;
     spacing: 8px;
 
-    SearchBar {
-      height: 45px;
-      placeholder-text: @tr("Search games...");
-      changed(text) => { BackupScreenLogic.filter(text); }
+    HorizontalLayout {
+      alignment: center;
+      SearchBar {
+        height: 45px;
+        width: 430px;
+        placeholder-text: @tr("Search games...");
+        changed(text) => { BackupScreenLogic.filter(text); }
+      }
     }
 
     Text {
@@ -73,17 +78,6 @@ export component Backup {
         height: 36px;
         text: "Select All";
         background: #2f2f49;
-      }
-    }
-
-    ScrollView {
-      width: 100%;
-      vertical-stretch: 1;
-
-      VerticalLayout {
-        spacing: 8px;
-
-        for game in BackupScreenLogic.filtered_games: GameCard { game: game; }
       }
     }
   }
