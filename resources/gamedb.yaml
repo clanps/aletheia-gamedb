@@ -83,6 +83,10 @@ Crystar:
   files:
     windows:
       - "{SteamUserData}/981750/remote/*"
+Cyberpunk 2077:
+  files:
+    windows:
+      - "{Home}/Saved Games/CD Projekt Red/Cyberpunk 2077/*"
 "DRAGON BALL Z: KAKAROT":
   files:
     windows:
