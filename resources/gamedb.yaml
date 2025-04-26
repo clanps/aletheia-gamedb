@@ -458,6 +458,24 @@ Yakuza 0:
     windows:
       - "{LocalAppData}/GOG.com/Galaxy/Applications/5966314534907843/Storage/Shared/Files/*"
       - "{SteamUserData}/638970/remote/*"
+Yakuza 3 Remastered:
+  files:
+    windows:
+      - "{SteamUserData}/1088710/remote/*"
+Yakuza 4 Remastered:
+  files:
+    windows:
+      - "{SteamUserData}/1105500/remote/*"
+Yakuza 5 Remastered:
+  files:
+    windows:
+      - "{LocalAppData}/GOG.com/Galaxy/Applications/56296606783325117/Storage/Shared/Files/*"
+      - "{SteamUserData}/1105510/remote/*"
+"Yakuza 6: The Song of Life":
+  files:
+    windows:
+      - "{LocalAppData}/GOG.com/Galaxy/Applications/56296606511683989/Storage/Shared/Files/*"
+      - "{SteamUserData}/1388590/remote/*"
 Yakuza Kiwami:
   files:
     windows:
