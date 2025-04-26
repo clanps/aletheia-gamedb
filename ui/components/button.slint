@@ -3,11 +3,15 @@
 
 export component Button {
   in property <string> text;
+  in property <color> background: #7678ed;
   callback clicked();
 
   Rectangle {
     border-radius: 4px;
-    background: #7678ed;
+    background: root.background;
+    drop-shadow-blur: 8px;
+    drop-shadow-color: rgba(0, 0, 0, 0.15);
+    drop-shadow-offset-y: 4px;
 
     Text {
       text: root.text;
