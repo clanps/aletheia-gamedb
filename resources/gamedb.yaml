@@ -20,6 +20,13 @@ Alan Wake 2:
   files:
     windows:
       - "{LocalAppData}/Remedy/AlanWake2/*"
+"Alien: Isolation":
+  files:
+    linux:
+      - "{XDGConfig}/feral-interactive/AlienIsolation/Steam Saves/*"
+    windows:
+      - "{Documents}/My Games/Alien Isolation/*"
+      - "{SteamUserData}/214490/remote/*"
 "All in Abyss: Judge the Fake":
   files:
     windows:
@@ -189,6 +196,22 @@ Gotham Knights:
   files:
     windows:
       - "{LocalAppData}/WB Games/Gotham Knights/Steam/Saved/SaveGames/*"
+"Grand Theft Auto IV: The Complete Edition":
+  files:
+    windows:
+      - "{LocalAppData}/Rockstar Games/GTA IV/savegames/*"
+Grand Theft Auto V Enhanced:
+  files:
+    windows:
+      - "{Documents}/Rockstar Games/GTAV Enhanced/Profiles/*"
+Grand Theft Auto V Legacy:
+  files:
+    windows:
+      - "{Documents}/Rockstar Games/GTA V/Profiles/*"
+"Halo: The Master Chief Collection":
+  files:
+    windows:
+      - "{SteamUserData}/976730/remote/*/Saves/*"
 Heavy Rain:
   files:
     windows:
@@ -217,6 +240,18 @@ Killer Frequency:
   files:
     windows:
       - "{LocalLow}/Team17/KillerFrequency/*/*.sav"
+Life is Strange 2:
+  files:
+    linux:
+      - "{XDGData}/feral-interactive/Life is Strange 2/SaveData/Dontnod/<user-id>/LIS2/Saved/SaveGames/*"
+    windows:
+      - "{LocalAppData}/Dontnod/*/LIS2/Saved/SaveGames/*"
+Life is Strange:
+  files:
+    linux:
+      - "{XDGData}/feral-interactive/Life Is Strange/VFS/Local/My Games/Life Is Strange/Saves/*"
+    windows:
+      - "{Documents}/My Games/Life Is Strange/Saves/*"
 "Like a Dragon Gaiden: The Man Who Erased His Name":
   files:
     windows:
