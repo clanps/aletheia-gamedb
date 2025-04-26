@@ -4,8 +4,6 @@
 use crate::config::Config;
 use crate::dirs::expand_path;
 use crate::file::hash_file;
-use crate::scanner::lutris::LutrisScanner;
-use crate::scanner::Scanner;
 use super::Command;
 use std::path::{Path, PathBuf};
 
@@ -13,7 +11,6 @@ pub struct Restore;
 
 impl Command for Restore {
     fn run(_args: std::env::Args, config: &Config) {
-        let lutris_games = LutrisScanner::get_games().unwrap();
         let save_dir = PathBuf::from(&config.save_dir);
 
         if !save_dir.exists() {
@@ -35,7 +32,7 @@ impl Command for Restore {
                 continue;
             }
 
-            restore_game(&game_dir, &game_name, &lutris_games);
+            restore_game(&game_dir, &game_name, &crate::gamedb::get_installed_games());
         }
     }
 }
