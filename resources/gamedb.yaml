@@ -31,6 +31,10 @@ Alan Wake 2:
   files:
     windows:
       - "{LocalLow}/AllianceArts/All in Abyss/SaveData/*/GameData/*.sav"
+BONEWORKS:
+  files:
+    windows:
+      - "{LocalLow}/Stress Level Zero/BONEWORKS/*.dat"
 BioShock:
   files:
     windows:
@@ -59,6 +63,10 @@ Borderlands 2 VR:
   files:
     windows:
       - "{Documents}/My Games/Borderlands 2 VR/WillowGame/SaveData/*"
+Borderlands 3:
+  files:
+    windows:
+      - "{Documents}/My Games/Borderlands 3/Saved/SaveGames/*"
 Craftopia:
   files:
     windows:
@@ -240,18 +248,18 @@ Killer Frequency:
   files:
     windows:
       - "{LocalLow}/Team17/KillerFrequency/*/*.sav"
-Life is Strange 2:
-  files:
-    linux:
-      - "{XDGData}/feral-interactive/Life is Strange 2/SaveData/Dontnod/<user-id>/LIS2/Saved/SaveGames/*"
-    windows:
-      - "{LocalAppData}/Dontnod/*/LIS2/Saved/SaveGames/*"
 Life is Strange:
   files:
     linux:
       - "{XDGData}/feral-interactive/Life Is Strange/VFS/Local/My Games/Life Is Strange/Saves/*"
     windows:
       - "{Documents}/My Games/Life Is Strange/Saves/*"
+Life is Strange 2:
+  files:
+    linux:
+      - "{XDGData}/feral-interactive/Life is Strange 2/SaveData/Dontnod/<user-id>/LIS2/Saved/SaveGames/*"
+    windows:
+      - "{LocalAppData}/Dontnod/*/LIS2/Saved/SaveGames/*"
 "Like a Dragon Gaiden: The Man Who Erased His Name":
   files:
     windows:
@@ -265,6 +273,10 @@ Life is Strange:
   files:
     windows:
       - "{AppData}/Sega/LikeADragonPirates/Steam/*"
+"Lost Records: Bloom & Rage":
+  files:
+    windows:
+      - "{LocalAppData}/Bloom&Rage/Saved/SaveGames/*"
 Marvel's Guardians of the Galaxy:
   files:
     windows:
@@ -414,6 +426,15 @@ Sonic Frontiers:
   files:
     windows:
       - "{AppData}/SEGA/SonicFrontiers/steam/*"
+Sonic Generations:
+  files:
+    windows:
+      - "{Documents}/My Games/Sonic Generations/*"
+Sonic X Shadow Generations:
+  files:
+    windows:
+      - "{AppData}/SEGA/SONIC_X_SHADOW_GENERATIONS/steam/*/game0/gamedata.sav"
+      - "{AppData}/SEGA/SONIC_X_SHADOW_GENERATIONS/steam/*/saved/savedata/gene_PC.sav"
 Split Fiction:
   files:
     windows:
