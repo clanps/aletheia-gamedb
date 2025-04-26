@@ -236,6 +236,10 @@ Hogwarts Legacy:
   files:
     windows:
       - "{LocalAppData}/Hogwarts Legacy/Saved/SaveGames/*"
+Hyperdimension Neptunia Re;Birth1:
+  files:
+    windows:
+      - "{Documents}/My Games/Idea Factory International, Inc/Hyperdimension Neptunia Re;Birth1/*"
 JUMP FORCE:
   files:
     windows:
