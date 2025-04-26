@@ -43,17 +43,37 @@ export component Backup {
 
   if (GameLogic.games.length > 0): VerticalLayout {
     padding: 16px;
-    spacing: 16px;
-
-    Text {
-      text: @tr("Select games to backup");
-      font-size: 20px;
-      font-weight: 500;
-    }
+    spacing: 8px;
 
     SearchBar {
+      height: 45px;
       placeholder-text: @tr("Search games...");
       changed(text) => { BackupScreenLogic.filter(text); }
+    }
+
+    Text {
+      text: "Selecting 0 / " + GameLogic.games.length + " games";
+      color: white;
+      opacity: 50%;
+      horizontal-alignment: center;
+    }
+
+    HorizontalLayout {
+      alignment: center;
+      spacing: 8px;
+
+      Button {
+        width: 140px;
+        height: 36px;
+        text: "Backup";
+      }
+
+      Button {
+        width: 140px;
+        height: 36px;
+        text: "Select All";
+        background: #2f2f49;
+      }
     }
 
     ScrollView {
@@ -64,17 +84,6 @@ export component Backup {
         spacing: 8px;
 
         for game in BackupScreenLogic.filtered_games: GameCard { game: game; }
-      }
-    }
-
-    HorizontalLayout {
-      alignment: center;
-      spacing: 16px;
-
-      Button {
-        width: 140px;
-        height: 36px;
-        text: "Backup";
       }
     }
   }

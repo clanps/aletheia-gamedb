@@ -9,6 +9,9 @@ export component NavItem inherits Rectangle {
   border-radius: 4px;
   background: root.active ? #7c7cff : #2f2f49;
   height: 40px;
+  drop-shadow-blur: 8px;
+  drop-shadow-color: rgba(0, 0, 0, 0.15);
+  drop-shadow-offset-y: 4px;
 
   Text {
     text: root.text;
