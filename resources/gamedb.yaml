@@ -67,6 +67,10 @@ Borderlands 3:
   files:
     windows:
       - "{Documents}/My Games/Borderlands 3/Saved/SaveGames/*"
+"Clair Obscur: Expedition 33":
+  files:
+    windows:
+      - "{LocalAppData}/Sandfall/Saved/SaveGames/*/*.sav"
 Craftopia:
   files:
     windows:
