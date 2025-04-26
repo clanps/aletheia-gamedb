@@ -1,60 +1,52 @@
 // SPDX-FileCopyrightText: 2025 Spencer
 // SPDX-License-Identifier: AGPL-3.0-only
 
-export component SearchBar {
+export component SearchBar inherits Rectangle {
   in property <string> placeholder_text;
   out property <bool> has_focus: input.has-focus;
   out property <string> text: input.text;
   callback changed(string);
 
-  min-height: 30px;
-  min-width: 100px;
-  horizontal-stretch: 1;
+  border-radius: 10px;
+  border-width: 1px;
+  border-color: root.has_focus ? #27273a : #18182040;
+  background: #1e1e2e;
+  drop-shadow-blur: 8px;
+  drop-shadow-color: rgba(0, 0, 0, 0.15);
+  drop-shadow-offset-y: 4px;
 
-  Rectangle {
-    border-radius: 10px;
-    border-width: 1px;
-    border-color: root.has_focus ? #27273a : #18182040;
-    background: #1e1e2e;
-    drop-shadow-blur: 8px;
-    drop-shadow-color: rgba(0, 0, 0, 0.15);
-    drop-shadow-offset-y: 4px;
+  HorizontalLayout {
+    padding-left: 12px;
+    padding-right: 12px;
+    spacing: 8px;
 
-    HorizontalLayout {
-      alignment: start;
-      padding-left: 12px;
-      padding-right: 12px;
-      spacing: 8px;
+    Image {
+      source: @image-url("../assets/search.svg");
+	    width: 24px;
+      opacity: 75%;
+      image-fit: contain;
+    }
 
-      Image {
-        source: @image-url("../assets/search.svg");
-	      width: 24px;
-        opacity: 75%;
-        image-fit: contain;
-      }
+    input := TextInput {
+      single-line: true;
+      font-family: "Inter";
+      font-size: 14px;
+      font-weight: 400;
+      color: white;
+      opacity: 65%;
+      vertical-alignment: center;
 
-      input := TextInput {
-        single-line: true;
-	      width: 88px;
+      if (self.text == ""): Text {
+        x: 0;
+        text: root.placeholder_text;
+        color: #ffffff80;
         font-family: "Inter";
         font-size: 14px;
         font-weight: 400;
-        color: white;
-        opacity: 65%;
-        vertical-alignment: center;
-
-        if (self.text == ""): Text {
-          text: root.placeholder_text;
-	        width: 88px;
-          color: #ffffff80;
-          font-family: "Inter";
-          font-size: 14px;
-          font-weight: 400;
-          opacity: 50%;
-        }
-
-        edited => { root.changed(self.text); }
+        opacity: 50%;
       }
+
+      edited => { root.changed(self.text); }
     }
   }
 }
