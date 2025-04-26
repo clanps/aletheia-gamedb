@@ -16,21 +16,23 @@ export component SearchBar {
     border-width: 1px;
     border-color: root.has_focus ? #27273a : #18182040;
     background: #1e1e2e;
-    width: 100%;
-    height: 100%;
 
     HorizontalLayout {
-      padding: 5px;
-      spacing: 5px;
+      alignment: start;
+      padding-left: 12px;
+      padding-right: 12px;
+      spacing: 8px;
 
       Image {
         source: @image-url("../assets/search.svg");
+	      width: 24px;
         opacity: 75%;
+        image-fit: contain;
       }
 
       input := TextInput {
-        horizontal-stretch: 1;
         single-line: true;
+	      width: 88px;
         font-family: "Inter";
         font-size: 14px;
         font-weight: 400;
@@ -40,6 +42,7 @@ export component SearchBar {
 
         if (self.text == ""): Text {
           text: root.placeholder_text;
+	        width: 88px;
           color: #ffffff80;
           font-family: "Inter";
           font-size: 14px;
