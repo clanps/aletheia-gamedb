@@ -5,7 +5,8 @@ import { UiGame } from "../structs/ui_game.slint";
 
 export component GameCard inherits Rectangle {
   in property <UiGame> game;
-  property <bool> selected: true;
+  property <bool> selected;
+  callback clicked();
 
   background: #1e1e2e;
   border-radius: 20px;
@@ -63,6 +64,9 @@ export component GameCard inherits Rectangle {
   }
 
   TouchArea {
-    clicked => { root.selected = !root.selected; }
+    clicked => {
+      root.selected = !root.selected;
+      root.clicked();
+    }
   }
 }

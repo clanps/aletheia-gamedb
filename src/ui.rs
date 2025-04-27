@@ -71,6 +71,24 @@ pub fn run(config: &Config) {
         }
     });
 
+    app.global::<BackupScreenLogic>().on_select_game({
+        let app_weak = app.as_weak();
+
+        move |game| {
+            let app = app_weak.upgrade().unwrap();
+            let selected_games_model = app.global::<BackupScreenLogic>().get_selected_games();
+            let mut selected_games: Vec<UiGame> = selected_games_model.iter().collect();
+
+            if let Some(index) = selected_games.iter().position(|g| g.name == game.name) {
+                selected_games.remove(index);
+            } else {
+                selected_games.push(game);
+            }
+
+            app.global::<BackupScreenLogic>().set_selected_games(ModelRc::new(std::rc::Rc::new(VecModel::from(selected_games))));
+        }
+    });
+
     app.global::<GameLogic>().invoke_refresh_games();
     app.run().unwrap();
 }

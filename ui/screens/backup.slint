@@ -10,7 +10,9 @@ import { UiGame } from "../structs/ui_game.slint";
 
 export global BackupScreenLogic {
   in property <[UiGame]> filtered_games: [];
+  in-out property <[UiGame]> selected_games: [];
   callback filter(string);
+  callback select_game(UiGame);
 }
 
 export component Backup {
@@ -57,7 +59,7 @@ export component Backup {
     }
 
     Text {
-      text: "Selecting 0 / " + GameLogic.games.length + " games";
+      text: "Selecting " + BackupScreenLogic.selected_games.length + " / " + GameLogic.games.length + " games";
       color: white;
       opacity: 50%;
       horizontal-alignment: center;
@@ -76,8 +78,15 @@ export component Backup {
       Button {
         width: 140px;
         height: 36px;
-        text: "Select All";
+        text: GameLogic.games.length != BackupScreenLogic.selected_games.length ? "Select All" : "Clear Selection";
         background: #2f2f49;
+        clicked => {
+          if (BackupScreenLogic.selected_games.length != GameLogic.games.length) {
+            BackupScreenLogic.selected_games = GameLogic.games;
+          } else {
+            BackupScreenLogic.selected_games = [];
+          }
+        }
       }
     }
 
@@ -89,6 +98,9 @@ export component Backup {
 
         for game in BackupScreenLogic.filtered_games: GameCard {
           game: game;
+          clicked => {
+            BackupScreenLogic.select_game(game);
+          }
         }
       }
     }
