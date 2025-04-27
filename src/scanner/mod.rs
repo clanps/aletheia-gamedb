@@ -8,7 +8,8 @@ pub mod steam;
 #[derive(Clone, Debug)]
 pub struct Game {
     pub name: String,
-    pub directory: std::path::PathBuf
+    pub directory: std::path::PathBuf,
+    pub source: String
 }
 
 pub trait Scanner {

@@ -80,5 +80,17 @@ export component Backup {
         background: #2f2f49;
       }
     }
+
+    Flickable {
+      VerticalLayout {
+        spacing: 8px;
+        width: 50%;
+        // width: 430px;
+
+        for game in BackupScreenLogic.filtered_games: GameCard {
+          game: game;
+        }
+      }
+    }
   }
 }

@@ -19,6 +19,7 @@ pub fn run() {
         let ui_games: Vec<UiGame> = games.into_iter().map(|g| UiGame {
             name: g.name.into(),
             backup_size: "0MB".into(),
+            source: g.source.into(),
             selected: true
         }).collect();
 

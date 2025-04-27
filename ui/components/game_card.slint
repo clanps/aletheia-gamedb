@@ -7,18 +7,48 @@ export component GameCard inherits Rectangle {
   in property <UiGame> game;
   property <bool> selected: true;
 
-  background: selected ? #585870 : #383848;
-  border-radius: 4px;
-  height: 44px;
+  background: #1e1e2e;
+  border-radius: 20px;
 
   HorizontalLayout {
     padding: 12px;
-    spacing: 16px;
+    spacing: 8px;
 
-    Text {
-      text: game.name;
-      font-size: 16px;
-      color: white;
+    Rectangle {
+      width: 24px;
+      height: 24px;
+
+      icon_container := Rectangle {
+        background: rgba(47, 47, 70, 0.75);
+        border-radius: 2px;
+      }
+
+      Image {
+        source: @image-url("../assets/check.svg");
+        opacity: root.selected ? 100% : 10%;
+        x: 0;
+      }
+    }
+
+    HorizontalLayout {
+      alignment: start;
+      spacing: 4px;
+
+      Text {
+        text: game.name;
+        font-size: 16px;
+        color: white;
+        overflow: elide;
+        vertical-alignment: center;
+      }
+
+      Text {
+        y: 1px;
+        text: "(" + game.source + ")";
+        opacity: 25%;
+        font-size: 10px;
+        vertical-alignment: center;
+      }
     }
 
     Text {
@@ -26,6 +56,7 @@ export component GameCard inherits Rectangle {
       font-size: 14px;
       color: #a0a0a0;
       horizontal-alignment: right;
+      vertical-alignment: center;
     }
   }
 

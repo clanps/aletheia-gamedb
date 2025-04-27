@@ -40,7 +40,7 @@ impl Scanner for LutrisScanner {
             let name = &yml["name"].as_str().context("Lutris game config is missing name.")?;
             let directory = &yml["game"]["prefix"].as_str().context("Lutris game config is missing game prefix.")?;
 
-            games.push(Game { name: (*name).to_owned(), directory: directory.into() });
+            games.push(Game { name: (*name).to_owned(), directory: directory.into(), source: "Lutris".into() });
         }
 
         Ok(games)

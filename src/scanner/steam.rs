@@ -40,7 +40,8 @@ impl Scanner for SteamScanner {
                         }
                     } else {
                         install_dir
-                    }
+                    },
+                    source: "Steam".into()
                 });
             }
         }
