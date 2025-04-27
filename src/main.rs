@@ -29,6 +29,6 @@ fn main() {
             _ => eprintln!("Command not found.")
         }
     } else {
-        ui::run();
+        ui::run(&config);
     }
 }

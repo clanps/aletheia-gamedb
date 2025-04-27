@@ -1,6 +1,7 @@
 // SPDX-FileCopyrightText: 2025 Spencer
 // SPDX-License-Identifier: AGPL-3.0-only
 
+use std::fs::read_dir;
 use std::path::PathBuf;
 
 pub fn cache() -> PathBuf {
@@ -118,4 +119,21 @@ pub fn shrink_path(path: &str, prefix: Option<&PathBuf>) -> PathBuf {
             .replace("C:/Program Files (x86)/Steam/userdata/*", "{SteamUserData}")
             .into()
     }
+}
+
+pub fn get_size(path: &PathBuf) -> u64 {
+    let mut size = 0;
+
+    for entry in read_dir(path).unwrap() {
+        let dir_entry = entry.unwrap();
+        let entry_path = dir_entry.path();
+
+        if entry_path.is_file() {
+            size += entry_path.metadata().unwrap().len();
+        } else if entry_path.is_dir() {
+            size += get_size(&entry_path);
+        }
+    }
+
+    size
 }
