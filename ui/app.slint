@@ -34,6 +34,7 @@ export component App inherits Window {
           active: root.current_screen == "backup";
           clicked => {
             root.current_screen = "backup";
+            BackupScreenLogic.filter(""); // Lazy hack to reset search, waiting for https://github.com/slint-ui/slint/pull/6657 to be merged.
           }
         }
 
