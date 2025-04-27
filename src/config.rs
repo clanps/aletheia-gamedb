@@ -34,18 +34,7 @@ impl Config {
 impl Default for Config {
     fn default() -> Self {
         Self {
-            save_dir: if cfg!(unix) {
-                std::env::var_os("XDG_DATA_HOME")
-                    .map_or_else(|| std::env::var_os("HOME")
-                    .map(PathBuf::from).unwrap()
-                    .join(".local/share"), PathBuf::from)
-                    .join("aletheia")
-            } else {
-                std::env::var_os("LOCALAPPDATA")
-                    .map(PathBuf::from)
-                    .unwrap()
-                    .join("aletheia")
-            }
+            save_dir: crate::dirs::app_data()
         }
     }
 }
