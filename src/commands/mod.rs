@@ -3,7 +3,6 @@
 
 pub mod backup;
 pub mod restore;
-#[cfg(feature = "updater")]
 pub mod update;
 
 pub trait Command {

@@ -13,7 +13,6 @@ use crate::scanner::lutris::LutrisScanner;
 
 const GAMEDB_YAML: &str = include_str!("../resources/gamedb.yaml");
 
-#[cfg(feature = "updater")]
 pub enum UpdaterResult {
     Failed,
     Success,
@@ -46,16 +45,14 @@ pub struct FileMetadata {
 }
 
 pub fn parse() -> std::collections::HashMap<String, GameDbEntry> {
-    if cfg!(feature = "updater") {
-        let gamedb_path = cache().join("gamedb.yaml");
+    let gamedb_path = cache().join("gamedb.yaml");
 
-        if Path::exists(&gamedb_path) {
-            if let Ok(gamedb) = serde_yaml::from_str(&read_to_string(gamedb_path).unwrap()) {
-                return gamedb;
-            }
-
-            println!("Failed to parse cached GameDB, falling back to built-in.");
+    if Path::exists(&gamedb_path) {
+        if let Ok(gamedb) = serde_yaml::from_str(&read_to_string(gamedb_path).unwrap()) {
+            return gamedb;
         }
+
+        println!("Failed to parse cached GameDB, falling back to built-in.");
     }
 
     serde_yaml::from_str(GAMEDB_YAML).expect("Failed to parse GameDB.")
@@ -73,7 +70,6 @@ pub fn get_installed_games() -> Vec<Game> {
     games.into_iter().filter(|game| db.contains_key(&game.name)).collect()
 }
 
-#[cfg(feature = "updater")]
 pub fn update() -> anyhow::Result<UpdaterResult> {
     let cache_dir = cache();
 
