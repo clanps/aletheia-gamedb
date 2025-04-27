@@ -77,13 +77,18 @@ pub fn expand_path(path: &str, prefix: Option<&PathBuf>) -> PathBuf {
         let app_data = config();
         let home_dir = home();
 
+        let steam_directory = match steamlocate::SteamDir::locate() {
+            Ok(steam_dir) => steam_dir.path().join("userdata/*"),
+            Err(_) => PathBuf::from("C:/Program Files (x86)/Steam/userdata/*")
+        };
+
         path
             .replace("{AppData}", &app_data.to_string_lossy())
             .replace("{Documents}", &home_dir.join("Documents").to_string_lossy())
             .replace("{Home}", &home_dir.to_string_lossy())
             .replace("{LocalAppData}", &app_data.join("Local").to_string_lossy())
             .replace("{LocalLow}", &app_data.join("LocalLow").to_string_lossy())
-            .replace("{SteamUserData}", "C:/Program Files (x86)/Steam/userdata/*")
+            .replace("{SteamUserData}", &*steam_directory.to_string_lossy())
             .into()
     }
 }
@@ -110,13 +115,18 @@ pub fn shrink_path(path: &str, prefix: Option<&PathBuf>) -> PathBuf {
         let app_data = config();
         let home_dir = home();
 
+        let steam_directory = match steamlocate::SteamDir::locate() {
+            Ok(steam_dir) => steam_dir.path().join("userdata/*"),
+            Err(_) => PathBuf::from("C:/Program Files (x86)/Steam/userdata/*")
+        };
+
         path
             .replace(&*app_data.join("LocalLow").to_string_lossy(), "{LocalLow}")
             .replace(&*app_data.join("Local").to_string_lossy(), "{LocalAppData}")
             .replace(&*app_data.to_string_lossy(), "{AppData}")
             .replace(&*home_dir.join("Documents").to_string_lossy(), "{Documents}")
             .replace(&*home_dir.to_string_lossy(), "{Home}")
-            .replace("C:/Program Files (x86)/Steam/userdata/*", "{SteamUserData}")
+            .replace(&*steam_directory.to_string_lossy(), "{SteamUserData}")
             .into()
     }
 }
