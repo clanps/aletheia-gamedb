@@ -30,6 +30,7 @@ export component App inherits Window {
 
         NavItem {
           text: @tr("Backup");
+          icon: @image-url("./assets/backup.svg");
           active: root.current_screen == "backup";
           clicked => {
             root.current_screen = "backup";
@@ -38,6 +39,7 @@ export component App inherits Window {
 
         NavItem {
           text: @tr("Restore");
+          icon: @image-url("./assets/restore.svg");
           active: root.current_screen == "restore";
           clicked => {
             root.current_screen = "restore";
@@ -46,6 +48,7 @@ export component App inherits Window {
 
         NavItem {
           text: @tr("Settings");
+          icon: @image-url("./assets/settings.svg");
           active: root.current_screen == "settings";
           clicked => {
             root.current_screen = "settings";
@@ -54,6 +57,7 @@ export component App inherits Window {
 
         NavItem {
           text: @tr("About");
+          icon: @image-url("./assets/about.svg");
           active: root.current_screen == "about";
           clicked => {
             root.current_screen = "about";
