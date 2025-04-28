@@ -522,6 +522,10 @@ Sunset Overdrive:
   files:
     windows:
       - "{SteamUserData}/840720/remote/*"
+Tales from the Borderlands:
+  files:
+    windows:
+      - "{Documents}/Telltale Games/Tales from the Borderlands/*"
 Terraria:
   files:
     linux:
