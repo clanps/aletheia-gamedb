@@ -30,7 +30,8 @@ impl Scanner for SteamScanner {
                     directory: if cfg!(unix) {
                         let prefix_directory = steam_directory.path()
                             .join("steamapps/compatdata")
-                            .join(game.app_id.to_string());
+                            .join(game.app_id.to_string())
+                            .join("pfx");
 
                         if prefix_directory.exists() {
                             prefix_directory

@@ -57,8 +57,14 @@ pub fn home() -> PathBuf {
 pub fn expand_path(path: &str, prefix: Option<&PathBuf>) -> PathBuf {
     if cfg!(unix) {
         let wine_prefix = prefix.unwrap();
+        let username = if wine_prefix.to_string_lossy().contains("steamapps/compatdata") {
+            "steamuser".to_owned()
+        } else {
+            std::env::var_os("USER").unwrap().to_string_lossy().to_string()
+        };
+
         let drive_c = wine_prefix.join("drive_c");
-        let user = drive_c.join("users").join(std::env::var_os("USER").unwrap());
+        let user = drive_c.join("users").join(username);
         let windows_app_data = user.join("AppData");
         let documents = user.join("Documents");
         let linux_app_data = app_data();
@@ -96,8 +102,14 @@ pub fn expand_path(path: &str, prefix: Option<&PathBuf>) -> PathBuf {
 pub fn shrink_path(path: &str, prefix: Option<&PathBuf>) -> PathBuf {
     if cfg!(unix) {
         let wine_prefix = prefix.unwrap();
+        let username = if wine_prefix.to_string_lossy().contains("steamapps/compatdata") {
+            "steamuser".to_string()
+        } else {
+            std::env::var_os("USER").unwrap().to_string_lossy().to_string()
+        };
+
         let drive_c = wine_prefix.join("drive_c");
-        let user = drive_c.join("users").join(std::env::var_os("USER").unwrap());
+        let user = drive_c.join("users").join(username);
         let windows_app_data = user.join("AppData");
         let linux_app_data = app_data();
 
