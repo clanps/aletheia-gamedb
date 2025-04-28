@@ -8,7 +8,7 @@ import { GameCard } from "../components/game_card.slint";
 import { SearchBar } from "../components/search_bar.slint";
 import { UiGame } from "../structs/ui_game.slint";
 
-export global BackupScreenLogic {
+export global GamesScreenLogic {
   in property <[UiGame]> filtered_games: [];
   in-out property <[UiGame]> selected_games: [];
   callback filter(string);
@@ -16,7 +16,7 @@ export global BackupScreenLogic {
   callback backup();
 }
 
-export component Backup {
+export component Games {
   callback search_changed(string);
   width: 100%;
   height: 100%;
@@ -55,12 +55,12 @@ export component Backup {
         height: 45px;
         width: 430px;
         placeholder-text: @tr("Search games...");
-        changed(text) => { BackupScreenLogic.filter(text); }
+        changed(text) => { GamesScreenLogic.filter(text); }
       }
     }
 
     Text {
-      text: "Selecting " + BackupScreenLogic.selected_games.length + " / " + GameLogic.games.length + " games";
+      text: "Selecting " + GamesScreenLogic.selected_games.length + " / " + GameLogic.games.length + " games";
       color: white;
       opacity: 50%;
       horizontal-alignment: center;
@@ -75,8 +75,8 @@ export component Backup {
         height: 36px;
         text: "Backup";
         clicked => {
-          if (BackupScreenLogic.selected_games.length > 0) {
-            BackupScreenLogic.backup();
+          if (GamesScreenLogic.selected_games.length > 0) {
+            GamesScreenLogic.backup();
           }
         }
       }
@@ -84,13 +84,19 @@ export component Backup {
       Button {
         width: 140px;
         height: 36px;
-        text: GameLogic.games.length != BackupScreenLogic.selected_games.length ? "Select All" : "Clear Selection";
+        text: "Restore";
+      }
+
+      Button {
+        width: 140px;
+        height: 36px;
+        text: GameLogic.games.length != GamesScreenLogic.selected_games.length ? "Select All" : "Clear Selection";
         background: #2f2f49;
         clicked => {
-          if (BackupScreenLogic.selected_games.length != GameLogic.games.length) {
-            BackupScreenLogic.selected_games = GameLogic.games;
+          if (GamesScreenLogic.selected_games.length != GameLogic.games.length) {
+            GamesScreenLogic.selected_games = GameLogic.games;
           } else {
-            BackupScreenLogic.selected_games = [];
+            GamesScreenLogic.selected_games = [];
           }
         }
       }
@@ -102,10 +108,10 @@ export component Backup {
         width: 50%;
         // width: 430px;
 
-        for game in BackupScreenLogic.filtered_games: GameCard {
+        for game in GamesScreenLogic.filtered_games: GameCard {
           game: game;
           clicked => {
-            BackupScreenLogic.select_game(game);
+            GamesScreenLogic.select_game(game);
           }
         }
       }

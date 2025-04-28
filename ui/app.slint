@@ -4,13 +4,13 @@
 import { GameLogic } from "./app_logic.slint";
 import { NavItem } from "./components/nav_item.slint";
 import { About } from "./screens/about.slint";
-import { Backup, BackupScreenLogic } from "./screens/backup.slint";
+import { Games, GamesScreenLogic } from "./screens/games.slint";
 import { UiGame } from "./structs/ui_game.slint";
 
-export { BackupScreenLogic, GameLogic }
+export { GamesScreenLogic, GameLogic }
 
 export component App inherits Window {
-  property <string> current_screen: "backup";
+  property <string> current_screen: "games";
 
   preferred-width: 1280px;
   preferred-height: 900px;
@@ -29,21 +29,12 @@ export component App inherits Window {
         spacing: 16px;
 
         NavItem {
-          text: @tr("Backup");
+          text: @tr("Games");
           icon: @image-url("./assets/backup.svg");
-          active: root.current_screen == "backup";
+          active: root.current_screen == "games";
           clicked => {
-            root.current_screen = "backup";
-            BackupScreenLogic.filter(""); // Lazy hack to reset search, waiting for https://github.com/slint-ui/slint/pull/6657 to be merged.
-          }
-        }
-
-        NavItem {
-          text: @tr("Restore");
-          icon: @image-url("./assets/restore.svg");
-          active: root.current_screen == "restore";
-          clicked => {
-            root.current_screen = "restore";
+            root.current_screen = "games";
+            GamesScreenLogic.filter(""); // Lazy hack to reset search, waiting for https://github.com/slint-ui/slint/pull/6657 to be merged.
           }
         }
 
@@ -71,7 +62,7 @@ export component App inherits Window {
         border-radius: 8px;
         padding: 24px;
 
-        if (root.current_screen == "backup"): Backup {}
+        if (root.current_screen == "games"): Games {}
         if (root.current_screen == "about"): About {}
       }
     }
