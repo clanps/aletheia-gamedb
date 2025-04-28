@@ -8,19 +8,24 @@ use crate::config::Config;
 use crate::gamedb;
 use slint::{Model, ModelRc, VecModel};
 
+#[allow(clippy::cast_precision_loss, reason = "Only used for UI")]
 fn format_size(size: u64) -> String {
-    if size < 1024 {
-        format!("{}B", size)
-    } else if size < 1024 * 1024 {
-        format!("{:.1}KB", size as f64 / 1024.0)
-    } else if size < 1024 * 1024 * 1024 {
-        format!("{:.1}MB", size as f64 / (1024.0 * 1024.0))
+    const KB: u64 = 1024;
+    const MB: u64 = 1048576;
+    const GB: u64 = 1073741824;
+
+    if size < KB {
+        format!("{size}B")
+    } else if size < MB {
+        format!("{:.1}KB", size as f64 / KB as f64)
+    } else if size < GB {
+        format!("{:.1}MB", size as f64 / MB as f64)
     } else {
-        format!("{:.2}GB", size as f64 / (1024.0 * 1024.0 * 1024.0))
+        format!("{:.2}GB", size as f64 / GB as f64)
     }
 }
 
-pub fn run(config: Config) {
+pub fn run(config: &Config) {
     let app = App::new().unwrap();
     let app_weak = app.as_weak();
     let cfg = config.clone();

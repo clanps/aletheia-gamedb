@@ -88,7 +88,7 @@ pub fn expand_path(path: &str, prefix: Option<&PathBuf>) -> PathBuf {
             .replace("{Home}", &home_dir.to_string_lossy())
             .replace("{LocalAppData}", &app_data.join("Local").to_string_lossy())
             .replace("{LocalLow}", &app_data.join("LocalLow").to_string_lossy())
-            .replace("{SteamUserData}", &*steam_directory.to_string_lossy())
+            .replace("{SteamUserData}", &steam_directory.to_string_lossy())
             .into()
     }
 }
