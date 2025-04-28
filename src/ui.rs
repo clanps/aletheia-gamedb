@@ -56,11 +56,11 @@ pub fn run(config: &Config) {
 
             let games_model = ModelRc::new(std::rc::Rc::new(VecModel::from(ui_games)));
             app.global::<GameLogic>().set_games(games_model.clone());
-            app.global::<BackupScreenLogic>().set_filtered_games(games_model);
+            app.global::<GamesScreenLogic>().set_filtered_games(games_model);
         }
     });
 
-    app.global::<BackupScreenLogic>().on_filter({
+    app.global::<GamesScreenLogic>().on_filter({
         let app_weak = app.as_weak();
 
         move |query| {
@@ -68,7 +68,7 @@ pub fn run(config: &Config) {
             let games = app.global::<GameLogic>().get_games();
 
             if query.is_empty() {
-                app.global::<BackupScreenLogic>().set_filtered_games(games);
+                app.global::<GamesScreenLogic>().set_filtered_games(games);
                 return;
             }
 
@@ -76,16 +76,16 @@ pub fn run(config: &Config) {
                 .filter(|g| g.name.to_lowercase().contains(&query.to_lowercase()))
                 .collect();
 
-            app.global::<BackupScreenLogic>().set_filtered_games(ModelRc::new(std::rc::Rc::new(VecModel::from(filtered_games))));
+            app.global::<GamesScreenLogic>().set_filtered_games(ModelRc::new(std::rc::Rc::new(VecModel::from(filtered_games))));
         }
     });
 
-    app.global::<BackupScreenLogic>().on_select_game({
+    app.global::<GamesScreenLogic>().on_select_game({
         let app_weak = app.as_weak();
 
         move |game| {
             let app = app_weak.upgrade().unwrap();
-            let selected_games_model = app.global::<BackupScreenLogic>().get_selected_games();
+            let selected_games_model = app.global::<GamesScreenLogic>().get_selected_games();
             let mut selected_games: Vec<UiGame> = selected_games_model.iter().collect();
 
             if let Some(index) = selected_games.iter().position(|g| g.name == game.name) {
@@ -94,15 +94,15 @@ pub fn run(config: &Config) {
                 selected_games.push(game);
             }
 
-            app.global::<BackupScreenLogic>().set_selected_games(ModelRc::new(std::rc::Rc::new(VecModel::from(selected_games))));
+            app.global::<GamesScreenLogic>().set_selected_games(ModelRc::new(std::rc::Rc::new(VecModel::from(selected_games))));
         }
     });
 
-    app.global::<BackupScreenLogic>().on_backup({
+    app.global::<GamesScreenLogic>().on_backup({
         let app = app_weak.upgrade().unwrap();
 
         move || {
-            let selected_games_model = app.global::<BackupScreenLogic>().get_selected_games();
+            let selected_games_model = app.global::<GamesScreenLogic>().get_selected_games();
             let selected_games: Vec<UiGame> = selected_games_model.iter().collect();
             let selected_game_names: Vec<String> = selected_games
                 .iter()
