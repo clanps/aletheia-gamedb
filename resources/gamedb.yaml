@@ -537,6 +537,10 @@ Unleashed Recompiled:
       - "{XDGConfig}/UnleashedRecomp/save/*"
     windows:
       - "{AppData}/UnleashedRecomp/save/*"
+Until Dawn:
+  files:
+    windows:
+      - "{Documents}/My Games/Bates/Saved/SavedGames/*"
 Yakuza 0:
   files:
     windows:
