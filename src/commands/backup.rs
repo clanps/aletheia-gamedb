@@ -13,10 +13,16 @@ use glob::glob;
 pub struct Backup;
 
 impl Command for Backup { 
-    fn run(_args: std::env::Args, config: &Config) {
+    fn run(args: Vec<String>, config: &Config) {
         let game_db = gamedb::parse();
+        let installed_games = gamedb::get_installed_games();
+        let games: Vec<_> = if args.is_empty() {
+            installed_games
+        } else {
+            installed_games.into_iter().filter(|game| args.contains(&game.name)).collect()
+        };
 
-        for game in gamedb::get_installed_games() {
+        for game in games {
             let backup_folder = PathBuf::from(&config.save_dir).join(&game.name);
             let manifest_path = backup_folder.join("aletheia_manifest.yaml");
             let mut changed = false;

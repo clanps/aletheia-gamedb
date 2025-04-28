@@ -8,7 +8,7 @@ use super::Command;
 pub struct Update;
 
 impl Command for Update {
-    fn run(_args: std::env::Args, _config: &Config) {
+    fn run(_args: Vec<String>, _config: &Config) {
         match gamedb::update().unwrap() {
             gamedb::UpdaterResult::Success => println!("Successfully updated GameDB."),
             gamedb::UpdaterResult::Failed => println!("Failed to update GameDB."),

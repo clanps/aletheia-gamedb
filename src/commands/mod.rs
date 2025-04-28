@@ -6,5 +6,5 @@ pub mod restore;
 pub mod update;
 
 pub trait Command {
-    fn run(args: std::env::Args, config: &crate::config::Config);
+    fn run(args: Vec<String>, config: &crate::config::Config);
 }

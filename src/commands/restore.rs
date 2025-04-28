@@ -10,7 +10,7 @@ use std::path::{Path, PathBuf};
 pub struct Restore;
 
 impl Command for Restore {
-    fn run(_args: std::env::Args, config: &Config) {
+    fn run(_args: Vec<String>, config: &Config) {
         let save_dir = PathBuf::from(&config.save_dir);
 
         if !save_dir.exists() {

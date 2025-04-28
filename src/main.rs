@@ -19,16 +19,14 @@ use commands::Command;
 fn main() {
     let config = config::Config::load();
 
-    let mut args = std::env::args();
-
-    if let Some(cmd) = args.nth(1) {
+    if let Some(cmd) = std::env::args().nth(1) {
         match cmd.as_str() {
-            "backup" => commands::backup::Backup::run(args, &config),
-            "restore" => commands::restore::Restore::run(args, &config),
-            "update" => commands::update::Update::run(args, &config),
+            "backup" => commands::backup::Backup::run(vec![], &config),
+            "restore" => commands::restore::Restore::run(vec![], &config),
+            "update" => commands::update::Update::run(vec![], &config),
             _ => eprintln!("Command not found.")
         }
     } else {
-        ui::run(&config);
+        ui::run(config);
     }
 }

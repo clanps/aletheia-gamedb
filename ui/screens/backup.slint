@@ -13,6 +13,7 @@ export global BackupScreenLogic {
   in-out property <[UiGame]> selected_games: [];
   callback filter(string);
   callback select_game(UiGame);
+  callback backup();
 }
 
 export component Backup {
@@ -73,6 +74,11 @@ export component Backup {
         width: 140px;
         height: 36px;
         text: "Backup";
+        clicked => {
+          if (BackupScreenLogic.selected_games.length > 0) {
+            BackupScreenLogic.backup();
+          }
+        }
       }
 
       Button {
