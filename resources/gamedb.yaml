@@ -497,6 +497,12 @@ Sunset Overdrive:
   files:
     windows:
       - "{SteamUserData}/840720/remote/*"
+Terraria:
+  files:
+    linux:
+      - "{XDGData}/Terraria/*"
+    windows:
+      - "{Documents}/My Games/Terraria/*"
 The Casting of Frank Stone:
   files:
     windows:
