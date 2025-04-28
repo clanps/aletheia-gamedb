@@ -342,6 +342,14 @@ MiSide:
   files:
     windows:
       - "{LocalLow}/AIHASTO/MiSideFull/Save/*"
+Minecraft Dungeons:
+  files:
+    windows:
+      - "{Home}/Saved Games/Mojang Studios/Dungeons/*"
+Minecraft Legends:
+  files:
+    windows:
+      - "{AppData}/Minecraft Legends/*"
 Mouthwashing:
   files:
     windows:
