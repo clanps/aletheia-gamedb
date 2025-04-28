@@ -350,6 +350,14 @@ Minecraft Legends:
   files:
     windows:
       - "{AppData}/Minecraft Legends/*"
+"Minecraft: Story Mode - A Telltale Games Series":
+  files:
+    windows:
+      - "{Documents}/Telltale Games/Minecraft Story Mode/*"
+"Minecraft: Story Mode - Season Two":
+  files:
+    windows:
+      - "{Documents}/Telltale Games/Minecraft Story Mode - Season Two/*"
 Mouthwashing:
   files:
     windows:
