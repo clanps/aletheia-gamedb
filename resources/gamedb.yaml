@@ -277,6 +277,16 @@ Hogwarts Legacy:
   files:
     windows:
       - "{LocalAppData}/Hogwarts Legacy/Saved/SaveGames/*"
+HuniePop:
+  files:
+    linux:
+      - "{XDGConfig}/unity3d/HuniePot/HuniePop/*.game"
+    windows:
+      - "{LocalLow}/HuniePot/HuniePop/*"
+"HuniePop 2: Double Date":
+  files:
+    windows:
+      - "{LocalLow}/HuniePot/HuniePop 2 - Double Date/*"
 Hyperdimension Neptunia Re;Birth1:
   files:
     windows:
