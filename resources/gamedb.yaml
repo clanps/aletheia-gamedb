@@ -501,6 +501,19 @@ The Casting of Frank Stone:
   files:
     windows:
       - "{LocalAppData}/TheCastingofFrankStone/Saved/*"
+"The Elder Scrolls V: Skyrim":
+  files:
+    windows:
+      - "{Documents}/My Games/Skyrim/Saves/*"
+"The Elder Scrolls V: Skyrim Special Edition":
+  files:
+    windows:
+      - "{Documents}/My Games/Skyrim Special Edition/Saves/*"
+      - "{Documents}/My Games/Skyrim Special Edition GOG/Saves/*"
+"The Elder Scrolls V: Skyrim VR":
+  files:
+    windows:
+      - "{Documents}/My Games/Skyrim VR/Saves/*"
 The Evil Within:
   files:
     windows:
