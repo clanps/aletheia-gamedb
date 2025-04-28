@@ -514,6 +514,18 @@ The Casting of Frank Stone:
   files:
     windows:
       - "{Documents}/My Games/Skyrim VR/Saves/*"
+The Escapists:
+  files:
+    linux:
+      - "{XDGConfig}/unity3d/Team 17 Digital ltd_/The Escapists 2/Saves/*"
+    windows:
+      - "{LocalLow}/Team 17 Digital ltd_/The Escapists 2/Saves/*"
+The Escapists 2:
+  files:
+    linux:
+      - "{XDGConfig}/unity3d/Team 17 Digital ltd_/The Escapists 2/Saves/*"
+    windows:
+      - "{LocalLow}/Team 17 Digital ltd_/The Escapists 2/Saves/*"
 The Evil Within:
   files:
     windows:
