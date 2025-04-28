@@ -608,6 +608,11 @@ The Quarry:
   files:
     windows:
       - "{Documents}/Telltale Games/The Walking Dead The Final Season/*"
+"The Walking Dead: The Telltale Definitive Series":
+  files:
+    windows:
+      - "{Documents}/Telltale Games/The Walking Dead Definitive/*"
+      - "{Documents}/Telltale Games/The Walking Dead The Telltale Definitive Series/*"
 Tormented Souls:
   files:
     windows:
