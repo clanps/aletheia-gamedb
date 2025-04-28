@@ -155,10 +155,26 @@ Dead Rising 4:
   files:
     windows:
       - "{Documents}/My Games/Dead Rising 4/saves/*"
+Devil May Cry 4 Special Edition:
+  files:
+    windows:
+      - "{Documents}/CAPCOM/DEVILMAYCRY4SPECIALEDITION/*"
+Devil May Cry 5:
+  files:
+    windows:
+      - "{SteamUserData}/601150/remote/win64_save/*.bin"
+Devil May Cry HD Collection:
+  files:
+    windows:
+      - "{SteamUserData}/631510/remote/*"
 "Disney Epic Mickey 2: The Power of Two":
   files:
     windows:
       - "{AppData}/Disney Interactive Studios/Epic Mickey 2/Save/*"
+DmC Devil May Cry:
+  files:
+    windows:
+      - "{SteamUserData}/220440/remote/*"
 Dying Light:
   files:
     # TODO: Linux
