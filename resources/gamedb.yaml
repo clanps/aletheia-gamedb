@@ -583,6 +583,27 @@ The Quarry:
       - "{XDGConfig}/unity3d/Crows Crows Crows/The Stanley Parable_ Ultra Deluxe/*"
     windows:
       - "{LocalLow}/unity3d/Crows Crows Crows/The Stanley Parable_ Ultra Deluxe/*"
+"The Walking Dead":
+  files:
+    windows:
+      - "{Documents}/Telltale Games/The Walking Dead/*"
+"The Walking Dead: A New Frontier":
+  files:
+    windows:
+      - "{Documents}/Telltale Games/The Walking Dead A New Frontier/*"
+      - "{Documents}/Telltale Games/The Walking Dead - A New Frontier (Season 3)/*"
+"The Walking Dead: Michonne - A Telltale Miniseries":
+  files:
+    windows:
+      - "{Documents}/Telltale Games/The Walking Dead Michonne/*"
+"The Walking Dead: Season Two":
+  files:
+    windows:
+      - "{Documents}/Telltale Games/The Walking Dead Season Two/*"
+"The Walking Dead: The Final Season":
+  files:
+    windows:
+      - "{Documents}/Telltale Games/The Walking Dead The Final Season/*"
 Tormented Souls:
   files:
     windows:
