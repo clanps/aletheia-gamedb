@@ -35,6 +35,15 @@ BONEWORKS:
   files:
     windows:
       - "{LocalLow}/Stress Level Zero/BONEWORKS/*.dat"
+"Batman - The Telltale Series":
+  files:
+    windows:
+      - "{Documents}/Telltale Games/Batman Series/*"
+      - "{Documents}/Telltale Games/Batman The Telltale Series/*"
+"Batman: The Enemy Within - The Telltale Series":
+  files:
+    windows:
+      - "{Documents}/Telltale Games/Batman The Enemy Within - The Telltale Series/*"
 BioShock:
   files:
     windows:
