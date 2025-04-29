@@ -4,13 +4,13 @@
 use crate::config::Config;
 use crate::dirs::expand_path;
 use crate::file::hash_file;
-use super::Command;
+use super::{Args, Command};
 use std::path::{Path, PathBuf};
 
 pub struct Restore;
 
 impl Command for Restore {
-    fn run(_args: Vec<String>, config: &Config) {
+    fn run(_args: Args, config: &Config) {
         let save_dir = PathBuf::from(&config.save_dir);
 
         if !save_dir.exists() {

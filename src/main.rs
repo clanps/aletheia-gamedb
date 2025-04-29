@@ -15,14 +15,14 @@ mod gamedb;
 mod scanner;
 mod ui;
 
-use commands::Command;
+use commands::{Args, Command};
 
 fn main() {
     let config = config::Config::load();
     let mut args = std::env::args().skip(1);
 
     if let Some(cmd) = args.next() {
-        let args: Vec<String> = args.collect();
+        let args = Args::parse(&args.collect::<Vec<String>>());
         match cmd.as_str() {
             "backup" => commands::Backup::run(args, &config),
             "restore" => commands::Restore::run(args, &config),

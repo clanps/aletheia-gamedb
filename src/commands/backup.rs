@@ -5,7 +5,7 @@ use crate::config::Config;
 use crate::dirs::{expand_path, shrink_path};
 use crate::file::hash_file;
 use crate::gamedb::{self, GameInfo, FileMetadata};
-use super::Command;
+use super::{Args, Command};
 use std::fs::{copy, create_dir_all, metadata, read_to_string, write};
 use std::path::PathBuf;
 use glob::glob;
@@ -13,13 +13,13 @@ use glob::glob;
 pub struct Backup;
 
 impl Command for Backup { 
-    fn run(args: Vec<String>, config: &Config) {
+    fn run(args: Args, config: &Config) {
         let game_db = gamedb::parse();
         let installed_games = gamedb::get_installed_games();
-        let games: Vec<_> = if args.is_empty() {
+        let games: Vec<_> = if args.positional.is_empty() {
             installed_games
         } else {
-            installed_games.into_iter().filter(|game| args.contains(&game.name)).collect()
+            installed_games.into_iter().filter(|game| args.positional.contains(&game.name)).collect()
         };
 
         for game in games {

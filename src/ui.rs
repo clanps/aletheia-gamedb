@@ -3,7 +3,7 @@
 
 slint::include_modules!();
 
-use crate::commands::Command;
+use crate::commands::{Args, Command};
 use crate::config::Config;
 use crate::gamedb;
 use slint::{Model, ModelRc, VecModel};
@@ -104,10 +104,11 @@ pub fn run(config: &Config) {
         move || {
             let selected_games_model = app.global::<GamesScreenLogic>().get_selected_games();
             let selected_games: Vec<UiGame> = selected_games_model.iter().collect();
-            let selected_game_names: Vec<String> = selected_games
+            let selected_game_names = Args::parse(&selected_games
                 .iter()
                 .map(|game| game.name.to_string())
-                .collect();
+                .collect::<Vec<String>>()
+            );
 
             crate::commands::Backup::run(selected_game_names, &cfg);
         }

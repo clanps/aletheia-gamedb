@@ -3,12 +3,12 @@
 
 use crate::config::Config;
 use crate::gamedb;
-use super::Command;
+use super::{Args, Command};
 
 pub struct Update;
 
 impl Command for Update {
-    fn run(_args: Vec<String>, _config: &Config) {
+    fn run(_args: Args, _config: &Config) {
         match gamedb::update() {
             Ok(gamedb::UpdaterResult::Success) => println!("Successfully updated GameDB."),
             Ok(gamedb::UpdaterResult::UpToDate) => println!("GameDB is already up to date."),
