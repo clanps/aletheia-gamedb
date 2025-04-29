@@ -24,6 +24,7 @@ serde_yaml = "0.9.34"
 sha2 = "0.10.8"
 slint = "1.10.0"
 steamlocate = "2.0.1"
+thiserror = "2.0.12"
 
 [build-dependencies]
 slint-build = "1.10.0"

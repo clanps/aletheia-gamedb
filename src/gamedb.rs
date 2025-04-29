@@ -13,8 +13,17 @@ use crate::scanner::lutris::LutrisScanner;
 
 const GAMEDB_YAML: &str = include_str!("../resources/gamedb.yaml");
 
+#[derive(Debug, thiserror::Error)]
+pub enum Error {
+    #[error("IO error: {0}")]
+    Io(#[from] std::io::Error),
+    #[error("Network error: {0}")]
+    Network(#[from] reqwest::Error)
+}
+
+pub type Result<T> = core::result::Result<T, Error>;
+
 pub enum UpdaterResult {
-    Failed,
     Success,
     UpToDate
 }
@@ -70,7 +79,7 @@ pub fn get_installed_games() -> Vec<Game> {
     games.into_iter().filter(|game| db.contains_key(&game.name)).collect()
 }
 
-pub fn update() -> anyhow::Result<UpdaterResult> {
+pub fn update() -> Result<UpdaterResult> {
     let cache_dir = cache();
 
     let gamedb_path = cache_dir.join("gamedb.yaml");
@@ -87,13 +96,10 @@ pub fn update() -> anyhow::Result<UpdaterResult> {
         request = request.header(reqwest::header::IF_NONE_MATCH, etag);
     }
 
-    let response = request.send()?;
+    let response = request.send()?.error_for_status()?;
     let status = response.status();
 
-
-    if !status.is_success() {
-        return Ok(UpdaterResult::Failed);
-    } else if status == reqwest::StatusCode::NOT_MODIFIED {
+    if status == reqwest::StatusCode::NOT_MODIFIED {
         return Ok(UpdaterResult::UpToDate);
     }
 

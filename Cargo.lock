@@ -161,6 +161,7 @@ dependencies = [
  "slint",
  "slint-build",
  "steamlocate",
+ "thiserror 2.0.12",
  "winres",
 ]
 
