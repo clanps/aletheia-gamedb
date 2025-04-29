@@ -43,11 +43,10 @@ impl Args {
         let mut i = 0;
         while i < args.len() {
             let arg = &args[i];
-            
-            if arg.starts_with("--") {
-                let name = arg.strip_prefix("--").unwrap();
+
+            if let Some(name) = arg.strip_prefix("--") {
                 let has_value = i + 1 < args.len() && !args[i + 1].starts_with('-');
-                
+ 
                 if has_value {
                     flags.push(Flag::with_value(name, &args[i + 1]));
                     i += 2;
@@ -67,7 +66,7 @@ impl Args {
     pub fn has_flag(&self, name: &str) -> bool {
         self.flags.iter().any(|f| f.name == name)
     }
-    
+ 
     pub fn get_flag(&self, name: &str) -> Option<&Flag> {
         self.flags.iter().find(|f| f.name == name)
     }
