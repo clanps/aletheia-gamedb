@@ -1,8 +1,7 @@
 // SPDX-FileCopyrightText: 2025 Spencer
 // SPDX-License-Identifier: AGPL-3.0-only
 
-use super::{Game, Scanner};
-use anyhow::Result;
+use super::{Result, Game, Scanner};
 
 pub struct SteamScanner;
 

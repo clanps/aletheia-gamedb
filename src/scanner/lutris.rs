@@ -3,8 +3,7 @@
 
 use crate::dirs::{config, app_data, home};
 use std::fs::{File, read_dir};
-use super::{Game, Scanner};
-use anyhow::{Context, Result};
+use super::{Error, Game, Result, Scanner};
 
 pub struct LutrisScanner;
 
@@ -37,10 +36,22 @@ impl Scanner for LutrisScanner {
             let file = File::open(&path)?;
             let yml: serde_yaml::Value = serde_yaml::from_reader(file)?;
 
-            let name = &yml["name"].as_str().context("Lutris game config is missing name.")?;
-            let directory = &yml["game"]["prefix"].as_str().context("Lutris game config is missing game prefix.")?;
+            let name = yml.get("name")
+                .and_then(|n| n.as_str())
+                .ok_or(Error::MissingMetadata {
+                    game_name: path.display().to_string(),
+                    key: "Name".to_owned()
+                })?;
 
-            games.push(Game { name: (*name).to_owned(), directory: directory.into(), source: "Lutris".into() });
+            let directory = yml.get("game")
+                .and_then(|g| g.get("prefix"))
+                .and_then(|p| p.as_str())
+                .ok_or(Error::MissingMetadata {
+                    game_name: name.to_owned(),
+                    key: "game.prefix".to_owned()
+                })?;
+
+            games.push(Game { name: name.to_owned(), directory: directory.into(), source: "Lutris".to_owned() });
         }
 
         Ok(games)

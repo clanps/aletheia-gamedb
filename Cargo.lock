@@ -151,7 +151,6 @@ dependencies = [
 name = "aletheia"
 version = "0.1.0"
 dependencies = [
- "anyhow",
  "glob",
  "reqwest",
  "serde",
