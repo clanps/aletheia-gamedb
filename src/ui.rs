@@ -109,7 +109,7 @@ pub fn run(config: &Config) {
                 .map(|game| game.name.to_string())
                 .collect();
 
-            crate::commands::backup::Backup::run(selected_game_names, &cfg);
+            crate::commands::Backup::run(selected_game_names, &cfg);
         }
     });
 
