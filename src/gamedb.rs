@@ -3,13 +3,13 @@
 
 use crate::dirs::cache;
 use crate::scanner::{Game, Scanner};
-use crate::scanner::steam::SteamScanner;
+use crate::scanner::SteamScanner;
 use std::fs::{create_dir_all, read_to_string, write};
 use std::path::Path;
 use serde::{Deserialize, Serialize};
 
 #[cfg(unix)]
-use crate::scanner::lutris::LutrisScanner;
+use crate::scanner::LutrisScanner;
 
 const GAMEDB_YAML: &str = include_str!("../resources/gamedb.yaml");
 

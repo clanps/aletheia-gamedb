@@ -2,8 +2,12 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 
 #[cfg(unix)]
-pub mod lutris;
-pub mod steam;
+mod lutris;
+mod steam;
+
+#[cfg(unix)]
+pub use lutris::LutrisScanner;
+pub use steam::SteamScanner;
 
 #[derive(Debug, thiserror::Error)]
 pub enum Error {
