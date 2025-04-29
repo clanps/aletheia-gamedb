@@ -3,12 +3,12 @@
 
 use crate::dirs::{config, app_data, home};
 use std::fs::{File, read_dir};
-use super::{Error, Game, Result, Scanner};
+use super::{Game, Scanner};
 
 pub struct LutrisScanner;
 
 impl Scanner for LutrisScanner {
-    fn get_games() -> Result<Vec<Game>> {
+    fn get_games() -> Vec<Game> {
         let mut games = vec![];
         let lutris_config_dir_deprecated = config().join("lutris/games");
         let lutris_config_dir_new = app_data().join("lutris/games");
@@ -21,10 +21,10 @@ impl Scanner for LutrisScanner {
         } else if lutris_config_dir_flatpak.exists() {
             lutris_config_dir_flatpak
         } else {
-            return Ok(games);
+            return games;
         };
 
-        let game_configs = read_dir(lutris_config_dir)?;
+        let game_configs = read_dir(lutris_config_dir).unwrap();
 
         for cfg in game_configs.flatten() {
             let path = cfg.path();
@@ -33,27 +33,23 @@ impl Scanner for LutrisScanner {
                 continue;
             }
 
-            let file = File::open(&path)?;
-            let yml: serde_yaml::Value = serde_yaml::from_reader(file)?;
+            let file = File::open(&path).unwrap();
+            let yml: serde_yaml::Value = serde_yaml::from_reader(file).unwrap();
 
             let name = yml.get("name")
-                .and_then(|n| n.as_str())
-                .ok_or(Error::MissingMetadata {
-                    game_name: path.display().to_string(),
-                    key: "Name".to_owned()
-                })?;
+                .and_then(|n| n.as_str());
 
             let directory = yml.get("game")
                 .and_then(|g| g.get("prefix"))
-                .and_then(|p| p.as_str())
-                .ok_or(Error::MissingMetadata {
-                    game_name: name.to_owned(),
-                    key: "game.prefix".to_owned()
-                })?;
+                .and_then(|p| p.as_str());
 
-            games.push(Game { name: name.to_owned(), directory: directory.into(), source: "Lutris".to_owned() });
+            if name.is_none() || directory.is_none() {
+                continue;
+            }
+
+            games.push(Game { name: name.unwrap().to_owned(), directory: directory.unwrap().into(), source: "Lutris".to_owned() });
         }
 
-        Ok(games)
+        games
     }
 }

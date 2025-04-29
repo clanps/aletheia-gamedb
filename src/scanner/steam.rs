@@ -1,18 +1,18 @@
 // SPDX-FileCopyrightText: 2025 Spencer
 // SPDX-License-Identifier: AGPL-3.0-only
 
-use super::{Result, Game, Scanner};
+use super::{Game, Scanner};
 
 pub struct SteamScanner;
 
 impl Scanner for SteamScanner {
-    fn get_games() -> Result<Vec<Game>> {
+    fn get_games() -> Vec<Game> {
         let mut games = vec![];
 
         let steam_directory = match steamlocate::SteamDir::locate() {
             Ok(dir) => dir,
             Err(_e) => {
-                return Ok(games);
+                return games;
             }
         };
 
@@ -46,7 +46,7 @@ impl Scanner for SteamScanner {
             }
         }
 
-        Ok(games)
+        games
     }
 }
 

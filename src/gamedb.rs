@@ -72,9 +72,9 @@ pub fn get_installed_games() -> Vec<Game> {
     let mut games = vec![];
 
     #[cfg(unix)]
-    games.extend(LutrisScanner::get_games().unwrap());
+    games.extend(LutrisScanner::get_games());
 
-    games.extend(SteamScanner::get_games().unwrap());
+    games.extend(SteamScanner::get_games());
 
     games.into_iter().filter(|game| db.contains_key(&game.name)).collect()
 }
