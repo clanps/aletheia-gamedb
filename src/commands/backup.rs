@@ -16,7 +16,22 @@ impl Command for Backup {
     fn run(args: Args, config: &Config) {
         let game_db = gamedb::parse();
         let installed_games = gamedb::get_installed_games();
-        let games: Vec<_> = if args.positional.is_empty() {
+        let games: Vec<_> = if let Some(launcher) = args.get_flag_value("infer") {
+            if launcher != "lutris" {
+                println!("Unsupported launcher, currently only Lutris is supported.");
+                return;
+            }
+
+            let game_name = match std::env::var("GAME_NAME") {
+                Ok(name) => name,
+                Err(_) => {
+                    println!("GAME_NAME environment variable not found, is the game being launched by Lutris?");
+                    return;
+                }
+            };
+
+            installed_games.into_iter().filter(|game| game.name == game_name).collect()
+        } else if args.positional.is_empty() {
             installed_games
         } else {
             installed_games.into_iter().filter(|game| args.positional.contains(&game.name)).collect()
