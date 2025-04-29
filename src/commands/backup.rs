@@ -12,7 +12,7 @@ use glob::glob;
 
 pub struct Backup;
 
-impl Command for Backup { 
+impl Command for Backup {
     fn run(args: Args, config: &Config) {
         let game_db = gamedb::parse();
         let installed_games = gamedb::get_installed_games();

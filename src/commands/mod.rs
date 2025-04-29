@@ -39,14 +39,14 @@ impl Args {
     pub fn parse(args: &[String]) -> Self {
         let mut positional = Vec::new();
         let mut flags = Vec::new();
-        
+
         let mut i = 0;
         while i < args.len() {
             let arg = &args[i];
 
             if let Some(name) = arg.strip_prefix("--") {
                 let has_value = i + 1 < args.len() && !args[i + 1].starts_with('-');
- 
+
                 if has_value {
                     flags.push(Flag::with_value(name, &args[i + 1]));
                     i += 2;
@@ -59,22 +59,22 @@ impl Args {
                 i += 1;
             }
         }
-        
+
         Self { positional, flags }
     }
-    
+
     pub fn has_flag(&self, name: &str) -> bool {
         self.flags.iter().any(|f| f.name == name)
     }
- 
+
     pub fn get_flag(&self, name: &str) -> Option<&Flag> {
         self.flags.iter().find(|f| f.name == name)
     }
-    
+
     pub fn get_flag_value(&self, name: &str) -> Option<&String> {
         self.get_flag(name).and_then(|f| f.value.as_ref())
     }
-    
+
     pub fn flags_map(&self) -> std::collections::HashMap<String, Option<String>> {
         self.flags.iter()
             .map(|f| (f.name.clone(), f.value.clone()))

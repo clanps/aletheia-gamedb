@@ -66,7 +66,7 @@ fn restore_game(game_dir: &Path, game_name: &str, lutris_games: &[crate::scanner
     for file in manifest.files {
         let expanded = expand_path(&file.path, Some(&game.directory));
         let src_file = game_dir.join(PathBuf::from(&file.path).file_name().unwrap());
-        
+
         if expanded.exists() && hash_file(&expanded) == file.hash {
             continue;
         }

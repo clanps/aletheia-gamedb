@@ -28,7 +28,7 @@ impl Scanner for LutrisScanner {
 
         for cfg in game_configs.flatten() {
             let path = cfg.path();
-            
+
             if path.extension().and_then(|ext| ext.to_str()) != Some("yml") {
                 continue;
             }
