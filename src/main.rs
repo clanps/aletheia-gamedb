@@ -24,9 +24,9 @@ fn main() {
     if let Some(cmd) = args.next() {
         let args: Vec<String> = args.collect();
         match cmd.as_str() {
-            "backup" => commands::backup::Backup::run(args, &config),
-            "restore" => commands::restore::Restore::run(args, &config),
-            "update" => commands::update::Update::run(args, &config),
+            "backup" => commands::Backup::run(args, &config),
+            "restore" => commands::Restore::run(args, &config),
+            "update" => commands::Update::run(args, &config),
             _ => eprintln!("Command not found.")
         }
     } else {
