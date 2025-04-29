@@ -4,7 +4,6 @@
 use sha2::{Sha512, Digest};
 
 pub fn hash_file(file_path: &std::path::PathBuf) -> String {
-    println!("{file_path:?}");
     let mut file_content = std::fs::File::open(file_path).unwrap();
     let mut hasher = Sha512::new();
 

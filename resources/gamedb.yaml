@@ -331,7 +331,7 @@ Life is Strange 2:
 "Lost Records: Bloom & Rage":
   files:
     windows:
-      - "{LocalAppData}/Bloom&Rage/Saved/SaveGames/*"
+      - "{LocalAppData}/Bloom&Rage/Saved/SaveGames/*/*.sav"
 Marvel's Guardians of the Galaxy:
   files:
     windows:
