@@ -33,13 +33,11 @@ impl Command for Backup {
                 backup_game(&game, config, game_db.get(&game.name).unwrap());
             }
         } else if !args.positional.is_empty() {
-            for game in installed_games.into_iter().filter(|game| args.positional.contains(&game.name)).collect::<Vec<_>>() {
-                backup_game(&game, config, game_db.get(&game.name).unwrap());
-            }
+            installed_games.iter()
+                .filter(|game| args.positional.contains(&game.name))
+                .for_each(|game| backup_game(game, config, game_db.get(&game.name).unwrap()));
         } else {
-            for game in installed_games {
-                backup_game(&game, config, game_db.get(&game.name).unwrap());
-            }
+            installed_games.iter().for_each(|game| backup_game(game, config, game_db.get(&game.name).unwrap()));
         }
     }
 }
