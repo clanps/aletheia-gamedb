@@ -10,11 +10,39 @@ use std::path::{Path, PathBuf};
 pub struct Restore;
 
 impl Command for Restore {
-    fn run(_args: Args, config: &Config) {
+    fn run(args: Args, config: &Config) {
         let save_dir = PathBuf::from(&config.save_dir);
 
         if !save_dir.exists() {
             eprintln!("Backup directory doesn't exist.");
+            return;
+        }
+
+        let installed_games = crate::gamedb::get_installed_games();
+
+        if let Some(launcher) = args.get_flag_value("infer") {
+            if launcher != "lutris" {
+                println!("Unsupported launcher, currently only Lutris is supported.");
+                return;
+            }
+
+            let Ok(game_name) = std::env::var("GAME_NAME") else {
+                println!("GAME_NAME environment variable not found, is the game being launched by Lutris?");
+                return;
+            };
+
+            let game_dir = save_dir.join(&game_name);
+            if !game_dir.exists() || !game_dir.is_dir() {
+                println!("No backups found for {game_name}.");
+                return;
+            }
+
+            if !game_dir.join("aletheia_manifest.yaml").exists() {
+                println!("{game_name} is missing a manifest file.");
+                return;
+            }
+
+            restore_game(&game_dir, &game_name, &installed_games);
             return;
         }
 
@@ -32,7 +60,7 @@ impl Command for Restore {
                 continue;
             }
 
-            restore_game(&game_dir, &game_name, &crate::gamedb::get_installed_games());
+            restore_game(&game_dir, &game_name, &installed_games);
         }
     }
 }
