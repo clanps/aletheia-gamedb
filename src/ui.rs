@@ -98,11 +98,11 @@ pub fn run(config: &Config) {
         }
     });
 
-    app.global::<GamesScreenLogic>().on_backup({
+    app.global::<GamesScreenLogic>().on_perform_operation({
         let app = app_weak.upgrade().unwrap();
         let cfg = cfg.clone();
 
-        move || {
+        move |action| {
             let selected_games_model = app.global::<GamesScreenLogic>().get_selected_games();
             let selected_games: Vec<UiGame> = selected_games_model.iter().collect();
             let selected_game_names = Args::parse(&selected_games
@@ -111,24 +111,12 @@ pub fn run(config: &Config) {
                 .collect::<Vec<String>>()
             );
 
-            crate::commands::Backup::run(selected_game_names, &cfg);
-        }
-    });
-
-    app.global::<GamesScreenLogic>().on_restore({
-        let app = app_weak.upgrade().unwrap();
-        let cfg = cfg.clone();
-
-        move || {
-            let selected_games_model = app.global::<GamesScreenLogic>().get_selected_games();
-            let selected_games: Vec<UiGame> = selected_games_model.iter().collect();
-            let selected_game_names = Args::parse(&selected_games
-                .iter()
-                .map(|game| game.name.to_string())
-                .collect::<Vec<String>>()
-            );
-
-            crate::commands::Restore::run(selected_game_names, &cfg);
+            if action == "backup" {
+                crate::commands::Backup::run(selected_game_names, &cfg);
+                app.global::<GameLogic>().invoke_refresh_games()
+            } else {
+                crate::commands::Restore::run(selected_game_names, &cfg);
+            }
         }
     });
 

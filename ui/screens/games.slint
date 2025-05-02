@@ -13,8 +13,7 @@ export global GamesScreenLogic {
   in-out property <[UiGame]> selected_games: [];
   callback filter(string);
   callback select_game(UiGame);
-  callback backup();
-  callback restore();
+  callback perform_operation(string);
 }
 
 export component Games {
@@ -77,7 +76,7 @@ export component Games {
         text: "Backup";
         clicked => {
           if (GamesScreenLogic.selected_games.length > 0) {
-            GamesScreenLogic.backup();
+            GamesScreenLogic.perform_operation("backup");
           }
         }
       }
@@ -88,7 +87,7 @@ export component Games {
         text: "Restore";
         clicked => {
           if (GamesScreenLogic.selected_games.length > 0) {
-            GamesScreenLogic.restore();
+            GamesScreenLogic.perform_operation("restore");
           }
         }
       }
