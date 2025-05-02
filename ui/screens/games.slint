@@ -14,6 +14,7 @@ export global GamesScreenLogic {
   callback filter(string);
   callback select_game(UiGame);
   callback backup();
+  callback restore();
 }
 
 export component Games {
@@ -85,6 +86,11 @@ export component Games {
         width: 140px;
         height: 36px;
         text: "Restore";
+        clicked => {
+          if (GamesScreenLogic.selected_games.length > 0) {
+            GamesScreenLogic.restore();
+          }
+        }
       }
 
       Button {
