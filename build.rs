@@ -6,7 +6,6 @@ fn main() {
 
     slint_build::compile_with_config("ui/app.slint", config).expect("Slint build failed.");
 
-    if cfg!(windows) && !cfg!(debug_assertions) {
-        winresource::WindowsResource::new().compile().unwrap();
-    }
+    #[cfg(all(windows, not(debug_assertions)))]
+    winresource::WindowsResource::new().compile().unwrap();
 }
