@@ -453,7 +453,7 @@ Quantum Break:
 Remnant II:
   files:
     windows:
-      - "{Home}/Saved Games/Remnant2/Steam/*"
+      - "{Home}/Saved Games/Remnant2/Steam/*/*"
 Resident Evil Revelations:
   files:
     windows:
