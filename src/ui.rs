@@ -113,7 +113,7 @@ pub fn run(config: &Config) {
 
             if action == "backup" {
                 crate::commands::Backup::run(selected_game_names, &cfg);
-                app.global::<GameLogic>().invoke_refresh_games()
+                app.global::<GameLogic>().invoke_refresh_games();
             } else {
                 crate::commands::Restore::run(selected_game_names, &cfg);
             }
