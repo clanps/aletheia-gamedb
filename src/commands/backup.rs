@@ -61,15 +61,21 @@ fn backup_game(game: &Game, config: &Config, entry: &GameDbEntry) {
             let found_paths = glob(&expanded.to_string_lossy()).unwrap();
 
             for file in found_paths {
-                let file_path = file.unwrap();
-                let file_path_str = file_path.to_string_lossy().to_string();
-                let file_hash = hash_file(&file_path);
+                let file = file.unwrap();
+                let file_path_str = file.to_string_lossy().to_string();
+
+                if file.is_dir() {
+                    println!("Found {file_path_str} while backing up {}. Glob patterns should match files only.", game.name);
+                    continue;
+                }
+
+                let file_hash = hash_file(&file);
                 let file_changed = existing_manifest.as_ref().is_none_or(|manifest| manifest.files.iter().find(|m| m.path == file_path_str).is_none_or(|metadata| metadata.hash != file_hash));
 
                 if file_changed {
                     let file_metadata = process_file(
-                        &file_path,
-                        &backup_folder.clone().join(file_path.file_name().unwrap()),
+                        &file,
+                        &backup_folder.clone().join(file.file_name().unwrap()),
                         Some(&game.directory)
                     );
 
