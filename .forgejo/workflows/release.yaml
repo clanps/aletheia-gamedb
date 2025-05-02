@@ -1,0 +1,30 @@
+name: Publish Release Builds
+on:
+  push:
+    tags:
+      - '*.*.*'
+
+jobs:
+  Release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Rust toolchain
+        uses: actions/rust-toolchain@stable
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build
+        run: |
+          sudo apt update && sudo apt install -y g++-mingw-w64-x86-64 && mkdir release && rustup target add x86_64-pc-windows-gnu
+          cargo build --release && mv target/release/aletheia release/aletheia-linux-x64
+          cargo build --release --target x86_64-pc-windows-gnu && mv target/x86_64-pc-windows-gnu/release/aletheia.exe release/aletheia-windows-x64.exe
+
+      - name: Release
+        uses: actions/forgejo-release@v2.6.0
+        with:
+          direction: upload
+          url: https://git.usesarchbtw.lol
+          repo: ${{ env.GITHUB_REPOSITORY }}
+          tag: ${{ env.GITHUB_REF_NAME }}
+          release-dir: release
