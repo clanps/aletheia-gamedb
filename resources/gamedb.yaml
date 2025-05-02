@@ -450,6 +450,10 @@ Quantum Break:
   files:
     windows:
       - "{LocalAppData}/QuantumBreak/*"
+Remnant II:
+  files:
+    windows:
+      - "{Home}/Saved Games/Remnant2/Steam/*"
 Resident Evil Revelations:
   files:
     windows:
