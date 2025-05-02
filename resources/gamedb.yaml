@@ -143,7 +143,7 @@ Dead Island:
 Dead Island 2:
   files:
     windows:
-      - "{LocalAppdata}/DeadIslandSteam/Saved/SaveGames/*"
+      - "{LocalAppData}/DeadIslandSteam/Saved/SaveGames/*"
 Dead Rising:
   files:
     windows:
