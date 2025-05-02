@@ -12,7 +12,12 @@ pub struct Config {
 
 impl Config {
     pub fn load() -> Self {
-        let dir = crate::dirs::config().join("aletheia");
+        let dir = if cfg!(unix) {
+            crate::dirs::config().join("aletheia")
+        } else {
+            crate::dirs::app_data().join("aletheia")
+        };
+
         let config_path = dir.join("config.json");
 
         if Path::exists(&config_path) {
