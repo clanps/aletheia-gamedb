@@ -40,7 +40,7 @@ pub fn run(config: &Config) {
 
             let ui_games: Vec<UiGame> = games.into_iter().map(|g| {
                 let name = g.name;
-                let backup_path = save_dir.join(&name);
+                let backup_path = save_dir.join(name.replace(':', ""));
 
                 UiGame {
                     name: name.into(),
