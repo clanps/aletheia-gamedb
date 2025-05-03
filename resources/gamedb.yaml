@@ -35,6 +35,10 @@ BONEWORKS:
   files:
     windows:
       - "{LocalLow}/Stress Level Zero/BONEWORKS/*.dat"
+Balatro:
+  files:
+    windows:
+      - "{AppData}/Balatro/*"
 "Batman - The Telltale Series":
   files:
     windows:
