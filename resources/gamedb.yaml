@@ -635,6 +635,10 @@ The Quarry:
     windows:
       - "{Documents}/Telltale Games/The Walking Dead Definitive/*"
       - "{Documents}/Telltale Games/The Walking Dead The Telltale Definitive Series/*"
+"Tiny Tina's Wonderlands":
+  files:
+    windows:
+      - "{Documents}/My Games/Tiny Tina's Wonderlands/Saved/SaveGames/*/*"
 Tormented Souls:
   files:
     windows:
