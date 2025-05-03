@@ -67,12 +67,9 @@ impl Command for Restore {
 
 fn restore_game(game_dir: &Path, lutris_games: &[crate::scanner::Game]) {
     let manifest_content = std::fs::read_to_string(game_dir.join("aletheia_manifest.yaml")).unwrap();
-    let manifest = match serde_yaml::from_str::<crate::gamedb::GameInfo>(&manifest_content) {
-        Ok(manifest) => manifest,
-        Err(_) => {
-            eprintln!("Failed to parse {}'s manifest.", game_dir.file_name().unwrap().to_string_lossy());
-            return;
-        }
+    let Ok(manifest) = serde_yaml::from_str::<crate::gamedb::GameInfo>(&manifest_content) else {
+        eprintln!("Failed to parse {}'s manifest.", game_dir.file_name().unwrap().to_string_lossy());
+        return;
     };
 
     let game_name = manifest.name;
