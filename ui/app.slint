@@ -5,6 +5,7 @@ import { GameLogic } from "./app_logic.slint";
 import { NavItem } from "./components/nav_item.slint";
 import { About } from "./screens/about.slint";
 import { Games, GamesScreenLogic } from "./screens/games.slint";
+import { Settings } from "./screens/settings.slint";
 import { UiGame } from "./structs/ui_game.slint";
 
 export { GamesScreenLogic, GameLogic }
@@ -63,6 +64,7 @@ export component App inherits Window {
         padding: 24px;
 
         if (root.current_screen == "games"): Games {}
+        if (root.current_screen == "settings"): Settings {}
         if (root.current_screen == "about"): About {}
       }
     }

@@ -1,0 +1,93 @@
+import { Button } from "../components/button.slint";
+import { TextInput } from "../components/text_input.slint";
+
+export component Settings {
+  width: 100%;
+  height: 100%;
+
+  VerticalLayout {
+    alignment: start;
+    spacing: 24px;
+    padding: 24px;
+
+    Text {
+      text: "Settings";
+      color: #cdd6f4;
+      font-family: "Inter";
+      font-size: 28px;
+      font-weight: 700;
+    }
+
+    Rectangle { height: 1px; background: #45475a; }
+
+    VerticalLayout {
+      spacing: 16px;
+
+      HorizontalLayout {
+        spacing: 12px;
+
+        Rectangle {
+          width: 24px;
+          height: 24px;
+          Image {
+            source: @image-url("../assets/folder.svg");
+            width: 100%;
+            height: 100%;
+            colorize: #89b4fa;
+          }
+        }
+
+        Text {
+          text: "Game Data Location";
+          color: #cdd6f4;
+          font-size: 18px;
+          font-weight: 600;
+          font-family: "Inter";
+          vertical-alignment: center;
+        }
+      }
+
+      VerticalLayout {
+        padding-left: 36px;
+        spacing: 12px;
+
+        Text {
+          text: "Choose where your games will be saved";
+          color: #a6adc8;
+          font-family: "Inter";
+          font-size: 14px;
+        }
+
+        HorizontalLayout {
+          spacing: 8px;
+
+          TextInput {
+            height: 38px;
+            width: 400px;
+            placeholder_text: "Path to save location";
+          }
+
+          Button {
+            text: "Browse";
+            width: 100px;
+            height: 38px;
+          }
+        }
+      }
+    }
+
+    Rectangle { height: 1px; background: #45475a; }
+
+    HorizontalLayout {
+      alignment: end;
+      padding-top: 12px;
+      padding-bottom: 8px;
+
+      Button {
+        text: "Save";
+        width: 120px;
+        height: 40px;
+      }
+    }
+  }
+}
