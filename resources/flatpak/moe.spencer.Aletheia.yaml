@@ -22,6 +22,7 @@ finish-args:
   - --device=dri
   # Used to detect and restore Lutris save files
   - --filesystem=~/.var/app/net.lutris.Lutris
+  - --filesystem=~/Games
   # Used to detect and restore Steam save files
   - --filesystem=~/.var/app/com.valvesoftware.Steam
 
