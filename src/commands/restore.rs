@@ -42,7 +42,7 @@ impl Command for Restore {
                 return;
             }
 
-            restore_game(&game_dir, &game_name, &installed_games);
+            restore_game(&game_dir, &installed_games);
             return;
         }
 
@@ -60,24 +60,26 @@ impl Command for Restore {
                 continue;
             }
 
-            restore_game(&game_dir, &game_name, &installed_games);
+            restore_game(&game_dir, &installed_games);
         }
     }
 }
 
-fn restore_game(game_dir: &Path, game_name: &str, lutris_games: &[crate::scanner::Game]) {
-    let Some(game) = lutris_games.iter().find(|g| g.name == game_name) else {
-        println!("{game_name} was not found in Lutris.");
-        return;
-    };
-
+fn restore_game(game_dir: &Path, lutris_games: &[crate::scanner::Game]) {
     let manifest_content = std::fs::read_to_string(game_dir.join("aletheia_manifest.yaml")).unwrap();
     let manifest = match serde_yaml::from_str::<crate::gamedb::GameInfo>(&manifest_content) {
         Ok(manifest) => manifest,
-        Err(_e) => {
-            eprintln!("Failed to parse {game_name}'s manifest.");
+        Err(_) => {
+            eprintln!("Failed to parse {}'s manifest.", game_dir.file_name().unwrap().to_string_lossy());
             return;
         }
+    };
+
+    let game_name = manifest.name;
+
+    let Some(game) = lutris_games.iter().find(|g| g.name == game_name) else {
+        println!("{game_name} was not found in Lutris.");
+        return;
     };
 
     let mut restored = false;
