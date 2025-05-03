@@ -12,6 +12,7 @@ export global GamesScreenLogic {
   in property <[UiGame]> filtered_games: [];
   in-out property <[UiGame]> selected_games: [];
   callback filter(string);
+  callback select_all(bool);
   callback select_game(UiGame);
   callback perform_operation(string);
 }
@@ -98,11 +99,7 @@ export component Games {
         text: GameLogic.games.length != GamesScreenLogic.selected_games.length ? "Select All" : "Clear Selection";
         background: #2f2f49;
         clicked => {
-          if (GamesScreenLogic.selected_games.length != GameLogic.games.length) {
-            GamesScreenLogic.selected_games = GameLogic.games;
-          } else {
-            GamesScreenLogic.selected_games = [];
-          }
+          GamesScreenLogic.select_all(GamesScreenLogic.selected_games.length != GameLogic.games.length)
         }
       }
     }
@@ -116,6 +113,7 @@ export component Games {
         for game in GamesScreenLogic.filtered_games: GameCard {
           game: game;
           clicked => {
+            game.selected = !game.selected;
             GamesScreenLogic.select_game(game);
           }
         }

@@ -55,8 +55,10 @@ pub fn run(config: &Config) {
             }).collect();
 
             let games_model = ModelRc::new(std::rc::Rc::new(VecModel::from(ui_games)));
+            // In a perfect world, Slint would have a way to filter in their markdown language so I could avoid this
             app.global::<GameLogic>().set_games(games_model.clone());
-            app.global::<GamesScreenLogic>().set_filtered_games(games_model);
+            app.global::<GamesScreenLogic>().set_filtered_games(games_model.clone());
+            app.global::<GamesScreenLogic>().set_selected_games(games_model);
         }
     });
 
@@ -79,6 +81,30 @@ pub fn run(config: &Config) {
             app.global::<GamesScreenLogic>().set_filtered_games(ModelRc::new(std::rc::Rc::new(VecModel::from(filtered_games))));
         }
     });
+
+    app.global::<GamesScreenLogic>().on_select_all({
+        let app_weak = app.as_weak();
+
+        move |enabled| {
+            let app = app_weak.upgrade().unwrap();
+            let filtered_games_model = app.global::<GamesScreenLogic>().get_filtered_games();
+            let updated_games: Vec<UiGame> = filtered_games_model.iter().map(|mut g| {
+                g.selected = enabled;
+                g
+            }).collect();
+
+            let updated_model = ModelRc::new(std::rc::Rc::new(VecModel::from(updated_games.clone())));
+            app.global::<GamesScreenLogic>().set_filtered_games(updated_model.clone());
+            app.global::<GamesScreenLogic>().set_selected_games(
+                if enabled {
+                    ModelRc::new(std::rc::Rc::new(VecModel::from(updated_games)))
+                } else {
+                    ModelRc::new(std::rc::Rc::new(VecModel::from(vec![])))
+                }
+            );
+        }
+    });
+
 
     app.global::<GamesScreenLogic>().on_select_game({
         let app_weak = app.as_weak();

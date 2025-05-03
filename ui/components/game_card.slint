@@ -5,7 +5,6 @@ import { UiGame } from "../structs/ui_game.slint";
 
 export component GameCard inherits Rectangle {
   in property <UiGame> game;
-  property <bool> selected;
   callback clicked();
 
   background: #1e1e2e;
@@ -28,7 +27,7 @@ export component GameCard inherits Rectangle {
 
       Image {
         source: @image-url("../assets/check.svg");
-        opacity: root.selected ? 100% : 10%;
+        opacity: root.game.selected ? 100% : 10%;
         x: 0;
       }
     }
@@ -55,7 +54,7 @@ export component GameCard inherits Rectangle {
     }
 
     Text {
-      text: game.backup_size;
+      text: root.game.backup_size;
       font-size: 14px;
       color: #a0a0a0;
       horizontal-alignment: right;
@@ -64,9 +63,6 @@ export component GameCard inherits Rectangle {
   }
 
   TouchArea {
-    clicked => {
-      root.selected = !root.selected;
-      root.clicked();
-    }
+    clicked => { root.clicked() }
   }
 }
