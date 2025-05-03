@@ -43,12 +43,7 @@ impl Command for Backup {
 }
 
 fn backup_game(game: &Game, config: &Config, entry: &GameDbEntry) {
-    let backup_folder = if cfg!(unix) {
-        PathBuf::from(&config.save_dir).join(&game.name)
-    } else {
-        PathBuf::from(&config.save_dir).join(game.name.replace(':', ""))
-    };
-
+    let backup_folder = PathBuf::from(&config.save_dir).join(game.name.replace(':', "")); // NTFS doesn't support : and this makes sense on Unix for cross-OS syncing
     let manifest_path = backup_folder.join("aletheia_manifest.yaml");
     let mut changed = false;
     let existing_manifest = manifest_path.exists().then(|| {
