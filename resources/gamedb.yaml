@@ -635,6 +635,10 @@ The Quarry:
     windows:
       - "{Documents}/Telltale Games/The Walking Dead Definitive/*"
       - "{Documents}/Telltale Games/The Walking Dead The Telltale Definitive Series/*"
+"Tiny Tina's Assault on Dragon Keep: A Wonderlands One-shot Adventure":
+  files:
+    windows:
+      - "{Documents}/My Games/Tiny Tina's Assault On Dragon Keep/WillowGame/SaveData/*/*"
 "Tiny Tina's Wonderlands":
   files:
     windows:
