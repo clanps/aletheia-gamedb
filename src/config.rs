@@ -11,18 +11,29 @@ pub struct Config {
 }
 
 impl Config {
-    pub fn load() -> Self {
-        let dir = if cfg!(unix) {
+    fn get_dir() -> PathBuf {
+        if cfg!(unix) {
             crate::dirs::config().join("aletheia")
         } else {
             crate::dirs::app_data().join("aletheia")
-        };
+        }
+    }
+
+    pub fn load() -> Self {
+        let dir = Self::get_dir();
 
         let config_path = dir.join("config.json");
 
         if Path::exists(&config_path) {
             let content = read_to_string(&config_path).expect("Failed to read config file.");
-            let cfg: Self = serde_json::from_str(&content).expect("Failed to parse config file.");
+            let mut cfg: Self = serde_json::from_str(&content).expect("Failed to parse config file.");
+
+            if !Path::exists(&cfg.save_dir) {
+                println!("Save directory does not exist, resetting.");
+
+                cfg.save_dir = crate::dirs::app_data();
+                Self::save(&cfg);
+            }
 
             return cfg;
         }
@@ -35,12 +46,8 @@ impl Config {
         default
     }
 
-    pub fn save(cfg: Self) {
-        let dir = if cfg!(unix) {
-            crate::dirs::config().join("aletheia")
-        } else {
-            crate::dirs::app_data().join("aletheia")
-        };
+    pub fn save(cfg: &Self) {
+        let dir = Self::get_dir();
 
         let config_path = dir.join("config.json");
         create_dir_all(&dir).unwrap();

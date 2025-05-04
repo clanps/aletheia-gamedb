@@ -171,7 +171,7 @@ pub fn run(config: &AletheiaConfig) {
 
     app.global::<SettingsScreenLogic>().on_save_config({
         move |cfg| {
-            AletheiaConfig::save(AletheiaConfig { save_dir: (&cfg.save_dir).into() })
+            AletheiaConfig::save(&AletheiaConfig { save_dir: (&cfg.save_dir).into() })
         }
     });
 
