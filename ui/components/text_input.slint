@@ -3,8 +3,8 @@
 
 export component TextInput inherits Rectangle {
   in property <string> placeholder_text;
+  in-out property <string> text;
   out property <bool> has_focus: input.has-focus;
-  out property <string> text: input.text;
   callback changed(string);
 
   border-width: 1px;
@@ -28,6 +28,7 @@ export component TextInput inherits Rectangle {
       color: white;
       opacity: 65%;
       vertical-alignment: center;
+      text: root.text;
 
       if (self.text == ""): Text {
         x: 0;
@@ -39,7 +40,10 @@ export component TextInput inherits Rectangle {
         opacity: 50%;
       }
 
-      edited => { root.changed(self.text); }
+      edited => {
+        root.text = self.text;
+        root.changed(self.text);
+      }
     }
   }
 }

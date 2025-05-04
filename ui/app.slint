@@ -5,10 +5,10 @@ import { GameLogic } from "./app_logic.slint";
 import { NavItem } from "./components/nav_item.slint";
 import { About } from "./screens/about.slint";
 import { Games, GamesScreenLogic } from "./screens/games.slint";
-import { Settings } from "./screens/settings.slint";
+import { Settings, SettingsScreenLogic } from "./screens/settings.slint";
 import { UiGame } from "./structs/ui_game.slint";
 
-export { GamesScreenLogic, GameLogic }
+export { GamesScreenLogic, GameLogic, SettingsScreenLogic }
 
 export component App inherits Window {
   property <string> current_screen: "games";

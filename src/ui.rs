@@ -146,6 +146,25 @@ pub fn run(config: &Config) {
         }
     });
 
+    app.global::<SettingsScreenLogic>().on_browse({
+        let app_weak = app.as_weak();
+
+        move || {
+            let app = app_weak.upgrade().unwrap();
+
+            slint::spawn_local(async move {
+                if let Some(folder) = rfd::AsyncFileDialog::new()
+                    .set_directory(crate::dirs::home())
+                    .pick_folder()
+                    .await
+                {
+                    let path = folder.path().to_string_lossy().to_string();
+                    app.global::<SettingsScreenLogic>().set_save_dir(path.into());
+                }
+            }).unwrap();
+        }
+    });
+
     app.global::<GameLogic>().invoke_refresh_games();
     app.run().unwrap();
 }
