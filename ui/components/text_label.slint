@@ -1,0 +1,30 @@
+// SPDX-FileCopyrightText: 2025 Spencer
+// SPDX-License-Identifier: AGPL-3.0-only
+
+export component TextLabel inherits Rectangle {
+  in property <string> text;
+  callback changed(string);
+
+  border-width: 1px;
+  border-color: #18182040;
+  background: #1e1e2e;
+  drop-shadow-blur: 8px;
+  drop-shadow-color: rgba(0, 0, 0, 0.15);
+  drop-shadow-offset-y: 4px;
+
+  HorizontalLayout {
+    padding-left: 12px;
+    padding-right: 12px;
+    spacing: 8px;
+
+    Text {
+      font-family: "Inter";
+      font-size: 14px;
+      font-weight: 400;
+      color: white;
+      opacity: 65%;
+      vertical-alignment: center;
+      text: root.text;
+    }
+  }
+}

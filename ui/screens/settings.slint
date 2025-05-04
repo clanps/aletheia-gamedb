@@ -1,5 +1,5 @@
 import { Button } from "../components/button.slint";
-import { TextInput } from "../components/text_input.slint";
+import { TextLabel } from "../components/text_label.slint";
 import { Config } from "../structs/config.slint";
 
 export global SettingsScreenLogic {
@@ -68,11 +68,10 @@ export component Settings {
         HorizontalLayout {
           spacing: 8px;
 
-          TextInput {
+          TextLabel {
             height: 38px;
             width: 400px;
             text: SettingsScreenLogic.config.save_dir;
-            placeholder_text: "Path to save location";
           }
 
           Button {
