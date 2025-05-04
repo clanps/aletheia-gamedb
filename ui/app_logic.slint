@@ -1,7 +1,7 @@
 import { UiGame } from "./structs/ui_game.slint";
 
 export global AppLogic {
-  callback get_version() -> string;
+  in property <string> version;
   callback open_url(string);
 }
 

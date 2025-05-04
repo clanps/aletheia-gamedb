@@ -9,10 +9,6 @@ export component About {
   width: 100%;
   height: 100%;
 
-  property <string> version;
-
-  init => { version = AppLogic.get_version(); }
-
   VerticalLayout {
     alignment: start;
     spacing: 24px;
@@ -56,7 +52,7 @@ export component About {
         }
 
         Text {
-          text: "Version: " + version;
+          text: "Version: " + AppLogic.version;
           color: #a6adc8;
           font-family: "Inter";
           font-size: 14px;
