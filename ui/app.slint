@@ -1,14 +1,14 @@
 // SPDX-FileCopyrightText: 2025 Spencer
 // SPDX-License-Identifier: AGPL-3.0-only
 
-import { GameLogic } from "./app_logic.slint";
+import { AppLogic, GameLogic } from "./app_logic.slint";
 import { NavItem } from "./components/nav_item.slint";
 import { About } from "./screens/about.slint";
 import { Games, GamesScreenLogic } from "./screens/games.slint";
 import { Settings, SettingsScreenLogic } from "./screens/settings.slint";
 import { UiGame } from "./structs/ui_game.slint";
 
-export { GamesScreenLogic, GameLogic, SettingsScreenLogic }
+export { AppLogic, GamesScreenLogic, GameLogic, SettingsScreenLogic }
 
 export component App inherits Window {
   property <string> current_screen: "games";

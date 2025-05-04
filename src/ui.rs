@@ -31,6 +31,18 @@ pub fn run(config: &AletheiaConfig) {
     let cfg = config.clone();
     let save_dir = config.save_dir.clone();
 
+    app.global::<AppLogic>().on_get_version(|| {
+        env!("CARGO_PKG_VERSION").into()
+    });
+
+    app.global::<AppLogic>().on_open_url(move |url| {
+        #[cfg(unix)]
+        std::process::Command::new("xdg-open").arg(url).spawn().ok();
+
+        #[cfg(windows)]
+        std::process::Command::new("cmd").args(&["/c", "start", url]).spawn().ok();
+    });
+
     app.global::<GameLogic>().on_refresh_games({
         let app = app_weak.upgrade().unwrap();
 

@@ -1,5 +1,10 @@
 import { UiGame } from "./structs/ui_game.slint";
 
+export global AppLogic {
+  callback get_version() -> string;
+  callback open_url(string);
+}
+
 export global GameLogic {
   in property <[UiGame]> games: [];
   callback refresh_games();

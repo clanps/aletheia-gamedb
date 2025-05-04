@@ -2,7 +2,119 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 
 import { AboutSlint } from "std-widgets.slint";
+import { AppLogic } from "../app_logic.slint";
+import { Button } from "../components/button.slint";
 
 export component About {
-  AboutSlint {}
+  width: 100%;
+  height: 100%;
+
+  property <string> version;
+
+  init => { version = AppLogic.get_version(); }
+
+  VerticalLayout {
+    alignment: start;
+    spacing: 24px;
+    padding: 24px;
+
+    Text {
+      text: "About Aletheia";
+      color: #cdd6f4;
+      font-family: "Inter";
+      font-size: 28px;
+      font-weight: 700;
+    }
+
+    Rectangle { height: 1px; background: #45475a; }
+
+    VerticalLayout {
+      spacing: 16px;
+
+      HorizontalLayout {
+        spacing: 12px;
+
+        Text {
+          text: "Application Info";
+          color: #cdd6f4;
+          font-size: 18px;
+          font-weight: 600;
+          font-family: "Inter";
+          vertical-alignment: center;
+        }
+      }
+
+      VerticalLayout {
+        padding-left: 36px;
+        spacing: 12px;
+
+        Text {
+          text: "Aletheia is an open-source game save backup tool";
+          color: #a6adc8;
+          font-family: "Inter";
+          font-size: 14px;
+        }
+
+        Text {
+          text: "Version: " + version;
+          color: #a6adc8;
+          font-family: "Inter";
+          font-size: 14px;
+        }
+
+        Text {
+          text: "License: AGPL-3.0";
+          color: #a6adc8;
+          font-family: "Inter";
+          font-size: 14px;
+        }
+
+        HorizontalLayout {
+          spacing: 12px;
+          padding-top: 8px;
+
+          Button {
+            text: "View Source Code";
+            width: 180px;
+            height: 38px;
+            clicked => { AppLogic.open_url("https://git.usesarchbtw.lol/Spencer/aletheia"); }
+          }
+
+          Button {
+            text: "View License";
+            width: 180px;
+            height: 38px;
+            clicked => { AppLogic.open_url("https://git.usesarchbtw.lol/Spencer/aletheia/src/branch/master/LICENSE"); }
+          }
+        }
+      }
+    }
+
+    Rectangle { height: 1px; background: #45475a; }
+
+    VerticalLayout {
+      spacing: 16px;
+
+      HorizontalLayout {
+        Text {
+          text: "Built with";
+          color: #cdd6f4;
+          font-size: 18px;
+          font-weight: 600;
+          font-family: "Inter";
+          vertical-alignment: center;
+        }
+      }
+
+      VerticalLayout {
+        padding-left: 36px;
+        spacing: 12px;
+
+        AboutSlint {
+          preferred-height: 240px;
+          preferred-width: 100%;
+        }
+      }
+    }
+  }
 }
