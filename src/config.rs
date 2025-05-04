@@ -34,6 +34,19 @@ impl Config {
 
         default
     }
+
+    pub fn save(cfg: Self) {
+        let dir = if cfg!(unix) {
+            crate::dirs::config().join("aletheia")
+        } else {
+            crate::dirs::app_data().join("aletheia")
+        };
+
+        let config_path = dir.join("config.json");
+        create_dir_all(&dir).unwrap();
+
+        write(&config_path, serde_json::to_string_pretty(&cfg).unwrap()).unwrap()
+    }
 }
 
 impl Default for Config {

@@ -4,7 +4,7 @@
 slint::include_modules!();
 
 use crate::commands::{Args, Command};
-use crate::config::Config;
+use crate::config::Config as AletheiaConfig;
 use crate::gamedb;
 use slint::{Model, ModelRc, VecModel};
 
@@ -25,7 +25,7 @@ fn format_size(size: u64) -> String {
     }
 }
 
-pub fn run(config: &Config) {
+pub fn run(config: &AletheiaConfig) {
     let app = App::new().unwrap();
     let app_weak = app.as_weak();
     let cfg = config.clone();
@@ -159,12 +159,23 @@ pub fn run(config: &Config) {
                     .await
                 {
                     let path = folder.path().to_string_lossy().to_string();
-                    app.global::<SettingsScreenLogic>().set_save_dir(path.into());
+                    let mut cfg = app.global::<SettingsScreenLogic>().get_config();
+
+                    cfg.save_dir = path.into();
+
+                    app.global::<SettingsScreenLogic>().set_config(cfg);
                 }
             }).unwrap();
         }
     });
 
+    app.global::<SettingsScreenLogic>().on_save_config({
+        move |cfg| {
+            AletheiaConfig::save(AletheiaConfig { save_dir: (&cfg.save_dir).into() })
+        }
+    });
+
     app.global::<GameLogic>().invoke_refresh_games();
+    app.global::<SettingsScreenLogic>().set_config(Config { save_dir: config.save_dir.to_string_lossy().to_string().into() });
     app.run().unwrap();
 }
