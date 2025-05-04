@@ -171,6 +171,10 @@ pub fn run(config: &AletheiaConfig) {
 
     app.global::<SettingsScreenLogic>().on_save_config({
         move |cfg| {
+            if !std::path::PathBuf::from(&cfg.save_dir.to_string()).exists() {
+                return; // TODO: Show an error etc.
+            }
+
             AletheiaConfig::save(&AletheiaConfig { save_dir: (&cfg.save_dir).into() })
         }
     });
