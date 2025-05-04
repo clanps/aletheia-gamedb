@@ -37,14 +37,28 @@ impl Command for Restore {
                 return;
             }
 
-            if !game_dir.join("aletheia_manifest.yaml").exists() {
+            let manifest_path = game_dir.join("aletheia_manifest.yaml");
+
+            if !manifest_path.exists() {
                 println!("{game_name} is missing a manifest file.");
                 return;
             }
 
-            restore_game(&game_dir, &installed_games);
+            let manifest_content = std::fs::read_to_string(manifest_path).unwrap();
+            let Ok(manifest) = serde_yaml::from_str::<crate::gamedb::GameInfo>(&manifest_content) else {
+                eprintln!("Failed to parse {}'s manifest.", game_dir.file_name().unwrap().to_string_lossy());
+                return;
+            };
+
+            restore_game(&game_dir, manifest, &installed_games);
             return;
         }
+
+        let games = if args.positional.is_empty() {
+            vec![]
+        } else {
+            args.positional
+        };
 
         for game in std::fs::read_dir(&save_dir).unwrap() {
             let game_dir = game.unwrap().path();
@@ -54,24 +68,29 @@ impl Command for Restore {
             }
 
             let game_name = game_dir.file_name().unwrap().to_string_lossy();
+            let manifest_path = game_dir.join("aletheia_manifest.yaml");
 
-            if !game_dir.join("aletheia_manifest.yaml").exists() {
+            if !manifest_path.exists() {
                 eprintln!("{game_name} is missing a manifest file.");
                 continue;
             }
 
-            restore_game(&game_dir, &installed_games);
+            let manifest_content = std::fs::read_to_string(manifest_path).unwrap();
+            let Ok(manifest) = serde_yaml::from_str::<crate::gamedb::GameInfo>(&manifest_content) else {
+                eprintln!("Failed to parse {}'s manifest.", game_dir.file_name().unwrap().to_string_lossy());
+                return;
+            };
+
+            if !games.is_empty() && !games.contains(&manifest.name) {
+                continue;
+            }
+
+            restore_game(&game_dir, manifest, &installed_games);
         }
     }
 }
 
-fn restore_game(game_dir: &Path, lutris_games: &[crate::scanner::Game]) {
-    let manifest_content = std::fs::read_to_string(game_dir.join("aletheia_manifest.yaml")).unwrap();
-    let Ok(manifest) = serde_yaml::from_str::<crate::gamedb::GameInfo>(&manifest_content) else {
-        eprintln!("Failed to parse {}'s manifest.", game_dir.file_name().unwrap().to_string_lossy());
-        return;
-    };
-
+fn restore_game(game_dir: &Path, manifest: crate::gamedb::GameInfo, lutris_games: &[crate::scanner::Game]) {
     let game_name = manifest.name;
 
     let Some(game) = lutris_games.iter().find(|g| g.name == game_name) else {

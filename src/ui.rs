@@ -25,6 +25,7 @@ fn format_size(size: u64) -> String {
     }
 }
 
+#[allow(clippy::too_many_lines, reason = "I will refactor this 'at some point'")]
 pub fn run(config: &AletheiaConfig) {
     let app = App::new().unwrap();
     let app_weak = app.as_weak();
@@ -179,7 +180,7 @@ pub fn run(config: &AletheiaConfig) {
 
     app.global::<SettingsScreenLogic>().on_save_config({
         move |cfg| {
-            AletheiaConfig::save(&AletheiaConfig { save_dir: (&cfg.save_dir).into() })
+            AletheiaConfig::save(&AletheiaConfig { save_dir: (&cfg.save_dir).into() });
         }
     });
 
