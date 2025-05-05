@@ -193,6 +193,18 @@ Devil May Cry HD Collection:
   files:
     windows:
       - "{SteamUserData}/631510/remote/*"
+Dishonored:
+  files:
+    windows:
+      - "{Documents}/My Games/Dishonored/DishonoredGame/SaveData/*"
+Dishonored 2:
+  files:
+    windows:
+      - "{Home}/Saved Games/Arkane Studios/dishonored2/base/savegame/*"
+"Dishonored: Death of the Outsider":
+  files:
+    windows:
+      - "{Home}/Saved Games/Arkane Studios/Dishonored_DO/base/savegame/*"
 "Disney Epic Mickey 2: The Power of Two":
   files:
     windows:
