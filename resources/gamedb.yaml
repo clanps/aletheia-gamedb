@@ -232,6 +232,46 @@ Fallout 4 VR:
   files:
     windows:
       - "{Documents}/My Games/FalloutNV/Saves/*"
+"Five Nights at Freddy's":
+  files:
+    windows:
+      - "{AppData}/MMFApplications/freddy/*"
+"Five Nights at Freddy's 2":
+  files:
+    windows:
+      - "{AppData}/MMFApplications/freddy2/*"
+"Five Nights at Freddy's 3":
+  files:
+    windows:
+      - "{AppData}/MMFApplications/freddy3/*"
+"Five Nights at Freddy's: 4":
+  files:
+    windows:
+      - "{AppData}/MMFApplications/fn4/*"
+"Five Nights at Freddy's: Help Wanted":
+  files:
+    windows:
+      - "{LocalAppData}/freddys/Saved/SaveGames/*"
+"Five Nights at Freddy's: Help Wanted 2":
+  files:
+    windows:
+      - "{LocalAppData}/HW2/Saved/SaveGames/*"
+"Five Nights at Freddy's: Into the Pit":
+  files:
+    windows:
+      - "{LocalLow}/Mega Cat Studios/Five Nights at Freddy's Into the Pit/*/*"
+"Five Nights at Freddy's: Security Breach":
+  files:
+    windows:
+      - "{LocalAppData}/fnaf9/Saved/SaveGames/*"
+"Five Nights at Freddy's: Sister Location":
+  files:
+    windows:
+      - "{AppData}/MMFApplications/sl/*"
+"Freddy Fazbear's Pizzeria Simulator":
+  files:
+    windows:
+      - "{AppData}/MMFApplications/FNAF6"
 Ghostrunner:
   files:
     windows:
