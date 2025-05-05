@@ -37,7 +37,7 @@ pub fn run(config: &AletheiaConfig) {
         std::process::Command::new("xdg-open").arg(url).spawn().ok();
 
         #[cfg(windows)]
-        std::process::Command::new("cmd").args(&["/c", "start", url]).spawn().ok();
+        std::process::Command::new("cmd").args(["/c", "start", &url]).spawn().ok();
     });
 
     app.global::<GameLogic>().on_refresh_games({
