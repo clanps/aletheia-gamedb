@@ -5,9 +5,15 @@
 mod lutris;
 mod steam;
 
+#[cfg(windows)]
+mod gog;
+
 #[cfg(unix)]
 pub use lutris::LutrisScanner;
 pub use steam::SteamScanner;
+
+#[cfg(windows)]
+pub use gog::GOGScanner;
 
 #[derive(Clone, Debug)]
 pub struct Game {

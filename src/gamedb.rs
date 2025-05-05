@@ -11,6 +11,9 @@ use serde::{Deserialize, Serialize};
 #[cfg(unix)]
 use crate::scanner::LutrisScanner;
 
+#[cfg(windows)]
+use crate::scanner::GOGScanner;
+
 const GAMEDB_YAML: &str = include_str!("../resources/gamedb.yaml");
 
 #[derive(Debug, thiserror::Error)]
@@ -73,6 +76,9 @@ pub fn get_installed_games() -> Vec<Game> {
 
     #[cfg(unix)]
     games.extend(LutrisScanner::get_games());
+
+    #[cfg(windows)]
+    games.extend(GOGScanner::get_games());
 
     games.extend(SteamScanner::get_games());
 
