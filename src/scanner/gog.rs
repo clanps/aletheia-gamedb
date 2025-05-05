@@ -15,14 +15,13 @@ struct GOGameInfo {
 impl Scanner for GOGScanner {
     fn get_games() -> Vec<Game> {
         let mut games = vec![];
+        let gog_db_path = PathBuf::from("C:/ProgramData/GOG.com/Galaxy/storage/galaxy-2.0.db");
 
-        let gog_dir = PathBuf::from("C:/ProgramData/GOG.com/Galaxy/storage/galaxy-2.0.db");
-
-        if !gog_dir.exists() {
+        if !gog_db_path.exists() {
             return games;
         }
 
-        let con = rusqlite::Connection::open(gog_dir).unwrap();
+        let con = rusqlite::Connection::open(gog_db_path).unwrap();
         let mut stmt = con.prepare("SELECT productId, installationPath FROM InstalledBaseProducts").unwrap();
 
         let rows = stmt
