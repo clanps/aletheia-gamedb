@@ -104,6 +104,19 @@ Cyberpunk 2077:
   files:
     windows:
       - "{Home}/Saved Games/CD Projekt Red/Cyberpunk 2077/*"
+DRAGON BALL FighterZ:
+  files:
+    windows:
+      - "{LocalAppData}/DBFighterZ/Saved/SaveGames/*/REPLAY.sav"
+      - "{LocalAppData}/DBFighterZ/Saved/SaveGames/*/SYSTEM.sav"
+DRAGON BALL XENOVERSE:
+  files:
+    windows:
+      - "{SteamUserData}/323470/remote/DBXV.sav"
+DRAGON BALL XENOVERSE 2:
+  files:
+    windows:
+      - "{SteamUserData}/323470/remote/DBXV21/DBXV2.sav"
 "DRAGON BALL Z: KAKAROT":
   files:
     windows:
