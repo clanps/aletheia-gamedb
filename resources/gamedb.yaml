@@ -80,10 +80,6 @@ Borderlands 3:
   files:
     windows:
       - "{Documents}/My Games/Borderlands 3/Saved/SaveGames/*"
-"Clair Obscur: Expedition 33":
-  files:
-    windows:
-      - "{LocalAppData}/Sandfall/Saved/SaveGames/*/*.sav"
 Cars:
   files:
     windows:
@@ -96,6 +92,14 @@ Cars Mater-National Championship:
   files:
     windows:
       - "{Documents}/THQ/Cars2/*"
+Castle Crashers:
+  files:
+    windows:
+      - "{SteamUserData}/204360/Remote/*"
+"Clair Obscur: Expedition 33":
+  files:
+    windows:
+      - "{LocalAppData}/Sandfall/Saved/SaveGames/*/*.sav"
 Craftopia:
   files:
     windows:
