@@ -84,6 +84,18 @@ Borderlands 3:
   files:
     windows:
       - "{LocalAppData}/Sandfall/Saved/SaveGames/*/*.sav"
+Cars:
+  files:
+    windows:
+      - "{Documents}/THQ/Cars/Save/*"
+Cars 2:
+  files:
+    windows:
+      - "{Documents}/Disney Interactive Studios/Cars2/storage/*"
+Cars Mater-National Championship:
+  files:
+    windows:
+      - "{Documents}/THQ/Cars2/*"
 Craftopia:
   files:
     windows:
