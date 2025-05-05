@@ -539,6 +539,30 @@ Remnant II:
   files:
     windows:
       - "{Home}/Saved Games/Remnant2/Steam/*/*"
+Resident Evil 2:
+  files:
+    windows:
+      - "{SteamUserData}/883710/remote/*"
+Resident Evil 3:
+  files:
+    windows:
+      - "{SteamUserData}/952060/remote/*"
+Resident Evil 4:
+  files:
+    windows:
+      - "{SteamUserData}/2050650/remote/win64_save/*"
+Resident Evil 5:
+  files:
+    windows:
+      - "{Documents}/capcom/RESIDENT EVIL 5/*"
+Resident Evil 6:
+  files:
+    windows:
+      - "{SteamUserData}/221040/remote/*"
+Resident Evil 7 Biohazard:
+  files:
+    windows:
+      - "{SteamUserData}/418370/remote/win64_save/*"
 Resident Evil Revelations:
   files:
     windows:
