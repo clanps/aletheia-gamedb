@@ -51,7 +51,7 @@ fn backup_game(game: &Game, config: &Config, entry: &GameDbEntry) {
         serde_yaml::from_str::<GameInfo>(&content).unwrap()
     });
 
-    create_dir_all(&backup_folder).expect(&format!("Failed to backup {}.", game.name));
+    create_dir_all(&backup_folder).unwrap_or_else(|_| panic!("Failed to backup {}.", game.name)); // TODO: Show warning?
 
     let mut game_files: Vec<FileMetadata> = vec![];
 
