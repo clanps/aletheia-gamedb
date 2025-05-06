@@ -120,6 +120,10 @@ Cyberpunk 2077:
   files:
     windows:
       - "{Home}/Saved Games/CD Projekt Red/Cyberpunk 2077/*"
+DOOM Eternal:
+  files:
+    windows:
+      - "{Home}/Saved Games/id Software/DOOMEternal/base/*"
 DRAGON BALL FighterZ:
   files:
     windows:
@@ -337,11 +341,11 @@ Gotham Knights:
 Grand Theft Auto V Enhanced:
   files:
     windows:
-      - "{Documents}/Rockstar Games/GTAV Enhanced/Profiles/*"
+      - "{Documents}/Rockstar Games/GTAV Enhanced/Profiles/*/*"
 Grand Theft Auto V Legacy:
   files:
     windows:
-      - "{Documents}/Rockstar Games/GTA V/Profiles/*"
+      - "{Documents}/Rockstar Games/GTA V/Profiles/*/*"
 "Halo: The Master Chief Collection":
   files:
     windows:
@@ -437,6 +441,10 @@ Marvel's Spider-Man Remastered:
   files:
     windows:
       - "{LocalAppData}/RainCodePlus/Saved/SaveGames/*"
+"Metal Gear Rising: Revengeance":
+  files:
+    windows:
+      - "{Documents}/MGR/SaveData/MGR.sav"
 Metro 2033 Redux:
   files:
     windows:
@@ -519,6 +527,10 @@ Persona 5 Royal:
   files:
     windows:
       - "{AppData}/SEGA/P5R/Steam/*"
+Phasmophobia:
+  files:
+    windows:
+      - "{LocalLow}/Kinetic Games/Phasmophobia/saveData.txt"
 Planet Coaster:
   files:
     windows:
@@ -535,6 +547,10 @@ Quantum Break:
   files:
     windows:
       - "{LocalAppData}/QuantumBreak/*"
+Red Dead Redemption 2:
+  files:
+    windows:
+      - "{Documents}/Rockstar Games/Red Dead Redemption 2/Profiles/*/*"
 Remnant II:
   files:
     windows:
