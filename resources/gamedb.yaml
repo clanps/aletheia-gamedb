@@ -712,6 +712,14 @@ The Quarry:
   files:
     windows:
       - "{LocalAppData}/TheQuarry/Saved/SaveGames/*"
+The Sims 3:
+  files:
+    windows:
+      - "{Documents}/Electronic Arts/The Sims 3/Saves/*"
+The Sims 4:
+  files:
+    windows:
+      - "{Documents}/Electronic Arts/The Sims 4/saves/*"
 "The Stanley Parable: Ultra Deluxe":
   files:
     linux:
