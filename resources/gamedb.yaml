@@ -515,6 +515,10 @@ NEKOPARA Vol. 4:
     windows:
       - "{AppData}/NEKO WORKs/nekopara4/*"
       - "{Documents}/NEKO WORKs/nekopara_vol4/*"
+"NieR: Automata":
+  files:
+    windows:
+      - "{Documents}/My Games/NieR_Automata/*"
 Palworld:
   files:
     windows:
