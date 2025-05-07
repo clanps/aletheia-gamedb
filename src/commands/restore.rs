@@ -62,12 +62,13 @@ impl Command for Restore {
 
         for game in std::fs::read_dir(&save_dir).unwrap() {
             let game_dir = game.unwrap().path();
+            let is_dir = game_dir.is_dir();
+            let game_name = game_dir.file_name().unwrap().to_string_lossy();
 
-            if !game_dir.is_dir() {
+            if !is_dir || (is_dir && game_dir.starts_with(".")) {
                 continue;
             }
 
-            let game_name = game_dir.file_name().unwrap().to_string_lossy();
             let manifest_path = game_dir.join("aletheia_manifest.yaml");
 
             if !manifest_path.exists() {
