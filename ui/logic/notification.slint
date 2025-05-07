@@ -1,0 +1,42 @@
+// SPDX-FileCopyrightText: 2025 Spencer
+// SPDX-License-Identifier: AGPL-3.0-only
+
+import { NotificationType } from "../components/notification.slint";
+
+export global NotificationLogic {
+  callback show_notification(string, NotificationType);
+
+  private property <bool> notification_visible;
+  private property <string> notification_message;
+  private property <NotificationType> notification_type: NotificationType.INFO;
+
+  public function show_success(message: string) {
+    NotificationLogic.show_notification(message, NotificationType.SUCCESS);
+  }
+
+  public function show_error(message: string) {
+    NotificationLogic.show_notification(message, NotificationType.ERROR);
+  }
+
+  public function show_info(message: string) {
+    NotificationLogic.show_notification(message, NotificationType.INFO);
+  }
+
+  public function show_warning(message: string) {
+    NotificationLogic.show_notification(message, NotificationType.WARNING);
+  }
+
+  show_notification(message, type) => {
+    notification_message = message;
+    notification_type = type;
+    notification_visible = true;
+  }
+
+  public function hide_notification() {
+    notification_visible = false;
+  }
+
+  out property <bool> is_notification_visible: notification_visible;
+  out property <string> current_notification_message: notification_message;
+  out property <NotificationType> current_notification_type: notification_type;
+}

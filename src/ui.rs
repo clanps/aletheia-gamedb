@@ -56,7 +56,7 @@ pub fn run(config: &AletheiaConfig) {
                     backup_size: if backup_path.exists() {
                         format_size(crate::dirs::get_size(&backup_path)).into()
                     } else {
-                        "0MB".into()
+                        "0B".into()
                     },
                     source: g.source.into(),
                     selected: true
@@ -149,8 +149,10 @@ pub fn run(config: &AletheiaConfig) {
             if action == "backup" {
                 crate::commands::Backup::run(selected_game_names, &cfg);
                 app.global::<GameLogic>().invoke_refresh_games();
+                app.global::<NotificationLogic>().invoke_show_success(format!("Backed up {} games", selected_games.len()).into());
             } else {
                 crate::commands::Restore::run(selected_game_names, &cfg);
+                app.global::<NotificationLogic>().invoke_show_success(format!("Restored {} games", selected_games.len()).into());
             }
         }
     });

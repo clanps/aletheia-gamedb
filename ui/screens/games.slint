@@ -2,10 +2,11 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 
 import { ScrollView } from "std-widgets.slint";
-import { GameLogic } from "../app_logic.slint";
 import { Button } from "../components/button.slint";
 import { GameCard } from "../components/game_card.slint";
 import { SearchBar } from "../components/search_bar.slint";
+import { GameLogic } from "../logic/game.slint";
+import { NotificationLogic } from "../logic/notification.slint";
 import { UiGame } from "../structs/ui_game.slint";
 
 export global GamesScreenLogic {
@@ -99,7 +100,7 @@ export component Games {
         text: GameLogic.games.length != GamesScreenLogic.selected_games.length ? "Select All" : "Clear Selection";
         background: #2f2f49;
         clicked => {
-          GamesScreenLogic.select_all(GamesScreenLogic.selected_games.length != GameLogic.games.length)
+          GamesScreenLogic.select_all(GamesScreenLogic.selected_games.length != GameLogic.games.length);
         }
       }
     }

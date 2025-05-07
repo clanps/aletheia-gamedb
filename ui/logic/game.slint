@@ -1,0 +1,6 @@
+import { UiGame } from "../structs/ui_game.slint";
+
+export global GameLogic {
+  in property <[UiGame]> games: [];
+  callback refresh_games();
+}

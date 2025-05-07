@@ -1,14 +1,17 @@
 // SPDX-FileCopyrightText: 2025 Spencer
 // SPDX-License-Identifier: AGPL-3.0-only
 
-import { AppLogic, GameLogic } from "./app_logic.slint";
 import { NavItem } from "./components/nav_item.slint";
+import { Notification } from "./components/notification.slint";
+import { AppLogic } from "./logic/app.slint";
+import { GameLogic } from "./logic/game.slint";
+import { NotificationLogic } from "./logic/notification.slint";
 import { About } from "./screens/about.slint";
 import { Games, GamesScreenLogic } from "./screens/games.slint";
 import { Settings, SettingsScreenLogic } from "./screens/settings.slint";
 import { UiGame } from "./structs/ui_game.slint";
 
-export { AppLogic, GamesScreenLogic, GameLogic, SettingsScreenLogic }
+export { AppLogic, GamesScreenLogic, GameLogic, NotificationLogic, SettingsScreenLogic }
 
 export component App inherits Window {
   property <string> current_screen: "games";
@@ -68,5 +71,15 @@ export component App inherits Window {
         if (root.current_screen == "about"): About {}
       }
     }
+  }
+
+  Notification {
+    visible: NotificationLogic.is_notification_visible;
+    message: NotificationLogic.current_notification_message;
+    notification_type: NotificationLogic.current_notification_type;
+    target_x: parent.width - self.width - 20px;
+    y: parent.height - self.height - 20px;
+
+    closed => { NotificationLogic.hide_notification() }
   }
 }

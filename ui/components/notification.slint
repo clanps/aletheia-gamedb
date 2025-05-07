@@ -1,0 +1,61 @@
+// SPDX-FileCopyrightText: 2025 Spencer
+// SPDX-License-Identifier: AGPL-3.0-only
+
+export enum NotificationType {
+  SUCCESS,
+  ERROR,
+  INFO,
+  WARNING
+}
+
+export component Notification inherits Rectangle {
+  in property <string> message;
+  in property <NotificationType> notification_type: NotificationType.INFO;
+  in property <duration> show_duration: 2500ms;
+  in property <length> target_x;
+  callback closed();
+
+  width: notification_layout.preferred-width + 24px;
+  height: notification_layout.preferred-height + 16px;
+  border-radius: 8px;
+  background: #1e1e2e;
+  drop-shadow-blur: 8px;
+  drop-shadow-color: rgba(0, 0, 0, 0.15);
+  drop-shadow-offset-y: 4px;
+
+  private property <image> icon: notification-type == NotificationType.SUCCESS ? @image-url("../assets/check.svg") :
+                                 notification-type == NotificationType.ERROR ? @image-url("../assets/cancel.svg") :
+                                 notification-type == NotificationType.WARNING ? @image-url("../assets/warning.svg") :
+                                 @image-url("../assets/info.svg");
+
+  animate x { duration: 300ms; easing: ease-out; }
+  animate opacity { duration: 250ms; easing: ease-in-out; }
+
+  opacity: self.visible ? 1 : 0;
+  x: self.visible ? target_x : target_x + 100px;
+
+  Timer {
+    running: parent.visible;
+    interval: root.show_duration;
+    triggered() => { root.closed() }
+  }
+
+  notification_layout := HorizontalLayout {
+    spacing: 6px;
+    alignment: center;
+
+    Image {
+      source: root.icon;
+      vertical-alignment: center;
+    }
+
+    Text {
+      text: root.message;
+      color: white;
+      font-family: "Inter";
+      font-size: 14px;
+      font-weight: 500;
+      vertical-alignment: center;
+    }
+  }
+}
