@@ -65,7 +65,7 @@ impl Command for Restore {
             let is_dir = game_dir.is_dir();
             let game_name = game_dir.file_name().unwrap().to_string_lossy();
 
-            if !is_dir || (is_dir && game_dir.starts_with(".")) {
+            if !is_dir || (is_dir && game_name.starts_with(".")) {
                 continue;
             }
 
