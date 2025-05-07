@@ -28,10 +28,7 @@ export component Notification inherits Rectangle {
                                  notification-type == NotificationType.WARNING ? @image-url("../assets/warning.svg") :
                                  @image-url("../assets/info.svg");
 
-  animate x { duration: 300ms; easing: ease-out; }
-  animate opacity { duration: 250ms; easing: ease-in-out; }
-
-  opacity: self.visible ? 1 : 0;
+  animate x { duration: 550ms; easing: ease-out; }
   x: self.visible ? target_x : target_x + 100px;
 
   Timer {
