@@ -603,6 +603,10 @@ Rise of the Tomb Raider:
   files:
     windows:
       - "{SteamUserData}/391220/remote/*"
+SILENT HILL 2:
+  files:
+    windows:
+      - "{LocalAppData}/SilentHill2/Saved/SaveGames/*/*.sav"
 SUPERHOT:
   files:
     linux:
