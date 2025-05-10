@@ -421,6 +421,14 @@ Life is Strange 2:
   files:
     windows:
       - "{AppData}/Sega/LikeADragonPirates/Steam/*"
+Lords Of The Fallen:
+  files:
+    windows:
+      - "{SteamUserData}/265300/remote/*"
+Lords of the Fallen:
+  files:
+    windows:
+      - "{LocalAppData}/LOTF2/Saved/SaveGames/*"
 "Lost Records: Bloom & Rage":
   files:
     windows:
