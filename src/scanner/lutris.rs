@@ -31,7 +31,7 @@ impl Scanner for LutrisScanner {
 
         for row in rows {
             let (name, dir) = row.unwrap();
-            games.push(Game { name, directory: dir, source: "Lutris".into() });
+            games.push(Game { name, installation_dir: None, prefix: Some(dir), source: "Lutris".into() });
         }
 
         games

@@ -111,7 +111,7 @@ fn restore_game(game_dir: &Path, manifest: crate::gamedb::GameInfo, lutris_games
     }
 
     for file in manifest.files {
-        let expanded = expand_path(&file.path, Some(&game.directory));
+        let expanded = expand_path(&file.path, game.installation_dir.as_ref(), game.prefix.as_ref());
         let src_file = game_dir.join(PathBuf::from(&file.path).file_name().unwrap());
 
         if expanded.exists() && hash_file(&expanded) == file.hash {

@@ -1,5 +1,6 @@
 // SPDX-FileCopyrightText: 2025 Spencer
 // SPDX-License-Identifier: AGPL-3.0-only
+use std::path::PathBuf;
 
 #[cfg(unix)]
 mod lutris;
@@ -18,7 +19,8 @@ pub use gog::GOGScanner;
 #[derive(Clone, Debug)]
 pub struct Game {
     pub name: String,
-    pub directory: std::path::PathBuf,
+    pub installation_dir: Option<PathBuf>,
+    pub prefix: Option<PathBuf>,
     pub source: String
 }
 

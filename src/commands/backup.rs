@@ -57,7 +57,7 @@ fn backup_game(game: &Game, config: &Config, entry: &GameDbEntry) {
 
     if let Some(ref windows_paths) = entry.files.windows {
         for path in windows_paths {
-            let expanded = expand_path(path, Some(&game.directory));
+            let expanded = expand_path(path, game.installation_dir.as_ref(), game.prefix.as_ref());
             let found_paths = glob(&expanded.to_string_lossy()).unwrap();
 
             for file in found_paths {
@@ -76,7 +76,7 @@ fn backup_game(game: &Game, config: &Config, entry: &GameDbEntry) {
                     let file_metadata = process_file(
                         &file,
                         &backup_folder.clone().join(file.file_name().unwrap()),
-                        Some(&game.directory)
+                        game
                     );
 
                     game_files.push(file_metadata);
@@ -106,11 +106,11 @@ fn backup_game(game: &Game, config: &Config, entry: &GameDbEntry) {
     println!("Backed up {}.", game_metadata.name);
 }
 
-fn process_file(file_path: &PathBuf, dest: &PathBuf, prefix: Option<&PathBuf>) -> FileMetadata {
+fn process_file(file_path: &PathBuf, dest: &PathBuf, game: &Game) -> FileMetadata {
     copy(file_path, dest).unwrap();
 
     FileMetadata {
-        path: shrink_path(&file_path.to_string_lossy(), prefix).to_string_lossy().to_string(),
+        path: shrink_path(&file_path.to_string_lossy(), game.installation_dir.as_ref(), game.prefix.as_ref()).to_string_lossy().to_string(),
         hash: hash_file(file_path),
         size: metadata(file_path).unwrap().len()
     }

@@ -54,7 +54,12 @@ pub fn home() -> PathBuf {
     }
 }
 
-pub fn expand_path(path: &str, prefix: Option<&PathBuf>) -> PathBuf {
+pub fn expand_path(path: &str, installation_dir: Option<&PathBuf>, prefix: Option<&PathBuf>) -> PathBuf {
+    let path = match installation_dir {
+        Some(install_dir) => path.replace("{GameRoot}", &install_dir.to_string_lossy()),
+        None => path.to_owned()
+    };
+
     if cfg!(unix) {
         let wine_prefix = prefix.unwrap();
         let username = if wine_prefix.to_string_lossy().contains("Steam/steamapps/compatdata") {
@@ -99,7 +104,12 @@ pub fn expand_path(path: &str, prefix: Option<&PathBuf>) -> PathBuf {
     }
 }
 
-pub fn shrink_path(path: &str, prefix: Option<&PathBuf>) -> PathBuf {
+pub fn shrink_path(path: &str, installation_dir: Option<&PathBuf>, prefix: Option<&PathBuf>) -> PathBuf {
+    let path = match installation_dir {
+        Some(install_dir) => path.replace(&*install_dir.to_string_lossy(), "{GameRoot}"),
+        None => path.to_owned()
+    };
+
     if cfg!(unix) {
         let wine_prefix = prefix.unwrap();
         let username = if wine_prefix.to_string_lossy().contains("Steam/steamapps/compatdata") {

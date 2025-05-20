@@ -9,11 +9,8 @@ impl Scanner for SteamScanner {
     fn get_games() -> Vec<Game> {
         let mut games = vec![];
 
-        let steam_directory = match steamlocate::SteamDir::locate() {
-            Ok(dir) => dir,
-            Err(_e) => {
-                return games;
-            }
+        let Ok(steam_directory) = steamlocate::SteamDir::locate() else {
+            return games;
         };
 
         for library in steam_directory.libraries().unwrap() {
@@ -26,20 +23,16 @@ impl Scanner for SteamScanner {
 
                 games.push(Game {
                     name: game_name,
-                    directory: if cfg!(unix) {
+                    installation_dir: Some(install_dir),
+                    prefix: if cfg!(unix) {
                         let prefix_directory = steam_directory.path()
                             .join("steamapps/compatdata")
                             .join(game.app_id.to_string())
                             .join("pfx");
 
-                        if prefix_directory.exists() {
-                            prefix_directory
-                        } else {
-                            // Native Linux game
-                            install_dir
-                        }
+                        prefix_directory.exists().then_some(prefix_directory)
                     } else {
-                        install_dir
+                        None
                     },
                     source: "Steam".into()
                 });
