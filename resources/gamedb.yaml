@@ -7,6 +7,12 @@ AI Limit:
   files:
     windows:
       - "{LocalLow}/SenseGames/AILIMIT/Archive/*.sav"
+"AI: THE SOMNIUM FILES - nirvanA Initiative":
+  files:
+    windows:
+      - "{LocalAppData}/SpikeChunsoft/AI Nirvana Initiative/Auto.dat"
+      - "{LocalAppData}/SpikeChunsoft/AI Nirvana Initiative/Manual.dat"
+      - "{LocalAppData}/SpikeChunsoft/AI Nirvana Initiative/System.dat"
 "AI: The Somnium Files":
   files:
     windows:
