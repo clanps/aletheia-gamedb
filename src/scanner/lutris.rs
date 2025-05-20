@@ -20,18 +20,24 @@ impl Scanner for LutrisScanner {
             return games;
         };
 
-        let mut stmt = con.prepare("SELECT name, directory FROM games").unwrap();
+        let mut stmt = con.prepare("SELECT name, directory, platform FROM games").unwrap();
         let rows = stmt
             .query_map([], |row| {
                 let name: String = row.get(0)?;
                 let path: String = row.get(1)?;
-                Ok((name, std::path::PathBuf::from(path)))
+                let platform: String = row.get(2)?;
+                Ok((name, std::path::PathBuf::from(path), platform))
             })
             .unwrap();
 
         for row in rows {
-            let (name, dir) = row.unwrap();
-            games.push(Game { name, installation_dir: None, prefix: Some(dir), source: "Lutris".into() });
+            let (name, dir, platform) = row.unwrap();
+
+            if platform == "Windows" {
+                games.push(Game { name, installation_dir: None, prefix: Some(dir), source: "Lutris".into() });
+            } else {
+                games.push(Game { name, installation_dir: Some(dir), prefix: None, source: "Lutris".into() });
+            }
         }
 
         games
