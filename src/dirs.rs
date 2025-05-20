@@ -75,7 +75,7 @@ pub fn expand_path(path: &str, installation_dir: Option<&PathBuf>, prefix: Optio
         let linux_app_data = app_data();
 
         path
-            .replace("{AppData}", &windows_app_data.to_string_lossy())
+            .replace("{AppData}", &windows_app_data.join("Roaming").to_string_lossy())
             .replace("{Documents}", &documents.to_string_lossy())
             .replace("{Home}", &user.to_string_lossy())
             .replace("{LocalAppData}", &windows_app_data.join("Local").to_string_lossy())
@@ -94,7 +94,7 @@ pub fn expand_path(path: &str, installation_dir: Option<&PathBuf>, prefix: Optio
         };
 
         path
-            .replace("{AppData}", &app_data.to_string_lossy())
+            .replace("{AppData}", &app_data.join("Roaming").to_string_lossy())
             .replace("{Documents}", &home_dir.join("Documents").to_string_lossy())
             .replace("{Home}", &home_dir.to_string_lossy())
             .replace("{LocalAppData}", &app_data.join("Local").to_string_lossy())
@@ -126,7 +126,7 @@ pub fn shrink_path(path: &str, installation_dir: Option<&PathBuf>, prefix: Optio
         path
             .replace(&*windows_app_data.join("LocalLow").to_string_lossy(), "{LocalLow}")
             .replace(&*windows_app_data.join("Local").to_string_lossy(), "{LocalAppData}")
-            .replace(&*windows_app_data.to_string_lossy(), "{AppData}")
+            .replace(&*windows_app_data.join("Roaming").to_string_lossy(), "{AppData}")
             .replace(&*user.join("Documents").to_string_lossy(), "{Documents}")
             .replace(&*user.to_string_lossy(), "{Home}")
             .replace(&*linux_app_data.join("Steam/userdata/*").to_string_lossy(), "{SteamUserData}")
@@ -145,7 +145,7 @@ pub fn shrink_path(path: &str, installation_dir: Option<&PathBuf>, prefix: Optio
         path
             .replace(&*app_data.join("LocalLow").to_string_lossy(), "{LocalLow}")
             .replace(&*app_data.join("Local").to_string_lossy(), "{LocalAppData}")
-            .replace(&*app_data.to_string_lossy(), "{AppData}")
+            .replace(&*app_data.join("Roaming").to_string_lossy(), "{AppData}")
             .replace(&*home_dir.join("Documents").to_string_lossy(), "{Documents}")
             .replace(&*home_dir.to_string_lossy(), "{Home}")
             .replace(&*steam_directory.to_string_lossy(), "{SteamUserData}")

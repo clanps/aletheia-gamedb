@@ -389,7 +389,7 @@ Hyperdimension Neptunia Re;Birth1:
 I Walk Among Zombies Vol. 1:
   files:
     windows:
-      - "{AppData}/Roaming/seacoxx/zombie/*"
+      - "{AppData}/seacoxx/zombie/*"
 JUMP FORCE:
   files:
     windows:
