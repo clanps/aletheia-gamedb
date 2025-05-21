@@ -55,32 +55,36 @@ pub fn home() -> PathBuf {
 }
 
 pub fn expand_path(path: &str, installation_dir: Option<&PathBuf>, prefix: Option<&PathBuf>) -> PathBuf {
-    let path = match installation_dir {
+    let mut path = match installation_dir {
         Some(install_dir) => path.replace("{GameRoot}", &install_dir.to_string_lossy()),
         None => path.to_owned()
     };
 
     if cfg!(unix) {
-        let wine_prefix = prefix.unwrap();
-        let username = if wine_prefix.to_string_lossy().contains("Steam/steamapps/compatdata") {
-            "steamuser".to_owned()
-        } else {
-            std::env::var_os("USER").unwrap().to_string_lossy().to_string()
-        };
-
-        let drive_c = wine_prefix.join("drive_c");
-        let user = drive_c.join("users").join(username);
-        let windows_app_data = user.join("AppData");
-        let documents = user.join("Documents");
         let linux_app_data = app_data();
 
+        if let Some(wine_prefix) = prefix {
+            let username = if wine_prefix.to_string_lossy().contains("Steam/steamapps/compatdata") {
+                "steamuser".to_owned()
+            } else {
+                std::env::var_os("USER").unwrap().to_string_lossy().to_string()
+            };
+
+            let drive_c = wine_prefix.join("drive_c");
+            let user = drive_c.join("users").join(username);
+            let windows_app_data = user.join("AppData");
+            let documents = user.join("Documents");
+
+            path = path
+                .replace("{AppData}", &windows_app_data.join("Roaming").to_string_lossy())
+                .replace("{Documents}", &documents.to_string_lossy())
+                .replace("{Home}", &user.to_string_lossy())
+                .replace("{LocalAppData}", &windows_app_data.join("Local").to_string_lossy())
+                .replace("{LocalLow}", &windows_app_data.join("LocalLow").to_string_lossy())
+                .replace("{SteamUserData}", &linux_app_data.join("Steam/userdata/*").to_string_lossy());
+        }
+
         path
-            .replace("{AppData}", &windows_app_data.join("Roaming").to_string_lossy())
-            .replace("{Documents}", &documents.to_string_lossy())
-            .replace("{Home}", &user.to_string_lossy())
-            .replace("{LocalAppData}", &windows_app_data.join("Local").to_string_lossy())
-            .replace("{LocalLow}", &windows_app_data.join("LocalLow").to_string_lossy())
-            .replace("{SteamUserData}", &linux_app_data.join("Steam/userdata/*").to_string_lossy())
             .replace("{XDGConfig}", &config().to_string_lossy())
             .replace("{XDGData}", &linux_app_data.to_string_lossy())
             .into()
@@ -105,31 +109,35 @@ pub fn expand_path(path: &str, installation_dir: Option<&PathBuf>, prefix: Optio
 }
 
 pub fn shrink_path(path: &str, installation_dir: Option<&PathBuf>, prefix: Option<&PathBuf>) -> PathBuf {
-    let path = match installation_dir {
+    let mut path = match installation_dir {
         Some(install_dir) => path.replace(&*install_dir.to_string_lossy(), "{GameRoot}"),
         None => path.to_owned()
     };
 
     if cfg!(unix) {
-        let wine_prefix = prefix.unwrap();
-        let username = if wine_prefix.to_string_lossy().contains("Steam/steamapps/compatdata") {
-            "steamuser".to_string()
-        } else {
-            std::env::var_os("USER").unwrap().to_string_lossy().to_string()
-        };
-
-        let drive_c = wine_prefix.join("drive_c");
-        let user = drive_c.join("users").join(username);
-        let windows_app_data = user.join("AppData");
         let linux_app_data = app_data();
 
+        if let Some(wine_prefix) = prefix {
+            let username = if wine_prefix.to_string_lossy().contains("Steam/steamapps/compatdata") {
+                "steamuser".to_string()
+            } else {
+                std::env::var_os("USER").unwrap().to_string_lossy().to_string()
+            };
+
+            let drive_c = wine_prefix.join("drive_c");
+            let user = drive_c.join("users").join(username);
+            let windows_app_data = user.join("AppData");
+
+            path = path
+                .replace(&*windows_app_data.join("LocalLow").to_string_lossy(), "{LocalLow}")
+                .replace(&*windows_app_data.join("Local").to_string_lossy(), "{LocalAppData}")
+                .replace(&*windows_app_data.join("Roaming").to_string_lossy(), "{AppData}")
+                .replace(&*user.join("Documents").to_string_lossy(), "{Documents}")
+                .replace(&*user.to_string_lossy(), "{Home}")
+                .replace(&*linux_app_data.join("Steam/userdata/*").to_string_lossy(), "{SteamUserData}");
+        }
+
         path
-            .replace(&*windows_app_data.join("LocalLow").to_string_lossy(), "{LocalLow}")
-            .replace(&*windows_app_data.join("Local").to_string_lossy(), "{LocalAppData}")
-            .replace(&*windows_app_data.join("Roaming").to_string_lossy(), "{AppData}")
-            .replace(&*user.join("Documents").to_string_lossy(), "{Documents}")
-            .replace(&*user.to_string_lossy(), "{Home}")
-            .replace(&*linux_app_data.join("Steam/userdata/*").to_string_lossy(), "{SteamUserData}")
             .replace(&*config().to_string_lossy(), "{XDGConfig}")
             .replace(&*linux_app_data.to_string_lossy(), "{XDGData}")
             .into()
