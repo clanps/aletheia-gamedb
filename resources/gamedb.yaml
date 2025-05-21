@@ -870,7 +870,7 @@ Youtubers Life:
       - "{SteamUserData}/1150640/remote/*.dat"
 "Zelda 64: Recompiled":
   files:
-    windows:
-      - "{LocalAppData}/Zelda64Recompiled/saves/*"
     linux:
       - "{XDGConfig}/Zelda64Recompiled/saves/*"
+    windows:
+      - "{LocalAppData}/Zelda64Recompiled/saves/*"
