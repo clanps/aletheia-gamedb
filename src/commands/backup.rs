@@ -54,41 +54,49 @@ fn backup_game(game: &Game, config: &Config, entry: &GameDbEntry) {
     create_dir_all(&backup_folder).unwrap_or_else(|_| panic!("Failed to backup {}.", game.name)); // TODO: Show warning?
 
     let mut game_files: Vec<FileMetadata> = vec![];
+    let mut paths = vec![];
 
     if let Some(ref windows_paths) = entry.files.windows {
-        for path in windows_paths {
-            let expanded = expand_path(path, game.installation_dir.as_ref(), game.prefix.as_ref());
-            let found_paths = glob(&expanded.to_string_lossy()).unwrap();
+        paths.extend(windows_paths);
+    }
 
-            for file in found_paths {
-                let file = file.unwrap();
-                let file_path_str = file.to_string_lossy().to_string();
+    #[cfg(unix)]
+    if let Some(ref linux_paths) = entry.files.linux {
+        paths.extend(linux_paths);
+    }
 
-                if file.is_dir() {
-                    println!("Found {file_path_str} while backing up {}. Glob patterns should match files only.", game.name);
-                    continue;
-                }
+    for path in paths {
+        let expanded = expand_path(path, game.installation_dir.as_ref(), game.prefix.as_ref());
+        let found_paths = glob(&expanded.to_string_lossy()).unwrap();
 
-                let file_hash = hash_file(&file);
-                let file_changed = existing_manifest.as_ref().is_none_or(|manifest| manifest.files.iter().find(|m| m.path == file_path_str).is_none_or(|metadata| metadata.hash != file_hash));
+        for file in found_paths {
+            let file = file.unwrap();
+            let file_path_str = file.to_string_lossy().to_string();
 
-                if file_changed {
-                    let file_metadata = process_file(
-                        &file,
-                        &backup_folder.clone().join(file.file_name().unwrap()),
-                        game
-                    );
+            if file.is_dir() {
+                println!("Found {file_path_str} while backing up {}. Glob patterns should match files only.", game.name);
+                continue;
+            }
 
-                    game_files.push(file_metadata);
-                    changed = true;
-                } else {
-                    let existing_metadata = existing_manifest.as_ref().unwrap().files
-                        .iter()
-                        .find(|m| m.path == file_path_str)
-                        .unwrap();
+            let file_hash = hash_file(&file);
+            let file_changed = existing_manifest.as_ref().is_none_or(|manifest| manifest.files.iter().find(|m| m.path == file_path_str).is_none_or(|metadata| metadata.hash != file_hash));
 
-                    game_files.push(existing_metadata.to_owned());
-                }
+            if file_changed {
+                let file_metadata = process_file(
+                    &file,
+                    &backup_folder.clone().join(file.file_name().unwrap()),
+                    game
+                );
+
+                game_files.push(file_metadata);
+                changed = true;
+            } else {
+                let existing_metadata = existing_manifest.as_ref().unwrap().files
+                    .iter()
+                    .find(|m| m.path == file_path_str)
+                    .unwrap();
+
+                game_files.push(existing_metadata.to_owned());
             }
         }
     }
