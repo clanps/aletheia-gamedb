@@ -820,6 +820,10 @@ Until Dawn:
   files:
     windows:
       - "{Documents}/My Games/Bates/Saved/SavedGames/*"
+Where Winter Crows Go:
+  files:
+    linux:
+      - "{GameRoot}/game/saves/*"
 Yakuza 0:
   files:
     windows:
