@@ -323,6 +323,10 @@ Fallout 4 VR:
   files:
     windows:
       - "{AppData}/MMFApplications/FNAF6"
+Gaming Cafe Simulator:
+  files:
+    windows:
+      - "{LocalAppData}/GamingCafeSimulator/Saved/SaveGames/*"
 Ghostrunner:
   files:
     windows:
