@@ -66,18 +66,18 @@ impl Scanner for HeroicScanner {
                 continue;
             };
 
-            let game_config = heroic_path.join("GamesConfig").join(format!("{}.json", &game.app_id));
-
-            if !game_config.exists() {
-                continue;
-            }
-
-            let game_config_file_content = read_to_string(&game_config).unwrap();
-            let Ok(game_config) = serde_json::from_str::<serde_json::Value>(&game_config_file_content) else {
-                continue;
-            };
-
             let prefix = if cfg!(unix) && game.platform == "windows" {
+                let game_config = heroic_path.join("GamesConfig").join(format!("{}.json", &game.app_id));
+
+                if !game_config.exists() {
+                    continue;
+                }
+
+                let game_config_file_content = read_to_string(&game_config).unwrap();
+                let Ok(game_config) = serde_json::from_str::<serde_json::Value>(&game_config_file_content) else {
+                    continue;
+                };
+
                 game_config
                     .get(&game.app_id)
                     .and_then(|c| c.get("winePrefix"))
