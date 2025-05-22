@@ -3,7 +3,7 @@
 
 use crate::dirs::cache;
 use crate::scanner::{Game, Scanner};
-use crate::scanner::SteamScanner;
+use crate::scanner::{HeroicScanner, SteamScanner};
 use std::fs::{create_dir_all, read_to_string, write};
 use std::path::Path;
 use serde::{Deserialize, Serialize};
@@ -80,6 +80,7 @@ pub fn get_installed_games() -> Vec<Game> {
     #[cfg(windows)]
     games.extend(GOGScanner::get_games());
 
+    games.extend(HeroicScanner::get_games());
     games.extend(SteamScanner::get_games());
 
     games.into_iter().filter(|game| db.contains_key(&game.name)).collect()

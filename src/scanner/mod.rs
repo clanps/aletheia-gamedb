@@ -9,12 +9,16 @@ mod steam;
 #[cfg(windows)]
 mod gog;
 
+mod heroic;
+
 #[cfg(unix)]
 pub use lutris::LutrisScanner;
 pub use steam::SteamScanner;
 
 #[cfg(windows)]
 pub use gog::GOGScanner;
+
+pub use heroic::HeroicScanner;
 
 #[derive(Clone, Debug)]
 pub struct Game {

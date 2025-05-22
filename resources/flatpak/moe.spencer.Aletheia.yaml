@@ -25,6 +25,8 @@ finish-args:
   - --filesystem=~/Games
   # Used to detect and restore Steam save files
   - --filesystem=~/.var/app/com.valvesoftware.Steam
+  # Used to detect and restore Heroic save files
+  - --filesystem=~/.var/app/com.heroicgameslauncher.hgl
 
 command: aletheia
 
