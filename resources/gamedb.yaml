@@ -90,6 +90,11 @@ Call of Cthulhu:
   files:
     windows:
       - "{LocalAppData}/CallOfCthulhu/Saved/SaveGames/*"
+"Call of Duty: Ghosts":
+  files:
+    windows:
+      - "{GameRoot}/players2/user/mpdata"
+      - "{GameRoot}/players2/user/mpdataex"
 Cars:
   files:
     windows:
