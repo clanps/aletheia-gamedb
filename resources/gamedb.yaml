@@ -476,6 +476,10 @@ Marvel's Spider-Man Remastered:
   files:
     windows:
       - "{Documents}/MGR/SaveData/MGR.sav"
+"Metaphor: ReFantazio":
+  files:
+    windows:
+      - "{AppData}/SEGA/METAPHOR/Steam/*/*"
 Metro 2033 Redux:
   files:
     windows:
