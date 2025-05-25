@@ -84,7 +84,7 @@ fn backup_game(game: &Game, config: &Config, entry: &GameDbEntry) {
             if file_changed {
                 let file_metadata = process_file(
                     &file,
-                    &backup_folder.clone().join(file.file_name().unwrap()),
+                    &backup_folder.join(file.file_name().unwrap()),
                     game
                 );
 
