@@ -5,7 +5,6 @@ use crate::dirs::cache;
 use crate::scanner::{Game, Scanner};
 use crate::scanner::{HeroicScanner, SteamScanner};
 use std::fs::{create_dir_all, read_to_string, write};
-use std::path::Path;
 use serde::{Deserialize, Serialize};
 
 #[cfg(unix)]
@@ -59,7 +58,7 @@ pub struct FileMetadata {
 pub fn parse() -> std::collections::HashMap<String, GameDbEntry> {
     let gamedb_path = cache().join("gamedb.yaml");
 
-    if Path::exists(&gamedb_path) {
+    if gamedb_path.exists() {
         if let Ok(gamedb) = serde_yaml::from_str(&read_to_string(gamedb_path).unwrap()) {
             return gamedb;
         }
@@ -94,7 +93,7 @@ pub fn update() -> Result<UpdaterResult> {
 
     create_dir_all(cache_dir)?;
 
-    let previous_etag = Path::exists(&etag_path).then(|| read_to_string(&etag_path).unwrap());
+    let previous_etag = etag_path.exists().then(|| read_to_string(&etag_path).ok()).flatten();
 
     let client = reqwest::blocking::Client::new();
     let mut request = client.get("https://git.usesarchbtw.lol/Spencer/aletheia/raw/branch/master/resources/gamedb.yaml");
