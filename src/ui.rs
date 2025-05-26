@@ -44,6 +44,10 @@ pub fn run(config: &AletheiaConfig) {
         let app = app_weak.upgrade().unwrap();
 
         move || {
+            let selected_names: std::collections::HashSet<String> = app.global::<GamesScreenLogic>()
+                .get_selected_games().iter().map(|g| g.name.to_string()).collect();
+            let select_all = selected_names.is_empty();
+
             let mut games = gamedb::get_installed_games();
             games.sort_by(|a, b| a.name.to_lowercase().cmp(&b.name.to_lowercase()));
 
@@ -52,14 +56,14 @@ pub fn run(config: &AletheiaConfig) {
                 let backup_path = save_dir.join(name.replace(':', ""));
 
                 UiGame {
-                    name: name.into(),
+                    name: name.clone().into(),
                     backup_size: if backup_path.exists() {
                         format_size(crate::dirs::get_size(&backup_path)).into()
                     } else {
                         "0B".into()
                     },
                     source: g.source.into(),
-                    selected: true
+                    selected: select_all || selected_names.contains(&name)
                 }
             }).collect();
 
@@ -67,7 +71,7 @@ pub fn run(config: &AletheiaConfig) {
             // In a perfect world, Slint would have a way to filter in their markdown language so I could avoid this
             app.global::<GameLogic>().set_games(games_model.clone());
             app.global::<GamesScreenLogic>().set_filtered_games(games_model.clone());
-            app.global::<GamesScreenLogic>().set_selected_games(games_model);
+            app.global::<GamesScreenLogic>().set_selected_games(ModelRc::new(VecModel::from(games_model.iter().filter(|g| g.selected).collect::<Vec<UiGame>>())));
         }
     });
 
