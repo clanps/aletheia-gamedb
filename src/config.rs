@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 
 use std::fs::{create_dir_all, read_to_string, write};
-use std::path::{Path, PathBuf};
+use std::path::PathBuf;
 
 #[derive(Clone, serde::Deserialize, serde::Serialize)]
 #[serde(default)]
@@ -24,11 +24,11 @@ impl Config {
 
         let config_path = dir.join("config.json");
 
-        if Path::exists(&config_path) {
+        if config_path.exists() {
             let content = read_to_string(&config_path).expect("Failed to read config file.");
             let mut cfg: Self = serde_json::from_str(&content).expect("Failed to parse config file.");
 
-            if !Path::exists(&cfg.save_dir) {
+            if !cfg.save_dir.exists() {
                 println!("Save directory does not exist, resetting.");
 
                 cfg.save_dir = crate::dirs::app_data();
