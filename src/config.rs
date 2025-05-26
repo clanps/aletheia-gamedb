@@ -19,6 +19,14 @@ impl Config {
         }
     }
 
+    fn get_save_dir() -> PathBuf {
+        if cfg!(unix) {
+            crate::dirs::app_data().join("aletheia")
+        } else {
+            Self::get_dir().join("saves")
+        }
+    }
+
     pub fn load() -> Self {
         let dir = Self::get_dir();
 
@@ -31,7 +39,7 @@ impl Config {
             if !cfg.save_dir.exists() {
                 println!("Save directory does not exist, resetting.");
 
-                cfg.save_dir = crate::dirs::app_data();
+                cfg.save_dir = Self::get_save_dir();
                 Self::save(&cfg);
             }
 
@@ -59,7 +67,7 @@ impl Config {
 impl Default for Config {
     fn default() -> Self {
         Self {
-            save_dir: crate::dirs::app_data()
+            save_dir: Self::get_save_dir()
         }
     }
 }
