@@ -67,7 +67,7 @@ pub fn run(config: &AletheiaConfig) {
                 }
             }).collect();
 
-            let games_model = ModelRc::new(std::rc::Rc::new(VecModel::from(ui_games)));
+            let games_model = ModelRc::new(VecModel::from(ui_games));
             // In a perfect world, Slint would have a way to filter in their markdown language so I could avoid this
             app.global::<GameLogic>().set_games(games_model.clone());
             app.global::<GamesScreenLogic>().set_filtered_games(games_model.clone());
@@ -91,7 +91,7 @@ pub fn run(config: &AletheiaConfig) {
                 .filter(|g| g.name.to_lowercase().contains(&query.to_lowercase()))
                 .collect();
 
-            app.global::<GamesScreenLogic>().set_filtered_games(ModelRc::new(std::rc::Rc::new(VecModel::from(filtered_games))));
+            app.global::<GamesScreenLogic>().set_filtered_games(ModelRc::new(VecModel::from(filtered_games)));
         }
     });
 
@@ -106,13 +106,13 @@ pub fn run(config: &AletheiaConfig) {
                 g
             }).collect();
 
-            let updated_model = ModelRc::new(std::rc::Rc::new(VecModel::from(updated_games.clone())));
+            let updated_model = ModelRc::new(VecModel::from(updated_games.clone()));
             app.global::<GamesScreenLogic>().set_filtered_games(updated_model.clone());
             app.global::<GamesScreenLogic>().set_selected_games(
                 if enabled {
-                    ModelRc::new(std::rc::Rc::new(VecModel::from(updated_games)))
+                    ModelRc::new(VecModel::from(updated_games))
                 } else {
-                    ModelRc::new(std::rc::Rc::new(VecModel::from(vec![])))
+                    ModelRc::new(VecModel::from(vec![]))
                 }
             );
         }
@@ -133,7 +133,7 @@ pub fn run(config: &AletheiaConfig) {
                 selected_games.push(game);
             }
 
-            app.global::<GamesScreenLogic>().set_selected_games(ModelRc::new(std::rc::Rc::new(VecModel::from(selected_games))));
+            app.global::<GamesScreenLogic>().set_selected_games(ModelRc::new(VecModel::from(selected_games)));
         }
     });
 
