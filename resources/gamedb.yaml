@@ -665,6 +665,10 @@ Severed Steel:
   files:
     windows:
       - "{LocalAppData}/ThankYouVeryCool/Saved/SaveGames/*"
+Sker Ritual:
+  files:
+    windows:
+      - "{SteamUserData}/1492070/remote/PersistentSaveData"
 Slitterhead:
   files:
     windows:
@@ -775,6 +779,10 @@ The Lego Movie Videogame:
   files:
     windows:
       - "{SteamUserData}/267530/remote/savedgames/*"
+The NOexistenceN of you AND me:
+  files:
+    windows:
+      - "{LocalLow}/Nino/TheNOexistenceNofyouANDme/NaninovelData/Saves/GlobalSave.json"
 The Quarry:
   files:
     windows:
