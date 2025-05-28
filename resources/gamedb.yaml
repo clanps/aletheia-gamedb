@@ -216,6 +216,10 @@ Dead Rising 4:
   files:
     windows:
       - "{Documents}/My Games/Dead Rising 4/saves/*"
+"Detroit: Become Human":
+  files:
+    windows:
+      - "{Home}/Saved Games/Quantic Dream/Detroit Become Human/*"
 Devil May Cry 4 Special Edition:
   files:
     windows:
@@ -550,6 +554,10 @@ NEKOPARA Vol. 4:
   files:
     windows:
       - "{Documents}/My Games/NieR_Automata/*"
+"Octodad: Dadliest Catch":
+  files:
+    windows:
+      - "{Home}/Saved Games/Octodad Dadliest Catch/*"
 Palworld:
   files:
     windows:
@@ -681,6 +689,10 @@ Sonic Generations:
   files:
     windows:
       - "{Documents}/My Games/Sonic Generations/*"
+Sonic Lost World:
+  files:
+    windows:
+      - "{GameRoot}/*.sdat"
 Sonic X Shadow Generations:
   files:
     windows:
@@ -827,6 +839,10 @@ The Sims 4:
     windows:
       - "{Documents}/Telltale Games/The Walking Dead Definitive/*"
       - "{Documents}/Telltale Games/The Walking Dead The Telltale Definitive Series/*"
+"The Witcher 3: Wild Hunt":
+  files:
+    windows:
+      - "{Documents}/The Witcher 3/gamesaves/*"
 "Tiny Tina's Assault on Dragon Keep: A Wonderlands One-shot Adventure":
   files:
     windows:
@@ -839,6 +855,12 @@ Tormented Souls:
   files:
     windows:
       - "{LocalLow}/duale-abstractd/Tormented Souls Release/Saves/*"
+ULTRAKILL:
+  files:
+    linux:
+      - "{GameRoot}/Saves/*"
+    windows:
+      - "{GameRoot}/Saves/*"
 Unleashed Recompiled:
   files:
     linux:
@@ -849,10 +871,18 @@ Until Dawn:
   files:
     windows:
       - "{Documents}/My Games/Bates/Saved/SavedGames/*"
+Vampyr:
+  files:
+    windows:
+      - "{LocalAppData}/AVGame/Saved/SaveGames/*"
 Where Winter Crows Go:
   files:
     linux:
       - "{GameRoot}/game/saves/*"
+"Wolfenstein: The New Order":
+  files:
+    windows:
+      - "{Home}/Saved Games/MachineGames/Wolfenstein The New Order/base/savegame/*"
 Yakuza 0:
   files:
     windows:
