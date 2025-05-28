@@ -28,7 +28,6 @@ fn format_size(size: u64) -> String {
 #[allow(clippy::too_many_lines, reason = "I will refactor this 'at some point'")]
 pub fn run(config: &AletheiaConfig) {
     let app = App::new().unwrap();
-    let app_weak = app.as_weak();
     let cfg = config.clone();
     let save_dir = config.save_dir.clone();
 
@@ -41,10 +40,10 @@ pub fn run(config: &AletheiaConfig) {
     });
 
     app.global::<GameLogic>().on_refresh_games({
-        let app = app_weak.upgrade().unwrap();
+        let app_weak = app.as_weak().unwrap();
 
         move || {
-            let selected_names: std::collections::HashSet<String> = app.global::<GamesScreenLogic>()
+            let selected_names: std::collections::HashSet<String> = app_weak.global::<GamesScreenLogic>()
                 .get_selected_games().iter().map(|g| g.name.to_string()).collect();
             let select_all = selected_names.is_empty();
 
@@ -69,21 +68,20 @@ pub fn run(config: &AletheiaConfig) {
 
             let games_model = ModelRc::new(VecModel::from(ui_games));
             // In a perfect world, Slint would have a way to filter in their markdown language so I could avoid this
-            app.global::<GameLogic>().set_games(games_model.clone());
-            app.global::<GamesScreenLogic>().set_filtered_games(games_model.clone());
-            app.global::<GamesScreenLogic>().set_selected_games(ModelRc::new(VecModel::from(games_model.iter().filter(|g| g.selected).collect::<Vec<UiGame>>())));
+            app_weak.global::<GameLogic>().set_games(games_model.clone());
+            app_weak.global::<GamesScreenLogic>().set_filtered_games(games_model.clone());
+            app_weak.global::<GamesScreenLogic>().set_selected_games(ModelRc::new(VecModel::from(games_model.iter().filter(|g| g.selected).collect::<Vec<UiGame>>())));
         }
     });
 
     app.global::<GamesScreenLogic>().on_filter({
-        let app_weak = app.as_weak();
+        let app_weak = app.as_weak().unwrap();
 
         move |query| {
-            let app = app_weak.upgrade().unwrap();
-            let games = app.global::<GameLogic>().get_games();
+            let games = app_weak.global::<GameLogic>().get_games();
 
             if query.is_empty() {
-                app.global::<GamesScreenLogic>().set_filtered_games(games);
+                app_weak.global::<GamesScreenLogic>().set_filtered_games(games);
                 return;
             }
 
@@ -91,24 +89,23 @@ pub fn run(config: &AletheiaConfig) {
                 .filter(|g| g.name.to_lowercase().contains(&query.to_lowercase()))
                 .collect();
 
-            app.global::<GamesScreenLogic>().set_filtered_games(ModelRc::new(VecModel::from(filtered_games)));
+            app_weak.global::<GamesScreenLogic>().set_filtered_games(ModelRc::new(VecModel::from(filtered_games)));
         }
     });
 
     app.global::<GamesScreenLogic>().on_select_all({
-        let app_weak = app.as_weak();
+        let app_weak = app.as_weak().unwrap();
 
         move |enabled| {
-            let app = app_weak.upgrade().unwrap();
-            let filtered_games_model = app.global::<GamesScreenLogic>().get_filtered_games();
+            let filtered_games_model = app_weak.global::<GamesScreenLogic>().get_filtered_games();
             let updated_games: Vec<UiGame> = filtered_games_model.iter().map(|mut g| {
                 g.selected = enabled;
                 g
             }).collect();
 
             let updated_model = ModelRc::new(VecModel::from(updated_games.clone()));
-            app.global::<GamesScreenLogic>().set_filtered_games(updated_model.clone());
-            app.global::<GamesScreenLogic>().set_selected_games(
+            app_weak.global::<GamesScreenLogic>().set_filtered_games(updated_model.clone());
+            app_weak.global::<GamesScreenLogic>().set_selected_games(
                 if enabled {
                     ModelRc::new(VecModel::from(updated_games))
                 } else {
@@ -120,11 +117,10 @@ pub fn run(config: &AletheiaConfig) {
 
 
     app.global::<GamesScreenLogic>().on_select_game({
-        let app_weak = app.as_weak();
+        let app_weak = app.as_weak().unwrap();
 
         move |game| {
-            let app = app_weak.upgrade().unwrap();
-            let selected_games_model = app.global::<GamesScreenLogic>().get_selected_games();
+            let selected_games_model = app_weak.global::<GamesScreenLogic>().get_selected_games();
             let mut selected_games: Vec<UiGame> = selected_games_model.iter().collect();
 
             if let Some(index) = selected_games.iter().position(|g| g.name == game.name) {
@@ -133,16 +129,16 @@ pub fn run(config: &AletheiaConfig) {
                 selected_games.push(game);
             }
 
-            app.global::<GamesScreenLogic>().set_selected_games(ModelRc::new(VecModel::from(selected_games)));
+            app_weak.global::<GamesScreenLogic>().set_selected_games(ModelRc::new(VecModel::from(selected_games)));
         }
     });
 
     app.global::<GamesScreenLogic>().on_perform_operation({
-        let app = app_weak.upgrade().unwrap();
+        let app_weak = app.as_weak().unwrap();
         let cfg = cfg.clone();
 
         move |action| {
-            let selected_games_model = app.global::<GamesScreenLogic>().get_selected_games();
+            let selected_games_model = app_weak.global::<GamesScreenLogic>().get_selected_games();
             let selected_games: Vec<UiGame> = selected_games_model.iter().collect();
             let selected_game_names = Args::parse(&selected_games
                 .iter()
@@ -152,11 +148,11 @@ pub fn run(config: &AletheiaConfig) {
 
             if action == "backup" {
                 crate::commands::Backup::run(selected_game_names, &cfg);
-                app.global::<GameLogic>().invoke_refresh_games();
-                app.global::<NotificationLogic>().invoke_show_success(format!("Backed up {} games", selected_games.len()).into());
+                app_weak.global::<GameLogic>().invoke_refresh_games();
+                app_weak.global::<NotificationLogic>().invoke_show_success(format!("Backed up {} games", selected_games.len()).into());
             } else {
                 crate::commands::Restore::run(selected_game_names, &cfg);
-                app.global::<NotificationLogic>().invoke_show_success(format!("Restored {} games", selected_games.len()).into());
+                app_weak.global::<NotificationLogic>().invoke_show_success(format!("Restored {} games", selected_games.len()).into());
             }
         }
     });
