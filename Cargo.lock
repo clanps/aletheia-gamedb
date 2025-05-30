@@ -6682,9 +6682,9 @@ dependencies = [
 
 [[package]]
 name = "winresource"
-version = "0.1.21"
+version = "0.1.22"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "87c1610cb25b3296ecc1d255597c607f9aa537368022861eacd5951d31f8c374"
+checksum = "a179ac8923651ff1d15efbee760b4dd3679fd85fa5a8b2bb1109b7248f80e30f"
 dependencies = [
  "version_check",
 ]
