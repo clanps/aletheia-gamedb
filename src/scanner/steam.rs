@@ -39,6 +39,26 @@ impl Scanner for SteamScanner {
             }
         }
 
+        for shortcut in steam_directory.shortcuts().unwrap() {
+            let shortcut = shortcut.unwrap();
+
+            games.push(Game {
+                name: shortcut.app_name,
+                installation_dir: Some(shortcut.start_dir.into()),
+                prefix: if cfg!(unix) {
+                    let prefix_directory = steam_directory.path()
+                        .join("steamapps/compatdata")
+                        .join(shortcut.app_id.to_string())
+                        .join("pfx");
+
+                    prefix_directory.exists().then_some(prefix_directory)
+                } else {
+                    None
+                },
+                source: "Steam".into()
+            });
+        }
+
         games
     }
 }
