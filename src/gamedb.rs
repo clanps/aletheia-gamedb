@@ -32,12 +32,12 @@ pub enum UpdaterResult {
     UpToDate
 }
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Clone, Debug, Deserialize, Serialize)]
 pub struct GameDbEntry {
     pub files: GameFiles
 }
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Clone, Debug, Deserialize, Serialize)]
 pub struct GameFiles {
     pub windows: Option<Vec<String>>,
     pub linux: Option<Vec<String>>
@@ -56,6 +56,17 @@ pub struct FileMetadata {
     pub size: u64
 }
 
+#[derive(Debug, Deserialize, Serialize)]
+struct CustomDbMetadata {
+    etag: Option<String>,
+    data: HashMap<String, GameDbEntry>
+}
+
+#[derive(Debug, Default, Deserialize, Serialize)]
+struct CustomDbCache {
+    databases: HashMap<String, CustomDbMetadata>,
+}
+
 pub fn parse() -> HashMap<String, GameDbEntry> {
     let cache_dir = cache();
     let custom_gamedb_path = cache_dir.join("custom_gamedb.yaml");
@@ -72,9 +83,11 @@ pub fn parse() -> HashMap<String, GameDbEntry> {
         serde_yaml::from_str(GAMEDB_YAML).expect("Failed to parse GameDB.")
     };
 
-    if cache_dir.exists() {
-        if let Ok(gamedb) = serde_yaml::from_str::<HashMap<String, GameDbEntry>>(&read_to_string(custom_gamedb_path).unwrap()) {
-            db.extend(gamedb);
+    if custom_gamedb_path.exists() {
+        if let Ok(db_cache) = serde_yaml::from_str::<CustomDbCache>(&read_to_string(custom_gamedb_path).unwrap()) {
+            for custom_db in db_cache.databases.values() {
+                db.extend(custom_db.data.clone());
+            }
         }
     }
 
@@ -131,6 +144,16 @@ pub fn update() -> Result<UpdaterResult> {
     Ok(UpdaterResult::Success)
 }
 
+fn load_custom_db_cache() -> CustomDbCache {
+    let cache_path = cache().join("custom_gamedb.yaml");
+
+    if cache_path.exists() {
+        serde_yaml::from_str(&read_to_string(&cache_path).unwrap()).unwrap()
+    } else {
+        CustomDbCache::default()
+    }
+}
+
 // TODO: Make async
 pub fn update_custom(cfg: &Config) -> Result<UpdaterResult> {
     if cfg.custom_databases.is_empty() {
@@ -138,17 +161,54 @@ pub fn update_custom(cfg: &Config) -> Result<UpdaterResult> {
     }
 
     let cache_dir = cache();
+
     let client = reqwest::blocking::Client::new();
+    let mut db_cache = load_custom_db_cache();
     let mut combined = HashMap::<String, GameDbEntry>::new();
+    let mut updated = false;
+
+    create_dir_all(&cache_dir)?;
 
     for db in &cfg.custom_databases {
-        let response = client.get(db).send()?.error_for_status()?;
-        let db = serde_yaml::from_str::<HashMap<String, GameDbEntry>>(&response.text()?).unwrap();
+        let mut request = client.get(db);
+        let cached_etag = db_cache.databases.get(db).and_then(|meta| meta.etag.as_ref());
 
-        combined.extend(db);
+        if let Some(etag) = cached_etag {
+            request = request.header(reqwest::header::IF_NONE_MATCH, etag);
+        }
+
+        let response = request.send()?.error_for_status()?;
+
+        if response.status() == reqwest::StatusCode::NOT_MODIFIED {
+            if let Some(cached_meta) = db_cache.databases.get(db) {
+                combined.extend(cached_meta.data.clone());
+            }
+
+            continue;
+        }
+
+        let etag = response.headers().get(reqwest::header::ETAG)
+            .and_then(|etag| etag.to_str().ok())
+            .map(ToOwned::to_owned);
+
+        let db_data = serde_yaml::from_str::<HashMap<String, GameDbEntry>>(&response.text()?).unwrap();
+
+        db_cache.databases.insert(db.clone(), CustomDbMetadata {
+            etag,
+            data: db_data.clone()
+        });
+
+        combined.extend(db_data);
+        updated = true;
     }
 
-    write(cache_dir.join("custom_gamedb.yaml"), serde_yaml::to_string(&combined).unwrap())?;
+    db_cache.databases.retain(|url, _| cfg.custom_databases.contains(url));
 
-    Ok(UpdaterResult::Success)
+    write(cache_dir.join("custom_gamedb.yaml"), serde_yaml::to_string(&db_cache).unwrap())?;
+
+    if updated {
+        Ok(UpdaterResult::Success)
+    } else {
+        Ok(UpdaterResult::UpToDate)
+    }
 }
