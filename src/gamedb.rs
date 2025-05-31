@@ -1,9 +1,11 @@
 // SPDX-FileCopyrightText: 2025 Spencer
 // SPDX-License-Identifier: AGPL-3.0-only
 
+use crate::config::Config;
 use crate::dirs::cache;
 use crate::scanner::{Game, Scanner};
 use crate::scanner::{HeroicScanner, SteamScanner};
+use std::collections::HashMap;
 use std::fs::{create_dir_all, read_to_string, write};
 use serde::{Deserialize, Serialize};
 
@@ -30,12 +32,12 @@ pub enum UpdaterResult {
     UpToDate
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct GameDbEntry {
     pub files: GameFiles
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct GameFiles {
     pub windows: Option<Vec<String>>,
     pub linux: Option<Vec<String>>
@@ -54,18 +56,29 @@ pub struct FileMetadata {
     pub size: u64
 }
 
-pub fn parse() -> std::collections::HashMap<String, GameDbEntry> {
-    let gamedb_path = cache().join("gamedb.yaml");
+pub fn parse() -> HashMap<String, GameDbEntry> {
+    let cache_dir = cache();
+    let custom_gamedb_path = cache_dir.join("custom_gamedb.yaml");
+    let gamedb_path = cache_dir.join("gamedb.yaml");
 
-    if gamedb_path.exists() {
+    let mut db: HashMap<String, GameDbEntry> = if gamedb_path.exists() {
         if let Ok(gamedb) = serde_yaml::from_str(&read_to_string(gamedb_path).unwrap()) {
-            return gamedb;
+            gamedb
+        } else {
+            println!("Failed to parse cached GameDB, falling back to built-in.");
+            serde_yaml::from_str(GAMEDB_YAML).expect("Failed to parse GameDB.")
         }
+    } else {
+        serde_yaml::from_str(GAMEDB_YAML).expect("Failed to parse GameDB.")
+    };
 
-        println!("Failed to parse cached GameDB, falling back to built-in.");
+    if cache_dir.exists() {
+        if let Ok(gamedb) = serde_yaml::from_str::<HashMap<String, GameDbEntry>>(&read_to_string(custom_gamedb_path).unwrap()) {
+            db.extend(gamedb);
+        }
     }
 
-    serde_yaml::from_str(GAMEDB_YAML).expect("Failed to parse GameDB.")
+    db
 }
 
 pub fn get_installed_games() -> Vec<Game> {
@@ -114,6 +127,28 @@ pub fn update() -> Result<UpdaterResult> {
 
     write(&gamedb_path, response.bytes()?)?;
     write(&etag_path, current_etag.unwrap())?;
+
+    Ok(UpdaterResult::Success)
+}
+
+// TODO: Make async
+pub fn update_custom(cfg: &Config) -> Result<UpdaterResult> {
+    if cfg.custom_databases.is_empty() {
+        return Ok(UpdaterResult::UpToDate);
+    }
+
+    let cache_dir = cache();
+    let client = reqwest::blocking::Client::new();
+    let mut combined = HashMap::<String, GameDbEntry>::new();
+
+    for db in &cfg.custom_databases {
+        let response = client.get(db).send()?.error_for_status()?;
+        let db = serde_yaml::from_str::<HashMap<String, GameDbEntry>>(&response.text()?).unwrap();
+
+        combined.extend(db);
+    }
+
+    write(cache_dir.join("custom_gamedb.yaml"), serde_yaml::to_string(&combined).unwrap())?;
 
     Ok(UpdaterResult::Success)
 }

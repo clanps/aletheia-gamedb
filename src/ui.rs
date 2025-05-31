@@ -182,12 +182,12 @@ pub fn run(config: &AletheiaConfig) {
 
     app.global::<SettingsScreenLogic>().on_save_config({
         move |cfg| {
-            AletheiaConfig::save(&AletheiaConfig { save_dir: (&cfg.save_dir).into() });
+            AletheiaConfig::save(&AletheiaConfig { custom_databases: cfg.custom_databases.iter().map(Into::into).collect(), save_dir: (&cfg.save_dir).into() });
         }
     });
 
     app.global::<GameLogic>().invoke_refresh_games();
     app.global::<AppLogic>().set_version(env!("CARGO_PKG_VERSION").into());
-    app.global::<SettingsScreenLogic>().set_config(Config { save_dir: config.save_dir.to_string_lossy().to_string().into() });
+    app.global::<SettingsScreenLogic>().set_config(Config { custom_databases: ModelRc::new(VecModel::from(vec![])), save_dir: config.save_dir.to_string_lossy().to_string().into() });
     app.run().unwrap();
 }

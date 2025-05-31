@@ -27,6 +27,7 @@ fn main() {
             "backup" => commands::Backup::run(args, &config),
             "restore" => commands::Restore::run(args, &config),
             "update" => commands::Update::run(args, &config),
+            "update_custom" => commands::UpdateCustom::run(args, &config),
             _ => eprintln!("Command not found.")
         }
     } else {

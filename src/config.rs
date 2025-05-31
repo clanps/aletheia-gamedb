@@ -7,7 +7,8 @@ use std::path::PathBuf;
 #[derive(Clone, serde::Deserialize, serde::Serialize)]
 #[serde(default)]
 pub struct Config {
-    pub save_dir: PathBuf,
+    pub custom_databases: Vec<String>,
+    pub save_dir: PathBuf
 }
 
 impl Config {
@@ -67,6 +68,7 @@ impl Config {
 impl Default for Config {
     fn default() -> Self {
         Self {
+            custom_databases: vec![],
             save_dir: Self::get_save_dir()
         }
     }
