@@ -188,6 +188,6 @@ pub fn run(config: &AletheiaConfig) {
 
     app.global::<GameLogic>().invoke_refresh_games();
     app.global::<AppLogic>().set_version(env!("CARGO_PKG_VERSION").into());
-    app.global::<SettingsScreenLogic>().set_config(Config { custom_databases: ModelRc::new(VecModel::from(vec![])), save_dir: config.save_dir.to_string_lossy().to_string().into() });
+    app.global::<SettingsScreenLogic>().set_config(Config { custom_databases: ModelRc::new(VecModel::from(config.custom_databases.iter().map(Into::into).collect::<Vec<_>>())), save_dir: config.save_dir.to_string_lossy().to_string().into() });
     app.run().unwrap();
 }
