@@ -82,7 +82,7 @@ impl Scanner for HeroicScanner {
                     .get(&game.app_id)
                     .and_then(|c| c.get("winePrefix"))
                     .and_then(|p| p.as_str())
-                    .map(std::convert::Into::into)
+                    .map(Into::into)
             } else {
                 None
             };
