@@ -89,11 +89,15 @@ fn backup_game(game: &Game, config: &Config, entry: &GameDbEntry) {
     create_dir_all(&backup_folder).unwrap_or_else(|_| panic!("Failed to backup {}.", game.name)); // TODO: Show warning?
 
     for file in files {
-        let file_path_str = file.to_string_lossy().to_string();
-        let file_hash = hash_file(&file);
-        let file_changed = existing_manifest.as_ref().is_none_or(|manifest| manifest.files.iter().find(|m| m.path == file_path_str).is_none_or(|metadata| metadata.hash != file_hash));
+        let shrunk_file_path = shrink_path(&file.to_string_lossy(), game.installation_dir.as_ref(), game.prefix.as_ref()).to_string_lossy().to_string();
+        let should_backup = existing_manifest.as_ref().is_none_or(|manifest| {
+            manifest.files.iter()
+                .find(|m| m.path == shrunk_file_path).is_none_or(|existing| {
+                    existing.hash != hash_file(&file) && metadata(&file).unwrap().modified().unwrap() > existing.modified
+                })
+        });
 
-        if file_changed {
+        if should_backup {
             let file_metadata = process_file(
                 &file,
                 &backup_folder.join(file.file_name().unwrap()),
@@ -105,7 +109,7 @@ fn backup_game(game: &Game, config: &Config, entry: &GameDbEntry) {
         } else {
             let existing_metadata = existing_manifest.as_ref().unwrap().files
                 .iter()
-                .find(|m| m.path == file_path_str)
+                .find(|m| m.path == shrunk_file_path)
                 .unwrap();
 
             game_files.push(existing_metadata.to_owned());
@@ -128,9 +132,12 @@ fn backup_game(game: &Game, config: &Config, entry: &GameDbEntry) {
 fn process_file(file_path: &PathBuf, dest: &PathBuf, game: &Game) -> FileMetadata {
     copy(file_path, dest).unwrap();
 
+    let file_metadata = metadata(file_path).unwrap();
+
     FileMetadata {
+        modified: file_metadata.modified().unwrap(),
         path: shrink_path(&file_path.to_string_lossy(), game.installation_dir.as_ref(), game.prefix.as_ref()).to_string_lossy().to_string(),
         hash: hash_file(file_path),
-        size: metadata(file_path).unwrap().len()
+        size: file_metadata.len()
     }
 }

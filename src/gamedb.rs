@@ -52,6 +52,7 @@ pub struct GameInfo {
 #[derive(Clone, Deserialize, Serialize)]
 pub struct FileMetadata {
     pub hash: String,
+    pub modified: std::time::SystemTime,
     pub path: String,
     pub size: u64
 }
