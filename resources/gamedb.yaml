@@ -93,8 +93,7 @@ Call of Cthulhu:
 "Call of Duty: Ghosts":
   files:
     windows:
-      - "{GameRoot}/players2/user/mpdata"
-      - "{GameRoot}/players2/user/mpdataex"
+      - "{GameRoot}/players2/savegame.svg"
 Cars:
   files:
     windows:
