@@ -51,8 +51,6 @@ fn backup_game(game: &Game, config: &Config, entry: &GameDbEntry) {
         serde_yaml::from_str::<GameInfo>(&content).unwrap()
     });
 
-    create_dir_all(&backup_folder).unwrap_or_else(|_| panic!("Failed to backup {}.", game.name)); // TODO: Show warning?
-
     let mut game_files: Vec<FileMetadata> = vec![];
     let mut paths = vec![];
 
@@ -64,6 +62,8 @@ fn backup_game(game: &Game, config: &Config, entry: &GameDbEntry) {
     if let Some(ref linux_paths) = entry.files.linux {
         paths.extend(linux_paths);
     }
+
+    let mut files = vec![];
 
     for path in paths {
         let expanded = expand_path(path, game.installation_dir.as_ref(), game.prefix.as_ref());
@@ -78,26 +78,37 @@ fn backup_game(game: &Game, config: &Config, entry: &GameDbEntry) {
                 continue;
             }
 
-            let file_hash = hash_file(&file);
-            let file_changed = existing_manifest.as_ref().is_none_or(|manifest| manifest.files.iter().find(|m| m.path == file_path_str).is_none_or(|metadata| metadata.hash != file_hash));
+            files.push(file);
+        }
+    }
 
-            if file_changed {
-                let file_metadata = process_file(
-                    &file,
-                    &backup_folder.join(file.file_name().unwrap()),
-                    game
-                );
+    if files.is_empty() {
+        return;
+    }
 
-                game_files.push(file_metadata);
-                changed = true;
-            } else {
-                let existing_metadata = existing_manifest.as_ref().unwrap().files
-                    .iter()
-                    .find(|m| m.path == file_path_str)
-                    .unwrap();
+    create_dir_all(&backup_folder).unwrap_or_else(|_| panic!("Failed to backup {}.", game.name)); // TODO: Show warning?
 
-                game_files.push(existing_metadata.to_owned());
-            }
+    for file in files {
+        let file_path_str = file.to_string_lossy().to_string();
+        let file_hash = hash_file(&file);
+        let file_changed = existing_manifest.as_ref().is_none_or(|manifest| manifest.files.iter().find(|m| m.path == file_path_str).is_none_or(|metadata| metadata.hash != file_hash));
+
+        if file_changed {
+            let file_metadata = process_file(
+                &file,
+                &backup_folder.join(file.file_name().unwrap()),
+                game
+            );
+
+            game_files.push(file_metadata);
+            changed = true;
+        } else {
+            let existing_metadata = existing_manifest.as_ref().unwrap().files
+                .iter()
+                .find(|m| m.path == file_path_str)
+                .unwrap();
+
+            game_files.push(existing_metadata.to_owned());
         }
     }
 
