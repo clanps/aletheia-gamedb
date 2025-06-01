@@ -17,7 +17,7 @@ Add game save locations in `resources/gamedb.yaml`. Include Linux paths if the g
 | `{AppData}`       | Roaming AppData folder on Windows                                                             |
 | `{LocalAppData}`  | Local AppData folder on Windows                                                               |
 | `{LocalLow}`      | LocalLow AppData folder on Windows                                                            |
-| `{Documents}`     | User’s Documents directory                                                                    |
+| `{Documents}`     | User’s documents directory                                                                    |
 | `{Home}`          | User’s home directory                                                                         |
 | `{XDGConfig}`     | Linux XDG config directory                                                                    |
 | `{XDGData}`       | Linux XDG data directory                                                                      |
