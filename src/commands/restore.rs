@@ -53,12 +53,6 @@ impl Command for Restore {
             return;
         }
 
-        let games = if args.positional.is_empty() {
-            vec![]
-        } else {
-            args.positional
-        };
-
         for game in std::fs::read_dir(&save_dir).unwrap() {
             let game_dir = game.unwrap().path();
             let is_dir = game_dir.is_dir();
@@ -81,7 +75,7 @@ impl Command for Restore {
                 return;
             };
 
-            if !games.is_empty() && !games.contains(&manifest.name) {
+            if !args.positional.is_empty() && !args.positional.contains(&manifest.name) {
                 continue;
             }
 
