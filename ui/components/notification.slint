@@ -23,18 +23,23 @@ export component Notification inherits Rectangle {
   drop-shadow-color: rgba(0, 0, 0, 0.15);
   drop-shadow-offset-y: 4px;
 
+  private property <bool> animated_in: false;
   private property <image> icon: notification-type == NotificationType.SUCCESS ? @image-url("../assets/check.svg") :
                                  notification-type == NotificationType.ERROR ? @image-url("../assets/cancel.svg") :
                                  notification-type == NotificationType.WARNING ? @image-url("../assets/warning.svg") :
                                  @image-url("../assets/info.svg");
 
-  animate x { duration: 550ms; easing: ease-out; }
-  x: self.visible ? target_x : target_x + 100px;
+  animate x { duration: 225ms; easing: ease-out; }
+  x: animated_in ? target_x : target_x + 100px;
 
   Timer {
     running: parent.visible;
     interval: root.show_duration;
     triggered() => { root.closed() }
+  }
+
+  changed visible => {
+    animated_in = self.visible;
   }
 
   notification_layout := HorizontalLayout {
