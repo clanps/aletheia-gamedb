@@ -680,6 +680,10 @@ Slitterhead:
   files:
     windows:
       - "{LocalAppData}/YKS/Saved/SaveGames/Steam/*/*.sav"
+Sonic Forces:
+  files:
+    windows:
+      - "{GameRoot}/savedata/*/savedata.xml"
 Sonic Frontiers:
   files:
     windows:
