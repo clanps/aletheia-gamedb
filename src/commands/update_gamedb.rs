@@ -10,8 +10,8 @@ pub struct UpdateGameDb;
 impl Command for UpdateGameDb {
     fn run(_args: Args, _config: &Config) {
         match gamedb::update() {
-            Ok(gamedb::UpdaterResult::Success) => println!("Successfully updated GameDB."),
-            Ok(gamedb::UpdaterResult::UpToDate) => println!("GameDB is already up to date."),
+            Ok(true) => println!("Successfully updated GameDB."),
+            Ok(false) => println!("GameDB is already up to date."),
             Err(e) => eprintln!("Error updating GameDB: {e}")
         }
     }

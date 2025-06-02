@@ -10,8 +10,8 @@ pub struct UpdateCustom;
 impl Command for UpdateCustom {
     fn run(_args: Args, config: &Config) {
         match gamedb::update_custom(config) {
-            Ok(gamedb::UpdaterResult::Success) => println!("Successfully updated custom GameDBs."),
-            Ok(gamedb::UpdaterResult::UpToDate) => println!("Custom GameDBs are already up to date."),
+            Ok(true) => println!("Successfully updated custom GameDBs."),
+            Ok(false) => println!("Custom GameDBs are already up to date."),
             Err(e) => eprintln!("Error updating custom GameDBs: {e}")
         }
     }

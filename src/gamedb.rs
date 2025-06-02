@@ -27,11 +27,6 @@ pub enum Error {
 
 pub type Result<T> = core::result::Result<T, Error>;
 
-pub enum UpdaterResult {
-    Success,
-    UpToDate
-}
-
 #[derive(Clone, Debug, Deserialize, Serialize)]
 pub struct GameDbEntry {
     pub files: GameFiles
@@ -111,7 +106,7 @@ pub fn get_installed_games() -> Vec<Game> {
     games.into_iter().filter(|game| db.contains_key(&game.name)).collect()
 }
 
-pub fn update() -> Result<UpdaterResult> {
+pub fn update() -> Result<bool> {
     let cache_dir = cache();
 
     let gamedb_path = cache_dir.join("gamedb.yaml");
@@ -132,7 +127,7 @@ pub fn update() -> Result<UpdaterResult> {
     let status = response.status();
 
     if status == reqwest::StatusCode::NOT_MODIFIED {
-        return Ok(UpdaterResult::UpToDate);
+        return Ok(false);
     }
 
     let current_etag = response.headers()
@@ -142,7 +137,7 @@ pub fn update() -> Result<UpdaterResult> {
     write(&gamedb_path, response.bytes()?)?;
     write(&etag_path, current_etag.unwrap())?;
 
-    Ok(UpdaterResult::Success)
+    Ok(true)
 }
 
 fn load_custom_db_cache() -> CustomDbCache {
@@ -156,9 +151,9 @@ fn load_custom_db_cache() -> CustomDbCache {
 }
 
 // TODO: Make async
-pub fn update_custom(cfg: &Config) -> Result<UpdaterResult> {
+pub fn update_custom(cfg: &Config) -> Result<bool> {
     if cfg.custom_databases.is_empty() {
-        return Ok(UpdaterResult::UpToDate);
+        return Ok(false);
     }
 
     let cache_dir = cache();
@@ -204,12 +199,7 @@ pub fn update_custom(cfg: &Config) -> Result<UpdaterResult> {
     }
 
     db_cache.databases.retain(|url, _| cfg.custom_databases.contains(url));
-
     write(cache_dir.join("custom_gamedb.yaml"), serde_yaml::to_string(&db_cache).unwrap())?;
 
-    if updated {
-        Ok(UpdaterResult::Success)
-    } else {
-        Ok(UpdaterResult::UpToDate)
-    }
+    Ok(updated)
 }
