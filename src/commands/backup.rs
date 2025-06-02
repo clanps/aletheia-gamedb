@@ -25,14 +25,30 @@ impl Command for Backup {
             };
 
             if let Some(game) = installed_games.into_iter().find(|game| game.name == game_name) {
-                backup_game(&game, config, game_db.get(&game.name).unwrap());
+                if let Err(e) = backup_game(&game, config, game_db.get(&game.name).unwrap()) {
+                    eprintln!("Failed to backup {}: {}", game.name, e);
+                } else {
+                    println!("Backed up {}.", game.name);
+                }
             }
         } else if !args.positional.is_empty() {
             installed_games.iter()
                 .filter(|game| args.positional.contains(&game.name))
-                .for_each(|game| backup_game(game, config, game_db.get(&game.name).unwrap()));
+                .for_each(|game| {
+                    if let Err(e) = backup_game(game, config, game_db.get(&game.name).unwrap()) {
+                        eprintln!("Failed to backup {}: {}", game.name, e);
+                    } else {
+                        println!("Backed up {}.", game.name);
+                    }
+                });
         } else {
-            installed_games.iter().for_each(|game| backup_game(game, config, game_db.get(&game.name).unwrap()));
+            for game in &installed_games {
+                if let Err(e) = backup_game(game, config, game_db.get(&game.name).unwrap()) {
+                    eprintln!("Failed to backup {}: {}", game.name, e);
+                } else {
+                    println!("Backed up {}.", game.name);
+                }
+            }
         }
     }
 }

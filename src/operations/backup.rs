@@ -10,15 +10,25 @@ use std::fs::{copy, create_dir_all, metadata, read_to_string, write};
 use std::path::PathBuf;
 use glob::glob;
 
-pub fn backup_game(game: &Game, config: &Config, entry: &GameDbEntry) {
+#[derive(Debug, thiserror::Error)]
+pub enum Error {
+    #[error("Failed to create backup directory: {0}")]
+    DirectoryCreation(#[from] std::io::Error),
+    #[error("Malformed manifest file")]
+    MalformedManifest
+}
+
+pub type Result<T> = core::result::Result<T, Error>;
+
+pub fn backup_game(game: &Game, config: &Config, entry: &GameDbEntry) -> Result<bool> {
     let backup_folder = PathBuf::from(&config.save_dir).join(game.name.replace(':', "")); // NTFS doesn't support : and this makes sense on Unix for cross-OS syncing
     let manifest_path = backup_folder.join("aletheia_manifest.yaml");
-    let mut changed = false;
-    let existing_manifest = manifest_path.exists().then(|| {
-        let content = read_to_string(&manifest_path).unwrap();
-        serde_yaml::from_str::<GameInfo>(&content).unwrap()
-    });
+    let existing_manifest = manifest_path.exists()
+        .then(|| read_to_string(&manifest_path).unwrap())
+        .map(|content| serde_yaml::from_str::<GameInfo>(&content).map_err(|_| Error::MalformedManifest))
+        .transpose()?;
 
+    let mut changed = false;
     let mut game_files: Vec<FileMetadata> = vec![];
     let mut paths = vec![];
 
@@ -51,10 +61,10 @@ pub fn backup_game(game: &Game, config: &Config, entry: &GameDbEntry) {
     }
 
     if files.is_empty() {
-        return;
+        return Ok(false);
     }
 
-    create_dir_all(&backup_folder).unwrap_or_else(|_| panic!("Failed to backup {}.", game.name)); // TODO: Show warning?
+    create_dir_all(&backup_folder)?;
 
     for file in files {
         let shrunk_file_path = shrink_path(&file.to_string_lossy(), game.installation_dir.as_ref(), game.prefix.as_ref()).to_string_lossy().to_string();
@@ -85,7 +95,7 @@ pub fn backup_game(game: &Game, config: &Config, entry: &GameDbEntry) {
     }
 
     if !changed {
-        return;
+        return Ok(false);
     }
 
     let game_metadata = GameInfo {
@@ -94,7 +104,8 @@ pub fn backup_game(game: &Game, config: &Config, entry: &GameDbEntry) {
     };
 
     write(&manifest_path, serde_yaml::to_string(&game_metadata).unwrap()).unwrap();
-    println!("Backed up {}.", game_metadata.name);
+
+    Ok(true)
 }
 
 fn process_file(file_path: &PathBuf, dest: &PathBuf, game: &Game) -> FileMetadata {
