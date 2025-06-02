@@ -2,19 +2,19 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 
 #[cfg(feature = "updater")]
-mod check_for_update;
+mod update;
 
 mod backup;
 mod restore;
-mod update;
+mod update_gamedb;
 mod update_custom;
 
 #[cfg(feature = "updater")]
-pub use check_for_update::CheckForUpdate;
+pub use update::Update;
 
 pub use backup::Backup;
 pub use restore::Restore;
-pub use update::Update;
+pub use update_gamedb::UpdateGameDb;
 pub use update_custom::UpdateCustom;
 
 pub struct Args {

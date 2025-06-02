@@ -28,11 +28,11 @@ fn main() {
         let args = Args::parse(&args.collect::<Vec<String>>());
         match cmd.as_str() {
             "backup" => commands::Backup::run(args, &config),
-            #[cfg(feature = "updater")]
-            "check_for_update" => commands::CheckForUpdate::run(args, &config),
             "restore" => commands::Restore::run(args, &config),
+            #[cfg(feature = "updater")]
             "update" => commands::Update::run(args, &config),
-            "update_custom" => commands::UpdateCustom::run(args, &config),
+            "update_gamedb" => commands::UpdateGameDb::run(args, &config),
+            "update_custom_gamedbs" => commands::UpdateCustom::run(args, &config),
             _ => eprintln!("Command not found.")
         }
     } else {
