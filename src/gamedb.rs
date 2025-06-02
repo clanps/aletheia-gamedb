@@ -65,7 +65,6 @@ struct CustomDbCache {
 
 pub fn parse() -> HashMap<String, GameDbEntry> {
     let cache_dir = cache();
-    let custom_gamedb_path = cache_dir.join("custom_gamedb.yaml");
     let gamedb_path = cache_dir.join("gamedb.yaml");
 
     let mut db: HashMap<String, GameDbEntry> = if gamedb_path.exists() {
@@ -79,12 +78,8 @@ pub fn parse() -> HashMap<String, GameDbEntry> {
         serde_yaml::from_str(GAMEDB_YAML).expect("Failed to parse GameDB.")
     };
 
-    if custom_gamedb_path.exists() {
-        if let Ok(db_cache) = serde_yaml::from_str::<CustomDbCache>(&read_to_string(custom_gamedb_path).unwrap()) {
-            for custom_db in db_cache.databases.values() {
-                db.extend(custom_db.data.clone());
-            }
-        }
+    for custom_db in load_custom_db_cache().databases.values() {
+        db.extend(custom_db.data.clone());
     }
 
     db
@@ -144,7 +139,10 @@ fn load_custom_db_cache() -> CustomDbCache {
     let cache_path = cache().join("custom_gamedb.yaml");
 
     if cache_path.exists() {
-        serde_yaml::from_str(&read_to_string(&cache_path).unwrap()).unwrap()
+        serde_yaml::from_str(&read_to_string(&cache_path).unwrap()).unwrap_or_else(|_| {
+            eprintln!("Failed to load custom GameDB cache.");
+            CustomDbCache::default()
+        })
     } else {
         CustomDbCache::default()
     }
