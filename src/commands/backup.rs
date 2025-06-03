@@ -20,7 +20,15 @@ impl Command for Backup {
         
         let installed_games = gamedb::get_installed_games();
 
-        if !args.positional.is_empty() {
+        if args.positional.is_empty() {
+            for game in &installed_games {
+                if let Err(e) = backup_game(game, config, game_db.get(&game.name).unwrap()) {
+                    eprintln!("Failed to backup {}: {}", game.name, e);
+                } else {
+                    println!("Backed up {}.", game.name);
+                }
+            }
+        } else {
             installed_games.iter()
                 .filter(|game| args.positional.contains(&game.name))
                 .for_each(|game| {
@@ -30,14 +38,6 @@ impl Command for Backup {
                         println!("Backed up {}.", game.name);
                     }
                 });
-        } else {
-            for game in &installed_games {
-                if let Err(e) = backup_game(game, config, game_db.get(&game.name).unwrap()) {
-                    eprintln!("Failed to backup {}: {}", game.name, e);
-                } else {
-                    println!("Backed up {}.", game.name);
-                }
-            }
         }
     }
 }
