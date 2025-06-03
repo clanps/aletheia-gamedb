@@ -4,14 +4,16 @@
 use crate::config::Config;
 use crate::gamedb;
 use crate::infer::Launcher;
+use crate::infer::launchers::Heroic;
 use crate::operations::backup_game;
 
 #[cfg(unix)]
 use crate::infer::launchers::Lutris;
 
 pub fn backup(launcher: &str, config: &Config) {
+    println!("{}", launcher.to_lowercase());
     let game = match launcher.to_lowercase().as_str() {
-        "heroic" => todo!("Support Heroic games"),
+        "heroic" => Heroic::get_game(),
         #[cfg(unix)]
         "lutris" => Lutris::get_game(),
         _ => {

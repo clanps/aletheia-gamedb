@@ -4,6 +4,7 @@
 use crate::config::Config;
 use crate::gamedb;
 use crate::infer::Launcher;
+use crate::infer::launchers::Heroic;
 use crate::operations::restore_game;
 use std::fs::read_to_string;
 use std::path::PathBuf;
@@ -13,7 +14,7 @@ use crate::infer::launchers::Lutris;
 
 pub fn restore(launcher: &str, config: &Config) {
     let game = match launcher.to_lowercase().as_str() {
-        "heroic" => todo!("Support Heroic games"),
+        "heroic" => Heroic::get_game(),
         #[cfg(unix)]
         "lutris" => Lutris::get_game(),
         _ => {
