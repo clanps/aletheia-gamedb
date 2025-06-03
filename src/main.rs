@@ -12,6 +12,7 @@ mod config;
 mod dirs;
 mod file;
 mod gamedb;
+mod infer;
 mod operations;
 mod scanner;
 mod ui;

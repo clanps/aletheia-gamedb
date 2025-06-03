@@ -3,6 +3,7 @@
 
 use crate::config::Config;
 use crate::gamedb;
+use crate::infer;
 use crate::operations::backup_game;
 use super::{Args, Command};
 
@@ -11,27 +12,15 @@ pub struct Backup;
 impl Command for Backup {
     fn run(args: Args, config: &Config) {
         let game_db = gamedb::parse();
-        let installed_games = gamedb::get_installed_games();
 
         if let Some(launcher) = args.get_flag_value("infer") {
-            if launcher != "lutris" {
-                log::warn!("Backup was ran with infer using an unsupported launcher.");
-                return;
-            }
+            infer::backup(launcher, config);
+            return;
+        }
+        
+        let installed_games = gamedb::get_installed_games();
 
-            let Ok(game_name) = std::env::var("GAME_NAME") else {
-                log::error!("GAME_NAME environment variable not found, is the game being launched by Lutris?");
-                return;
-            };
-
-            if let Some(game) = installed_games.into_iter().find(|game| game.name == game_name) {
-                if let Err(e) = backup_game(&game, config, game_db.get(&game.name).unwrap()) {
-                    log::error!("Failed to backup {}: {}", game.name, e);
-                } else {
-                    log::info!("Backed up {}.", game.name);
-                }
-            }
-        } else if !args.positional.is_empty() {
+        if !args.positional.is_empty() {
             installed_games.iter()
                 .filter(|game| args.positional.contains(&game.name))
                 .for_each(|game| {
