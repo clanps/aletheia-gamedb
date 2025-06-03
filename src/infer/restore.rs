@@ -1,14 +1,17 @@
 use crate::config::Config;
 use crate::gamedb;
 use crate::infer::Launcher;
-use crate::infer::launchers::Lutris;
 use crate::operations::restore_game;
 use std::fs::read_to_string;
 use std::path::PathBuf;
 
+#[cfg(unix)]
+use crate::infer::launchers::Lutris;
+
 pub fn restore(launcher: &str, config: &Config) {
     let game = match launcher {
         "heroic" => todo!("Support Heroic games"),
+        #[cfg(unix)]
         "lutris" => Lutris::get_game(),
         _ => {
             log::warn!("Backup was ran with infer using an unsupported launcher.");
