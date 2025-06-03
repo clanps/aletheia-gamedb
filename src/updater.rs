@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2025 Spencer
+// SPDX-License-Identifier: AGPL-3.0-only
+
 #[derive(serde::Deserialize)]
 struct ForgejoRelease {
     tag_name: String

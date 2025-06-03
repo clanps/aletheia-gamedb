@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2025 Spencer
+// SPDX-License-Identifier: AGPL-3.0-only
+
 use crate::gamedb;
 use crate::infer::Launcher;
 use crate::scanner::Game;
