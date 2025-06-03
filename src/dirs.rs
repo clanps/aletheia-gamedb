@@ -81,7 +81,7 @@ pub fn expand_path(path: &str, installation_dir: Option<&PathBuf>, prefix: Optio
                 .replace("{Home}", &user.to_string_lossy())
                 .replace("{LocalAppData}", &windows_app_data.join("Local").to_string_lossy())
                 .replace("{LocalLow}", &windows_app_data.join("LocalLow").to_string_lossy())
-                .replace("{SteamUserData}", &linux_app_data.join("Steam/userdata/*").to_string_lossy());
+                .replace("{SteamUserData}", &linux_app_data.join("Steam/userdata/+([0-9])").to_string_lossy());
         }
 
         path
@@ -93,8 +93,8 @@ pub fn expand_path(path: &str, installation_dir: Option<&PathBuf>, prefix: Optio
         let home_dir = home();
 
         let steam_directory = match steamlocate::SteamDir::locate() {
-            Ok(steam_dir) => steam_dir.path().join("userdata/*"),
-            Err(_) => PathBuf::from("C:/Program Files (x86)/Steam/userdata/*")
+            Ok(steam_dir) => steam_dir.path().join("userdata/+([0-9])"),
+            Err(_) => PathBuf::from("C:/Program Files (x86)/Steam/userdata/+([0-9])")
         };
 
         path
