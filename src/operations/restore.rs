@@ -5,11 +5,11 @@ use crate::dirs::expand_path;
 use crate::file::hash_file;
 use std::path::{Path, PathBuf};
 
-pub fn restore_game(game_dir: &Path, manifest: crate::gamedb::GameInfo, lutris_games: &[crate::scanner::Game]) {
+pub fn restore_game(game_dir: &Path, manifest: crate::gamedb::GameInfo, installed_games: &[crate::scanner::Game]) {
     let game_name = manifest.name;
 
-    let Some(game) = lutris_games.iter().find(|g| g.name == game_name) else {
-        println!("{game_name} was not found in Lutris.");
+    let Some(game) = installed_games.iter().find(|g| g.name == game_name) else {
+        println!("{game_name} was not found.");
         return;
     };
 
