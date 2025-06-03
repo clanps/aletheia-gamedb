@@ -14,6 +14,6 @@ impl Launcher for Lutris {
             return None;
         };
 
-        gamedb::get_installed_games().into_iter().find(|game| game.name == game_name)
+        gamedb::get_installed_games().into_iter().find(|game| game.name == game_name && game.source == "Lutris")
     }
 }
