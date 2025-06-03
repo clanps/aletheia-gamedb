@@ -37,7 +37,7 @@ impl Scanner for GOGScanner {
             let info_path = dir.join(format!("goggame-{product_id}.info"));
 
             if !info_path.exists() {
-                println!("{} is missing a GOG info file.", dir.display());
+                log::error!("{} is missing a GOG info file.", dir.display());
                 continue;
             }
 

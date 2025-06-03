@@ -22,6 +22,8 @@ mod updater;
 use commands::{Args, Command};
 
 fn main() {
+    env_logger::init();
+
     let config = config::Config::load();
     let mut args = std::env::args().skip(1);
 

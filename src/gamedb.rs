@@ -71,7 +71,7 @@ pub fn parse() -> HashMap<String, GameDbEntry> {
         if let Ok(gamedb) = serde_yaml::from_str(&read_to_string(gamedb_path).unwrap()) {
             gamedb
         } else {
-            println!("Failed to parse cached GameDB, falling back to built-in.");
+            log::error!("Failed to parse cached GameDB, falling back to built-in.");
             serde_yaml::from_str(GAMEDB_YAML).expect("Failed to parse GameDB.")
         }
     } else {
@@ -140,7 +140,7 @@ fn load_custom_db_cache() -> CustomDbCache {
 
     if cache_path.exists() {
         serde_yaml::from_str(&read_to_string(&cache_path).unwrap()).unwrap_or_else(|_| {
-            eprintln!("Failed to load custom GameDB cache.");
+            log::error!("Failed to parse custom GameDB cache.");
             CustomDbCache::default()
         })
     } else {

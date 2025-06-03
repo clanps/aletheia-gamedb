@@ -21,38 +21,38 @@ impl Command for Restore {
 
         if let Some(launcher) = args.get_flag_value("infer") {
             if launcher != "lutris" {
-                println!("Unsupported launcher, currently only Lutris is supported.");
+                log::warn!("Restore was ran with infer using an unsupported launcher.");
                 return;
             }
 
             let Ok(game_name) = std::env::var("GAME_NAME") else {
-                println!("GAME_NAME environment variable not found, is the game being launched by Lutris?");
+                log::error!("GAME_NAME environment variable not found, is the game being launched by Lutris?");
                 return;
             };
 
             let game_dir = save_dir.join(&game_name);
             if !game_dir.exists() || !game_dir.is_dir() {
-                println!("No backups found for {game_name}.");
+                log::warn!("No backups found for {game_name}.");
                 return;
             }
 
             let manifest_path = game_dir.join("aletheia_manifest.yaml");
 
             if !manifest_path.exists() {
-                println!("{game_name} is missing a manifest file.");
+                log::error!("{game_name} is missing a manifest file.");
                 return;
             }
 
             let manifest_content = std::fs::read_to_string(manifest_path).unwrap();
             let Ok(manifest) = serde_yaml::from_str::<crate::gamedb::GameInfo>(&manifest_content) else {
-                eprintln!("Failed to parse {}'s manifest.", game_dir.file_name().unwrap().to_string_lossy());
+                log::error!("Failed to parse {}'s manifest.", game_dir.file_name().unwrap().to_string_lossy());
                 return;
             };
 
             if let Err(e) = restore_game(&game_dir, &manifest, &installed_games) {
-                println!("Failed to restore {}: {e}", manifest.name);
+                log::error!("Failed to restore {}: {e}", manifest.name);
             } else {
-                println!("Restored {}.", manifest.name);
+                log::info!("Restored {}.", manifest.name);
             }
 
             return;

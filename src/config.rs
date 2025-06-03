@@ -38,7 +38,7 @@ impl Config {
             let mut cfg: Self = serde_json::from_str(&content).expect("Failed to parse config file.");
 
             if !cfg.save_dir.exists() {
-                println!("Save directory does not exist, resetting.");
+                log::warn!("Save directory does not exist, resetting.");
 
                 cfg.save_dir = Self::get_save_dir();
                 Self::save(&cfg);
