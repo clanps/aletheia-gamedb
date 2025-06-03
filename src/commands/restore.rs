@@ -49,7 +49,12 @@ impl Command for Restore {
                 return;
             };
 
-            restore_game(&game_dir, manifest, &installed_games);
+            if let Err(e) = restore_game(&game_dir, &manifest, &installed_games) {
+                println!("Failed to restore {}: {e}", manifest.name);
+            } else {
+                println!("Restored {}.", manifest.name);
+            }
+
             return;
         }
 
@@ -79,7 +84,11 @@ impl Command for Restore {
                 continue;
             }
 
-            restore_game(&game_dir, manifest, &installed_games);
+            if let Err(e) = restore_game(&game_dir, &manifest, &installed_games) {
+                println!("Failed to restore {}: {e}", manifest.name);
+            } else {
+                println!("Restored {}.", manifest.name);
+            }
         }
     }
 }

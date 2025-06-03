@@ -5,26 +5,32 @@ use crate::dirs::expand_path;
 use crate::file::hash_file;
 use std::path::{Path, PathBuf};
 
-pub fn restore_game(game_dir: &Path, manifest: crate::gamedb::GameInfo, installed_games: &[crate::scanner::Game]) {
-    let game_name = manifest.name;
+#[derive(Debug, thiserror::Error)]
+pub enum Error {
+    #[error("Game not found")]
+    GameNotFound,
+    #[error("{0} is missing or corrupted")]
+    MissingOrCorruptedFiles(String)
+}
 
-    let Some(game) = installed_games.iter().find(|g| g.name == game_name) else {
-        println!("{game_name} was not found.");
-        return;
+pub type Result<T> = core::result::Result<T, Error>;
+
+pub fn restore_game(game_dir: &Path, manifest: &crate::gamedb::GameInfo, installed_games: &[crate::scanner::Game]) -> Result<bool> {
+    let game_name = &manifest.name;
+
+    let Some(game) = installed_games.iter().find(|g| g.name == *game_name) else {
+        return Err(Error::GameNotFound);
     };
-
-    let mut restored = false;
 
     for file in &manifest.files {
         let src_file = game_dir.join(PathBuf::from(&file.path).file_name().unwrap());
 
         if !src_file.exists() || hash_file(&src_file) != file.hash {
-            eprintln!("{} is missing or corrupted.", src_file.file_name().unwrap().to_string_lossy());
-            return;
+            return Err(Error::MissingOrCorruptedFiles(src_file.file_name().unwrap().to_string_lossy().to_string()));
         }
     }
 
-    for file in manifest.files {
+    for file in &manifest.files {
         let expanded = expand_path(&file.path, game.installation_dir.as_ref(), game.prefix.as_ref());
         let src_file = game_dir.join(PathBuf::from(&file.path).file_name().unwrap());
 
@@ -38,11 +44,8 @@ pub fn restore_game(game_dir: &Path, manifest: crate::gamedb::GameInfo, installe
         }
 
         std::fs::copy(&src_file, &expanded).unwrap();
-        restored = true;
     }
 
-    if restored {
-        println!("Restored {game_name}.");
-    }
+    Ok(true)
 }
 
