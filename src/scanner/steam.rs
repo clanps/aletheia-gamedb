@@ -14,7 +14,9 @@ impl Scanner for SteamScanner {
         };
 
         for library in steam_directory.libraries().unwrap() {
-            let lib = library.unwrap();
+            let Ok(lib) = library else {
+                continue; // This can fail if running in Flatpak and permissions haven't been granted
+            };
 
             for app in lib.apps() {
                 let game = app.unwrap();
