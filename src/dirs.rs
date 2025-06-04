@@ -8,10 +8,7 @@ use std::path::PathBuf;
 pub fn cache() -> PathBuf {
     if cfg!(unix) {
         std::env::var_os("XDG_CACHE_HOME")
-            .map_or_else(|| std::env::var_os("HOME")
-            .map(PathBuf::from).unwrap()
-            .join(".cache"), PathBuf::from)
-            .join("aletheia")
+            .map_or_else(|| home().join(".cache"), PathBuf::from)
     } else {
         config().join("aletheia/cache")
     }
@@ -20,9 +17,7 @@ pub fn cache() -> PathBuf {
 pub fn config() -> PathBuf {
     if cfg!(unix) {
         std::env::var_os("XDG_CONFIG_HOME")
-            .map_or_else(|| std::env::var_os("HOME")
-            .map(PathBuf::from).unwrap()
-            .join(".config"), PathBuf::from)
+            .map_or_else(|| home().join(".config"), PathBuf::from)
     } else {
         std::env::var_os("APPDATA")
             .map(PathBuf::from)
@@ -33,9 +28,7 @@ pub fn config() -> PathBuf {
 pub fn app_data() -> PathBuf {
     if cfg!(unix) {
         std::env::var_os("XDG_DATA_HOME")
-            .map_or_else(|| std::env::var_os("HOME")
-            .map(PathBuf::from).unwrap()
-            .join(".local/share"), PathBuf::from)
+            .map_or_else(|| home().join(".local/share"), PathBuf::from)
     } else {
         std::env::var_os("LOCALAPPDATA")
             .map(PathBuf::from)
