@@ -14,11 +14,9 @@ impl Scanner for LutrisScanner {
         let lutris_config_dir_deprecated = config().join("lutris/games");
         let lutris_config_dir_new = app_data().join("lutris/games");
         let lutris_config_dir_flatpak = home().join(".var/app/net.lutris.Lutris/data/lutris/games");
-        let lutris_config_dir_other = home().join(".config/lutris/games"); // For cases where Aletheia is running in Flatpak but Lutris is not
 
         let lutris_db_path = app_data().join("lutris/pga.db");
         let lutris_db_path_flatpak = home().join(".var/app/net.lutris.Lutris/data/lutris/pga.db");
-        let lutris_db_path_other = home().join(".local/share/lutris/pga.db"); // For cases where Aletheia is running in Flatpak but Lutris is not
 
         let lutris_config_dir = if lutris_config_dir_deprecated.exists() {
             lutris_config_dir_deprecated
@@ -26,8 +24,6 @@ impl Scanner for LutrisScanner {
             lutris_config_dir_new
         } else if lutris_config_dir_flatpak.exists() {
             lutris_config_dir_flatpak
-        } else if lutris_config_dir_other.exists() {
-            lutris_config_dir_other
         } else {
             return games;
         };
@@ -36,8 +32,6 @@ impl Scanner for LutrisScanner {
             rusqlite::Connection::open(lutris_db_path).unwrap()
         } else if lutris_db_path_flatpak.exists() {
             rusqlite::Connection::open(lutris_db_path_flatpak).unwrap()
-        } else if lutris_db_path_other.exists() {
-            rusqlite::Connection::open(lutris_db_path_other).unwrap()
         } else {
             return games;
         };

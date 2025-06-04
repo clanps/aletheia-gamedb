@@ -21,15 +21,15 @@ finish-args:
   # Used for GPU acceleration
   - --device=dri
   # Used to detect and restore Lutris save files
-  - --filesystem=~/.config/lutris # For cases where Aletheia is installed in Flatpak but Lutris is not
-  - --filesystem=~/.local/share/lutris # For cases where Aletheia is installed in Flatpak but Lutris is not
+  - --filesystem=xdg-config/lutris # For cases where Aletheia is installed in Flatpak but Lutris is not
+  - --filesystem=xdg-data/lutris # For cases where Aletheia is installed in Flatpak but Lutris is not
   - --filesystem=~/.var/app/net.lutris.Lutris
   - --filesystem=~/Games
   # Used to detect and restore Steam save files
-  - --filesystem=~/.local/share/Steam # For cases where Aletheia is installed in Flatpak but Steam is not
+  - --filesystem=xdg-data/Steam # For cases where Aletheia is installed in Flatpak but Steam is not
   - --filesystem=~/.var/app/com.valvesoftware.Steam
   # Used to detect and restore Heroic save files
-  - --filesystem=~/.config/heroic # For cases where Aletheia is installed in Flatpak but Heroic is not
+  - --filesystem=xdg-config/heroic # For cases where Aletheia is installed in Flatpak but Heroic is not
   - --filesystem=~/.var/app/com.heroicgameslauncher.hgl
 
 command: aletheia
