@@ -1,6 +1,7 @@
 // SPDX-FileCopyrightText: 2025 Spencer
 // SPDX-License-Identifier: AGPL-3.0-only
 
+use std::ffi::OsString;
 use std::fs::read_dir;
 use std::path::PathBuf;
 
@@ -65,9 +66,9 @@ pub fn expand_path(path: &str, installation_dir: Option<&PathBuf>, prefix: Optio
 
         if let Some(wine_prefix) = prefix {
             let username = if wine_prefix.to_string_lossy().contains("Steam/steamapps/compatdata") {
-                "steamuser".to_owned()
+                OsString::from("steamuser")
             } else {
-                std::env::var_os("USER").unwrap().to_string_lossy().to_string()
+                std::env::var_os("USER").unwrap()
             };
 
             let drive_c = wine_prefix.join("drive_c");
@@ -119,9 +120,9 @@ pub fn shrink_path(path: &str, installation_dir: Option<&PathBuf>, prefix: Optio
 
         if let Some(wine_prefix) = prefix {
             let username = if wine_prefix.to_string_lossy().contains("Steam/steamapps/compatdata") {
-                "steamuser".to_string()
+                OsString::from("steamuser")
             } else {
-                std::env::var_os("USER").unwrap().to_string_lossy().to_string()
+                std::env::var_os("USER").unwrap()
             };
 
             let drive_c = wine_prefix.join("drive_c");
