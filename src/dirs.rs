@@ -44,15 +44,7 @@ pub fn app_data() -> PathBuf {
 }
 
 pub fn home() -> PathBuf {
-    if cfg!(unix) {
-        std::env::var_os("HOME")
-            .map(PathBuf::from)
-            .unwrap()
-    } else {
-        std::env::var_os("USERPROFILE")
-            .map(PathBuf::from)
-            .unwrap()
-    }
+    std::env::home_dir().unwrap()
 }
 
 pub fn expand_path(path: &str, installation_dir: Option<&PathBuf>, prefix: Option<&PathBuf>) -> PathBuf {
