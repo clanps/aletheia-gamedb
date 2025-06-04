@@ -1,9 +1,9 @@
 // SPDX-FileCopyrightText: 2025 Spencer
 // SPDX-License-Identifier: AGPL-3.0-only
 
-use std::ffi::OsString;
+use std::ffi::{OsStr, OsString};
 use std::fs::read_dir;
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
 pub fn cache() -> PathBuf {
     if cfg!(unix) {
@@ -40,17 +40,59 @@ pub fn home() -> PathBuf {
     std::env::home_dir().unwrap()
 }
 
-pub fn expand_path(path: &str, installation_dir: Option<&PathBuf>, prefix: Option<&PathBuf>) -> PathBuf {
-    let mut path = match installation_dir {
-        Some(install_dir) => path.replace("{GameRoot}", &install_dir.to_string_lossy()),
-        None => path.to_owned()
-    };
+fn expand_path_components(path: &Path, replacements: &[(&OsStr, PathBuf)]) -> PathBuf {
+    let mut result = PathBuf::new();
+
+    for component in path.components() {
+        let component_os = component.as_os_str();
+        let mut replaced = false;
+
+        for (pattern, replacement) in replacements {
+            if component_os == *pattern {
+                result.push(replacement);
+                replaced = true;
+                break;
+            }
+        }
+
+        if !replaced {
+            result.push(component);
+        }
+    }
+
+    result
+}
+
+fn shrink_path_components(path: &Path, replacements: &[(&OsStr, PathBuf)]) -> PathBuf {
+    for (pattern, replacement) in replacements {
+        if let Ok(stripped) = path.strip_prefix(replacement) {
+            let mut new_path = PathBuf::from(pattern);
+            new_path.push(stripped);
+            return new_path;
+        }
+    }
+
+    path.to_path_buf()
+}
+
+fn path_contains_subpath(haystack: &Path, needle: &str) -> bool {
+    haystack
+        .ancestors()
+        .any(|ancestor| ancestor.ends_with(needle))
+}
+
+pub fn expand_path(path: &Path, installation_dir: Option<&PathBuf>, prefix: Option<&PathBuf>) -> PathBuf {
+    let mut replacements: Vec<(&OsStr, PathBuf)> = vec![];
+
+    if let Some(install_dir) = installation_dir {
+        replacements.push((OsStr::new("{GameRoot}"), install_dir.to_owned()));
+    }
 
     if cfg!(unix) {
         let linux_app_data = app_data();
 
         if let Some(wine_prefix) = prefix {
-            let username = if wine_prefix.to_string_lossy().contains("Steam/steamapps/compatdata") {
+            let username = if path_contains_subpath(wine_prefix, "Steam/steamapps/compatdata") {
                 OsString::from("steamuser")
             } else {
                 std::env::var_os("USER").unwrap()
@@ -61,19 +103,20 @@ pub fn expand_path(path: &str, installation_dir: Option<&PathBuf>, prefix: Optio
             let windows_app_data = user.join("AppData");
             let documents = user.join("Documents");
 
-            path = path
-                .replace("{AppData}", &windows_app_data.join("Roaming").to_string_lossy())
-                .replace("{Documents}", &documents.to_string_lossy())
-                .replace("{Home}", &user.to_string_lossy())
-                .replace("{LocalAppData}", &windows_app_data.join("Local").to_string_lossy())
-                .replace("{LocalLow}", &windows_app_data.join("LocalLow").to_string_lossy())
-                .replace("{SteamUserData}", &linux_app_data.join("Steam/userdata/+([0-9])").to_string_lossy());
+            replacements.extend([
+                (OsStr::new("{AppData}"), windows_app_data.join("Roaming")),
+                (OsStr::new("{Documents}"), documents),
+                (OsStr::new("{Home}"), user),
+                (OsStr::new("{LocalAppData}"), windows_app_data.join("Local")),
+                (OsStr::new("{LocalLow}"), windows_app_data.join("LocalLow")),
+                (OsStr::new("{SteamUserData}"), linux_app_data.join("Steam/userdata/+([0-9])"))
+            ]);
         }
 
-        path
-            .replace("{XDGConfig}", &config().to_string_lossy())
-            .replace("{XDGData}", &linux_app_data.to_string_lossy())
-            .into()
+        replacements.extend([
+            (OsStr::new("{XDGConfig}"), config()),
+            (OsStr::new("{XDGData}"), linux_app_data)
+        ]);
     } else {
         let app_data = config();
         let home_dir = home();
@@ -83,28 +126,31 @@ pub fn expand_path(path: &str, installation_dir: Option<&PathBuf>, prefix: Optio
             Err(_) => PathBuf::from("C:/Program Files (x86)/Steam/userdata/+([0-9])")
         };
 
-        path
-            .replace("{AppData}", &app_data.join("Roaming").to_string_lossy())
-            .replace("{Documents}", &home_dir.join("Documents").to_string_lossy())
-            .replace("{Home}", &home_dir.to_string_lossy())
-            .replace("{LocalAppData}", &app_data.join("Local").to_string_lossy())
-            .replace("{LocalLow}", &app_data.join("LocalLow").to_string_lossy())
-            .replace("{SteamUserData}", &steam_directory.to_string_lossy())
-            .into()
+        replacements.extend([
+            (OsStr::new("{AppData}"), app_data.join("Roaming")),
+            (OsStr::new("{Documents}"), home_dir.join("Documents")),
+            (OsStr::new("{Home}"), home_dir),
+            (OsStr::new("{LocalAppData}"), app_data.join("Local")),
+            (OsStr::new("{LocalLow}"), app_data.join("LocalLow")),
+            (OsStr::new("{SteamUserData}"), steam_directory)
+        ]);
     }
+
+    expand_path_components(path, &replacements)
 }
 
-pub fn shrink_path(path: &str, installation_dir: Option<&PathBuf>, prefix: Option<&PathBuf>) -> PathBuf {
-    let mut path = match installation_dir {
-        Some(install_dir) => path.replace(&*install_dir.to_string_lossy(), "{GameRoot}"),
-        None => path.to_owned()
-    };
+pub fn shrink_path(path: &Path, installation_dir: Option<&PathBuf>, prefix: Option<&PathBuf>) -> PathBuf {
+    let mut replacements: Vec<(&OsStr, PathBuf)> = vec![];
+
+    if let Some(install_dir) = installation_dir {
+        replacements.push((OsStr::new("{GameRoot}"), install_dir.to_owned()));
+    }
 
     if cfg!(unix) {
         let linux_app_data = app_data();
 
         if let Some(wine_prefix) = prefix {
-            let username = if wine_prefix.to_string_lossy().contains("Steam/steamapps/compatdata") {
+            let username = if path_contains_subpath(wine_prefix, "Steam/steamapps/compatdata") {
                 OsString::from("steamuser")
             } else {
                 std::env::var_os("USER").unwrap()
@@ -114,19 +160,20 @@ pub fn shrink_path(path: &str, installation_dir: Option<&PathBuf>, prefix: Optio
             let user = drive_c.join("users").join(username);
             let windows_app_data = user.join("AppData");
 
-            path = path
-                .replace(&*windows_app_data.join("LocalLow").to_string_lossy(), "{LocalLow}")
-                .replace(&*windows_app_data.join("Local").to_string_lossy(), "{LocalAppData}")
-                .replace(&*windows_app_data.join("Roaming").to_string_lossy(), "{AppData}")
-                .replace(&*user.join("Documents").to_string_lossy(), "{Documents}")
-                .replace(&*user.to_string_lossy(), "{Home}")
-                .replace(&*linux_app_data.join("Steam/userdata/*").to_string_lossy(), "{SteamUserData}");
+            replacements.extend([
+                (OsStr::new("{LocalLow}"), windows_app_data.join("LocalLow")),
+                (OsStr::new("{LocalAppData}"), windows_app_data.join("Local")),
+                (OsStr::new("{AppData}"), windows_app_data.join("Roaming")),
+                (OsStr::new("{Documents}"), user.join("Documents")),
+                (OsStr::new("{Home}"), user),
+                (OsStr::new("{SteamUserData}"), linux_app_data.join("Steam/userdata/+([0-9])"))
+            ])
         }
 
-        path
-            .replace(&*config().to_string_lossy(), "{XDGConfig}")
-            .replace(&*linux_app_data.to_string_lossy(), "{XDGData}")
-            .into()
+        replacements.extend([
+            (OsStr::new("{XDGConfig}"), config()),
+            (OsStr::new("{XDGData}"), linux_app_data)
+        ]);
     } else {
         let app_data = config();
         let home_dir = home();
@@ -136,15 +183,17 @@ pub fn shrink_path(path: &str, installation_dir: Option<&PathBuf>, prefix: Optio
             Err(_) => PathBuf::from("C:/Program Files (x86)/Steam/userdata/*")
         };
 
-        path
-            .replace(&*app_data.join("LocalLow").to_string_lossy(), "{LocalLow}")
-            .replace(&*app_data.join("Local").to_string_lossy(), "{LocalAppData}")
-            .replace(&*app_data.join("Roaming").to_string_lossy(), "{AppData}")
-            .replace(&*home_dir.join("Documents").to_string_lossy(), "{Documents}")
-            .replace(&*home_dir.to_string_lossy(), "{Home}")
-            .replace(&*steam_directory.to_string_lossy(), "{SteamUserData}")
-            .into()
+        replacements.extend([
+            (OsStr::new("{LocalLow}"), app_data.join("LocalLow")),
+            (OsStr::new("{LocalAppData}"), app_data.join("Local")),
+            (OsStr::new("{AppData}"), app_data.join("Roaming")),
+            (OsStr::new("{Documents}"), home_dir.join("Documents")),
+            (OsStr::new("{Home}"), home_dir),
+            (OsStr::new("{SteamUserData}"), steam_directory)
+        ]);
     }
+
+    shrink_path_components(path, &replacements)
 }
 
 pub fn get_size(path: &PathBuf) -> u64 {

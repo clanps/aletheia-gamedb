@@ -7,7 +7,7 @@ use crate::file::hash_file;
 use crate::gamedb::{GameDbEntry, GameInfo, FileMetadata};
 use crate::scanner::Game;
 use std::fs::{copy, create_dir_all, metadata, read_to_string, write};
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 use glob::glob;
 
 #[derive(Debug, thiserror::Error)]
@@ -44,7 +44,7 @@ pub fn backup_game(game: &Game, config: &Config, entry: &GameDbEntry) -> Result<
     let mut files = vec![];
 
     for path in paths {
-        let expanded = expand_path(path, game.installation_dir.as_ref(), game.prefix.as_ref());
+        let expanded = expand_path(Path::new(path), game.installation_dir.as_ref(), game.prefix.as_ref());
         let found_paths = glob(&expanded.to_string_lossy()).unwrap();
 
         for file in found_paths {
@@ -66,7 +66,7 @@ pub fn backup_game(game: &Game, config: &Config, entry: &GameDbEntry) -> Result<
     create_dir_all(&backup_folder)?;
 
     for file in files {
-        let shrunk_file_path = shrink_path(&file.to_string_lossy(), game.installation_dir.as_ref(), game.prefix.as_ref()).to_string_lossy().to_string();
+        let shrunk_file_path = shrink_path(file.as_path(), game.installation_dir.as_ref(), game.prefix.as_ref()).to_string_lossy().to_string();
         let should_backup = existing_manifest.as_ref().is_none_or(|manifest| {
             manifest.files.iter()
                 .find(|m| m.path == shrunk_file_path).is_none_or(|existing| {
@@ -114,7 +114,7 @@ fn process_file(file_path: &PathBuf, dest: &PathBuf, game: &Game) -> FileMetadat
 
     FileMetadata {
         modified: file_metadata.modified().unwrap(),
-        path: shrink_path(&file_path.to_string_lossy(), game.installation_dir.as_ref(), game.prefix.as_ref()).to_string_lossy().to_string(),
+        path: shrink_path(file_path, game.installation_dir.as_ref(), game.prefix.as_ref()).to_string_lossy().to_string(),
         hash: hash_file(file_path),
         size: file_metadata.len()
     }
