@@ -26,6 +26,7 @@ finish-args:
   - --filesystem=~/.var/app/net.lutris.Lutris
   - --filesystem=~/Games
   # Used to detect and restore Steam save files
+  - --filesystem=~/.local/share/Steam # For cases where Aletheia is installed in Flatpak but Steam is not
   - --filesystem=~/.var/app/com.valvesoftware.Steam
   # Used to detect and restore Heroic save files
   - --filesystem=~/.config/heroic # For cases where Aletheia is installed in Flatpak but Heroic is not
