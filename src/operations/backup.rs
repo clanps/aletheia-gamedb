@@ -49,10 +49,9 @@ pub fn backup_game(game: &Game, config: &Config, entry: &GameDbEntry) -> Result<
 
         for file in found_paths {
             let file = file.unwrap();
-            let file_path_str = file.to_string_lossy().to_string();
 
             if file.is_dir() {
-                log::warn!("Found {file_path_str} while backing up {}. Glob patterns should match files only.", game.name);
+                log::warn!("Found {} while backing up {}. Glob patterns should match files only.", file.display(), game.name);
                 continue;
             }
 
