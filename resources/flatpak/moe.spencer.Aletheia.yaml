@@ -21,6 +21,8 @@ finish-args:
   # Used for GPU acceleration
   - --device=dri
   # Used to detect and restore Lutris save files
+  - --filesystem=~/.config/lutris # For cases where Aletheia is installed in Flatpak but Lutris is not
+  - --filesystem=~/.local/share/lutris # For cases where Aletheia is installed in Flatpak but Lutris is not
   - --filesystem=~/.var/app/net.lutris.Lutris
   - --filesystem=~/Games
   # Used to detect and restore Steam save files
