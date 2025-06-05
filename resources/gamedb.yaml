@@ -662,7 +662,7 @@ SWORD ART ONLINE Last Recollection:
 Saints Row The Third Remastered:
   files:
     windows:
-      - "{LocalAppData}/GOG.com/Galaxy/Applications/53610945248137475/Storage/Shared/Files/*.sr3s_pc"
+      - "{GOGAppData}/53610945248137475/Storage/Shared/Files/*.sr3s_pc"
       - "{SteamUserData}/978300/remote/*.sr3s_pc"
 Scrap Mechanic:
   files:
@@ -889,7 +889,7 @@ Where Winter Crows Go:
 Yakuza 0:
   files:
     windows:
-      - "{LocalAppData}/GOG.com/Galaxy/Applications/5966314534907843/Storage/Shared/Files/*"
+      - "{GOGAppData}/5966314534907843/Storage/Shared/Files/*"
       - "{SteamUserData}/638970/remote/*"
 Yakuza 3 Remastered:
   files:
@@ -902,17 +902,17 @@ Yakuza 4 Remastered:
 Yakuza 5 Remastered:
   files:
     windows:
-      - "{LocalAppData}/GOG.com/Galaxy/Applications/56296606783325117/Storage/Shared/Files/*"
+      - "{GOGAppData}/56296606783325117/Storage/Shared/Files/*"
       - "{SteamUserData}/1105510/remote/*"
 "Yakuza 6: The Song of Life":
   files:
     windows:
-      - "{LocalAppData}/GOG.com/Galaxy/Applications/56296606511683989/Storage/Shared/Files/*"
+      - "{GOGAppData}/56296606511683989/Storage/Shared/Files/*"
       - "{SteamUserData}/1388590/remote/*"
 Yakuza Kiwami:
   files:
     windows:
-      - "{LocalAppData}/GOG.com/Galaxy/Applications/56296604923139714/Storage/Shared/Files/*"
+      - "{GOGAppData}/56296604923139714/Storage/Shared/Files/*"
       - "{SteamUserData}/834530/remote/*"
 Yakuza Kiwami 2:
   files:
