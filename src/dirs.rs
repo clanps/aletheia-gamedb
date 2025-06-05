@@ -167,7 +167,7 @@ pub fn shrink_path(path: &Path, installation_dir: Option<&PathBuf>, prefix: Opti
                 (OsStr::new("{Documents}"), user.join("Documents")),
                 (OsStr::new("{Home}"), user),
                 (OsStr::new("{SteamUserData}"), linux_app_data.join("Steam/userdata/+([0-9])"))
-            ])
+            ]);
         }
 
         replacements.extend([

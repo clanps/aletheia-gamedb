@@ -42,7 +42,7 @@ pub fn restore(launcher: &str, config: &Config) {
 
         let manifest_content = read_to_string(manifest_path).unwrap();
         let Ok(manifest) = serde_yaml::from_str::<crate::gamedb::GameInfo>(&manifest_content) else {
-            log::error!("Failed to parse {}'s manifest.", game_dir.file_name().unwrap().to_string_lossy());
+            log::error!("Failed to parse {}'s manifest.", game_dir.file_name().unwrap().display());
             return;
         };
 

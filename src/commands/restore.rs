@@ -43,7 +43,7 @@ impl Command for Restore {
 
             let manifest_content = std::fs::read_to_string(manifest_path).unwrap();
             let Ok(manifest) = serde_yaml::from_str::<crate::gamedb::GameInfo>(&manifest_content) else {
-                eprintln!("Failed to parse {}'s manifest.", game_dir.file_name().unwrap().to_string_lossy());
+                eprintln!("Failed to parse {}'s manifest.", game_dir.file_name().unwrap().display());
                 continue;
             };
 
