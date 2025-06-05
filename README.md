@@ -21,4 +21,5 @@ Add game save locations in `resources/gamedb.yaml`. Include Linux paths if the g
 | `{Home}`          | User’s home directory                                                                         |
 | `{XDGConfig}`     | Linux XDG config directory                                                                    |
 | `{XDGData}`       | Linux XDG data directory                                                                      |
+| `{GOGAppData}`    | GOG application data directory                                                                |
 | `{SteamUserData}` | Steam userdata directory (supports wildcard for multiple user profiles)                       |

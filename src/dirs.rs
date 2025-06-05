@@ -109,6 +109,7 @@ pub fn expand_path(path: &Path, installation_dir: Option<&PathBuf>, prefix: Opti
                 (OsStr::new("{Home}"), user),
                 (OsStr::new("{LocalAppData}"), windows_app_data.join("Local")),
                 (OsStr::new("{LocalLow}"), windows_app_data.join("LocalLow")),
+                (OsStr::new("{GOGAppData}"), windows_app_data.join("Local").join("GOG.com/Galaxy/Applications")),
                 (OsStr::new("{SteamUserData}"), linux_app_data.join("Steam/userdata/+([0-9])"))
             ]);
         }
@@ -132,6 +133,7 @@ pub fn expand_path(path: &Path, installation_dir: Option<&PathBuf>, prefix: Opti
             (OsStr::new("{Home}"), home_dir),
             (OsStr::new("{LocalAppData}"), app_data.join("Local")),
             (OsStr::new("{LocalLow}"), app_data.join("LocalLow")),
+            (OsStr::new("{GOGAppData}"), app_data.join("Local").join("GOG.com/Galaxy/Applications")),
             (OsStr::new("{SteamUserData}"), steam_directory)
         ]);
     }
@@ -166,6 +168,7 @@ pub fn shrink_path(path: &Path, installation_dir: Option<&PathBuf>, prefix: Opti
                 (OsStr::new("{AppData}"), windows_app_data.join("Roaming")),
                 (OsStr::new("{Documents}"), user.join("Documents")),
                 (OsStr::new("{Home}"), user),
+                (OsStr::new("{GOGAppData}"), windows_app_data.join("Local").join("GOG.com/Galaxy/Applications")),
                 (OsStr::new("{SteamUserData}"), linux_app_data.join("Steam/userdata/+([0-9])"))
             ]);
         }
@@ -189,6 +192,7 @@ pub fn shrink_path(path: &Path, installation_dir: Option<&PathBuf>, prefix: Opti
             (OsStr::new("{AppData}"), app_data.join("Roaming")),
             (OsStr::new("{Documents}"), home_dir.join("Documents")),
             (OsStr::new("{Home}"), home_dir),
+            (OsStr::new("{GOGAppData}"), app_data.join("Local").join("GOG.com/Galaxy/Applications")),
             (OsStr::new("{SteamUserData}"), steam_directory)
         ]);
     }
