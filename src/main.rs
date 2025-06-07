@@ -25,7 +25,7 @@ use commands::{Args, Command};
 fn main() {
     env_logger::init();
 
-    log::debug!("Flatpak: {}", std::env::var("FLATPAK_ID").is_ok());
+    log::info!("Aletheia v{} (Flatpak: {})", env!("CARGO_PKG_VERSION"), std::env::var("FLATPAK_ID").is_ok());
 
     let config = config::Config::load();
     let mut args = std::env::args().skip(1);
