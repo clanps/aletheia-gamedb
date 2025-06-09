@@ -86,6 +86,10 @@ Borderlands 3:
   files:
     windows:
       - "{Documents}/My Games/Borderlands 3/Saved/SaveGames/*"
+Bullet Girls Phantasia:
+  files:
+    windows:
+      - "{Documents}/My Games/BulletGirlsPhantasia/*"
 Call of Cthulhu:
   files:
     windows:
@@ -352,6 +356,10 @@ Ghostwire Tokyo:
   files:
     windows:
       - "{Home}/Saved Games/TangoGameworks/GhostWire Tokyo (STEAM)/Saved/SavedGames/*"
+God of War:
+  files:
+    windows:
+      - "{Home}/Saved Games/God of War/*"
 Gotham Knights:
   files:
     windows:
@@ -406,6 +414,10 @@ I Walk Among Zombies Vol. 1:
   files:
     windows:
       - "{AppData}/seacoxx/zombie/*"
+It Takes Two:
+  files:
+    windows:
+      - "{LocalAppData}/ItTakesTwo/*.Nuts"
 JUMP FORCE:
   files:
     windows:
@@ -455,6 +467,10 @@ Lords of the Fallen:
   files:
     windows:
       - "{LocalAppData}/Bloom&Rage/Saved/SaveGames/*/*.sav"
+MUSYNX:
+  files:
+    windows:
+      - "{GameRoot}/SavesDir/savedata.sav"
 Marvel's Guardians of the Galaxy:
   files:
     windows:
@@ -664,6 +680,10 @@ Saints Row The Third Remastered:
     windows:
       - "{GOGAppData}/53610945248137475/Storage/Shared/Files/*.sr3s_pc"
       - "{SteamUserData}/978300/remote/*.sr3s_pc"
+"Saints Row: The Third":
+  files:
+    windows:
+      - "{LocalAppData}/Saints Row The Third/*"
 Scrap Mechanic:
   files:
     windows:
