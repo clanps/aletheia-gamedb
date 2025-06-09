@@ -680,10 +680,22 @@ Slitterhead:
   files:
     windows:
       - "{LocalAppData}/YKS/Saved/SaveGames/Steam/*/*.sav"
+"Sonic & All-Stars Racing Transformed Collection":
+  files:
+    windows:
+      - "{SteamUserData}/212480/remote/*"
+Sonic Adventure 2:
+  files:
+    windows:
+      - "{GameRoot}/resource/gd_PC/SAVEDATA/*"
 Sonic Adventure DX:
   files:
     windows:
       - "{GameRoot}/SAVEDATA/*"
+Sonic CD:
+  files:
+    windows:
+      - "{GameRoot}/S_SCORE.dat"
 Sonic Forces:
   files:
     windows:
@@ -705,6 +717,10 @@ Sonic X Shadow Generations:
     windows:
       - "{AppData}/SEGA/SONIC_X_SHADOW_GENERATIONS/steam/*/game0/gamedata.sav"
       - "{AppData}/SEGA/SONIC_X_SHADOW_GENERATIONS/steam/*/saved/savedata/gene_PC.sav"
+Sonic and SEGA All Stars Racing:
+  files:
+    windows:
+      - "{GameRoot}/ssr_save.bin"
 Split Fiction:
   files:
     windows:
@@ -798,6 +814,10 @@ The Lego Movie Videogame:
   files:
     windows:
       - "{SteamUserData}/267530/remote/savedgames/*"
+The Murder of Sonic the Hedgehog:
+  files:
+    windows:
+      - "{LocalLow}/Sonic Social/The Murder of Sonic The Hedgehog/SaveData.data"
 The NOexistenceN of you AND me:
   files:
     windows:
