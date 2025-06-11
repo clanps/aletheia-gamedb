@@ -7,6 +7,8 @@
 #![deny(clippy::string_to_string)]
 #![allow(clippy::unreadable_literal, reason = "'Readable' literals are ugly")]
 
+#![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
+
 mod commands;
 mod config;
 mod dirs;
