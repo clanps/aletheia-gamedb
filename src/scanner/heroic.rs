@@ -1,6 +1,6 @@
 // SPDX-FileCopyrightText: 2025 Spencer
 // SPDX-License-Identifier: AGPL-3.0-only
-use crate::dirs::{app_data, config, home};
+use crate::dirs::{config, home};
 use super::{Game, Scanner};
 use serde::Deserialize;
 use std::fs::read_to_string;
@@ -39,7 +39,7 @@ impl Scanner for HeroicScanner {
                 .into_iter()
                 .find(|p| p.exists())
         } else {
-            let path = app_data().join("heroic");
+            let path = config().join("heroic");
             path.exists().then_some(path)
         }) else {
             return games;
