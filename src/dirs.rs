@@ -119,7 +119,8 @@ pub fn expand_path(path: &Path, installation_dir: Option<&PathBuf>, prefix: Opti
             (OsStr::new("{XDGData}"), linux_app_data)
         ]);
     } else {
-        let app_data = config();
+        let roaming_app_data = config();
+        let local_app_data = app_data();
         let home_dir = home();
 
         let steam_directory = match steamlocate::SteamDir::locate() {
@@ -128,12 +129,12 @@ pub fn expand_path(path: &Path, installation_dir: Option<&PathBuf>, prefix: Opti
         };
 
         replacements.extend([
-            (OsStr::new("{AppData}"), app_data.join("Roaming")),
+            (OsStr::new("{AppData}"), roaming_app_data),
             (OsStr::new("{Documents}"), home_dir.join("Documents")),
             (OsStr::new("{Home}"), home_dir),
-            (OsStr::new("{LocalAppData}"), app_data.join("Local")),
-            (OsStr::new("{LocalLow}"), app_data.join("LocalLow")),
-            (OsStr::new("{GOGAppData}"), app_data.join("Local").join("GOG.com/Galaxy/Applications")),
+            (OsStr::new("{LocalAppData}"), local_app_data.clone()),
+            (OsStr::new("{LocalLow}"), local_app_data.parent().unwrap().join("LocalLow")),
+            (OsStr::new("{GOGAppData}"), local_app_data.join("GOG.com/Galaxy/Applications")),
             (OsStr::new("{SteamUserData}"), steam_directory)
         ]);
     }
@@ -178,7 +179,8 @@ pub fn shrink_path(path: &Path, installation_dir: Option<&PathBuf>, prefix: Opti
             (OsStr::new("{XDGData}"), linux_app_data)
         ]);
     } else {
-        let app_data = config();
+        let roaming_app_data = config();
+        let local_app_data = config();
         let home_dir = home();
 
         let steam_directory = match steamlocate::SteamDir::locate() {
@@ -187,12 +189,12 @@ pub fn shrink_path(path: &Path, installation_dir: Option<&PathBuf>, prefix: Opti
         };
 
         replacements.extend([
-            (OsStr::new("{LocalLow}"), app_data.join("LocalLow")),
-            (OsStr::new("{LocalAppData}"), app_data.join("Local")),
-            (OsStr::new("{AppData}"), app_data.join("Roaming")),
+            (OsStr::new("{LocalLow}"), local_app_data.parent().unwrap().join("LocalLow")),
+            (OsStr::new("{LocalAppData}"), local_app_data.clone()),
+            (OsStr::new("{AppData}"), roaming_app_data),
             (OsStr::new("{Documents}"), home_dir.join("Documents")),
             (OsStr::new("{Home}"), home_dir),
-            (OsStr::new("{GOGAppData}"), app_data.join("Local").join("GOG.com/Galaxy/Applications")),
+            (OsStr::new("{GOGAppData}"), local_app_data.join("GOG.com/Galaxy/Applications")),
             (OsStr::new("{SteamUserData}"), steam_directory)
         ]);
     }
