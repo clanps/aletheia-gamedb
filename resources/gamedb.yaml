@@ -339,6 +339,10 @@ Fallout 4 VR:
   files:
     windows:
       - "{AppData}/MMFApplications/FNAF6"
+GYLT:
+  files:
+    windows:
+      - "{LocalAppData}/Gylt/Saved/SaveGames/*.sav"
 Gaming Cafe Simulator:
   files:
     windows:
