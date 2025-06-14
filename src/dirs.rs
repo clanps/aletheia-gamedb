@@ -124,8 +124,8 @@ pub fn expand_path(path: &Path, installation_dir: Option<&PathBuf>, prefix: Opti
         let home_dir = home();
 
         let steam_directory = match steamlocate::SteamDir::locate() {
-            Ok(steam_dir) => steam_dir.path().join("userdata/+([0-9])"),
-            Err(_) => PathBuf::from("C:/Program Files (x86)/Steam/userdata/+([0-9])")
+            Ok(steam_dir) => steam_dir.path().join("userdata/[0-9]*"),
+            Err(_) => PathBuf::from("C:/Program Files (x86)/Steam/userdata/[0-9]*")
         };
 
         replacements.extend([
@@ -184,8 +184,8 @@ pub fn shrink_path(path: &Path, installation_dir: Option<&PathBuf>, prefix: Opti
         let home_dir = home();
 
         let steam_directory = match steamlocate::SteamDir::locate() {
-            Ok(steam_dir) => steam_dir.path().join("userdata/*"),
-            Err(_) => PathBuf::from("C:/Program Files (x86)/Steam/userdata/*")
+            Ok(steam_dir) => steam_dir.path().join("userdata/[0-9]*"),
+            Err(_) => PathBuf::from("C:/Program Files (x86)/Steam/userdata/[0-9]*")
         };
 
         replacements.extend([
