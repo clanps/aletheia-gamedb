@@ -97,7 +97,15 @@ pub fn get_installed_games() -> Vec<Game> {
     games.extend(HeroicScanner::get_games());
     games.extend(SteamScanner::get_games());
 
-    games.into_iter().filter(|game| db.contains_key(game.name.replace("™", "").trim())).collect()
+    games.into_iter()
+        .filter_map(|mut game| {
+            let clean_name = game.name.replace("™", "").trim().to_string();
+            db.contains_key(&clean_name).then(|| {
+                game.name = clean_name;
+                game
+            })
+        })
+        .collect()
 }
 
 pub fn update() -> Result<bool> {
