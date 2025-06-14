@@ -114,6 +114,10 @@ Castle Crashers:
   files:
     windows:
       - "{SteamUserData}/204360/Remote/*"
+Catherine Classic:
+  files:
+    windows:
+      - "{AppData}/TheEccentricApe/Catherine/*"
 "Clair Obscur: Expedition 33":
   files:
     windows:
@@ -443,7 +447,7 @@ Life is Strange:
 Life is Strange 2:
   files:
     linux:
-      - "{XDGData}/feral-interactive/Life is Strange 2/SaveData/Dontnod/<user-id>/LIS2/Saved/SaveGames/*"
+      - "{XDGData}/feral-interactive/Life is Strange 2/SaveData/Dontnod/*/LIS2/Saved/SaveGames/*"
     windows:
       - "{LocalAppData}/Dontnod/*/LIS2/Saved/SaveGames/*"
 "Like a Dragon Gaiden: The Man Who Erased His Name":
