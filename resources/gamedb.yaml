@@ -934,6 +934,10 @@ Where Winter Crows Go:
   files:
     windows:
       - "{Home}/Saved Games/MachineGames/Wolfenstein The New Order/base/savegame/*"
+"Wolfenstein: The Old Blood":
+  files:
+    windows:
+      - "{Home}/Saved Games/MachineGames/Wolfenstein The Old Blood/base/savegame/*"
 Yakuza 0:
   files:
     windows:
