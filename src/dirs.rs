@@ -110,7 +110,7 @@ pub fn expand_path(path: &Path, installation_dir: Option<&PathBuf>, prefix: Opti
                 (OsStr::new("{LocalAppData}"), windows_app_data.join("Local")),
                 (OsStr::new("{LocalLow}"), windows_app_data.join("LocalLow")),
                 (OsStr::new("{GOGAppData}"), windows_app_data.join("Local").join("GOG.com/Galaxy/Applications")),
-                (OsStr::new("{SteamUserData}"), linux_app_data.join("Steam/userdata/+([0-9])"))
+                (OsStr::new("{SteamUserData}"), linux_app_data.join("Steam/userdata/[0-9]*"))
             ]);
         }
 
@@ -170,7 +170,7 @@ pub fn shrink_path(path: &Path, installation_dir: Option<&PathBuf>, prefix: Opti
                 (OsStr::new("{Documents}"), user.join("Documents")),
                 (OsStr::new("{Home}"), user),
                 (OsStr::new("{GOGAppData}"), windows_app_data.join("Local").join("GOG.com/Galaxy/Applications")),
-                (OsStr::new("{SteamUserData}"), linux_app_data.join("Steam/userdata/+([0-9])"))
+                (OsStr::new("{SteamUserData}"), linux_app_data.join("Steam/userdata/[0-9]*"))
             ]);
         }
 
