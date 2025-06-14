@@ -665,6 +665,10 @@ Rise of the Tomb Raider:
   files:
     windows:
       - "{SteamUserData}/391220/remote/*"
+SCARLET NEXUS:
+  files:
+    windows:
+      - "{LocalAppData}/BANDAI NAMCO Entertainment/SCARLET NEXUS/Saved/SaveGames/*/*"
 SILENT HILL 2:
   files:
     windows:
@@ -787,6 +791,10 @@ Tales from the Borderlands:
   files:
     windows:
       - "{Documents}/Telltale Games/Tales from the Borderlands/*"
+Tales of Arise:
+  files:
+    windows:
+      - "{LocalAppData}/BANDAI NAMCO Entertainment/Tales of Arise/Saved/SaveGames"
 Terraria:
   files:
     linux:
