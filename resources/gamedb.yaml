@@ -455,11 +455,11 @@ Killer Frequency:
 Kinkoi:
   files:
     windows:
-      - "{GameRoot}/*"
+      - "{GameRoot}/SaveData/*"
 Kinkoi Golden Time:
   files:
     windows:
-      - "{GameRoot}/*"
+      - "{GameRoot}/SaveData/*"
 Life is Strange:
   files:
     linux:
