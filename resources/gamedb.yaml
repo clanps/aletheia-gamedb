@@ -307,6 +307,10 @@ Fallout 4 VR:
   files:
     windows:
       - "{Documents}/My Games/FalloutNV/Saves/*"
+Find Love or Die Trying:
+  files:
+    windows:
+      - "{GameRoot}/game/saves/*"
 "Five Nights at Freddy's":
   files:
     windows:
@@ -448,6 +452,14 @@ Killer Frequency:
   files:
     windows:
       - "{LocalLow}/Team17/KillerFrequency/*/*.sav"
+Kinkoi:
+  files:
+    windows:
+      - "{GameRoot}/*"
+Kinkoi Golden Time:
+  files:
+    windows:
+      - "{GameRoot}/*"
 Life is Strange:
   files:
     linux:
@@ -509,6 +521,14 @@ Marvel's Spider-Man Remastered:
   files:
     windows:
       - "{LocalAppData}/RainCodePlus/Saved/SaveGames/*"
+McOsu:
+  files:
+    linux:
+      - "{GameRoot}/scores.db"
+      - "{GameRoot}/scoresvr.db"
+    windows:
+      - "{GameRoot}/scores.db"
+      - "{GameRoot}/scoresvr.db"
 "Metal Gear Rising: Revengeance":
   files:
     windows:
@@ -627,6 +647,10 @@ Quantum Break:
   files:
     windows:
       - "{LocalAppData}/QuantumBreak/*"
+Rabbit and Steel:
+  files:
+    windows:
+      - "{LocalAppData}/RabbitSteel/SaveFile/*"
 Red Dead Redemption 2:
   files:
     windows:
