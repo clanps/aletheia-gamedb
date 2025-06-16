@@ -90,6 +90,10 @@ Bullet Girls Phantasia:
   files:
     windows:
       - "{Documents}/My Games/BulletGirlsPhantasia/*"
+CODE VEIN:
+  files:
+    windows:
+      - "{LocalAppData}/CodeVein/Saved/SaveGames/*"
 Call of Cthulhu:
   files:
     windows:
