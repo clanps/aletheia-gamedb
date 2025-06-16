@@ -408,6 +408,12 @@ Hogwarts Legacy:
   files:
     windows:
       - "{LocalAppData}/Hogwarts Legacy/Saved/SaveGames/*"
+Hollow Knight:
+  files:
+    linux:
+      - "{XDGConfig}/unity3d/Team Cherry/Hollow Knight/*"
+    windows:
+      - "{LocalLow}/Team Cherry/Hollow Knight/*"
 HuniePop:
   files:
     linux:
