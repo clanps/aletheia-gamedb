@@ -55,6 +55,10 @@ pub fn backup_game(game: &Game, config: &Config, entry: &GameDbEntry) -> Result<
                 continue;
             }
 
+            if file.file_name().unwrap() == "steam_autocloud.vdf" {
+                continue;
+            }
+
             files.push(file);
         }
     }
