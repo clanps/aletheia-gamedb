@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: 2025 Spencer
 // SPDX-License-Identifier: AGPL-3.0-only
 
-use std::ffi::{OsStr, OsString};
+use std::ffi::OsString;
 use std::fs::read_dir;
 use std::path::{Path, PathBuf};
 
@@ -40,7 +40,7 @@ pub fn home() -> PathBuf {
     std::env::home_dir().unwrap()
 }
 
-fn expand_path_components(path: &Path, replacements: &[(&OsStr, PathBuf)]) -> PathBuf {
+fn expand_path_components(path: &Path, replacements: &[(&str, PathBuf)]) -> PathBuf {
     let mut result = PathBuf::new();
 
     for component in path.components() {
@@ -63,7 +63,7 @@ fn expand_path_components(path: &Path, replacements: &[(&OsStr, PathBuf)]) -> Pa
     result
 }
 
-fn shrink_path_components(path: &Path, replacements: &[(&OsStr, PathBuf)]) -> PathBuf {
+fn shrink_path_components(path: &Path, replacements: &[(&str, PathBuf)]) -> PathBuf {
     for (pattern, replacement) in replacements {
         if let Ok(stripped) = path.strip_prefix(replacement) {
             let mut new_path = PathBuf::from(pattern);
@@ -82,10 +82,10 @@ fn path_contains_subpath(haystack: &Path, needle: &str) -> bool {
 }
 
 pub fn expand_path(path: &Path, installation_dir: Option<&PathBuf>, prefix: Option<&PathBuf>) -> PathBuf {
-    let mut replacements: Vec<(&OsStr, PathBuf)> = vec![];
+    let mut replacements: Vec<(&str, PathBuf)> = vec![];
 
     if let Some(install_dir) = installation_dir {
-        replacements.push((OsStr::new("{GameRoot}"), install_dir.to_owned()));
+        replacements.push(("{GameRoot}", install_dir.to_owned()));
     }
 
     if cfg!(unix) {
@@ -104,19 +104,19 @@ pub fn expand_path(path: &Path, installation_dir: Option<&PathBuf>, prefix: Opti
             let documents = user.join("Documents");
 
             replacements.extend([
-                (OsStr::new("{AppData}"), windows_app_data.join("Roaming")),
-                (OsStr::new("{Documents}"), documents),
-                (OsStr::new("{Home}"), user),
-                (OsStr::new("{LocalAppData}"), windows_app_data.join("Local")),
-                (OsStr::new("{LocalLow}"), windows_app_data.join("LocalLow")),
-                (OsStr::new("{GOGAppData}"), windows_app_data.join("Local").join("GOG.com/Galaxy/Applications")),
-                (OsStr::new("{SteamUserData}"), linux_app_data.join("Steam/userdata/[0-9]*"))
+                ("{AppData}", windows_app_data.join("Roaming")),
+                ("{Documents}", documents),
+                ("{Home}", user),
+                ("{LocalAppData}", windows_app_data.join("Local")),
+                ("{LocalLow}", windows_app_data.join("LocalLow")),
+                ("{GOGAppData}", windows_app_data.join("Local").join("GOG.com/Galaxy/Applications")),
+                ("{SteamUserData}", linux_app_data.join("Steam/userdata/[0-9]*"))
             ]);
         }
 
         replacements.extend([
-            (OsStr::new("{XDGConfig}"), config()),
-            (OsStr::new("{XDGData}"), linux_app_data)
+            ("{XDGConfig}", config()),
+            ("{XDGData}", linux_app_data)
         ]);
     } else {
         let roaming_app_data = config();
@@ -129,13 +129,13 @@ pub fn expand_path(path: &Path, installation_dir: Option<&PathBuf>, prefix: Opti
         };
 
         replacements.extend([
-            (OsStr::new("{AppData}"), roaming_app_data),
-            (OsStr::new("{Documents}"), home_dir.join("Documents")),
-            (OsStr::new("{Home}"), home_dir),
-            (OsStr::new("{LocalAppData}"), local_app_data.clone()),
-            (OsStr::new("{LocalLow}"), local_app_data.parent().unwrap().join("LocalLow")),
-            (OsStr::new("{GOGAppData}"), local_app_data.join("GOG.com/Galaxy/Applications")),
-            (OsStr::new("{SteamUserData}"), steam_directory)
+            ("{AppData}", roaming_app_data),
+            ("{Documents}", home_dir.join("Documents")),
+            ("{Home}", home_dir),
+            ("{LocalAppData}", local_app_data.clone()),
+            ("{LocalLow}", local_app_data.parent().unwrap().join("LocalLow")),
+            ("{GOGAppData}", local_app_data.join("GOG.com/Galaxy/Applications")),
+            ("{SteamUserData}", steam_directory)
         ]);
     }
 
@@ -143,10 +143,10 @@ pub fn expand_path(path: &Path, installation_dir: Option<&PathBuf>, prefix: Opti
 }
 
 pub fn shrink_path(path: &Path, installation_dir: Option<&PathBuf>, prefix: Option<&PathBuf>) -> PathBuf {
-    let mut replacements: Vec<(&OsStr, PathBuf)> = vec![];
+    let mut replacements: Vec<(&str, PathBuf)> = vec![];
 
     if let Some(install_dir) = installation_dir {
-        replacements.push((OsStr::new("{GameRoot}"), install_dir.to_owned()));
+        replacements.push(("{GameRoot}", install_dir.to_owned()));
     }
 
     if cfg!(unix) {
@@ -164,19 +164,19 @@ pub fn shrink_path(path: &Path, installation_dir: Option<&PathBuf>, prefix: Opti
             let windows_app_data = user.join("AppData");
 
             replacements.extend([
-                (OsStr::new("{LocalLow}"), windows_app_data.join("LocalLow")),
-                (OsStr::new("{LocalAppData}"), windows_app_data.join("Local")),
-                (OsStr::new("{AppData}"), windows_app_data.join("Roaming")),
-                (OsStr::new("{Documents}"), user.join("Documents")),
-                (OsStr::new("{Home}"), user),
-                (OsStr::new("{GOGAppData}"), windows_app_data.join("Local").join("GOG.com/Galaxy/Applications")),
-                (OsStr::new("{SteamUserData}"), linux_app_data.join("Steam/userdata/[0-9]*"))
+                ("{LocalLow}", windows_app_data.join("LocalLow")),
+                ("{LocalAppData}", windows_app_data.join("Local")),
+                ("{AppData}", windows_app_data.join("Roaming")),
+                ("{Documents}", user.join("Documents")),
+                ("{Home}", user),
+                ("{GOGAppData}", windows_app_data.join("Local").join("GOG.com/Galaxy/Applications")),
+                ("{SteamUserData}", linux_app_data.join("Steam/userdata/[0-9]*"))
             ]);
         }
 
         replacements.extend([
-            (OsStr::new("{XDGConfig}"), config()),
-            (OsStr::new("{XDGData}"), linux_app_data)
+            ("{XDGConfig}", config()),
+            ("{XDGData}", linux_app_data)
         ]);
     } else {
         let roaming_app_data = config();
@@ -189,13 +189,13 @@ pub fn shrink_path(path: &Path, installation_dir: Option<&PathBuf>, prefix: Opti
         };
 
         replacements.extend([
-            (OsStr::new("{LocalLow}"), local_app_data.parent().unwrap().join("LocalLow")),
-            (OsStr::new("{LocalAppData}"), local_app_data.clone()),
-            (OsStr::new("{AppData}"), roaming_app_data),
-            (OsStr::new("{Documents}"), home_dir.join("Documents")),
-            (OsStr::new("{Home}"), home_dir),
-            (OsStr::new("{GOGAppData}"), local_app_data.join("GOG.com/Galaxy/Applications")),
-            (OsStr::new("{SteamUserData}"), steam_directory)
+            ("{LocalLow}", local_app_data.parent().unwrap().join("LocalLow")),
+            ("{LocalAppData}", local_app_data.clone()),
+            ("{AppData}", roaming_app_data),
+            ("{Documents}", home_dir.join("Documents")),
+            ("{Home}", home_dir),
+            ("{GOGAppData}", local_app_data.join("GOG.com/Galaxy/Applications")),
+            ("{SteamUserData}", steam_directory)
         ]);
     }
 
