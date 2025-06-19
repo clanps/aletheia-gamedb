@@ -292,6 +292,14 @@ Elden Ring:
   files:
     windows:
       - "{Documents}/KoeiTecmo/FATAL FRAME MOL/SAVEDATA"
+Fallout:
+  files:
+    windows:
+      - "{GameRoot}/data/SAVEGAME/*"
+Fallout 2:
+  files:
+    windows:
+      - "{GameRoot}/data/SAVEGAME/*"
 Fallout 3:
   files:
     windows:
