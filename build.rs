@@ -8,7 +8,7 @@ fn main() {
 
     #[cfg(all(windows, not(debug_assertions)))]
     {
-        let res = winresource::WindowsResource::new();
+        let mut res = winresource::WindowsResource::new();
         res.set_icon("resources/logo/windows.ico");
         res.compile().unwrap();
     }
