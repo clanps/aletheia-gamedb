@@ -7,5 +7,9 @@ fn main() {
     slint_build::compile_with_config("ui/app.slint", config).expect("Slint build failed.");
 
     #[cfg(all(windows, not(debug_assertions)))]
-    winresource::WindowsResource::new().compile().unwrap();
+    {
+        let res = winresource::WindowsResource::new();
+        res.set_icon("resources/logo/windows.ico");
+        res.compile().unwrap();
+    }
 }
