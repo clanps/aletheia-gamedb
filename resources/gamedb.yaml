@@ -948,6 +948,10 @@ The Sims 4:
   files:
     windows:
       - "{Documents}/My Games/Tiny Tina's Wonderlands/Saved/SaveGames/*/*"
+Tomb Raider I-III Remastered Starring Lara Croft:
+  files:
+    windows:
+      - "{AppData}/TRX/*/savegame.dat"
 Tormented Souls:
   files:
     windows:
