@@ -304,6 +304,10 @@ Fallout 3:
   files:
     windows:
       - "{Documents}/My Games/Fallout3/Saves/*"
+Fallout 3 - Game of the Year Edition:
+  files:
+    windows:
+      - "{Documents}/My Games/Fallout3/Saves/*"
 Fallout 4:
   files:
     windows:
