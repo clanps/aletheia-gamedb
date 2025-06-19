@@ -18,8 +18,6 @@ finish-args:
   - --socket=fallback-x11
   # Used to download GameDB updates
   - --share=network
-  # Used for GPU acceleration
-  - --device=dri
   # Used in the event of the user wanting to backup saves to external storage
   - --filesystem=/run/media
   # Used to detect and restore Lutris save files
@@ -47,4 +45,5 @@ modules:
         path: ../../
     post-install:
       - install -Dm644 ${FLATPAK_BUILDER_BUILDDIR}/resources/linux/aletheia.desktop ${FLATPAK_DEST}/share/applications/moe.spencer.Aletheia.desktop
+      - install -Dm644 ${FLATPAK_BUILDER_BUILDDIR}/resources/logo/512x512.png ${FLATPAK_DEST}/share/icons/hicolor/512x512/apps/moe.spencer.Aletheia.png
       - install -Dm644 ${FLATPAK_BUILDER_BUILDDIR}/resources/linux/moe.spencer.Aletheia.metainfo.xml ${FLATPAK_DEST}/share/metainfo/moe.spencer.Aletheia.metainfo.xml

@@ -2,5 +2,7 @@
 Type=Application
 Name=Aletheia
 Comment=Game save backup tool
+Icon=moe.spencer.Aletheia
 Exec=aletheia
 Keywords=backup
+Categories=Game;Backup;Slint;
