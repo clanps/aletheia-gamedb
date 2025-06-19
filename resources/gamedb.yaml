@@ -242,6 +242,7 @@ Devil May Cry 5:
 Devil May Cry HD Collection:
   files:
     windows:
+      - "{GOGAppData}/58418848926304357/Storage/Shared/Files/!(options).sav"
       - "{SteamUserData}/631510/remote/*"
 Dishonored:
   files:
