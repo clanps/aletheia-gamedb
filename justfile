@@ -4,6 +4,7 @@ install:
   sudo install -Dm644 resources/linux/completions/aletheia.bash /usr/share/bash-completion/completions/aletheia
   sudo install -Dm644 resources/linux/completions/aletheia.fish /usr/share/fish/vendor_completions.d
   sudo install -Dm644 resources/linux/aletheia.desktop /usr/share/applications
+  sudo install -Dm644 resources/logo/512x512.png /usr/share/icons/hicolor/512x512/apps/moe.spencer.Aletheia.png
   sudo install -Dm644 resources/linux/moe.spencer.Aletheia.metainfo.xml /usr/share/metainfo
 
 install_flatpak:
