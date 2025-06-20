@@ -38,7 +38,7 @@ modules:
   - name: aletheia
     buildsystem: simple
     build-commands:
-      - cargo build --release
+      - cargo build --release --features updater
       - install -Dm755 target/release/aletheia ${FLATPAK_DEST}/bin/aletheia
     sources:
       - type: dir
