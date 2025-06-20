@@ -1,5 +1,15 @@
-# Aletheia
-## Game Save Backup and Restore Utility
+<!--
+SPDX-FileCopyrightText: 2025 Spencer
+SPDX-License-Identifier: AGPL-3.0-only
+-->
+
+<p align="center">
+  <br><img src="/spencer/aletheia/raw/branch/master/resources/logo/512x512.png" width="220" /><br/>
+  <b>Aletheia</b>
+</p>
+
+## What is Aletheia?
+Aletheia is a cross-platform game save sync tool designed to help you easily back up and restore game saves across multiple game launchers and devices.
 
 #### Supported Launchers
 -   Heroic Games - GOG (Linux & Windows)
