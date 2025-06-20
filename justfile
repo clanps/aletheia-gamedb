@@ -10,3 +10,14 @@ install:
 install_flatpak:
   flatpak remote-add --if-not-exists --user flathub https://dl.flathub.org/repo/flathub.flatpakrepo
   flatpak-builder --force-clean --user --install-deps-from=flathub --repo=repo --install builddir resources/flatpak/moe.spencer.Aletheia.yaml
+
+uninstall:
+  sudo rm /usr/bin/aletheia
+  sudo rm /usr/share/bash-completion/completions/aletheia
+  sudo rm /usr/share/fish/vendor_completions.d/aletheia.fish
+  sudo rm /usr/share/applications/moe.spencer.Aletheia.desktop
+  sudo rm /usr/share/icons/hicolor/512x512/apps/moe.spencer.Aletheia.png
+  sudo rm /usr/share/metainfo/moe.spencer.Aletheia.metainfo.xml
+
+uninstall_flatpak:
+  flatpak uninstall moe.spencer.Aletheia
