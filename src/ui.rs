@@ -31,6 +31,8 @@ pub fn run(config: &AletheiaConfig) {
     let cfg = config.clone();
     let save_dir = config.save_dir.clone();
 
+    slint::set_xdg_app_id("moe.spencer.Aletheia").unwrap();
+
     app.global::<AppLogic>().on_open_url(move |url| {
         #[cfg(unix)]
         std::process::Command::new("xdg-open").arg(url).spawn().ok();
