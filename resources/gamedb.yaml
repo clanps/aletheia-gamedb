@@ -37,6 +37,10 @@ Alan Wake 2:
   files:
     windows:
       - "{LocalLow}/AllianceArts/All in Abyss/SaveData/*/GameData/*.sav"
+Alone in the Dark:
+  files:
+    windows:
+      - "{LocalAppData}/AloneInTheDark/Saved/SaveGames/!(settings).sav"
 BONEWORKS:
   files:
     windows:
