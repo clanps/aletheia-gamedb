@@ -40,7 +40,8 @@ Alan Wake 2:
 Alone in the Dark:
   files:
     windows:
-      - "{LocalAppData}/AloneInTheDark/Saved/SaveGames/!(settings).sav"
+      - "{LocalAppData}/AloneInTheDark/Saved/SaveGames/profile.sav"
+      - "{LocalAppData}/AloneInTheDark/Saved/SaveGames/save_*.sav"
 BONEWORKS:
   files:
     windows:
