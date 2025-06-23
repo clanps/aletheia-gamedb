@@ -5,6 +5,7 @@
 pub struct ForgejoRelease {
     pub body: String,
     pub tag_name: String,
+    #[serde(rename = "html_url")]
     pub url: String
 }
 
