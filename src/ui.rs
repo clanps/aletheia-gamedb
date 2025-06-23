@@ -222,12 +222,18 @@ pub fn run(config: &AletheiaConfig) {
         updater_logic.set_new_version(release.tag_name.into());
         updater_logic.set_changelog(release.body.into());
 
-        updater_logic.on_download_update(move || {
-            #[cfg(unix)]
-            std::process::Command::new("xdg-open").arg(release.url.clone()).spawn().ok();
+        updater_logic.on_download_update({
+            let updater_window = updater_window.as_weak().unwrap();
 
-            #[cfg(windows)]
-            std::process::Command::new("cmd").args(["/c", "start", &release.url.clone()]).spawn().ok();
+            move || {
+                #[cfg(unix)]
+                std::process::Command::new("xdg-open").arg(release.url.clone()).spawn().ok();
+
+                #[cfg(windows)]
+                std::process::Command::new("cmd").args(["/c", "start", &release.url.clone()]).spawn().ok();
+
+                updater_window.window().hide().unwrap();
+            }
         });
 
         updater_window.run().unwrap();
