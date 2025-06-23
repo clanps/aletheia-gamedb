@@ -10,8 +10,8 @@ pub struct Update;
 impl Command for Update {
     fn run(_args: Args, _config: &Config) {
         match updater::check() {
-            Ok(true) => println!("Aletheia is out of date! You can download the newest release here: https://git.usesarchbtw.lol/Spencer/aletheia/releases/latest"),
-            Ok(false) => println!("Aletheia is already up to date."),
+            Ok(updater::UpdateStatus::Available(_)) => println!("Aletheia is out of date! You can download the newest release here: https://git.usesarchbtw.lol/Spencer/aletheia/releases/latest"),
+            Ok(updater::UpdateStatus::UpToDate) => println!("Aletheia is already up to date."),
             Err(e) => eprintln!("Error checking for updates: {e}")
         }
     }

@@ -8,6 +8,9 @@ use crate::config::Config as AletheiaConfig;
 use crate::gamedb;
 use slint::{Model, ModelRc, VecModel};
 
+#[cfg(feature = "updater")]
+use crate::updater;
+
 #[allow(clippy::cast_precision_loss, reason = "Only used for UI")]
 fn format_size(size: u64) -> String {
     const KB: u64 = 1024;
@@ -28,6 +31,7 @@ fn format_size(size: u64) -> String {
 #[allow(clippy::too_many_lines, reason = "I will refactor this 'at some point'")]
 pub fn run(config: &AletheiaConfig) {
     let app = App::new().unwrap();
+    let updater_window = Updater::new().unwrap();
     let cfg = config.clone();
     let save_dir = config.save_dir.clone();
 
@@ -204,6 +208,17 @@ pub fn run(config: &AletheiaConfig) {
             }
         }
     });
+
+    #[cfg(feature = "updater")]
+    if let Ok(updater::UpdateStatus::Available(release)) = updater::check() {
+        let updater_logic = updater_window.global::<UpdaterLogic>();
+
+        updater_logic.set_current_version(env!("CARGO_PKG_VERSION").into());
+        updater_logic.set_new_version(release.tag_name.into());
+        updater_logic.set_changelog(release.body.into());
+        updater_window.run().unwrap();
+        return;
+    }
 
     app.global::<GameLogic>().invoke_refresh_games();
     app.global::<AppLogic>().set_version(env!("CARGO_PKG_VERSION").into());
