@@ -35,9 +35,13 @@ pub fn run(config: &AletheiaConfig) {
     let cfg = config.clone();
     let save_dir = config.save_dir.clone();
 
+    let app_logic = app.global::<AppLogic>();
+    let game_logic = app.global::<GameLogic>();
+    let settings_screen_logic = app.global::<SettingsScreenLogic>();
+
     slint::set_xdg_app_id("moe.spencer.Aletheia").unwrap();
 
-    app.global::<AppLogic>().on_open_url(move |url| {
+    app_logic.on_open_url(move |url| {
         #[cfg(unix)]
         std::process::Command::new("xdg-open").arg(url).spawn().ok();
 
@@ -45,7 +49,7 @@ pub fn run(config: &AletheiaConfig) {
         std::process::Command::new("cmd").args(["/c", "start", &url]).spawn().ok();
     });
 
-    app.global::<GameLogic>().on_refresh_games({
+    game_logic.on_refresh_games({
         let app_weak = app.as_weak().unwrap();
 
         move || {
@@ -163,7 +167,7 @@ pub fn run(config: &AletheiaConfig) {
         }
     });
 
-    app.global::<SettingsScreenLogic>().on_browse({
+    settings_screen_logic.on_browse({
         let app_weak = app.as_weak();
 
         move || {
@@ -186,13 +190,13 @@ pub fn run(config: &AletheiaConfig) {
         }
     });
 
-    app.global::<SettingsScreenLogic>().on_save_config({
+    settings_screen_logic.on_save_config({
         move |cfg| {
             AletheiaConfig::save(&AletheiaConfig { custom_databases: cfg.custom_databases.iter().map(Into::into).collect(), save_dir: (&cfg.save_dir).into() });
         }
     });
 
-    app.global::<SettingsScreenLogic>().on_update_gamedb({
+    settings_screen_logic.on_update_gamedb({
         let app_weak = app.as_weak().unwrap();
 
         move || {
@@ -220,8 +224,8 @@ pub fn run(config: &AletheiaConfig) {
         return;
     }
 
-    app.global::<GameLogic>().invoke_refresh_games();
-    app.global::<AppLogic>().set_version(env!("CARGO_PKG_VERSION").into());
-    app.global::<SettingsScreenLogic>().set_config(Config { custom_databases: ModelRc::new(VecModel::from(config.custom_databases.iter().map(Into::into).collect::<Vec<_>>())), save_dir: config.save_dir.to_string_lossy().to_string().into() });
+    game_logic.invoke_refresh_games();
+    app_logic.set_version(env!("CARGO_PKG_VERSION").into());
+    settings_screen_logic.set_config(Config { custom_databases: ModelRc::new(VecModel::from(config.custom_databases.iter().map(Into::into).collect::<Vec<_>>())), save_dir: config.save_dir.to_string_lossy().to_string().into() });
     app.run().unwrap();
 }
