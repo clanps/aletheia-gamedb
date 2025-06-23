@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 
 #[derive(Clone, serde::Deserialize)]
-pub struct ForgejoRelease {
+pub struct Release {
     pub body: String,
     pub tag_name: String,
     #[serde(rename = "html_url")]
@@ -19,17 +19,17 @@ pub type Result<T> = core::result::Result<T, Error>;
 
 pub enum UpdateStatus {
     UpToDate,
-    Available(ForgejoRelease),
+    Available(Release),
 }
 
 pub fn check() -> Result<UpdateStatus> {
     let client = reqwest::blocking::Client::new();
-    let response = client.get("https://git.usesarchbtw.lol/api/v1/repos/Spencer/aletheia/releases")
+    let response = client.get("https://api.github.com/repos/Spencer-0003/aletheia/releases")
         .header(reqwest::header::USER_AGENT, concat!(env!("CARGO_PKG_NAME"), "/", env!("CARGO_PKG_VERSION")))
         .send()?
         .error_for_status()?;
 
-    let releases: Vec<ForgejoRelease> = response.json()?;
+    let releases: Vec<Release> = response.json()?;
 
     let Some(latest_release) = releases.first() else {
         return Ok(UpdateStatus::UpToDate);

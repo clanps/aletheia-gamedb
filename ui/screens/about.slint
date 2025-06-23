@@ -65,14 +65,21 @@ export component About {
             text: "View Source Code";
             width: 180px;
             height: 38px;
-            clicked => { AppLogic.open_url("https://git.usesarchbtw.lol/Spencer/aletheia"); }
+            clicked => { AppLogic.open_url("https://github.com/Spencer-0003/aletheia"); }
           }
 
           Button {
             text: "View License";
             width: 180px;
             height: 38px;
-            clicked => { AppLogic.open_url("https://git.usesarchbtw.lol/Spencer/aletheia/src/branch/master/LICENSE"); }
+            clicked => { AppLogic.open_url("https://github.com/Spencer-0003/aletheia/blob/master/LICENSE"); }
+          }
+
+          Button {
+            text: "Support the Project";
+            width: 180px;
+            height: 38px;
+            clicked => { AppLogic.open_url("https://github.com/Spencer-0003/aletheia?tab=readme-ov-file#support-the-project") }
           }
         }
       }

@@ -119,7 +119,7 @@ pub fn update() -> Result<bool> {
     let previous_etag = etag_path.exists().then(|| read_to_string(&etag_path).ok()).flatten();
 
     let client = reqwest::blocking::Client::new();
-    let mut request = client.get("https://git.usesarchbtw.lol/Spencer/aletheia/raw/branch/master/resources/gamedb.yaml");
+    let mut request = client.get("https://raw.githubusercontent.com/Spencer-0003/aletheia/refs/heads/master/resources/gamedb.yaml");
 
     if let Some(ref etag) = previous_etag {
         request = request.header(reqwest::header::IF_NONE_MATCH, etag);

@@ -1,0 +1,116 @@
+name: Publish Release Builds
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        type: string
+        description: Version to release.
+        required: true
+
+jobs:
+  build_linux:
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-24.04
+            target: x86_64-unknown-linux-gnu
+            artifact: aletheia-linux-x64
+          - os: ubuntu-24.04-arm
+            target: aarch64-unknown-linux-gnu
+            artifact: aletheia-linux-aarch64
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Setup Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build
+        run: cargo build --release --features updater --target=${{ matrix.target }} && mv target/${{ matrix.target }}/release/aletheia target/${{ matrix.target }}/release/${{ matrix.artifact }}
+
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact }}
+          path: target/${{ matrix.target }}/release/${{ matrix.artifact }}
+
+  build_windows:
+    strategy:
+      matrix:
+        include:
+          - os: windows-2022
+            target: x86_64-pc-windows-msvc
+            artifact: aletheia-windows-x64.exe
+          # - os: windows-11-arm # SQLite currently does not provide pre-built Windows ARM binaries
+          #  target: aarch64-pc-windows-msvc
+          #  artifact: aletheia-windows-aarch64.exe
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Setup Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install SQLite
+        shell: cmd
+        run: |
+          choco install sqlite
+          cd /D C:\ProgramData\chocolatey\lib\SQLite\tools
+          call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+          lib /machine:x64 /def:sqlite3.def /out:sqlite3.lib
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build
+        run: $env:SQLITE3_LIB_DIR="C:\ProgramData\chocolatey\lib\SQLite\tools"; cargo build --release --features updater --target=${{ matrix.target }}; Rename-Item "target\${{ matrix.target }}\release\aletheia.exe" "${{ matrix.artifact }}"
+
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact }}
+          path: target/${{ matrix.target }}/release/${{ matrix.artifact }}
+
+  build_flatpak:
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-24.04
+            arch: x86_64
+          - os: ubuntu-24.04-arm
+            arch: aarch64
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Install dependencies
+        run: sudo apt update && sudo apt install -y flatpak-builder && flatpak remote-add --if-not-exists --user flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build
+        run: |
+          flatpak-builder --user --force-clean --install-deps-from=flathub --repo=repo builddir resources/flatpak/moe.spencer.Aletheia.yaml
+          flatpak build-bundle repo aletheia-${{ matrix.arch }}.flatpak moe.spencer.Aletheia --runtime-repo=https://flathub.org/repo/flathub.flatpakrepo
+
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: aletheia-${{ matrix.arch }}.flatpak
+          path: aletheia-${{ matrix.arch }}.flatpak
+
+  create_release:
+    needs: [build_linux, build_windows, build_flatpak]
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ inputs.version }}
+          name: ${{ inputs.version }}
+          files: artifacts/**/*
