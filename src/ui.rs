@@ -37,6 +37,7 @@ pub fn run(config: &AletheiaConfig) {
 
     let app_logic = app.global::<AppLogic>();
     let game_logic = app.global::<GameLogic>();
+    let games_screen_logic = app.global::<GamesScreenLogic>();
     let settings_screen_logic = app.global::<SettingsScreenLogic>();
 
     slint::set_xdg_app_id("moe.spencer.Aletheia").unwrap();
@@ -84,7 +85,7 @@ pub fn run(config: &AletheiaConfig) {
         }
     });
 
-    app.global::<GamesScreenLogic>().on_filter({
+    games_screen_logic.on_filter({
         let app_weak = app.as_weak().unwrap();
 
         move |query| {
@@ -103,7 +104,7 @@ pub fn run(config: &AletheiaConfig) {
         }
     });
 
-    app.global::<GamesScreenLogic>().on_select_all({
+    games_screen_logic.on_select_all({
         let app_weak = app.as_weak().unwrap();
 
         move |enabled| {
@@ -126,7 +127,7 @@ pub fn run(config: &AletheiaConfig) {
     });
 
 
-    app.global::<GamesScreenLogic>().on_select_game({
+    games_screen_logic.on_select_game({
         let app_weak = app.as_weak().unwrap();
 
         move |game| {
@@ -143,7 +144,7 @@ pub fn run(config: &AletheiaConfig) {
         }
     });
 
-    app.global::<GamesScreenLogic>().on_perform_operation({
+    games_screen_logic.on_perform_operation({
         let app_weak = app.as_weak().unwrap();
         let cfg = cfg.clone();
 
