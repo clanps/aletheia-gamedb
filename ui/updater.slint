@@ -7,9 +7,9 @@ export global UpdaterLogic {
   in property <string> current_version;
   in property <string> new_version;
   in property <string> changelog;
+  in-out property <bool> downloading;
   callback download_update();
   callback skip_update();
-  callback close_updater();
 }
 
 export component Updater inherits Window {
@@ -157,7 +157,10 @@ export component Updater inherits Window {
           text: @tr("Download");
           width: 140px;
           height: 36px;
-          clicked => { UpdaterLogic.download_update(); }
+          clicked => {
+            UpdaterLogic.downloading = true;
+            UpdaterLogic.download_update();
+          }
         }
       }
     }

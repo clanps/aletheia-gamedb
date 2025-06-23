@@ -19,7 +19,7 @@ mod operations;
 mod scanner;
 mod ui;
 
-#[cfg(feature = "updater")]
+#[cfg(all(feature = "updater", not(debug_assertions)))]
 mod updater;
 
 use commands::{Args, Command};

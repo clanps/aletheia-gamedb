@@ -8,7 +8,7 @@ use crate::config::Config as AletheiaConfig;
 use crate::gamedb;
 use slint::{Model, ModelRc, VecModel};
 
-#[cfg(feature = "updater")]
+#[cfg(all(feature = "updater", not(debug_assertions)))]
 use crate::updater;
 
 #[allow(clippy::cast_precision_loss, reason = "Only used for UI")]
@@ -31,9 +31,12 @@ fn format_size(size: u64) -> String {
 #[allow(clippy::too_many_lines, reason = "I will refactor this 'at some point'")]
 pub fn run(config: &AletheiaConfig) {
     let app = App::new().unwrap();
-    let updater_window = Updater::new().unwrap();
+
     let cfg = config.clone();
     let save_dir = config.save_dir.clone();
+
+    #[cfg(all(feature = "updater", not(debug_assertions)))]
+    let updater_window = Updater::new().unwrap();
 
     let app_logic = app.global::<AppLogic>();
     let game_logic = app.global::<GameLogic>();
@@ -214,13 +217,21 @@ pub fn run(config: &AletheiaConfig) {
         }
     });
 
-    #[cfg(feature = "updater")]
+    #[cfg(all(feature = "updater", not(debug_assertions)))]
     if let Ok(updater::UpdateStatus::Available(release)) = updater::check() {
         let updater_logic = updater_window.global::<UpdaterLogic>();
 
         updater_logic.set_current_version(env!("CARGO_PKG_VERSION").into());
         updater_logic.set_new_version(release.tag_name.into());
         updater_logic.set_changelog(release.body.into());
+
+        updater_logic.on_skip_update({
+            let updater_window = updater_window.as_weak().unwrap();
+
+            move || {
+                updater_window.window().hide().unwrap();
+            }
+        });
 
         updater_logic.on_download_update({
             let updater_window = updater_window.as_weak().unwrap();
@@ -237,7 +248,10 @@ pub fn run(config: &AletheiaConfig) {
         });
 
         updater_window.run().unwrap();
-        return;
+
+        if updater_logic.get_downloading() {
+            return;
+        }
     }
 
     game_logic.invoke_refresh_games();
