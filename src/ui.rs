@@ -31,12 +31,8 @@ fn format_size(size: u64) -> String {
 #[allow(clippy::too_many_lines, reason = "I will refactor this 'at some point'")]
 pub fn run(config: &AletheiaConfig) {
     let app = App::new().unwrap();
-
     let cfg = config.clone();
     let save_dir = config.save_dir.clone();
-
-    #[cfg(all(feature = "updater", not(debug_assertions)))]
-    let updater_window = Updater::new().unwrap();
 
     let app_logic = app.global::<AppLogic>();
     let game_logic = app.global::<GameLogic>();
@@ -219,6 +215,7 @@ pub fn run(config: &AletheiaConfig) {
 
     #[cfg(all(feature = "updater", not(debug_assertions)))]
     if let Ok(updater::UpdateStatus::Available(release)) = updater::check() {
+        let updater_window = Updater::new().unwrap();
         let updater_logic = updater_window.global::<UpdaterLogic>();
 
         updater_logic.set_current_version(env!("CARGO_PKG_VERSION").into());
