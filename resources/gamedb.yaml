@@ -756,6 +756,10 @@ Severed Steel:
   files:
     windows:
       - "{LocalAppData}/ThankYouVeryCool/Saved/SaveGames/*"
+"Silent Hill 4: The Room":
+  files:
+    windows:
+      - "{GameRoot}/saves/*"
 Sker Ritual:
   files:
     windows:
