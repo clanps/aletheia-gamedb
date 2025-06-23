@@ -10,7 +10,7 @@ pub fn cache() -> PathBuf {
         std::env::var_os("XDG_CACHE_HOME")
             .map_or_else(|| home().join(".cache"), PathBuf::from)
     } else {
-        config().join("aletheia/cache")
+        app_data().join("aletheia/cache")
     }
 }
 
