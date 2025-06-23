@@ -46,6 +46,10 @@ BONEWORKS:
   files:
     windows:
       - "{LocalLow}/Stress Level Zero/BONEWORKS/*.dat"
+"BPM: BULLETS PER MINUTE":
+  files:
+    windows:
+      - "{Home}/Local Settings/Application Data/BPM/Saved/SaveGames/GameState.sav"
 Balatro:
   files:
     windows:
@@ -579,6 +583,14 @@ Minecraft Legends:
   files:
     windows:
       - "{Documents}/Telltale Games/Minecraft Story Mode - Season Two/*"
+Mortal Kombat 11:
+  files:
+    windows:
+      - "{SteamUserData}/976310/remote/*"
+Mortal Kombat X:
+  files:
+    windows:
+      - "{SteamUserData}/307780/remote/user/*"
 Mouthwashing:
   files:
     windows:
