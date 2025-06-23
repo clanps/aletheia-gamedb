@@ -6,6 +6,7 @@ export global SettingsScreenLogic {
   in property <Config> config;
   callback browse();
   callback save_config(Config);
+  callback update_gamedb();
 }
 
 export component Settings {
@@ -72,6 +73,55 @@ export component Settings {
             height: 38px;
             clicked => { SettingsScreenLogic.browse(); }
           }
+        }
+      }
+    }
+
+    Rectangle { height: 1px; background: #45475a; }
+
+    VerticalLayout {
+      spacing: 16px;
+
+      HorizontalLayout {
+        spacing: 12px;
+
+        Rectangle {
+          width: 24px;
+          height: 24px;
+          Image {
+            source: @image-url("../assets/database.svg");
+            colorize: #cdd6f4;
+            width: 100%;
+            height: 100%;
+          }
+        }
+
+        Text {
+          text: "GameDB";
+          color: #cdd6f4;
+          font-size: 18px;
+          font-weight: 600;
+          font-family: "Inter";
+          vertical-alignment: center;
+        }
+      }
+
+      VerticalLayout {
+        padding-left: 36px;
+        spacing: 12px;
+
+        Text {
+          text: "Download the latest copy of the GameDB";
+          color: #a6adc8;
+          font-family: "Inter";
+          font-size: 14px;
+        }
+
+        Button {
+          text: "Update GameDB";
+          width: 140px;
+          height: 38px;
+          clicked => { SettingsScreenLogic.update_gamedb(); }
         }
       }
     }

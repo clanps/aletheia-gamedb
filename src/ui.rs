@@ -188,6 +188,23 @@ pub fn run(config: &AletheiaConfig) {
         }
     });
 
+    app.global::<SettingsScreenLogic>().on_update_gamedb({
+        let app_weak = app.as_weak().unwrap();
+
+        move || {
+            let notification_logic = app_weak.global::<NotificationLogic>();
+
+            match gamedb::update() {
+                Ok(true) => notification_logic.invoke_show_success("Successfully updated GameDB.".into()),
+                Ok(false) => notification_logic.invoke_show_info("GameDB is already up to date.".into()),
+                Err(e) => {
+                    notification_logic.invoke_show_error("Failed to update GameDB.".into());
+                    log::error!("Error updating GameDB: {e}");
+                }
+            }
+        }
+    });
+
     app.global::<GameLogic>().invoke_refresh_games();
     app.global::<AppLogic>().set_version(env!("CARGO_PKG_VERSION").into());
     app.global::<SettingsScreenLogic>().set_config(Config { custom_databases: ModelRc::new(VecModel::from(config.custom_databases.iter().map(Into::into).collect::<Vec<_>>())), save_dir: config.save_dir.to_string_lossy().to_string().into() });
