@@ -1,0 +1,166 @@
+// SPDX-FileCopyrightText: 2025 Spencer
+// SPDX-License-Identifier: AGPL-3.0-only
+
+import { Button } from "./components/button.slint";
+
+export global UpdaterLogic {
+  in property <string> current_version;
+  in property <string> new_version;
+  in property <string> changelog;
+  callback download_update();
+  callback skip_update();
+  callback close_updater();
+}
+
+export component Updater inherits Window {
+  width: 500px;
+  height: 400px;
+
+  title: "Aletheia - Updater";
+  icon: @image-url("../resources/logo/512x512.png");
+
+  Rectangle {
+    width: 100%;
+    height: 100%;
+    background: #1e1e2e;
+
+    VerticalLayout {
+      alignment: start;
+      spacing: 24px;
+      padding: 24px;
+
+      VerticalLayout {
+        spacing: 12px;
+        alignment: center;
+
+        Text {
+          text: @tr("Update Available");
+          color: #cdd6f4;
+          font-size: 24px;
+          font-weight: 700;
+          font-family: "Inter";
+          horizontal-alignment: center;
+        }
+      }
+
+      Rectangle { height: 1px; background: #45475a; }
+
+      VerticalLayout {
+        spacing: 16px;
+
+        HorizontalLayout {
+          spacing: 16px;
+          alignment: center;
+
+          VerticalLayout {
+            alignment: center;
+            spacing: 4px;
+
+            Text {
+              text: @tr("Current");
+              color: #a6adc8;
+              font-family: "Inter";
+              font-size: 12px;
+              font-weight: 500;
+              horizontal-alignment: center;
+            }
+
+            Text {
+              text: UpdaterLogic.current_version;
+              color: #f38ba8;
+              font-family: "Inter";
+              font-size: 16px;
+              font-weight: 600;
+              horizontal-alignment: center;
+            }
+          }
+
+          Text {
+            text: "→";
+            color: #a6adc8;
+            font-size: 20px;
+            font-family: "Inter";
+          }
+
+          VerticalLayout {
+            alignment: center;
+            spacing: 4px;
+
+            Text {
+              text: @tr("New");
+              color: #a6adc8;
+              font-family: "Inter";
+              font-size: 12px;
+              font-weight: 500;
+              horizontal-alignment: center;
+            }
+
+            Text {
+              text: UpdaterLogic.new_version;
+              color: #a6e3a1;
+              font-family: "Inter";
+              font-size: 16px;
+              font-weight: 600;
+              horizontal-alignment: center;
+            }
+          }
+        }
+      }
+
+      VerticalLayout {
+        spacing: 8px;
+
+        Text {
+          text: @tr("What's New");
+          color: #cdd6f4;
+          font-size: 16px;
+          font-weight: 600;
+          font-family: "Inter";
+        }
+
+        Rectangle {
+          height: 120px;
+          background: #313244;
+          border-radius: 8px;
+
+          Flickable {
+            width: 100%;
+            height: 100%;
+            viewport-width: self.width;
+            viewport-height: max(self.height, text.preferred-height);
+
+            text := Text {
+              text: UpdaterLogic.changelog;
+              color: #cdd6f4;
+              font-family: "Inter";
+              font-size: 14px;
+              wrap: word-wrap;
+              width: parent.width - 24px;
+              x: 12px;
+              y: 12px;
+            }
+          }
+        }
+      }
+
+      HorizontalLayout {
+        alignment: end;
+        spacing: 12px;
+
+        Button {
+          text: @tr("Skip");
+          width: 80px;
+          height: 36px;
+          clicked => { UpdaterLogic.skip_update(); }
+        }
+
+        Button {
+          text: @tr("Download");
+          width: 140px;
+          height: 36px;
+          clicked => { UpdaterLogic.download_update(); }
+        }
+      }
+    }
+  }
+}
