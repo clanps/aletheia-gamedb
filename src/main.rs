@@ -37,7 +37,7 @@ fn main() {
         match cmd.as_str() {
             "backup" => commands::Backup::run(args, &config),
             "restore" => commands::Restore::run(args, &config),
-            #[cfg(feature = "updater")]
+            #[cfg(all(feature = "updater", not(debug_assertions)))]
             "update" => commands::Update::run(args, &config),
             "update_gamedb" => commands::UpdateGameDb::run(args, &config),
             "update_custom_gamedbs" => commands::UpdateCustom::run(args, &config),

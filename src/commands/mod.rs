@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: 2025 Spencer
 // SPDX-License-Identifier: AGPL-3.0-only
 
-#[cfg(feature = "updater")]
+#[cfg(all(feature = "updater", not(debug_assertions)))]
 mod update;
 
 mod backup;
@@ -9,7 +9,7 @@ mod restore;
 mod update_gamedb;
 mod update_custom;
 
-#[cfg(feature = "updater")]
+#[cfg(all(feature = "updater", not(debug_assertions)))]
 pub use update::Update;
 
 pub use backup::Backup;
