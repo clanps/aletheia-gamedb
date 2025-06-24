@@ -5,6 +5,7 @@
 #![deny(clippy::if_then_some_else_none)]
 #![deny(clippy::allow_attributes_without_reason)]
 #![deny(clippy::string_to_string)]
+#![deny(clippy::get_unwrap)]
 #![allow(clippy::unreadable_literal, reason = "'Readable' literals are ugly")]
 
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]

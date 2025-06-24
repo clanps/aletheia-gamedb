@@ -25,7 +25,7 @@ pub fn backup(launcher: &str, config: &Config) {
     let game_db = gamedb::parse();
 
     if let Some(game) = game {
-        if let Err(e) = backup_game(&game, config, game_db.get(&game.name).unwrap()) {
+        if let Err(e) = backup_game(&game, config, &game_db[&game.name]) {
             log::error!("Failed to backup {}: {}", game.name, e);
         } else {
             log::info!("Backed up {}.", game.name);

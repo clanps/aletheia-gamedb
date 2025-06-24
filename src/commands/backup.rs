@@ -22,7 +22,7 @@ impl Command for Backup {
 
         if args.positional.is_empty() {
             for game in &installed_games {
-                if let Err(e) = backup_game(game, config, game_db.get(&game.name).unwrap()) {
+                if let Err(e) = backup_game(game, config, &game_db[&game.name]) {
                     eprintln!("Failed to backup {}: {}", game.name, e);
                 } else {
                     println!("Backed up {}.", game.name);
@@ -32,7 +32,7 @@ impl Command for Backup {
             installed_games.iter()
                 .filter(|game| args.positional.contains(&game.name))
                 .for_each(|game| {
-                    if let Err(e) = backup_game(game, config, game_db.get(&game.name).unwrap()) {
+                    if let Err(e) = backup_game(game, config, &game_db[&game.name]) {
                         eprintln!("Failed to backup {}: {}", game.name, e);
                     } else {
                         println!("Backed up {}.", game.name);
