@@ -191,6 +191,8 @@ pub fn run(config: &AletheiaConfig) {
     });
 
     settings_screen_logic.on_save_config({
+        let app_weak = app.as_weak().unwrap();
+
         move |cfg| {
             AletheiaConfig::save(&AletheiaConfig {
                 custom_databases: cfg.custom_databases.iter().map(Into::into).collect(),
@@ -198,6 +200,8 @@ pub fn run(config: &AletheiaConfig) {
                 #[cfg(feature = "updater")]
                 check_for_updates: cfg.check_for_updates
             });
+
+            app_weak.global::<NotificationLogic>().invoke_show_success("Successfully saved settings.".into());
         }
     });
 
