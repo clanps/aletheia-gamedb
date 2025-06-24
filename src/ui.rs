@@ -192,7 +192,12 @@ pub fn run(config: &AletheiaConfig) {
 
     settings_screen_logic.on_save_config({
         move |cfg| {
-            AletheiaConfig::save(&AletheiaConfig { custom_databases: cfg.custom_databases.iter().map(Into::into).collect(), save_dir: (&cfg.save_dir).into() });
+            AletheiaConfig::save(&AletheiaConfig {
+                custom_databases: cfg.custom_databases.iter().map(Into::into).collect(),
+                save_dir: (&cfg.save_dir).into(),
+                #[cfg(feature = "updater")]
+                check_for_updates: cfg.check_for_updates
+            });
         }
     });
 
@@ -214,45 +219,59 @@ pub fn run(config: &AletheiaConfig) {
     });
 
     #[cfg(all(feature = "updater", not(debug_assertions)))]
-    if let Ok(updater::UpdateStatus::Available(release)) = updater::check() {
-        let updater_window = Updater::new().unwrap();
-        let updater_logic = updater_window.global::<UpdaterLogic>();
+    if config.check_for_updates {
+        if let Ok(updater::UpdateStatus::Available(release)) = updater::check() {
+            let updater_window = Updater::new().unwrap();
+            let updater_logic = updater_window.global::<UpdaterLogic>();
 
-        updater_logic.set_current_version(env!("CARGO_PKG_VERSION").into());
-        updater_logic.set_new_version(release.tag_name.into());
-        updater_logic.set_changelog(release.body.into());
+            updater_logic.set_current_version(env!("CARGO_PKG_VERSION").into());
+            updater_logic.set_new_version(release.tag_name.into());
+            updater_logic.set_changelog(release.body.into());
 
-        updater_logic.on_skip_update({
-            let updater_window = updater_window.as_weak().unwrap();
+            updater_logic.on_skip_update({
+                let updater_window = updater_window.as_weak().unwrap();
 
-            move || {
-                updater_window.window().hide().unwrap();
+                move || {
+                    updater_window.window().hide().unwrap();
+                }
+            });
+
+            updater_logic.on_download_update({
+                let updater_window = updater_window.as_weak().unwrap();
+
+                move || {
+                    #[cfg(unix)]
+                    std::process::Command::new("xdg-open").arg(release.url.clone()).spawn().ok();
+
+                    #[cfg(windows)]
+                    std::process::Command::new("cmd").args(["/c", "start", &release.url.clone()]).spawn().ok();
+
+                    updater_window.window().hide().unwrap();
+                }
+            });
+
+            updater_window.run().unwrap();
+
+            if updater_logic.get_downloading() {
+                return;
             }
-        });
-
-        updater_logic.on_download_update({
-            let updater_window = updater_window.as_weak().unwrap();
-
-            move || {
-                #[cfg(unix)]
-                std::process::Command::new("xdg-open").arg(release.url.clone()).spawn().ok();
-
-                #[cfg(windows)]
-                std::process::Command::new("cmd").args(["/c", "start", &release.url.clone()]).spawn().ok();
-
-                updater_window.window().hide().unwrap();
-            }
-        });
-
-        updater_window.run().unwrap();
-
-        if updater_logic.get_downloading() {
-            return;
         }
     }
 
     game_logic.invoke_refresh_games();
     app_logic.set_version(env!("CARGO_PKG_VERSION").into());
-    settings_screen_logic.set_config(Config { custom_databases: ModelRc::new(VecModel::from(config.custom_databases.iter().map(Into::into).collect::<Vec<_>>())), save_dir: config.save_dir.to_string_lossy().to_string().into() });
+    
+    #[cfg(feature = "updater")]
+    settings_screen_logic.set_show_update_settings(true);
+    
+    settings_screen_logic.set_config(Config {
+        custom_databases: ModelRc::new(VecModel::from(config.custom_databases.iter().map(Into::into).collect::<Vec<_>>())),
+        save_dir: config.save_dir.to_string_lossy().to_string().into(),
+        #[cfg(feature = "updater")]
+        check_for_updates: config.check_for_updates,
+        #[cfg(not(feature = "updater"))]
+        check_for_updates: false
+    });
+
     app.run().unwrap();
 }

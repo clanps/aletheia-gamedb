@@ -8,7 +8,9 @@ use std::path::PathBuf;
 #[serde(default)]
 pub struct Config {
     pub custom_databases: Vec<String>,
-    pub save_dir: PathBuf
+    pub save_dir: PathBuf,
+    #[cfg(feature = "updater")]
+    pub check_for_updates: bool
 }
 
 impl Config {
@@ -69,7 +71,9 @@ impl Default for Config {
     fn default() -> Self {
         Self {
             custom_databases: vec![],
-            save_dir: Self::get_save_dir()
+            save_dir: Self::get_save_dir(),
+            #[cfg(feature = "updater")]
+            check_for_updates: true
         }
     }
 }
