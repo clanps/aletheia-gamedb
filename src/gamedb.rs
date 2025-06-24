@@ -109,7 +109,11 @@ pub fn get_installed_games() -> Vec<Game> {
 }
 
 pub fn update() -> Result<bool> {
-    let cache_dir = cache().join("aletheia");
+    let cache_dir = if cfg!(unix) {
+        cache().join("aletheia")
+    } else {
+        cache()
+    };
 
     let gamedb_path = cache_dir.join("gamedb.yaml");
     let etag_path = cache_dir.join("gamedb.etag");
@@ -161,7 +165,11 @@ pub fn update_custom(cfg: &Config) -> Result<bool> {
         return Ok(false);
     }
 
-    let cache_dir = cache().join("aletheia");
+    let cache_dir = if cfg!(unix) {
+        cache().join("aletheia")
+    } else {
+        cache()
+    };
 
     let client = reqwest::blocking::Client::new();
     let mut db_cache = load_custom_db_cache();
