@@ -1,13 +1,14 @@
 // SPDX-FileCopyrightText: 2025 Spencer
 // SPDX-License-Identifier: AGPL-3.0-only
 
+use std::env::{home_dir, var_os};
 use std::ffi::OsString;
 use std::fs::read_dir;
 use std::path::{Path, PathBuf};
 
 pub fn cache() -> PathBuf {
     if cfg!(unix) {
-        std::env::var_os("XDG_CACHE_HOME")
+        var_os("XDG_CACHE_HOME")
             .map_or_else(|| home().join(".cache"), PathBuf::from)
     } else {
         app_data().join("aletheia/cache")
@@ -16,10 +17,10 @@ pub fn cache() -> PathBuf {
 
 pub fn config() -> PathBuf {
     if cfg!(unix) {
-        std::env::var_os("XDG_CONFIG_HOME")
+        var_os("XDG_CONFIG_HOME")
             .map_or_else(|| home().join(".config"), PathBuf::from)
     } else {
-        std::env::var_os("APPDATA")
+        var_os("APPDATA")
             .map(PathBuf::from)
             .unwrap()
     }
@@ -27,17 +28,17 @@ pub fn config() -> PathBuf {
 
 pub fn app_data() -> PathBuf {
     if cfg!(unix) {
-        std::env::var_os("XDG_DATA_HOME")
+        var_os("XDG_DATA_HOME")
             .map_or_else(|| home().join(".local/share"), PathBuf::from)
     } else {
-        std::env::var_os("LOCALAPPDATA")
+        var_os("LOCALAPPDATA")
             .map(PathBuf::from)
             .unwrap()
     }
 }
 
 pub fn home() -> PathBuf {
-    std::env::home_dir().unwrap()
+    home_dir().unwrap()
 }
 
 fn expand_path_components(path: &Path, replacements: &[(&str, PathBuf)]) -> PathBuf {
@@ -156,7 +157,7 @@ pub fn shrink_path(path: &Path, installation_dir: Option<&PathBuf>, prefix: Opti
             let username = if path_contains_subpath(wine_prefix, "Steam/steamapps/compatdata") {
                 OsString::from("steamuser")
             } else {
-                std::env::var_os("USER").unwrap()
+                var_os("USER").unwrap()
             };
 
             let drive_c = wine_prefix.join("drive_c");
