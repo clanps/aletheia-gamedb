@@ -821,6 +821,10 @@ Sonic and SEGA All Stars Racing:
   files:
     windows:
       - "{GameRoot}/ssr_save.bin"
+Spin Rhythm XD:
+  files:
+    windows:
+      - "{LocalLow}/Super Spin Digital/Spin Rhythm XD/*/*"
 Split Fiction:
   files:
     windows:
