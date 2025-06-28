@@ -1,7 +1,7 @@
 import { Button } from "../components/button.slint";
+import { CheckBox } from "../components/check_box.slint";
 import { TextLabel } from "../components/text_label.slint";
 import { Config } from "../structs/config.slint";
-import { CheckBox } from "std-widgets.slint";
 
 export global SettingsScreenLogic {
   in property <Config> config;
@@ -174,8 +174,8 @@ export component Settings {
 
           CheckBox {
             text: "Check for updates automatically";
-            checked: SettingsScreenLogic.config.check_for_updates;
-            toggled => { SettingsScreenLogic.config.check_for_updates = self.checked; }
+            enabled: SettingsScreenLogic.config.check_for_updates;
+            toggled => { SettingsScreenLogic.config.check_for_updates = self.enabled; }
           }
         }
       }
