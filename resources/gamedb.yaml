@@ -633,10 +633,18 @@ NEKOPARA Vol. 4:
     windows:
       - "{AppData}/NEKO WORKs/nekopara4/*"
       - "{Documents}/NEKO WORKs/nekopara_vol4/*"
+New Tales from the Borderlands:
+  files:
+    windows:
+      - "{LocalAppData}/Cypress2Game/Saved/SaveGames/Steam/*"
 "NieR: Automata":
   files:
     windows:
       - "{Documents}/My Games/NieR_Automata/*"
+Nightmare Kart:
+  files:
+    windows:
+      - "{LocalAppData}/NMKART/Saved/SaveGames/*"
 "Octodad: Dadliest Catch":
   files:
     windows:
@@ -701,6 +709,10 @@ Resident Evil 4:
   files:
     windows:
       - "{SteamUserData}/2050650/remote/win64_save/*"
+Resident Evil 4 (2005):
+  files:
+    windows:
+      - "{GameRoot}/SaveData.dat"
 Resident Evil 5:
   files:
     windows:
