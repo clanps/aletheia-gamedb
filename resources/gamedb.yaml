@@ -418,6 +418,10 @@ Grand Theft Auto V Legacy:
   files:
     windows:
       - "{SteamUserData}/976730/remote/*/Saves/*"
+Heart of the Woods:
+  files:
+    windows:
+      - "{GameRoot}/game/saves/*"
 Heavy Rain:
   files:
     windows:
