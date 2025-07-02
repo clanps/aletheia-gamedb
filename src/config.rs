@@ -4,7 +4,7 @@
 use std::fs::{create_dir_all, read_to_string, write};
 use std::path::PathBuf;
 
-#[derive(Clone, serde::Deserialize, serde::Serialize)]
+#[derive(Clone, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default)]
 pub struct Config {
     pub custom_databases: Vec<String>,

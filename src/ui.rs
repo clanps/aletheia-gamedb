@@ -196,8 +196,11 @@ pub fn run(config: &AletheiaConfig) {
 
     settings_screen_logic.on_save_config({
         let app_weak = app.as_weak().unwrap();
+        let cfg = cfg.clone();
 
         move |ui_cfg| {
+            let notification_logic = app_weak.global::<NotificationLogic>();
+            let current_config = cfg.as_ref().borrow();
             let new_config = AletheiaConfig {
                 custom_databases: ui_cfg.custom_databases.iter().map(Into::into).collect(),
                 save_dir: (&ui_cfg.save_dir).into(),
@@ -205,11 +208,13 @@ pub fn run(config: &AletheiaConfig) {
                 check_for_updates: ui_cfg.check_for_updates
             };
 
-            AletheiaConfig::save(&new_config);
-
-            *cfg.borrow_mut() = new_config;
-
-            app_weak.global::<NotificationLogic>().invoke_show_success("Successfully saved settings.".into());
+            if *current_config == new_config {
+                notification_logic.invoke_show_info("Settings are already up to date.".into());
+            } else {
+                AletheiaConfig::save(&new_config);
+                *cfg.borrow_mut() = new_config;
+                notification_logic.invoke_show_success("Successfully saved settings.".into());
+            }
         }
     });
 
