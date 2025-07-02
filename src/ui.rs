@@ -148,7 +148,7 @@ pub fn run(config: &AletheiaConfig) {
 
     games_screen_logic.on_perform_operation({
         let app_weak = app.as_weak().unwrap();
-        let cfg = cfg.clone();
+        let cfg = Rc::clone(&cfg);
 
         move |action| {
             let cfg = cfg.as_ref().borrow();
@@ -196,7 +196,7 @@ pub fn run(config: &AletheiaConfig) {
 
     settings_screen_logic.on_save_config({
         let app_weak = app.as_weak().unwrap();
-        let cfg = cfg.clone();
+        let cfg = Rc::clone(&cfg);
 
         move |ui_cfg| {
             let notification_logic = app_weak.global::<NotificationLogic>();
