@@ -115,13 +115,13 @@ pub fn run(config: &AletheiaConfig) {
 
             let updated_model = ModelRc::new(VecModel::from(updated_games.clone()));
             app_weak.global::<GamesScreenLogic>().set_filtered_games(updated_model.clone());
-            app_weak.global::<GamesScreenLogic>().set_selected_games(
+            app_weak.global::<GamesScreenLogic>().set_selected_games(ModelRc::new(VecModel::from(
                 if enabled {
-                    ModelRc::new(VecModel::from(updated_games))
+                    updated_games
                 } else {
-                    ModelRc::new(VecModel::from(vec![]))
+                    vec![]
                 }
-            );
+            )));
         }
     });
 
@@ -235,9 +235,7 @@ pub fn run(config: &AletheiaConfig) {
             updater_logic.on_skip_update({
                 let updater_window = updater_window.as_weak().unwrap();
 
-                move || {
-                    updater_window.window().hide().unwrap();
-                }
+                move || updater_window.window().hide().unwrap()
             });
 
             updater_logic.on_download_update({
@@ -264,10 +262,10 @@ pub fn run(config: &AletheiaConfig) {
 
     game_logic.invoke_refresh_games();
     app_logic.set_version(env!("CARGO_PKG_VERSION").into());
-    
+
     #[cfg(feature = "updater")]
     settings_screen_logic.set_show_update_settings(true);
-    
+
     settings_screen_logic.set_config(Config {
         custom_databases: ModelRc::new(VecModel::from(config.custom_databases.iter().map(Into::into).collect::<Vec<_>>())),
         save_dir: config.save_dir.to_string_lossy().to_string().into(),
