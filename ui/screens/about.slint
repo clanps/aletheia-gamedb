@@ -1,7 +1,6 @@
 // SPDX-FileCopyrightText: 2025 Spencer
 // SPDX-License-Identifier: AGPL-3.0-only
 
-import { AboutSlint } from "std-widgets.slint";
 import { Button } from "../components/button.slint";
 import { AppLogic } from "../logic/app.slint";
 
@@ -99,7 +98,7 @@ export component About {
 
       HorizontalLayout {
         Text {
-          text: "Built with";
+          text: "Built with Slint";
           color: #cdd6f4;
           font-size: 18px;
           font-weight: 600;
@@ -112,9 +111,23 @@ export component About {
         padding-left: 36px;
         spacing: 12px;
 
-        AboutSlint {
-          preferred-height: 240px;
-          preferred-width: 100%;
+        Text {
+          text: "Slint is a declarative GUI toolkit to build native user interfaces for Rust, C++, or JavaScript apps.";
+          color: #a6adc8;
+          font-family: "Inter";
+          font-size: 14px;
+          wrap: word-wrap;
+        }
+
+        HorizontalLayout {
+          padding-top: 8px;
+
+          Button {
+            text: "Learn more about Slint";
+            width: 180px;
+            height: 38px;
+            clicked => { AppLogic.open_url("https://slint.dev"); }
+          }
         }
       }
     }
