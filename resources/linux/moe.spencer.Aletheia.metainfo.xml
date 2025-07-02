@@ -2,7 +2,7 @@
 <component type="desktop-application">
   <id>moe.spencer.Aletheia</id>
   <launchable type="desktop-id">moe.spencer.Aletheia.desktop</launchable>
-  
+
   <name>Aletheia</name>
   <summary>Game save backup tool</summary>
   <content_rating type="oars-1.1"/>
@@ -13,7 +13,7 @@
 
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>AGPL-3.0-only</project_license>
-  
+
   <description>
     <p>Aletheia is a cross-platform game save sync tool designed to help you easily back up and restore game saves across multiple game launchers and devices.</p>
     <p>Supported launchers include:</p>
@@ -23,8 +23,9 @@
       <li>Steam</li>
     </ul>
   </description>
-  
+
   <url type="homepage">https://github.com/Spencer-0003/aletheia</url>
   <url type="bugtracker">https://github.com/Spencer-0003/aletheia/issues</url>
   <url type="vcs-browser">https://github.com/Spencer-0003/aletheia</url>
+  <url type="donation">https://github.com/Spencer-0003/aletheia?tab=readme-ov-file#support-the-project</url>
 </component>
