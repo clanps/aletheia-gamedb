@@ -33,6 +33,46 @@ fn format_size(size: u64) -> String {
 
 #[allow(clippy::too_many_lines, reason = "I will refactor this 'at some point'")]
 pub fn run(config: &AletheiaConfig) {
+    #[cfg(all(feature = "updater", not(debug_assertions)))]
+    if config.check_for_updates {
+        if let Ok(updater::UpdateStatus::Available(release)) = updater::check() {
+            let updater_window = Updater::new().unwrap();
+            let updater_logic = updater_window.global::<UpdaterLogic>();
+
+            slint::set_xdg_app_id("moe.spencer.Aletheia").unwrap();
+
+            updater_logic.set_current_version(env!("CARGO_PKG_VERSION").into());
+            updater_logic.set_new_version(release.tag_name.into());
+            updater_logic.set_changelog(release.body.into());
+
+            updater_logic.on_skip_update({
+                let updater_window = updater_window.as_weak().unwrap();
+
+                move || updater_window.window().hide().unwrap()
+            });
+
+            updater_logic.on_download_update({
+                let updater_window = updater_window.as_weak().unwrap();
+
+                move || {
+                    #[cfg(unix)]
+                    std::process::Command::new("xdg-open").arg(release.url.clone()).spawn().ok();
+
+                    #[cfg(windows)]
+                    std::process::Command::new("cmd").args(["/c", "start", &release.url.clone()]).spawn().ok();
+
+                    updater_window.window().hide().unwrap();
+                }
+            });
+
+            updater_window.run().unwrap();
+
+            if updater_logic.get_downloading() {
+                return;
+            }
+        }
+    }
+
     let app = App::new().unwrap();
     let cfg = Rc::new(RefCell::new(config.clone()));
     let save_dir = config.borrow().save_dir.clone();
@@ -234,44 +274,6 @@ pub fn run(config: &AletheiaConfig) {
             }
         }
     });
-
-    #[cfg(all(feature = "updater", not(debug_assertions)))]
-    if config.check_for_updates {
-        if let Ok(updater::UpdateStatus::Available(release)) = updater::check() {
-            let updater_window = Updater::new().unwrap();
-            let updater_logic = updater_window.global::<UpdaterLogic>();
-
-            updater_logic.set_current_version(env!("CARGO_PKG_VERSION").into());
-            updater_logic.set_new_version(release.tag_name.into());
-            updater_logic.set_changelog(release.body.into());
-
-            updater_logic.on_skip_update({
-                let updater_window = updater_window.as_weak().unwrap();
-
-                move || updater_window.window().hide().unwrap()
-            });
-
-            updater_logic.on_download_update({
-                let updater_window = updater_window.as_weak().unwrap();
-
-                move || {
-                    #[cfg(unix)]
-                    std::process::Command::new("xdg-open").arg(release.url.clone()).spawn().ok();
-
-                    #[cfg(windows)]
-                    std::process::Command::new("cmd").args(["/c", "start", &release.url.clone()]).spawn().ok();
-
-                    updater_window.window().hide().unwrap();
-                }
-            });
-
-            updater_window.run().unwrap();
-
-            if updater_logic.get_downloading() {
-                return;
-            }
-        }
-    }
 
     game_logic.invoke_refresh_games();
     app_logic.set_version(env!("CARGO_PKG_VERSION").into());
