@@ -7,6 +7,9 @@ use crate::commands::{Args, Command};
 use crate::config::Config as AletheiaConfig;
 use crate::gamedb;
 use slint::{Model, ModelRc, VecModel};
+use std::borrow::Borrow;
+use std::rc::Rc;
+use std::cell::RefCell;
 
 #[cfg(all(feature = "updater", not(debug_assertions)))]
 use crate::updater;
@@ -31,8 +34,8 @@ fn format_size(size: u64) -> String {
 #[allow(clippy::too_many_lines, reason = "I will refactor this 'at some point'")]
 pub fn run(config: &AletheiaConfig) {
     let app = App::new().unwrap();
-    let cfg = config.clone();
-    let save_dir = config.save_dir.clone();
+    let cfg = Rc::new(RefCell::new(config.clone()));
+    let save_dir = config.borrow().save_dir.clone();
 
     let app_logic = app.global::<AppLogic>();
     let game_logic = app.global::<GameLogic>();
@@ -148,6 +151,7 @@ pub fn run(config: &AletheiaConfig) {
         let cfg = cfg.clone();
 
         move |action| {
+            let cfg = cfg.as_ref().borrow();
             let selected_games_model = app_weak.global::<GamesScreenLogic>().get_selected_games();
             let selected_games: Vec<UiGame> = selected_games_model.iter().collect();
             let selected_game_names = Args::parse(&selected_games
@@ -193,13 +197,17 @@ pub fn run(config: &AletheiaConfig) {
     settings_screen_logic.on_save_config({
         let app_weak = app.as_weak().unwrap();
 
-        move |cfg| {
-            AletheiaConfig::save(&AletheiaConfig {
-                custom_databases: cfg.custom_databases.iter().map(Into::into).collect(),
-                save_dir: (&cfg.save_dir).into(),
+        move |ui_cfg| {
+            let new_config = AletheiaConfig {
+                custom_databases: ui_cfg.custom_databases.iter().map(Into::into).collect(),
+                save_dir: (&ui_cfg.save_dir).into(),
                 #[cfg(feature = "updater")]
-                check_for_updates: cfg.check_for_updates
-            });
+                check_for_updates: ui_cfg.check_for_updates
+            };
+
+            AletheiaConfig::save(&new_config);
+
+            *cfg.borrow_mut() = new_config;
 
             app_weak.global::<NotificationLogic>().invoke_show_success("Successfully saved settings.".into());
         }
