@@ -7,7 +7,6 @@ use crate::infer::Launcher;
 use crate::infer::launchers::Heroic;
 use crate::operations::restore_game;
 use std::fs::read_to_string;
-use std::path::PathBuf;
 
 #[cfg(unix)]
 use crate::infer::launchers::Lutris;
@@ -23,10 +22,8 @@ pub fn restore(launcher: &str, config: &Config) {
         }
     };
 
-    let save_dir = PathBuf::from(&config.save_dir);
-
     if let Some(game) = game {
-        let game_dir = save_dir.join(&game.name);
+        let game_dir = config.save_dir.join(&game.name);
 
         if !game_dir.exists() || !game_dir.is_dir() {
             log::warn!("No backups found for {}.", game.name);

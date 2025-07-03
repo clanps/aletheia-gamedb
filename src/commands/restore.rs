@@ -5,15 +5,12 @@ use crate::config::Config;
 use crate::infer;
 use crate::operations::restore_game;
 use super::{Args, Command};
-use std::path::PathBuf;
 
 pub struct Restore;
 
 impl Command for Restore {
     fn run(args: Args, config: &Config) {
-        let save_dir = PathBuf::from(&config.save_dir);
-
-        if !save_dir.exists() {
+        if !config.save_dir.exists() {
             eprintln!("Backup directory doesn't exist.");
             return;
         }
@@ -25,7 +22,7 @@ impl Command for Restore {
             return;
         }
 
-        for game in std::fs::read_dir(&save_dir).unwrap() {
+        for game in std::fs::read_dir(&config.save_dir).unwrap() {
             let game_dir = game.unwrap().path();
             let is_dir = game_dir.is_dir();
             let game_name = game_dir.file_name().unwrap().to_string_lossy();
