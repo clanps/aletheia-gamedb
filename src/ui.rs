@@ -3,11 +3,12 @@
 
 slint::include_modules!();
 
-use crate::commands::{Args, Command};
 use crate::config::Config as AletheiaConfig;
 use crate::gamedb;
+use crate::operations::{backup_game, restore_game};
 use slint::{Model, ModelRc, VecModel};
 use std::borrow::Borrow;
+use std::fs::read_to_string;
 use std::rc::Rc;
 use std::cell::RefCell;
 
@@ -192,21 +193,61 @@ pub fn run(config: &AletheiaConfig) {
 
         move |action| {
             let cfg = cfg.as_ref().borrow();
+            let notification_logic = app_weak.global::<NotificationLogic>();
             let selected_games_model = app_weak.global::<GamesScreenLogic>().get_selected_games();
             let selected_games: Vec<UiGame> = selected_games_model.iter().collect();
-            let selected_game_names = Args::parse(&selected_games
-                .iter()
-                .map(|game| game.name.to_string())
-                .collect::<Vec<String>>()
-            );
+            let installed_games = gamedb::get_installed_games();
 
             if action == "backup" {
-                crate::commands::Backup::run(selected_game_names, &cfg);
+                let game_db = gamedb::parse();
+
+                for ui_game in &selected_games {
+                    let game = installed_games.iter().find(|g| *g.name == *ui_game.name).unwrap();
+                    if let Err(e) = backup_game(game, &cfg, &game_db[&game.name]) {
+                        log::error!("Failed to backup {}.\n{e}", &game.name);
+                    } else {
+                        log::info!("Successfully backed up {}.", &game.name);
+                    }
+                }
+
                 app_weak.global::<GameLogic>().invoke_refresh_games();
-                app_weak.global::<NotificationLogic>().invoke_show_success(format!("Backed up {} games", selected_games.len()).into());
+                notification_logic.invoke_show_success(format!("Backed up {} games", selected_games.len()).into());
             } else {
-                crate::commands::Restore::run(selected_game_names, &cfg);
-                app_weak.global::<NotificationLogic>().invoke_show_success(format!("Restored {} games", selected_games.len()).into());
+                if !cfg.save_dir.exists() {
+                    notification_logic.invoke_show_error("Backup directory does not exist.".into());
+                    return;
+                }
+
+                for ui_game in &selected_games {
+                    let game_name = ui_game.name.to_string();
+                    let game_dir = cfg.save_dir.join(game_name.replace(':', ""));
+
+                    if !game_dir.exists() || !game_dir.is_dir() {
+                        log::error!("Backup directory for {game_name} doesn't exist.");
+                        continue;
+                    }
+
+                    let manifest_path = game_dir.join("aletheia_manifest.yaml");
+
+                    if !manifest_path.exists() {
+                        log::error!("{game_name} is missing a manifest file.");
+                        continue;
+                    }
+
+                    let manifest_content = read_to_string(manifest_path).unwrap();
+                    let Ok(manifest) = serde_yaml::from_str::<gamedb::GameInfo>(&manifest_content) else {
+                        log::error!("Failed to parse {game_name}'s manifest.");
+                        continue;
+                    };
+
+                    if let Err(e) = restore_game(&game_dir, &manifest, &installed_games) {
+                        log::error!("Failed to restore {}: {e}", manifest.name);
+                    } else {
+                        log::info!("Successfully restored {game_name}.");
+                    }
+                }
+
+                notification_logic.invoke_show_success(format!("Restored {} games", selected_games.len()).into());
             }
         }
     });
