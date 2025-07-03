@@ -19,7 +19,7 @@ Aletheia is a cross-platform game save sync tool designed to help you easily bac
 
 ## Contributing
 ### GameDB
-Add game save locations in `resources/gamedb.yaml`. Include Linux paths if the game supports Linux. Game titles are based on their Steam names. The following placeholders can be used:
+Add game save locations in `resources/gamedb.yaml`. Include Linux paths if the game supports Linux. Game titles are based on their GOG names, but Steam and itch.io games are also accepted. The following placeholders can be used:
 
 | Placeholder       | Description                                                                                   |
 |-------------------|-----------------------------------------------------------------------------------------------|
