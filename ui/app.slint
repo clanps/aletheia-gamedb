@@ -40,8 +40,11 @@ export component App inherits Window {
           icon: @image-url("./assets/joystick.svg");
           active: root.current_screen == "games";
           clicked => {
+            if (root.current_screen != "games") {
+              GamesScreenLogic.filter(""); // Lazy hack to reset search, waiting for https://github.com/slint-ui/slint/pull/6657 to be merged.
+            }
+
             root.current_screen = "games";
-            GamesScreenLogic.filter(""); // Lazy hack to reset search, waiting for https://github.com/slint-ui/slint/pull/6657 to be merged.
           }
         }
 
