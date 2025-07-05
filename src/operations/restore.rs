@@ -3,6 +3,9 @@
 
 use crate::dirs::expand_path;
 use crate::file::hash_file;
+use crate::gamedb::GameInfo;
+use crate::scanner::Game;
+use std::fs::{copy, create_dir_all};
 use std::path::{Path, PathBuf};
 
 #[derive(Debug, thiserror::Error)]
@@ -15,7 +18,7 @@ pub enum Error {
 
 pub type Result<T> = core::result::Result<T, Error>;
 
-pub fn restore_game(game_dir: &Path, manifest: &crate::gamedb::GameInfo, installed_games: &[crate::scanner::Game]) -> Result<bool> {
+pub fn restore_game(game_dir: &Path, manifest: &GameInfo, installed_games: &[Game]) -> Result<bool> {
     let game_name = &manifest.name;
 
     let Some(game) = installed_games.iter().find(|g| g.name == *game_name) else {
@@ -40,10 +43,10 @@ pub fn restore_game(game_dir: &Path, manifest: &crate::gamedb::GameInfo, install
 
         let expanded_parent = expanded.parent().unwrap();
         if !&expanded_parent.exists() {
-            std::fs::create_dir_all(expanded_parent).unwrap();
+            create_dir_all(expanded_parent).unwrap();
         }
 
-        std::fs::copy(&src_file, &expanded).unwrap();
+        copy(&src_file, &expanded).unwrap();
     }
 
     Ok(true)
