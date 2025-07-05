@@ -98,7 +98,8 @@ pub fn run(config: &AletheiaConfig) {
         let app_weak = app.as_weak().unwrap();
 
         move || {
-            let selected_names: std::collections::HashSet<String> = app_weak.global::<GamesScreenLogic>()
+            let games_screen_logic = app_weak.global::<GamesScreenLogic>();
+            let selected_names: HashSet<String> = games_screen_logic
                 .get_selected_games().iter().map(|g| g.name.to_string()).collect();
             let select_all = selected_names.is_empty();
 
@@ -124,8 +125,8 @@ pub fn run(config: &AletheiaConfig) {
             let games_model = ModelRc::new(VecModel::from(ui_games));
             // In a perfect world, Slint would have a way to filter in their markdown language so I could avoid this
             app_weak.global::<GameLogic>().set_games(games_model.clone());
-            app_weak.global::<GamesScreenLogic>().set_filtered_games(games_model.clone());
-            app_weak.global::<GamesScreenLogic>().set_selected_games(ModelRc::new(VecModel::from(games_model.iter().filter(|g| g.selected).collect::<Vec<UiGame>>())));
+            games_screen_logic.set_filtered_games(games_model.clone());
+            games_screen_logic.set_selected_games(ModelRc::new(VecModel::from(games_model.iter().filter(|g| g.selected).collect::<Vec<UiGame>>())));
         }
     });
 
