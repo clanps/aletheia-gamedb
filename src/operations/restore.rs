@@ -6,7 +6,7 @@ use crate::file::hash_file;
 use crate::gamedb::GameInfo;
 use crate::scanner::Game;
 use std::fs::{copy, create_dir_all};
-use std::path::{Path, PathBuf};
+use std::path::Path;
 
 #[derive(Debug, thiserror::Error)]
 pub enum Error {
@@ -26,7 +26,7 @@ pub fn restore_game(game_dir: &Path, manifest: &GameInfo, installed_games: &[Gam
     };
 
     for file in &manifest.files {
-        let src_file = game_dir.join(PathBuf::from(&file.path).file_name().unwrap());
+        let src_file = game_dir.join(Path::new(&file.path).file_name().unwrap());
 
         if !src_file.exists() || hash_file(&src_file) != file.hash {
             return Err(Error::MissingOrCorruptedFiles(src_file.file_name().unwrap().to_string_lossy().to_string()));
@@ -34,8 +34,9 @@ pub fn restore_game(game_dir: &Path, manifest: &GameInfo, installed_games: &[Gam
     }
 
     for file in &manifest.files {
-        let expanded = expand_path(Path::new(&file.path), game.installation_dir.as_deref(), game.prefix.as_deref());
-        let src_file = game_dir.join(PathBuf::from(&file.path).file_name().unwrap());
+        let file_path = Path::new(&file.path);
+        let expanded = expand_path(file_path, game.installation_dir.as_deref(), game.prefix.as_deref());
+        let src_file = game_dir.join(file_path.file_name().unwrap());
 
         if expanded.exists() && hash_file(&expanded) == file.hash {
             continue;

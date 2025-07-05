@@ -111,7 +111,7 @@ pub fn backup_game(game: &Game, config: &Config, entry: &GameDbEntry) -> Result<
     Ok(true)
 }
 
-fn process_file(file_path: &PathBuf, dest: &PathBuf, game: &Game) -> FileMetadata {
+fn process_file(file_path: &Path, dest: &Path, game: &Game) -> FileMetadata {
     copy(file_path, dest).unwrap();
 
     let file_metadata = metadata(file_path).unwrap();

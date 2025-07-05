@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 
 use std::fs::read_to_string;
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 use super::{Game, Scanner};
 
 pub struct GOGScanner;
@@ -15,7 +15,7 @@ struct GOGameInfo {
 impl Scanner for GOGScanner {
     fn get_games() -> Vec<Game> {
         let mut games = vec![];
-        let gog_db_path = PathBuf::from("C:/ProgramData/GOG.com/Galaxy/storage/galaxy-2.0.db");
+        let gog_db_path = Path::new("C:/ProgramData/GOG.com/Galaxy/storage/galaxy-2.0.db");
 
         if !gog_db_path.exists() {
             return games;
