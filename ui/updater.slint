@@ -2,15 +2,7 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 
 import { Button } from "./components/button.slint";
-
-export global UpdaterLogic {
-  in property <string> current_version;
-  in property <string> new_version;
-  in property <string> changelog;
-  in-out property <bool> downloading;
-  callback download_update();
-  callback skip_update();
-}
+import { UpdaterLogic } from "./logic/updater.slint";
 
 export component Updater inherits Window {
   width: 500px;
