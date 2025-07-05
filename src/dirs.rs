@@ -83,7 +83,7 @@ fn path_contains_subpath(haystack: &Path, needle: &str) -> bool {
         .any(|ancestor| ancestor.ends_with(needle))
 }
 
-pub fn expand_path(path: &Path, installation_dir: Option<&PathBuf>, prefix: Option<&PathBuf>) -> PathBuf {
+pub fn expand_path(path: &Path, installation_dir: Option<&Path>, prefix: Option<&Path>) -> PathBuf {
     let mut replacements: Vec<(&str, PathBuf)> = vec![];
 
     if let Some(install_dir) = installation_dir {
@@ -144,7 +144,7 @@ pub fn expand_path(path: &Path, installation_dir: Option<&PathBuf>, prefix: Opti
     expand_path_components(path, &replacements)
 }
 
-pub fn shrink_path(path: &Path, installation_dir: Option<&PathBuf>, prefix: Option<&PathBuf>) -> PathBuf {
+pub fn shrink_path(path: &Path, installation_dir: Option<&Path>, prefix: Option<&Path>) -> PathBuf {
     let mut replacements: Vec<(&str, PathBuf)> = vec![];
 
     if let Some(install_dir) = installation_dir {
@@ -204,7 +204,7 @@ pub fn shrink_path(path: &Path, installation_dir: Option<&PathBuf>, prefix: Opti
     shrink_path_components(path, &replacements)
 }
 
-pub fn get_size(path: &PathBuf) -> u64 {
+pub fn get_size(path: &Path) -> u64 {
     let mut size = 0;
 
     for entry in read_dir(path).unwrap() {

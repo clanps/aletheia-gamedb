@@ -34,7 +34,7 @@ pub fn restore_game(game_dir: &Path, manifest: &GameInfo, installed_games: &[Gam
     }
 
     for file in &manifest.files {
-        let expanded = expand_path(Path::new(&file.path), game.installation_dir.as_ref(), game.prefix.as_ref());
+        let expanded = expand_path(Path::new(&file.path), game.installation_dir.as_deref(), game.prefix.as_deref());
         let src_file = game_dir.join(PathBuf::from(&file.path).file_name().unwrap());
 
         if expanded.exists() && hash_file(&expanded) == file.hash {
