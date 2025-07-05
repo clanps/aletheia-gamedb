@@ -8,6 +8,7 @@ use crate::gamedb;
 use crate::operations::{backup_game, restore_game};
 use slint::{Model, ModelRc, VecModel};
 use std::borrow::Borrow;
+use std::collections::HashSet;
 use std::fs::read_to_string;
 use std::rc::Rc;
 use std::cell::RefCell;
@@ -132,18 +133,20 @@ pub fn run(config: &AletheiaConfig) {
         let app_weak = app.as_weak().unwrap();
 
         move |query| {
+            let games_screen_logic = app_weak.global::<GamesScreenLogic>();
             let games = app_weak.global::<GameLogic>().get_games();
-
-            if query.is_empty() {
-                app_weak.global::<GamesScreenLogic>().set_filtered_games(games);
-                return;
-            }
+            let selected_names: HashSet<String> = games_screen_logic
+                .get_selected_games().iter().map(|g| g.name.to_string()).collect();
 
             let filtered_games: Vec<UiGame> = games.iter()
-                .filter(|g| g.name.to_lowercase().contains(&query.to_lowercase()))
+                .filter(|g| query.is_empty() || g.name.to_lowercase().contains(&query.to_lowercase()))
+                .map(|mut g| {
+                    g.selected = selected_names.contains(&g.name.to_string());
+                    g
+                })
                 .collect();
 
-            app_weak.global::<GamesScreenLogic>().set_filtered_games(ModelRc::new(VecModel::from(filtered_games)));
+            games_screen_logic.set_filtered_games(ModelRc::new(VecModel::from(filtered_games)));
         }
     });
 
