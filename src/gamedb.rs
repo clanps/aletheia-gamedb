@@ -109,11 +109,7 @@ pub fn get_installed_games() -> Vec<Game> {
 }
 
 pub fn update() -> Result<bool> {
-    let cache_dir = if cfg!(unix) {
-        cache().join("aletheia")
-    } else {
-        cache()
-    };
+    let cache_dir = cache();
 
     let gamedb_path = cache_dir.join("gamedb.yaml");
     let etag_path = cache_dir.join("gamedb.etag");
@@ -147,7 +143,7 @@ pub fn update() -> Result<bool> {
 }
 
 fn load_custom_db_cache() -> CustomDbCache {
-    let cache_path = cache().join("aletheia/custom_gamedb.yaml");
+    let cache_path = cache().join("custom_gamedb.yaml");
 
     if cache_path.exists() {
         serde_yaml::from_str(&read_to_string(&cache_path).unwrap()).unwrap_or_else(|_| {
@@ -165,11 +161,7 @@ pub fn update_custom(cfg: &Config) -> Result<bool> {
         return Ok(false);
     }
 
-    let cache_dir = if cfg!(unix) {
-        cache().join("aletheia")
-    } else {
-        cache()
-    };
+    let cache_dir = cache();
 
     let client = reqwest::blocking::Client::new();
     let mut db_cache = load_custom_db_cache();
