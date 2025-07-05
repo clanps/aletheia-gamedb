@@ -886,9 +886,11 @@ Tales of Arise:
 Terraria:
   files:
     linux:
-      - "{XDGData}/Terraria/*"
+      - "{XDGData}/Terraria/Players/*"
+      - "{XDGData}/Terraria/Worlds/*"
     windows:
-      - "{Documents}/My Games/Terraria/*"
+      - "{Documents}/My Games/Terraria/Players/*"
+      - "{Documents}/My Games/Terraria/Worlds/*"
 The Callisto Protocol:
   files:
     windows:
