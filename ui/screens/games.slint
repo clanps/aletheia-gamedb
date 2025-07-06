@@ -102,6 +102,7 @@ export component Games {
         height: 36px;
         text: is_all_selected ? "Clear Selection" : "Select All";
         background: #2f2f49;
+        enabled: GamesScreenLogic.filtered_games.length > 0;
         clicked => {
           GamesScreenLogic.select_all(!is_all_selected);
         }
