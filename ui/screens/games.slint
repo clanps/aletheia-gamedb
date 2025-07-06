@@ -65,9 +65,7 @@ export component Games {
     }
 
     if (GamesScreenLogic.selected_games.length > 0): Text {
-      text: "Selecting " + GamesScreenLogic.selected_games.length + " / " + (GamesScreenLogic.filtered_games.length > 0
-        ? GamesScreenLogic.filtered_games.length
-        : GameLogic.games.length) + " games";
+      text: "Selecting " + GamesScreenLogic.selected_games.length + " / " + GameLogic.games.length + " games";
       color: white;
       opacity: 50%;
       horizontal-alignment: center;
