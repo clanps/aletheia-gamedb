@@ -20,6 +20,9 @@ export global GamesScreenLogic {
 
 export component Games {
   callback search_changed(string);
+  private property <bool> is_all_selected: GamesScreenLogic.filtered_games.length > 0
+                                           ? GamesScreenLogic.filtered_games.length == GamesScreenLogic.selected_games.length
+                                           : GameLogic.games.length == GamesScreenLogic.selected_games.length;
   width: 100%;
   height: 100%;
 
@@ -61,8 +64,10 @@ export component Games {
       }
     }
 
-    Text {
-      text: "Selecting " + GamesScreenLogic.selected_games.length + " / " + GameLogic.games.length + " games";
+    if (GamesScreenLogic.selected_games.length > 0): Text {
+      text: "Selecting " + GamesScreenLogic.selected_games.length + " / " + (GamesScreenLogic.filtered_games.length > 0
+        ? GamesScreenLogic.filtered_games.length
+        : GameLogic.games.length) + " games";
       color: white;
       opacity: 50%;
       horizontal-alignment: center;
@@ -95,10 +100,10 @@ export component Games {
       Button {
         width: 140px;
         height: 36px;
-        text: GameLogic.games.length != GamesScreenLogic.selected_games.length ? "Select All" : "Clear Selection";
+        text: is_all_selected ? "Clear Selection" : "Select All";
         background: #2f2f49;
         clicked => {
-          GamesScreenLogic.select_all(GamesScreenLogic.selected_games.length != GameLogic.games.length);
+          GamesScreenLogic.select_all(!is_all_selected);
         }
       }
     }

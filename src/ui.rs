@@ -146,8 +146,12 @@ pub fn run(config: &AletheiaConfig) {
                     g
                 })
                 .collect();
+            let selected_filtered_games: Vec<UiGame> = filtered_games.clone().into_iter()
+                .filter(|g| g.selected)
+                .collect();
 
             games_screen_logic.set_filtered_games(ModelRc::new(VecModel::from(filtered_games)));
+            games_screen_logic.set_selected_games(ModelRc::new(VecModel::from(selected_filtered_games)));
         }
     });
 
