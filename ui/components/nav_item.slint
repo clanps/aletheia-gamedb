@@ -56,7 +56,7 @@ export component NavItem inherits Rectangle {
   }
 
   states [
-   hover when touch_area.has-hover: {
+   hover when !root.active && touch_area.has-hover: {
      opacity: 75%;
      in { animate opacity { duration: 150ms; } }
      out { animate opacity { duration: 150ms; } }
