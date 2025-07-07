@@ -99,7 +99,7 @@ export component Games {
       Button {
         width: 140px;
         height: 36px;
-        text: search_bar.text == ""
+        text: search_bar.text.is-empty
             ? GamesScreenLogic.all_filtered_selected ? @tr("Clear Selection") : @tr("Select All")
             : @tr("{} Filtered", GamesScreenLogic.all_filtered_selected ? "Clear" : "Select");
         background: #2f2f49;
