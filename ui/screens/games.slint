@@ -54,7 +54,7 @@ export component Games {
 
     HorizontalLayout {
       alignment: center;
-      SearchBar {
+      search_bar := SearchBar {
         height: 45px;
         width: 430px;
         placeholder-text: @tr("Search games...");
@@ -96,7 +96,9 @@ export component Games {
       Button {
         width: 140px;
         height: 36px;
-        text: GamesScreenLogic.all_filtered_selected ? "Clear Selection" : "Select All";
+        text: search_bar.text == ""
+            ? GamesScreenLogic.all_filtered_selected ? @tr("Clear Selection") : @tr("Select All")
+            : @tr("{} Filtered", GamesScreenLogic.all_filtered_selected ? "Clear" : "Select");
         background: #2f2f49;
         enabled: GamesScreenLogic.filtered_games.length > 0;
         clicked => {
