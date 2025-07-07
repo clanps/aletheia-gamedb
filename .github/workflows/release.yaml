@@ -23,6 +23,9 @@ jobs:
       - name: Setup Rust toolchain
         uses: dtolnay/rust-toolchain@stable
 
+      - name: Install dependencies
+        run: sudo apt update && sudo apt install -y qt6-base-dev
+
       - name: Checkout code
         uses: actions/checkout@v4
 
