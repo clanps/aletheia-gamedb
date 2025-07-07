@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: 2025 Spencer
 // SPDX-License-Identifier: AGPL-3.0-only
 
-use std::fs::{create_dir_all, read_to_string, write};
+use std::fs::{create_dir_all, read_to_string, File};
 use std::path::PathBuf;
 
 #[derive(Clone, PartialEq, serde::Deserialize, serde::Serialize)]
@@ -52,7 +52,7 @@ impl Config {
         let default = Self::default();
 
         create_dir_all(&dir).unwrap();
-        write(&config_path, serde_json::to_string_pretty(&default).unwrap()).unwrap();
+        serde_json::to_writer_pretty(File::create(&config_path).unwrap(), &default).unwrap();
 
         default
     }
@@ -63,7 +63,7 @@ impl Config {
         let config_path = dir.join("config.json");
         create_dir_all(&dir).unwrap();
 
-        write(&config_path, serde_json::to_string_pretty(&cfg).unwrap()).unwrap();
+        serde_json::to_writer_pretty(File::create(&config_path).unwrap(), &cfg).unwrap();
     }
 }
 
