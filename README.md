@@ -32,7 +32,7 @@ Add game save locations in `resources/gamedb.yaml`. Include Linux paths if the g
 | `{XDGConfig}`     | Linux XDG config directory                                                                    |
 | `{XDGData}`       | Linux XDG data directory                                                                      |
 | `{GOGAppData}`    | GOG application data directory                                                                |
-| `{SteamUserData}` | Steam userdata directory (supports wildcard for multiple user profiles)                       |
+| `{SteamUserData}` | Steam userdata directory                                                                      |
 
 ## Support the Project
 If you find Aletheia useful and would like to support its development, consider donating.
