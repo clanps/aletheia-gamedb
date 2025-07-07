@@ -124,8 +124,8 @@ pub fn run(config: &AletheiaConfig) {
 
             let ui_games_model = ModelRc::new(VecModel::from(ui_games));
             let ui_selected_games: Vec<UiGame> = ui_games_model.iter()
-              .filter_map(|game| game.selected.then(|| game.clone()))
-              .collect();
+                .filter_map(|game| game.selected.then(|| game.clone()))
+                .collect();
 
             // In a perfect world, Slint would have a way to filter in their markdown language so I could avoid this
             app_weak.global::<GameLogic>().set_games(ui_games_model.clone());
@@ -151,6 +151,7 @@ pub fn run(config: &AletheiaConfig) {
                     g
                 })
                 .collect();
+
             let all_filtered_selected = !filtered_games.is_empty() && filtered_games.iter().all(|g| g.selected);
 
             games_screen_logic.set_filtered_games(ModelRc::new(VecModel::from(filtered_games)));
@@ -201,7 +202,7 @@ pub fn run(config: &AletheiaConfig) {
 
             let filtered_games_model = games_screen_logic.get_filtered_games();
             let all_filtered_selected = filtered_games_model.row_count() > 0 &&
-              filtered_games_model.iter().all(|g| selected_games_names.contains(&g.name.to_string()));
+                filtered_games_model.iter().all(|g| selected_games_names.contains(&g.name.to_string()));
 
             games_screen_logic.set_selected_games(ModelRc::new(VecModel::from(selected_games)));
             games_screen_logic.set_all_filtered_selected(all_filtered_selected);
