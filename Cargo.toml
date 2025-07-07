@@ -23,7 +23,7 @@ glob = "0.3.2"
 log = "0.4.27"
 reqwest = { version = "0.12.20", features = ["blocking", "json"] }
 rfd = "0.15.3"
-rusqlite = "0.36.0"
+rusqlite = "0.37.0"
 semver = { version = "1.0.26", optional = true }
 serde = { version = "1.0.219", features = ["derive"] }
 serde_json = "1.0.140"

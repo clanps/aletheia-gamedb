@@ -6,7 +6,7 @@ use crate::dirs::cache;
 use crate::scanner::{Game, Scanner};
 use crate::scanner::{HeroicScanner, SteamScanner};
 use std::collections::HashMap;
-use std::fs::{create_dir_all, read_to_string, write};
+use std::fs::{create_dir_all, File, read_to_string, write};
 use serde::{Deserialize, Serialize};
 
 #[cfg(unix)]
@@ -67,7 +67,7 @@ pub fn parse() -> HashMap<String, GameDbEntry> {
     let gamedb_path = cache().join("aletheia/gamedb.yaml");
 
     let mut db: HashMap<String, GameDbEntry> = if gamedb_path.exists() {
-        if let Ok(gamedb) = serde_yaml::from_str(&read_to_string(gamedb_path).unwrap()) {
+        if let Ok(gamedb) = serde_yaml::from_reader(File::open(gamedb_path).unwrap()) {
             gamedb
         } else {
             log::error!("Failed to parse cached GameDB, falling back to built-in.");
@@ -146,7 +146,7 @@ fn load_custom_db_cache() -> CustomDbCache {
     let cache_path = cache().join("custom_gamedb.yaml");
 
     if cache_path.exists() {
-        serde_yaml::from_str(&read_to_string(&cache_path).unwrap()).unwrap_or_else(|_| {
+        serde_yaml::from_reader(File::open(&cache_path).unwrap()).unwrap_or_else(|_| {
             log::error!("Failed to parse custom GameDB cache.");
             CustomDbCache::default()
         })
@@ -204,7 +204,7 @@ pub fn update_custom(cfg: &Config) -> Result<bool> {
     }
 
     db_cache.databases.retain(|url, _| cfg.custom_databases.contains(url));
-    write(cache_dir.join("custom_gamedb.yaml"), serde_yaml::to_string(&db_cache).unwrap())?;
+    serde_yaml::to_writer(File::open(cache_dir.join("custom_gamedb.yaml"))?, &db_cache).unwrap();
 
     Ok(updated)
 }
