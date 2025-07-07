@@ -40,7 +40,7 @@ export component Settings {
         }
 
         Text {
-          text: "Game Data Location";
+          text: @tr("Game Data Location");
           color: #cdd6f4;
           font-size: 18px;
           font-weight: 600;
@@ -54,7 +54,7 @@ export component Settings {
         spacing: 12px;
 
         Text {
-          text: "Choose where your games will be saved";
+          text: @tr("Choose where your games will be saved");
           color: #a6adc8;
           font-family: "Inter";
           font-size: 14px;
@@ -70,7 +70,7 @@ export component Settings {
           }
 
           Button {
-            text: "Browse";
+            text: @tr("Browse");
             width: 100px;
             height: 38px;
             clicked => { SettingsScreenLogic.browse(); }
@@ -99,7 +99,7 @@ export component Settings {
         }
 
         Text {
-          text: "GameDB";
+          text: @tr("GameDB");
           color: #cdd6f4;
           font-size: 18px;
           font-weight: 600;
@@ -113,14 +113,14 @@ export component Settings {
         spacing: 12px;
 
         Text {
-          text: "Download the latest copy of the GameDB";
+          text: @tr("Download the latest copy of the GameDB");
           color: #a6adc8;
           font-family: "Inter";
           font-size: 14px;
         }
 
         Button {
-          text: "Update GameDB";
+          text: @tr("Update GameDB");
           width: 140px;
           height: 38px;
           clicked => { SettingsScreenLogic.update_gamedb(); }
@@ -148,7 +148,7 @@ export component Settings {
         }
 
         Text {
-          text: "Updates";
+          text: @tr("Updates");
           color: #cdd6f4;
           font-size: 18px;
           font-weight: 600;
@@ -162,7 +162,7 @@ export component Settings {
         spacing: 12px;
 
         Text {
-          text: "Configure automatic update checking";
+          text: @tr("Configure automatic update checking");
           color: #a6adc8;
           font-family: "Inter";
           font-size: 14px;
@@ -173,7 +173,7 @@ export component Settings {
           alignment: start;
 
           CheckBox {
-            text: "Check for updates automatically";
+            text: @tr("Check for updates automatically");
             enabled: SettingsScreenLogic.config.check_for_updates;
             toggled => { SettingsScreenLogic.config.check_for_updates = self.enabled; }
           }
@@ -189,7 +189,7 @@ export component Settings {
       padding-bottom: 8px;
 
       Button {
-        text: "Save";
+        text: @tr("Save");
         width: 120px;
         height: 40px;
         clicked => { SettingsScreenLogic.save_config(SettingsScreenLogic.config); }
