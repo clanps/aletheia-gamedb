@@ -4,13 +4,15 @@
 export component Button {
   in property <string> text;
   in property <color> background: #7678ed;
+  in property <bool> enabled: true;
   callback clicked();
 
   Rectangle {
+    background: root.background;
     border-color: rgba(24, 24, 32, 0.75);
     border-radius: 8px;
     border-width: 1px;
-    background: root.background;
+    opacity: root.enabled ? 100% : 50%;
     drop-shadow-blur: 8px;
     drop-shadow-color: rgba(0, 0, 0, 0.15);
     drop-shadow-offset-y: 4px;
@@ -25,6 +27,7 @@ export component Button {
     }
 
     TouchArea {
+      enabled: root.enabled;
       mouse-cursor: pointer;
       clicked => { root.clicked(); }
     }

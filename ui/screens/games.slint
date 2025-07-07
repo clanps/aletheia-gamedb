@@ -12,6 +12,7 @@ import { UiGame } from "../structs/ui_game.slint";
 export global GamesScreenLogic {
   in property <[UiGame]> filtered_games: [];
   in-out property <[UiGame]> selected_games: [];
+  in property <bool> all_filtered_selected: false;
   callback filter(string);
   callback select_all(bool);
   callback select_game(UiGame);
@@ -61,7 +62,7 @@ export component Games {
       }
     }
 
-    Text {
+    if (GamesScreenLogic.selected_games.length > 0): Text {
       text: "Selecting " + GamesScreenLogic.selected_games.length + " / " + GameLogic.games.length + " games";
       color: white;
       opacity: 50%;
@@ -76,10 +77,9 @@ export component Games {
         width: 140px;
         height: 36px;
         text: "Backup";
+        enabled: GamesScreenLogic.selected_games.length > 0;
         clicked => {
-          if (GamesScreenLogic.selected_games.length > 0) {
-            GamesScreenLogic.perform_operation("backup");
-          }
+          GamesScreenLogic.perform_operation("backup");
         }
       }
 
@@ -87,20 +87,20 @@ export component Games {
         width: 140px;
         height: 36px;
         text: "Restore";
+        enabled: GamesScreenLogic.selected_games.length > 0;
         clicked => {
-          if (GamesScreenLogic.selected_games.length > 0) {
-            GamesScreenLogic.perform_operation("restore");
-          }
+          GamesScreenLogic.perform_operation("restore");
         }
       }
 
       Button {
         width: 140px;
         height: 36px;
-        text: GameLogic.games.length != GamesScreenLogic.selected_games.length ? "Select All" : "Clear Selection";
+        text: GamesScreenLogic.all_filtered_selected ? "Clear Selection" : "Select All";
         background: #2f2f49;
+        enabled: GamesScreenLogic.filtered_games.length > 0;
         clicked => {
-          GamesScreenLogic.select_all(GamesScreenLogic.selected_games.length != GameLogic.games.length);
+          GamesScreenLogic.select_all(!GamesScreenLogic.all_filtered_selected);
         }
       }
     }
