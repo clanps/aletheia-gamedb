@@ -22,7 +22,7 @@ export component About {
         spacing: 12px;
 
         Text {
-          text: "Application Info";
+          text: @tr("Application Info");
           color: #cdd6f4;
           font-size: 18px;
           font-weight: 600;
@@ -36,28 +36,28 @@ export component About {
         spacing: 12px;
 
         Text {
-          text: "Aletheia is an open-source game save backup tool";
+          text: @tr("Aletheia is an open-source game save backup tool");
           color: #a6adc8;
           font-family: "Inter";
           font-size: 14px;
         }
 
         Text {
-          text: "Version: " + AppLogic.version;
+          text: @tr("Version: ") + AppLogic.version;
           color: #a6adc8;
           font-family: "Inter";
           font-size: 14px;
         }
 
         Text {
-          text: "License: AGPL-3.0";
+          text: @tr("License: ") + "AGPL-3.0";
           color: #a6adc8;
           font-family: "Inter";
           font-size: 14px;
         }
 
         Text {
-          text: "Logo by: @clanps:usesarchbtw.lol";
+          text: @tr("Logo by: ") + "@clanps:usesarchbtw.lol";
           color: #a6adc8;
           font-family: "Inter";
           font-size: 14px;
@@ -68,21 +68,21 @@ export component About {
           padding-top: 8px;
 
           Button {
-            text: "View Source Code";
+            text: @tr("View Source Code");
             width: 180px;
             height: 38px;
             clicked => { AppLogic.open_url("https://github.com/Spencer-0003/aletheia"); }
           }
 
           Button {
-            text: "View License";
+            text: @tr("View License");
             width: 180px;
             height: 38px;
             clicked => { AppLogic.open_url("https://github.com/Spencer-0003/aletheia/blob/master/LICENSE"); }
           }
 
           Button {
-            text: "Support the Project";
+            text: @tr("Support the Project");
             width: 180px;
             height: 38px;
             clicked => { AppLogic.open_url("https://github.com/Spencer-0003/aletheia?tab=readme-ov-file#support-the-project") }
@@ -98,7 +98,7 @@ export component About {
 
       HorizontalLayout {
         Text {
-          text: "Built with Slint";
+          text: @tr("Built with Slint");
           color: #cdd6f4;
           font-size: 18px;
           font-weight: 600;
@@ -112,7 +112,7 @@ export component About {
         spacing: 12px;
 
         Text {
-          text: "Slint is a declarative GUI toolkit to build native user interfaces for Rust, C++, or JavaScript apps.";
+          text: @tr("Slint is a declarative GUI toolkit to build native user interfaces for Rust, C++, or JavaScript apps");
           color: #a6adc8;
           font-family: "Inter";
           font-size: 14px;
@@ -123,7 +123,7 @@ export component About {
           padding-top: 8px;
 
           Button {
-            text: "Learn more about Slint";
+            text: @tr("Learn more about Slint");
             width: 180px;
             height: 38px;
             clicked => { AppLogic.open_url("https://slint.dev"); }
