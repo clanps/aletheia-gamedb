@@ -12,6 +12,7 @@ import { UiGame } from "../structs/ui_game.slint";
 export global GamesScreenLogic {
   in property <[UiGame]> filtered_games: [];
   in-out property <[UiGame]> selected_games: [];
+  in property <bool> all_filtered_selected: false;
   callback filter(string);
   callback select_all(bool);
   callback select_game(UiGame);
@@ -20,9 +21,6 @@ export global GamesScreenLogic {
 
 export component Games {
   callback search_changed(string);
-  private property <bool> is_all_selected: GamesScreenLogic.filtered_games.length > 0
-                                           ? GamesScreenLogic.filtered_games.length == GamesScreenLogic.selected_games.length
-                                           : GameLogic.games.length == GamesScreenLogic.selected_games.length;
   width: 100%;
   height: 100%;
 
@@ -98,11 +96,11 @@ export component Games {
       Button {
         width: 140px;
         height: 36px;
-        text: is_all_selected ? "Clear Selection" : "Select All";
+        text: GamesScreenLogic.all_filtered_selected ? "Clear Selection" : "Select All";
         background: #2f2f49;
         enabled: GamesScreenLogic.filtered_games.length > 0;
         clicked => {
-          GamesScreenLogic.select_all(!is_all_selected);
+          GamesScreenLogic.select_all(!GamesScreenLogic.all_filtered_selected);
         }
       }
     }

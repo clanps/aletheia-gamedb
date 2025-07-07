@@ -6,12 +6,12 @@ slint::include_modules!();
 use crate::config::Config as AletheiaConfig;
 use crate::gamedb;
 use crate::operations::{backup_game, restore_game};
-use slint::{Model, ModelRc, VecModel};
+use slint::{Model, ModelRc, SharedString, VecModel};
 use std::borrow::Borrow;
+use std::cell::RefCell;
 use std::collections::HashSet;
 use std::fs::read_to_string;
 use std::rc::Rc;
-use std::cell::RefCell;
 
 #[cfg(all(feature = "updater", not(debug_assertions)))]
 use crate::updater;
@@ -122,11 +122,16 @@ pub fn run(config: &AletheiaConfig) {
                 }
             }).collect();
 
-            let games_model = ModelRc::new(VecModel::from(ui_games));
+            let ui_games_model = ModelRc::new(VecModel::from(ui_games));
+            let ui_selected_games: Vec<UiGame> = ui_games_model.iter()
+              .filter_map(|game| game.selected.then(|| game.clone()))
+              .collect();
+
             // In a perfect world, Slint would have a way to filter in their markdown language so I could avoid this
-            app_weak.global::<GameLogic>().set_games(games_model.clone());
-            games_screen_logic.set_filtered_games(games_model.clone());
-            games_screen_logic.set_selected_games(ModelRc::new(VecModel::from(games_model.iter().filter(|g| g.selected).collect::<Vec<UiGame>>())));
+            app_weak.global::<GameLogic>().set_games(ui_games_model.clone());
+            games_screen_logic.set_filtered_games(ui_games_model.clone());
+            games_screen_logic.set_selected_games(ModelRc::new(VecModel::from(ui_selected_games)));
+            games_screen_logic.set_all_filtered_selected(ui_games_model.row_count() > 0 && ui_games_model.iter().all(|game| game.selected));
         }
     });
 
@@ -146,8 +151,10 @@ pub fn run(config: &AletheiaConfig) {
                     g
                 })
                 .collect();
+            let all_filtered_selected = !filtered_games.is_empty() && filtered_games.iter().all(|g| g.selected);
 
             games_screen_logic.set_filtered_games(ModelRc::new(VecModel::from(filtered_games)));
+            games_screen_logic.set_all_filtered_selected(all_filtered_selected);
         }
     });
 
@@ -155,30 +162,33 @@ pub fn run(config: &AletheiaConfig) {
         let app_weak = app.as_weak().unwrap();
 
         move |enabled| {
-            let filtered_games_model = app_weak.global::<GamesScreenLogic>().get_filtered_games();
+            let games_screen_logic = app_weak.global::<GamesScreenLogic>();
+            let filtered_games_model = games_screen_logic.get_filtered_games();
             let updated_games: Vec<UiGame> = filtered_games_model.iter().map(|mut g| {
                 g.selected = enabled;
                 g
             }).collect();
+            let updated_games_names: HashSet<&SharedString> = updated_games.iter().map(|g| &g.name).collect();
+            let mut selected_games: Vec<UiGame> = games_screen_logic.get_selected_games().iter().collect();
 
-            let updated_model = ModelRc::new(VecModel::from(updated_games.clone()));
-            app_weak.global::<GamesScreenLogic>().set_filtered_games(updated_model.clone());
-            app_weak.global::<GamesScreenLogic>().set_selected_games(ModelRc::new(VecModel::from(
-                if enabled {
-                    updated_games
-                } else {
-                    vec![]
-                }
-            )));
+            selected_games.retain(|g| !updated_games_names.contains(&g.name));
+            if enabled {
+                selected_games.extend(updated_games.iter().cloned());
+            }
+
+            let all_filtered_selected = enabled && !updated_games.is_empty();
+            games_screen_logic.set_filtered_games(ModelRc::new(VecModel::from(updated_games)));
+            games_screen_logic.set_selected_games(ModelRc::new(VecModel::from(selected_games)));
+            games_screen_logic.set_all_filtered_selected(all_filtered_selected);
         }
     });
-
 
     games_screen_logic.on_select_game({
         let app_weak = app.as_weak().unwrap();
 
         move |game| {
-            let selected_games_model = app_weak.global::<GamesScreenLogic>().get_selected_games();
+            let games_screen_logic = app_weak.global::<GamesScreenLogic>();
+            let selected_games_model = games_screen_logic.get_selected_games();
             let mut selected_games: Vec<UiGame> = selected_games_model.iter().collect();
 
             if let Some(index) = selected_games.iter().position(|g| g.name == game.name) {
@@ -187,7 +197,14 @@ pub fn run(config: &AletheiaConfig) {
                 selected_games.push(game);
             }
 
-            app_weak.global::<GamesScreenLogic>().set_selected_games(ModelRc::new(VecModel::from(selected_games)));
+            let selected_games_names: HashSet<String> = selected_games.iter().map(|g| g.name.to_string()).collect();
+
+            let filtered_games_model = games_screen_logic.get_filtered_games();
+            let all_filtered_selected = filtered_games_model.row_count() > 0 &&
+              filtered_games_model.iter().all(|g| selected_games_names.contains(&g.name.to_string()));
+
+            games_screen_logic.set_selected_games(ModelRc::new(VecModel::from(selected_games)));
+            games_screen_logic.set_all_filtered_selected(all_filtered_selected);
         }
     });
 
