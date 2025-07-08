@@ -1,15 +1,47 @@
 // SPDX-FileCopyrightText: 2025 Spencer
 // SPDX-License-Identifier: AGPL-3.0-only
 
+use serde::Deserialize;
+use steamlocate::SteamDir;
 use super::{Game, Scanner};
+use std::collections::HashMap;
+use std::fs::File;
+
+#[derive(Deserialize, Debug)]
+struct LoginUsersFile {
+    #[serde(flatten)]
+    users: HashMap<String, LoginUser>
+}
+
+#[derive(Deserialize, Debug)]
+pub struct LoginUser {
+    #[serde(rename = "PersonaName")]
+    pub persona_name: String
+}
 
 pub struct SteamScanner;
+
+impl SteamScanner {
+    pub fn id64_to_id3(id64: u64) -> u64 {
+        id64 - 76561197960265728
+    }
+
+    pub fn get_users() -> Option<HashMap<String, LoginUser>> {
+        let Ok(steam_directory) = SteamDir::locate() else {
+            return None;
+        };
+
+        let login_users: LoginUsersFile = keyvalues_serde::from_reader(File::open(steam_directory.path().join("config/loginusers.vdf")).unwrap()).unwrap();
+
+        Some(login_users.users)
+    }
+}
 
 impl Scanner for SteamScanner {
     fn get_games() -> Vec<Game> {
         let mut games = vec![];
 
-        let Ok(steam_directory) = steamlocate::SteamDir::locate() else {
+        let Ok(steam_directory) = SteamDir::locate() else {
             return games;
         };
 
