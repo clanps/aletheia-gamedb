@@ -36,7 +36,7 @@ export component SearchBar inherits Rectangle {
       opacity: 65%;
       vertical-alignment: center;
 
-      if (self.text == ""): Text {
+      if (self.text.is-empty): Text {
         x: 0;
         text: root.placeholder_text;
         color: #ffffff80;
