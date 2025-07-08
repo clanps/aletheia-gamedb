@@ -307,6 +307,7 @@ pub fn run(config: &AletheiaConfig) {
             let new_config = AletheiaConfig {
                 custom_databases: ui_cfg.custom_databases.iter().map(Into::into).collect(),
                 save_dir: (&ui_cfg.save_dir).into(),
+                steam_account_id: (!ui_cfg.steam_account_id.is_empty()).then(|| (&ui_cfg.steam_account_id).into()),
                 #[cfg(feature = "updater")]
                 check_for_updates: ui_cfg.check_for_updates
             };
@@ -347,6 +348,7 @@ pub fn run(config: &AletheiaConfig) {
     settings_screen_logic.set_config(Config {
         custom_databases: ModelRc::new(VecModel::from(config.custom_databases.iter().map(Into::into).collect::<Vec<_>>())),
         save_dir: config.save_dir.to_string_lossy().to_string().into(),
+        steam_account_id: config.steam_account_id.as_deref().unwrap_or("").into(),
         #[cfg(feature = "updater")]
         check_for_updates: config.check_for_updates,
         #[cfg(not(feature = "updater"))]
