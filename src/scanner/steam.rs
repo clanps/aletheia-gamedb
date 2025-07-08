@@ -13,7 +13,11 @@ impl Scanner for SteamScanner {
             return games;
         };
 
-        for library in steam_directory.libraries().unwrap() {
+        let Ok(libraries) = steam_directory.libraries() else {
+            return games; // This can fail if Steam is downloaded but never signed in
+        };
+
+        for library in libraries {
             let Ok(lib) = library else {
                 continue; // This can fail if running in Flatpak and permissions haven't been granted
             };
