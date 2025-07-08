@@ -9,6 +9,7 @@ use std::path::PathBuf;
 pub struct Config {
     pub custom_databases: Vec<String>,
     pub save_dir: PathBuf,
+    pub steam_account_id: Option<String>,
     #[cfg(feature = "updater")]
     pub check_for_updates: bool
 }
@@ -72,6 +73,7 @@ impl Default for Config {
         Self {
             custom_databases: vec![],
             save_dir: Self::get_save_dir(),
+            steam_account_id: None,
             #[cfg(feature = "updater")]
             check_for_updates: true
         }
