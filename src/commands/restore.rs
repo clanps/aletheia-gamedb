@@ -1,6 +1,7 @@
 // SPDX-FileCopyrightText: 2025 Spencer
 // SPDX-License-Identifier: AGPL-3.0-only
 
+use crate::cli_helpers::ensure_steam_account_selected;
 use crate::config::Config;
 use crate::infer;
 use crate::operations::restore_game;
@@ -16,6 +17,10 @@ impl Command for Restore {
         }
 
         let installed_games = crate::gamedb::get_installed_games();
+
+        if config.steam_account_id.is_none() && installed_games.iter().any(|g| g.source == "Steam") {
+            ensure_steam_account_selected(config);
+        }
 
         if let Some(launcher) = args.get_flag_value("infer") {
             infer::restore(launcher, config);
