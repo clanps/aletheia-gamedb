@@ -21,6 +21,7 @@ pub enum Error {
 pub type Result<T> = core::result::Result<T, Error>;
 
 pub fn backup_game(game: &Game, config: &Config, entry: &GameDbEntry) -> Result<bool> {
+    let steam_id = config.steam_account_id.as_deref();
     let backup_folder = PathBuf::from(&config.save_dir).join(game.name.replace(':', "")); // NTFS doesn't support : and this makes sense on Unix for cross-OS syncing
     let manifest_path = backup_folder.join("aletheia_manifest.yaml");
     let existing_manifest = manifest_path.exists()
@@ -44,7 +45,7 @@ pub fn backup_game(game: &Game, config: &Config, entry: &GameDbEntry) -> Result<
     let mut files = vec![];
 
     for path in paths {
-        let expanded = expand_path(Path::new(path), game.installation_dir.as_deref(), game.prefix.as_deref());
+        let expanded = expand_path(Path::new(path), game.installation_dir.as_deref(), game.prefix.as_deref(), steam_id);
         let found_paths = glob(&expanded.to_string_lossy()).unwrap();
 
         for file in found_paths {
@@ -70,7 +71,7 @@ pub fn backup_game(game: &Game, config: &Config, entry: &GameDbEntry) -> Result<
     create_dir_all(&backup_folder)?;
 
     for file in files {
-        let shrunk_file_path = shrink_path(file.as_path(), game.installation_dir.as_deref(), game.prefix.as_deref()).to_string_lossy().to_string();
+        let shrunk_file_path = shrink_path(file.as_path(), game.installation_dir.as_deref(), game.prefix.as_deref(), steam_id).to_string_lossy().to_string();
         let should_backup = existing_manifest.as_ref().is_none_or(|manifest| {
             manifest.files.iter()
                 .find(|m| m.path == shrunk_file_path).is_none_or(|existing| {
@@ -82,7 +83,8 @@ pub fn backup_game(game: &Game, config: &Config, entry: &GameDbEntry) -> Result<
             let file_metadata = process_file(
                 &file,
                 &backup_folder.join(file.file_name().unwrap()),
-                game
+                game,
+                steam_id
             );
 
             game_files.push(file_metadata);
@@ -111,14 +113,14 @@ pub fn backup_game(game: &Game, config: &Config, entry: &GameDbEntry) -> Result<
     Ok(true)
 }
 
-fn process_file(file_path: &Path, dest: &Path, game: &Game) -> FileMetadata {
+fn process_file(file_path: &Path, dest: &Path, game: &Game, steam_id: Option<&str>) -> FileMetadata {
     copy(file_path, dest).unwrap();
 
     let file_metadata = metadata(file_path).unwrap();
 
     FileMetadata {
         modified: file_metadata.modified().unwrap(),
-        path: shrink_path(file_path, game.installation_dir.as_deref(), game.prefix.as_deref()).to_string_lossy().to_string(),
+        path: shrink_path(file_path, game.installation_dir.as_deref(), game.prefix.as_deref(), steam_id).to_string_lossy().to_string(),
         hash: hash_file(file_path),
         size: file_metadata.len()
     }

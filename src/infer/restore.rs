@@ -43,7 +43,7 @@ pub fn restore(launcher: &str, config: &Config) {
             return;
         };
 
-        if let Err(e) = restore_game(&game_dir, &manifest, &gamedb::get_installed_games()) {
+        if let Err(e) = restore_game(&game_dir, &manifest, &gamedb::get_installed_games(), config) {
             log::error!("Failed to restore {}: {}", game.name, e);
         } else {
             log::info!("Restore up {}.", game.name);

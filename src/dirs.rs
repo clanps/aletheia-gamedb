@@ -83,7 +83,7 @@ fn path_contains_subpath(haystack: &Path, needle: &str) -> bool {
         .any(|ancestor| ancestor.ends_with(needle))
 }
 
-pub fn expand_path(path: &Path, installation_dir: Option<&Path>, prefix: Option<&Path>) -> PathBuf {
+pub fn expand_path(path: &Path, installation_dir: Option<&Path>, prefix: Option<&Path>, steam_account_id: Option<&str>) -> PathBuf {
     let mut replacements: Vec<(&str, PathBuf)> = vec![];
 
     if let Some(install_dir) = installation_dir {
@@ -105,6 +105,12 @@ pub fn expand_path(path: &Path, installation_dir: Option<&Path>, prefix: Option<
             let windows_app_data = user.join("AppData");
             let documents = user.join("Documents");
 
+            let steam_user_data = if let Some(account_id) = steam_account_id {
+                linux_app_data.join("Steam/userdata").join(account_id)
+            } else {
+                linux_app_data.join("Steam/userdata/[0-9]*")
+            };
+
             replacements.extend([
                 ("{AppData}", windows_app_data.join("Roaming")),
                 ("{Documents}", documents),
@@ -112,7 +118,7 @@ pub fn expand_path(path: &Path, installation_dir: Option<&Path>, prefix: Option<
                 ("{LocalAppData}", windows_app_data.join("Local")),
                 ("{LocalLow}", windows_app_data.join("LocalLow")),
                 ("{GOGAppData}", windows_app_data.join("Local").join("GOG.com/Galaxy/Applications")),
-                ("{SteamUserData}", linux_app_data.join("Steam/userdata/[0-9]*"))
+                ("{SteamUserData}", steam_user_data)
             ]);
         }
 
@@ -125,9 +131,15 @@ pub fn expand_path(path: &Path, installation_dir: Option<&Path>, prefix: Option<
         let local_app_data = app_data();
         let home_dir = home();
 
-        let steam_directory = match steamlocate::SteamDir::locate() {
-            Ok(steam_dir) => steam_dir.path().join("userdata/[0-9]*"),
-            Err(_) => PathBuf::from("C:/Program Files (x86)/Steam/userdata/[0-9]*")
+        let steam_user_data = {
+            let base_path = steamlocate::SteamDir::locate()
+                .map_or_else(|_| PathBuf::from("C:/Program Files (x86)/Steam"), |dir| dir.path().to_path_buf());
+
+            let userdata_path = base_path.join("userdata");
+            match steam_account_id {
+                Some(id) => userdata_path.join(id),
+                None => userdata_path.join("[0-9]*")
+            }
         };
 
         replacements.extend([
@@ -137,14 +149,14 @@ pub fn expand_path(path: &Path, installation_dir: Option<&Path>, prefix: Option<
             ("{LocalAppData}", local_app_data.clone()),
             ("{LocalLow}", local_app_data.parent().unwrap().join("LocalLow")),
             ("{GOGAppData}", local_app_data.join("GOG.com/Galaxy/Applications")),
-            ("{SteamUserData}", steam_directory)
+            ("{SteamUserData}", steam_user_data)
         ]);
     }
 
     expand_path_components(path, &replacements)
 }
 
-pub fn shrink_path(path: &Path, installation_dir: Option<&Path>, prefix: Option<&Path>) -> PathBuf {
+pub fn shrink_path(path: &Path, installation_dir: Option<&Path>, prefix: Option<&Path>, steam_account_id: Option<&str>) -> PathBuf {
     let mut replacements: Vec<(&str, PathBuf)> = vec![];
 
     if let Some(install_dir) = installation_dir {
@@ -165,6 +177,12 @@ pub fn shrink_path(path: &Path, installation_dir: Option<&Path>, prefix: Option<
             let user = drive_c.join("users").join(username);
             let windows_app_data = user.join("AppData");
 
+            let steam_user_data = if let Some(account_id) = steam_account_id {
+                linux_app_data.join("Steam/userdata").join(account_id)
+            } else {
+                linux_app_data.join("Steam/userdata/[0-9]*")
+            };
+
             replacements.extend([
                 ("{LocalLow}", windows_app_data.join("LocalLow")),
                 ("{LocalAppData}", windows_app_data.join("Local")),
@@ -172,7 +190,7 @@ pub fn shrink_path(path: &Path, installation_dir: Option<&Path>, prefix: Option<
                 ("{Documents}", user.join("Documents")),
                 ("{Home}", user),
                 ("{GOGAppData}", windows_app_data.join("Local").join("GOG.com/Galaxy/Applications")),
-                ("{SteamUserData}", linux_app_data.join("Steam/userdata/[0-9]*"))
+                ("{SteamUserData}", steam_user_data)
             ]);
         }
 
@@ -185,9 +203,15 @@ pub fn shrink_path(path: &Path, installation_dir: Option<&Path>, prefix: Option<
         let local_app_data = config();
         let home_dir = home();
 
-        let steam_directory = match steamlocate::SteamDir::locate() {
-            Ok(steam_dir) => steam_dir.path().join("userdata/[0-9]*"),
-            Err(_) => PathBuf::from("C:/Program Files (x86)/Steam/userdata/[0-9]*")
+        let steam_user_data = {
+            let base_path = steamlocate::SteamDir::locate()
+                .map_or_else(|_| PathBuf::from("C:/Program Files (x86)/Steam"), |dir| dir.path().to_path_buf());
+
+            let userdata_path = base_path.join("userdata");
+            match steam_account_id {
+                Some(id) => userdata_path.join(id),
+                None => userdata_path.join("[0-9]*")
+            }
         };
 
         replacements.extend([
@@ -197,7 +221,7 @@ pub fn shrink_path(path: &Path, installation_dir: Option<&Path>, prefix: Option<
             ("{Documents}", home_dir.join("Documents")),
             ("{Home}", home_dir),
             ("{GOGAppData}", local_app_data.join("GOG.com/Galaxy/Applications")),
-            ("{SteamUserData}", steam_directory)
+            ("{SteamUserData}", steam_user_data)
         ]);
     }
 

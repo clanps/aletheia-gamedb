@@ -262,7 +262,7 @@ pub fn run(config: &AletheiaConfig) {
                         continue;
                     };
 
-                    if let Err(e) = restore_game(&game_dir, &manifest, &installed_games) {
+                    if let Err(e) = restore_game(&game_dir, &manifest, &installed_games, &cfg) {
                         log::error!("Failed to restore {}: {e}", manifest.name);
                     } else {
                         log::info!("Successfully restored {game_name}.");
