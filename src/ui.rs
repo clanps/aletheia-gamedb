@@ -6,6 +6,7 @@ slint::include_modules!();
 use crate::config::Config as AletheiaConfig;
 use crate::gamedb;
 use crate::operations::{backup_game, restore_game};
+use crate::scanner::SteamScanner;
 use slint::{Model, ModelRc, SharedString, VecModel};
 use std::borrow::Borrow;
 use std::cell::RefCell;
@@ -322,6 +323,28 @@ pub fn run(config: &AletheiaConfig) {
         }
     });
 
+    settings_screen_logic.on_get_steam_users({
+        let app_weak = app.as_weak().unwrap();
+
+        move || {
+            let settings_logic = app_weak.global::<SettingsScreenLogic>();
+
+            if let Some(users) = SteamScanner::get_users() {
+                let mut options: Vec<DropdownOption> = users.into_iter()
+                    .map(|(steam_id, user)| DropdownOption {
+                        label: user.persona_name.into(),
+                        value: SteamScanner::id64_to_id3(steam_id.parse::<u64>().unwrap()).to_string().into()
+                    })
+                    .collect();
+
+                if options.len() > 1 {
+                    options.sort_by(|a, b| a.label.cmp(&b.label));
+                }
+                settings_logic.set_steam_account_options(ModelRc::new(VecModel::from(options)));
+            }
+        }
+    });
+
     settings_screen_logic.on_update_gamedb({
         let app_weak = app.as_weak().unwrap();
 
@@ -345,10 +368,38 @@ pub fn run(config: &AletheiaConfig) {
     #[cfg(feature = "updater")]
     settings_screen_logic.set_show_update_settings(true);
 
+    settings_screen_logic.invoke_get_steam_users();
+
+    let mut steam_account_id = match SteamScanner::get_users() {
+        Some(users) if users.len() == 1 => users.keys().next().unwrap().clone(),
+        Some(users) => config.steam_account_id.as_ref()
+            .filter(|id| users.contains_key(*id))
+            .cloned()
+            .unwrap_or_default(),
+        None => "".into()
+    };
+
+    if !steam_account_id.is_empty() {
+        let id3 = SteamScanner::id64_to_id3(steam_account_id.parse::<u64>().unwrap()).to_string();
+        steam_account_id = id3.clone();
+
+        if Some(&id3) != config.steam_account_id.as_ref() {
+            let new_config = AletheiaConfig {
+                custom_databases: config.custom_databases.clone(),
+                save_dir: config.save_dir.clone(),
+                steam_account_id: Some(id3),
+                #[cfg(feature = "updater")]
+                check_for_updates: config.check_for_updates
+            };
+            AletheiaConfig::save(&new_config);
+            *cfg.borrow_mut() = new_config;
+        }
+    }
+
     settings_screen_logic.set_config(Config {
         custom_databases: ModelRc::new(VecModel::from(config.custom_databases.iter().map(Into::into).collect::<Vec<_>>())),
         save_dir: config.save_dir.to_string_lossy().to_string().into(),
-        steam_account_id: config.steam_account_id.as_deref().unwrap_or("").into(),
+        steam_account_id: steam_account_id.into(),
         #[cfg(feature = "updater")]
         check_for_updates: config.check_for_updates,
         #[cfg(not(feature = "updater"))]
