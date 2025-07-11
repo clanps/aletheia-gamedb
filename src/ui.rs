@@ -377,14 +377,22 @@ pub fn run(config: &AletheiaConfig) {
 
     let mut steam_account_id = match SteamScanner::get_users() {
         Some(users) if users.len() == 1 => users.keys().next().unwrap().clone(),
-        Some(users) => config.steam_account_id.as_ref()
-            .filter(|id| users.contains_key(*id))
-            .cloned()
-            .unwrap_or_default(),
+        Some(users) => {
+            let cfg_id3 = config.steam_account_id.as_deref().unwrap_or_default();
+            if cfg_id3.is_empty() {
+                "".into()
+            } else {
+                users.keys()
+                    .find(|id| SteamScanner::id64_to_id3(id.parse::<u64>().unwrap()).to_string() == cfg_id3)
+                    .cloned()
+                    .unwrap_or_default()
+            }
+        }
         None => "".into()
     };
 
     if !steam_account_id.is_empty() {
+        println!("{}", steam_account_id);
         let id3 = SteamScanner::id64_to_id3(steam_account_id.parse::<u64>().unwrap()).to_string();
         steam_account_id = id3.clone();
 
