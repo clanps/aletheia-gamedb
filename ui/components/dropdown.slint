@@ -1,0 +1,150 @@
+// SPDX-FileCopyrightText: 2025 Spencer
+// SPDX-License-Identifier: AGPL-3.0-only
+
+import { DropdownOption } from "../structs/dropdown_option.slint";
+
+component ForEach {}
+
+export component Dropdown {
+  in property <bool> enabled: true;
+  in property <[DropdownOption]> options: [];
+  in property <string> placeholder: "Select an option...";
+  in-out property <string> value: "";
+  out property <string> label: "";
+  callback changed(string);
+
+  for option in root.options: ForEach {
+    init => {
+      if root.value == option.value {
+        root.label = option.label;
+      }
+    }
+  }
+
+  Rectangle {
+    border-radius: 4px;
+    border-width: 1px;
+    border-color: #18182040;
+    background: #1e1e2e;
+    opacity: root.enabled ? 100% : 50%;
+    drop-shadow-blur: 8px;
+    drop-shadow-color: rgba(0, 0, 0, 0.15);
+    drop-shadow-offset-y: 4px;
+
+    HorizontalLayout {
+      padding-left: 12px;
+      padding-right: 12px;
+      spacing: 8px;
+      alignment: space-between;
+
+      Text {
+        private property <bool> display_label: !root.label.is-empty;
+        font-family: "Inter";
+        font-size: 14px;
+        font-weight: 400;
+        color: white;
+        opacity: display_label ? 65% : 40%;
+        overflow: elide;
+        vertical-alignment: center;
+        text: display_label ? root.label : root.placeholder;
+      }
+
+      Image {
+        source: @image-url("../assets/arrow_drop_down.svg");
+        colorize: #7678ed;
+        vertical-alignment: center;
+      }
+    }
+
+    TouchArea {
+      enabled: root.enabled;
+      mouse-cursor: pointer;
+      clicked => { dropdown_menu.show(); }
+    }
+  }
+
+  dropdown_menu := PopupWindow {
+    y: root.height + 1px;
+    width: root.width;
+    height: min(200px, root.height * root.options.length);
+
+    Rectangle {
+      width: 100%;
+      height: 100%;
+      border-color: #27273a;
+      border-radius: 4px;
+      border-width: 1px;
+      background: #1e1e2e;
+      drop-shadow-blur: 12px;
+      drop-shadow-color: rgba(0, 0, 0, 0.25);
+      drop-shadow-offset-y: 6px;
+
+      animate opacity { duration: 150ms; easing: ease-out; }
+
+      Flickable {
+        width: 100%;
+        height: 100%;
+
+        VerticalLayout {
+          spacing: 2px;
+          padding: 4px;
+          width: 100%;
+
+          for option[index] in root.options: Rectangle {
+            private property <bool> is_current_value: option.value == root.value;
+            width: 100%;
+            height: 32px;
+            background: touch_area.has-hover ? rgba(255, 255, 255, 0.1) :
+                        is_current_value ? rgba(255, 255, 255, 0.05) :
+                        transparent;
+            border-radius: 2px;
+
+            animate background { duration: 100ms; easing: ease-in-out; }
+
+            HorizontalLayout {
+              padding-left: 8px;
+              padding-right: 8px;
+              width: 100%;
+              alignment: space-between;
+
+              Text {
+                font-family: "Inter";
+                font-size: 14px;
+                font-weight: 400;
+                color: white;
+                opacity: is_current_value ? 100% : 65%;
+                overflow: elide;
+                vertical-alignment: center;
+                text: option.label;
+              }
+
+              Rectangle {
+                width: 1px;
+                horizontal-stretch: 1;
+                background: transparent;
+              }
+
+              if is_current_value: Image {
+                source: @image-url("../assets/checkmark.svg");
+                colorize: #7678ed;
+              }
+            }
+
+            touch_area := TouchArea {
+              width: 100%;
+              height: 100%;
+              mouse-cursor: pointer;
+              clicked => {
+                if !is_current_value {
+                  root.value = option.value;
+                  root.label = option.label;
+                  root.changed(option.value);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
