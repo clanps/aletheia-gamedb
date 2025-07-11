@@ -128,7 +128,7 @@ export component Settings {
           height: 36px;
           options: SettingsScreenLogic.steam_account_options;
           value: SettingsScreenLogic.config.steam_account_id;
-          placeholder: "Select an account...";
+          placeholder: @tr("Select an account...");
           changed(value) => {
             SettingsScreenLogic.config.steam_account_id = value;
           }

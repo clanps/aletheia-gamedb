@@ -8,7 +8,7 @@ component ForEach {}
 export component Dropdown {
   in property <bool> enabled: true;
   in property <[DropdownOption]> options: [];
-  in property <string> placeholder: "Select an option...";
+  in property <string> placeholder: @tr("Select an option...");
   in-out property <string> value: "";
   out property <string> label: "";
   callback changed(string);
