@@ -375,35 +375,38 @@ pub fn run(config: &AletheiaConfig) {
 
     settings_screen_logic.invoke_get_steam_users();
 
-    let mut steam_account_id = match SteamScanner::get_users() {
-        Some(users) if users.len() == 1 => users.keys().next().unwrap().clone(),
-        Some(users) => {
-            let cfg_id3 = config.steam_account_id.as_deref().unwrap_or_default();
-            if cfg_id3.is_empty() {
-                "".into()
-            } else {
-                users.keys()
-                    .find(|id| SteamScanner::id64_to_id3(id.parse::<u64>().unwrap()).to_string() == cfg_id3)
-                    .cloned()
-                    .unwrap_or_default()
+    let steam_account_id = SteamScanner::get_users().and_then(|users| {
+        if users.is_empty() {
+            return None;
+        }
+
+        if let Some(id3) = &config.steam_account_id {
+            let config_user_exists = users.keys().any(|id64_str| {
+                id64_str.parse::<u64>()
+                    .map(|id64| SteamScanner::id64_to_id3(id64).to_string() == *id3)
+                    .unwrap_or(false)
+            });
+
+            if config_user_exists {
+                return Some(id3.to_owned());
             }
         }
-        None => "".into()
-    };
 
-    if !steam_account_id.is_empty() {
-        println!("{}", steam_account_id);
-        let id3 = SteamScanner::id64_to_id3(steam_account_id.parse::<u64>().unwrap()).to_string();
-        steam_account_id = id3.clone();
+        if users.len() == 1 {
+            let steam_id64 = users.keys().next()?.parse::<u64>().ok()?;
+            return Some(SteamScanner::id64_to_id3(steam_id64).to_string());
+        }
 
-        if Some(&id3) != config.steam_account_id.as_ref() {
+        None
+    });
+
+    if let Some(id3) = &steam_account_id {
+        if config.steam_account_id.as_ref() != Some(id3) {
             let new_config = AletheiaConfig {
-                custom_databases: config.custom_databases.clone(),
-                save_dir: config.save_dir.clone(),
-                steam_account_id: Some(id3),
-                #[cfg(feature = "updater")]
-                check_for_updates: config.check_for_updates
+                steam_account_id: Some(id3.clone()),
+                ..config.clone()
             };
+
             AletheiaConfig::save(&new_config);
             *cfg.borrow_mut() = new_config;
         }
@@ -412,7 +415,7 @@ pub fn run(config: &AletheiaConfig) {
     settings_screen_logic.set_config(Config {
         custom_databases: ModelRc::new(VecModel::from(config.custom_databases.iter().map(Into::into).collect::<Vec<_>>())),
         save_dir: config.save_dir.to_string_lossy().to_string().into(),
-        steam_account_id: steam_account_id.into(),
+        steam_account_id: steam_account_id.unwrap_or_default().into(),
         #[cfg(feature = "updater")]
         check_for_updates: config.check_for_updates,
         #[cfg(not(feature = "updater"))]
