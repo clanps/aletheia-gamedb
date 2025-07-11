@@ -221,6 +221,11 @@ pub fn run(config: &AletheiaConfig) {
             let selected_games: Vec<UiGame> = selected_games_model.iter().collect();
             let installed_games = gamedb::get_installed_games();
 
+            if cfg.steam_account_id.is_none() && selected_games.iter().any(|g| g.source == "Steam") {
+                notification_logic.invoke_show_warning("Set your Steam account in Settings.".into());
+                return;
+            }
+
             if action == "backup" {
                 let game_db = gamedb::parse();
 
