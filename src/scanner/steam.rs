@@ -22,7 +22,7 @@ pub struct LoginUser {
 pub struct SteamScanner;
 
 impl SteamScanner {
-    pub fn id64_to_id3(id64: u64) -> u64 {
+    pub const fn id64_to_id3(id64: u64) -> u64 {
         id64 - 76561197960265728
     }
 
