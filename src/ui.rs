@@ -381,11 +381,9 @@ pub fn run(config: &AletheiaConfig) {
         }
 
         if let Some(id3) = &config.steam_account_id {
-            let config_user_exists = users.keys().any(|id64_str| {
-                id64_str.parse::<u64>()
-                    .map(|id64| SteamScanner::id64_to_id3(id64).to_string() == *id3)
-                    .unwrap_or(false)
-            });
+            let config_user_exists = users.keys()
+                .filter_map(|id64_str| id64_str.parse::<u64>().ok())
+                .any(|id64| SteamScanner::id64_to_id3(id64).to_string() == *id3);
 
             if config_user_exists {
                 return Some(id3.to_owned());
