@@ -148,7 +148,7 @@ pub fn run(config: &AletheiaConfig) {
             let filtered_games: Vec<UiGame> = games.iter()
                 .filter(|g| query.is_empty() || g.name.to_lowercase().contains(&query.to_lowercase()))
                 .map(|mut g| {
-                    g.selected = selected_names.contains(&g.name.to_string());
+                    g.selected = selected_names.contains(g.name.as_str());
                     g
                 })
                 .collect();
