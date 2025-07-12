@@ -6,6 +6,7 @@ slint::include_modules!();
 use crate::config::Config as AletheiaConfig;
 use crate::gamedb;
 use crate::operations::{backup_game, restore_game};
+use crate::scanner::SteamScanner;
 use slint::{Model, ModelRc, SharedString, VecModel};
 use std::borrow::Borrow;
 use std::cell::RefCell;
@@ -220,6 +221,11 @@ pub fn run(config: &AletheiaConfig) {
             let selected_games: Vec<UiGame> = selected_games_model.iter().collect();
             let installed_games = gamedb::get_installed_games();
 
+            if cfg.steam_account_id.is_none() && selected_games.iter().any(|g| g.source == "Steam") {
+                notification_logic.invoke_show_warning("Set your Steam account in Settings.".into());
+                return;
+            }
+
             if action == "backup" {
                 let game_db = gamedb::parse();
 
@@ -303,7 +309,8 @@ pub fn run(config: &AletheiaConfig) {
 
         move |ui_cfg| {
             let notification_logic = app_weak.global::<NotificationLogic>();
-            let current_config = cfg.as_ref().borrow().clone();
+            let settings_logic = app_weak.global::<SettingsScreenLogic>();
+
             let new_config = AletheiaConfig {
                 custom_databases: ui_cfg.custom_databases.iter().map(Into::into).collect(),
                 save_dir: (&ui_cfg.save_dir).into(),
@@ -312,12 +319,35 @@ pub fn run(config: &AletheiaConfig) {
                 check_for_updates: ui_cfg.check_for_updates
             };
 
-            if current_config == new_config {
-                notification_logic.invoke_show_info("Settings are already up to date.".into());
-            } else {
-                AletheiaConfig::save(&new_config);
-                *cfg.borrow_mut() = new_config;
-                notification_logic.invoke_show_success("Successfully saved settings.".into());
+            settings_logic.set_previous_save_dir(ui_cfg.save_dir.clone());
+            settings_logic.set_previous_steam_account_id(ui_cfg.steam_account_id.clone());
+            settings_logic.set_previous_check_for_updates(ui_cfg.check_for_updates);
+
+            AletheiaConfig::save(&new_config);
+            *cfg.borrow_mut() = new_config;
+
+            notification_logic.invoke_show_success("Successfully saved settings.".into());
+        }
+    });
+
+    settings_screen_logic.on_get_steam_users({
+        let app_weak = app.as_weak().unwrap();
+
+        move || {
+            let settings_logic = app_weak.global::<SettingsScreenLogic>();
+
+            if let Some(users) = SteamScanner::get_users() {
+                let mut options: Vec<DropdownOption> = users.into_iter()
+                    .map(|(steam_id, user)| DropdownOption {
+                        label: user.persona_name.into(),
+                        value: SteamScanner::id64_to_id3(steam_id.parse::<u64>().unwrap()).to_string().into()
+                    })
+                    .collect();
+
+                if options.len() > 1 {
+                    options.sort_by(|a, b| a.label.cmp(&b.label));
+                }
+                settings_logic.set_steam_account_options(ModelRc::new(VecModel::from(options)));
             }
         }
     });
@@ -345,15 +375,59 @@ pub fn run(config: &AletheiaConfig) {
     #[cfg(feature = "updater")]
     settings_screen_logic.set_show_update_settings(true);
 
+    settings_screen_logic.invoke_get_steam_users();
+
+    let steam_account_id = SteamScanner::get_users().and_then(|users| {
+        if users.is_empty() {
+            return None;
+        }
+
+        if let Some(id3) = &config.steam_account_id {
+            let config_user_exists = users.keys()
+                .filter_map(|id64_str| id64_str.parse::<u64>().ok())
+                .any(|id64| SteamScanner::id64_to_id3(id64).to_string() == *id3);
+
+            if config_user_exists {
+                return Some(id3.to_owned());
+            }
+        }
+
+        if users.len() == 1 {
+            let steam_id64 = users.keys().next()?.parse::<u64>().ok()?;
+            return Some(SteamScanner::id64_to_id3(steam_id64).to_string());
+        }
+
+        None
+    });
+
+    if let Some(id3) = &steam_account_id {
+        if config.steam_account_id.as_ref() != Some(id3) {
+            let new_config = AletheiaConfig {
+                steam_account_id: Some(id3.clone()),
+                ..config.clone()
+            };
+
+            AletheiaConfig::save(&new_config);
+            *cfg.borrow_mut() = new_config;
+        }
+    }
+
+    let steam_account_id_str = steam_account_id.as_deref().unwrap_or_default();
+
     settings_screen_logic.set_config(Config {
         custom_databases: ModelRc::new(VecModel::from(config.custom_databases.iter().map(Into::into).collect::<Vec<_>>())),
         save_dir: config.save_dir.to_string_lossy().to_string().into(),
-        steam_account_id: config.steam_account_id.as_deref().unwrap_or("").into(),
+        steam_account_id: steam_account_id_str.into(),
         #[cfg(feature = "updater")]
         check_for_updates: config.check_for_updates,
         #[cfg(not(feature = "updater"))]
         check_for_updates: false
     });
+
+    settings_screen_logic.set_previous_save_dir(config.save_dir.to_string_lossy().to_string().into());
+    settings_screen_logic.set_previous_steam_account_id(steam_account_id_str.into());
+    #[cfg(feature = "updater")]
+    settings_screen_logic.set_previous_check_for_updates(config.check_for_updates);
 
     app.run().unwrap();
 }
