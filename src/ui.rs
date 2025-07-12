@@ -125,7 +125,7 @@ pub fn run(config: &AletheiaConfig) {
 
             let ui_games_model = ModelRc::new(VecModel::from(ui_games));
             let ui_selected_games: Vec<UiGame> = ui_games_model.iter()
-                .filter_map(|game| game.selected.then(|| game.clone()))
+                .filter(|game| game.selected)
                 .collect();
 
             // In a perfect world, Slint would have a way to filter in their markdown language so I could avoid this
