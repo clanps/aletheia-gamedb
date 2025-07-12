@@ -412,10 +412,12 @@ pub fn run(config: &AletheiaConfig) {
         }
     }
 
+    let steam_account_id_str = steam_account_id.as_deref().unwrap_or_default();
+
     settings_screen_logic.set_config(Config {
         custom_databases: ModelRc::new(VecModel::from(config.custom_databases.iter().map(Into::into).collect::<Vec<_>>())),
         save_dir: config.save_dir.to_string_lossy().to_string().into(),
-        steam_account_id: steam_account_id.clone().unwrap_or_default().into(),
+        steam_account_id: steam_account_id_str.into(),
         #[cfg(feature = "updater")]
         check_for_updates: config.check_for_updates,
         #[cfg(not(feature = "updater"))]
@@ -423,7 +425,7 @@ pub fn run(config: &AletheiaConfig) {
     });
 
     settings_screen_logic.set_previous_save_dir(config.save_dir.to_string_lossy().to_string().into());
-    settings_screen_logic.set_previous_steam_account_id(steam_account_id.unwrap_or_default().into());
+    settings_screen_logic.set_previous_steam_account_id(steam_account_id_str.into());
     #[cfg(feature = "updater")]
     settings_screen_logic.set_previous_check_for_updates(config.check_for_updates);
 
