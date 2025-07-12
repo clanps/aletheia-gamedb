@@ -7,7 +7,7 @@ use crate::file::hash_file;
 use crate::gamedb::{GameDbEntry, GameInfo, FileMetadata};
 use crate::scanner::Game;
 use std::fs::{copy, create_dir_all, metadata, read_to_string, write};
-use std::path::{Path, PathBuf};
+use std::path::Path;
 use glob::glob;
 
 #[derive(Debug, thiserror::Error)]
@@ -22,7 +22,7 @@ pub type Result<T> = core::result::Result<T, Error>;
 
 pub fn backup_game(game: &Game, config: &Config, entry: &GameDbEntry) -> Result<bool> {
     let steam_id = config.steam_account_id.as_deref();
-    let backup_folder = PathBuf::from(&config.save_dir).join(game.name.replace(':', "")); // NTFS doesn't support : and this makes sense on Unix for cross-OS syncing
+    let backup_folder = config.save_dir.join(game.name.replace(':', "")); // NTFS doesn't support : and this makes sense on Unix for cross-OS syncing
     let manifest_path = backup_folder.join("aletheia_manifest.yaml");
     let existing_manifest = manifest_path.exists()
         .then(|| read_to_string(&manifest_path).unwrap())
