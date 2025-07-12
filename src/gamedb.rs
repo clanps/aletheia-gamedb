@@ -165,7 +165,6 @@ pub fn update_custom(cfg: &Config) -> Result<bool> {
 
     let client = reqwest::blocking::Client::new();
     let mut db_cache = load_custom_db_cache();
-    let mut combined = HashMap::<String, GameDbEntry>::new();
     let mut updated = false;
 
     create_dir_all(&cache_dir)?;
@@ -181,10 +180,6 @@ pub fn update_custom(cfg: &Config) -> Result<bool> {
         let response = request.send()?.error_for_status()?;
 
         if response.status() == reqwest::StatusCode::NOT_MODIFIED {
-            if let Some(cached_meta) = db_cache.databases.get(db) {
-                combined.extend(cached_meta.data.clone());
-            }
-
             continue;
         }
 
@@ -199,12 +194,13 @@ pub fn update_custom(cfg: &Config) -> Result<bool> {
             data: db_data.clone()
         });
 
-        combined.extend(db_data);
         updated = true;
     }
 
-    db_cache.databases.retain(|url, _| cfg.custom_databases.contains(url));
-    serde_yaml::to_writer(File::open(cache_dir.join("custom_gamedb.yaml"))?, &db_cache).unwrap();
+    if updated {
+        db_cache.databases.retain(|url, _| cfg.custom_databases.contains(url));
+        serde_yaml::to_writer(File::create(cache_dir.join("custom_gamedb.yaml"))?, &db_cache).unwrap();
+    }
 
     Ok(updated)
 }
