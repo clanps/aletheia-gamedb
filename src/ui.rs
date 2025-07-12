@@ -309,7 +309,8 @@ pub fn run(config: &AletheiaConfig) {
 
         move |ui_cfg| {
             let notification_logic = app_weak.global::<NotificationLogic>();
-            let current_config = cfg.as_ref().borrow().clone();
+            let settings_logic = app_weak.global::<SettingsScreenLogic>();
+
             let new_config = AletheiaConfig {
                 custom_databases: ui_cfg.custom_databases.iter().map(Into::into).collect(),
                 save_dir: (&ui_cfg.save_dir).into(),
@@ -318,13 +319,14 @@ pub fn run(config: &AletheiaConfig) {
                 check_for_updates: ui_cfg.check_for_updates
             };
 
-            if current_config == new_config {
-                notification_logic.invoke_show_info("Settings are already up to date.".into());
-            } else {
-                AletheiaConfig::save(&new_config);
-                *cfg.borrow_mut() = new_config;
-                notification_logic.invoke_show_success("Successfully saved settings.".into());
-            }
+            settings_logic.set_previous_save_dir(ui_cfg.save_dir.clone());
+            settings_logic.set_previous_steam_account_id(ui_cfg.steam_account_id.clone());
+            settings_logic.set_previous_check_for_updates(ui_cfg.check_for_updates);
+
+            AletheiaConfig::save(&new_config);
+            *cfg.borrow_mut() = new_config;
+
+            notification_logic.invoke_show_success("Successfully saved settings.".into());
         }
     });
 
@@ -413,12 +415,17 @@ pub fn run(config: &AletheiaConfig) {
     settings_screen_logic.set_config(Config {
         custom_databases: ModelRc::new(VecModel::from(config.custom_databases.iter().map(Into::into).collect::<Vec<_>>())),
         save_dir: config.save_dir.to_string_lossy().to_string().into(),
-        steam_account_id: steam_account_id.unwrap_or_default().into(),
+        steam_account_id: steam_account_id.clone().unwrap_or_default().into(),
         #[cfg(feature = "updater")]
         check_for_updates: config.check_for_updates,
         #[cfg(not(feature = "updater"))]
         check_for_updates: false
     });
+
+    settings_screen_logic.set_previous_save_dir(config.save_dir.to_string_lossy().to_string().into());
+    settings_screen_logic.set_previous_steam_account_id(steam_account_id.unwrap_or_default().into());
+    #[cfg(feature = "updater")]
+    settings_screen_logic.set_previous_check_for_updates(config.check_for_updates);
 
     app.run().unwrap();
 }

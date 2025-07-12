@@ -9,10 +9,16 @@ export global SettingsScreenLogic {
   in property <Config> config;
   in property <bool> show_update_settings;
   in property <[DropdownOption]> steam_account_options;
+  in property <string> previous_save_dir;
+  in property <string> previous_steam_account_id;
+  in property <bool> previous_check_for_updates: false;
+  in property <bool> can_save: config.save_dir != previous_save_dir ||
+                               config.steam_account_id != previous_steam_account_id ||
+                               config.check_for_updates != previous_check_for_updates;
   callback browse();
-  callback save_config(Config);
   callback get_steam_users();
   callback update_gamedb();
+  callback save_config(Config);
 }
 
 export component Settings {
@@ -249,6 +255,7 @@ export component Settings {
         text: @tr("Save");
         width: 120px;
         height: 40px;
+        enabled: SettingsScreenLogic.can_save;
         clicked => { SettingsScreenLogic.save_config(SettingsScreenLogic.config); }
       }
     }
