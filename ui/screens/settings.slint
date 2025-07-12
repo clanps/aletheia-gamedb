@@ -122,11 +122,22 @@ export component Settings {
         padding-left: 36px;
         spacing: 12px;
 
-        Text {
-          text: @tr("Choose the Steam account for your games");
-          color: #a6adc8;
-          font-size: 14px;
-          font-family: "Inter";
+        VerticalLayout {
+          spacing: 4px;
+
+          Text {
+            text: @tr("Choose the Steam account for your games");
+            color: #a6adc8;
+            font-size: 14px;
+            font-family: "Inter";
+          }
+
+          Text {
+            text: "Only affects games that save in the Steam userdata directory";
+            opacity: 25%;
+            font-size: 10px;
+            font-family: "Inter";
+          }
         }
 
         Dropdown {
