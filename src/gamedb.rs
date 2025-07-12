@@ -67,12 +67,10 @@ pub fn parse() -> HashMap<String, GameDbEntry> {
     let gamedb_path = cache().join("aletheia/gamedb.yaml");
 
     let mut db: HashMap<String, GameDbEntry> = if gamedb_path.exists() {
-        if let Ok(gamedb) = serde_yaml::from_reader(File::open(gamedb_path).unwrap()) {
-            gamedb
-        } else {
+        serde_yaml::from_reader(File::open(gamedb_path).unwrap()).unwrap_or_else(|_| {
             log::error!("Failed to parse cached GameDB, falling back to built-in.");
             serde_yaml::from_str(GAMEDB_YAML).expect("Failed to parse GameDB.")
-        }
+        })
     } else {
         serde_yaml::from_str(GAMEDB_YAML).expect("Failed to parse GameDB.")
     };

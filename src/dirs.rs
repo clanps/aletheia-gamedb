@@ -105,11 +105,7 @@ pub fn expand_path(path: &Path, installation_dir: Option<&Path>, prefix: Option<
             let windows_app_data = user.join("AppData");
             let documents = user.join("Documents");
 
-            let steam_user_data = if let Some(account_id) = steam_account_id {
-                linux_app_data.join("Steam/userdata").join(account_id)
-            } else {
-                linux_app_data.join("Steam/userdata/[0-9]*")
-            };
+            let steam_user_data = steam_account_id.map_or_else(|| linux_app_data.join("Steam/userdata/[0-9]*"), |id| linux_app_data.join("Steam/userdata").join(id));
 
             replacements.extend([
                 ("{AppData}", windows_app_data.join("Roaming")),
@@ -136,10 +132,7 @@ pub fn expand_path(path: &Path, installation_dir: Option<&Path>, prefix: Option<
                 .map_or_else(|_| PathBuf::from("C:/Program Files (x86)/Steam"), |dir| dir.path().to_path_buf());
 
             let userdata_path = base_path.join("userdata");
-            match steam_account_id {
-                Some(id) => userdata_path.join(id),
-                None => userdata_path.join("[0-9]*")
-            }
+            steam_account_id.map_or_else(|| userdata_path.join("[0-9]*"), |id| userdata_path.join(id))
         };
 
         replacements.extend([
@@ -177,11 +170,7 @@ pub fn shrink_path(path: &Path, installation_dir: Option<&Path>, prefix: Option<
             let user = drive_c.join("users").join(username);
             let windows_app_data = user.join("AppData");
 
-            let steam_user_data = if let Some(account_id) = steam_account_id {
-                linux_app_data.join("Steam/userdata").join(account_id)
-            } else {
-                linux_app_data.join("Steam/userdata/[0-9]*")
-            };
+            let steam_user_data = steam_account_id.map_or_else(|| linux_app_data.join("Steam/userdata/[0-9]*"), |id| linux_app_data.join("Steam/userdata").join(id));
 
             replacements.extend([
                 ("{LocalLow}", windows_app_data.join("LocalLow")),
@@ -208,10 +197,7 @@ pub fn shrink_path(path: &Path, installation_dir: Option<&Path>, prefix: Option<
                 .map_or_else(|_| PathBuf::from("C:/Program Files (x86)/Steam"), |dir| dir.path().to_path_buf());
 
             let userdata_path = base_path.join("userdata");
-            match steam_account_id {
-                Some(id) => userdata_path.join(id),
-                None => userdata_path.join("[0-9]*")
-            }
+            steam_account_id.map_or_else(|| userdata_path.join("[0-9]*"), |id| userdata_path.join(id))
         };
 
         replacements.extend([

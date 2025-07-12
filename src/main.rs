@@ -3,6 +3,7 @@
 
 #![warn(clippy::pedantic)]
 #![deny(clippy::if_then_some_else_none)]
+#![deny(clippy::option_if_let_else)]
 #![deny(clippy::allow_attributes_without_reason)]
 #![deny(clippy::string_to_string)]
 #![deny(clippy::get_unwrap)]
