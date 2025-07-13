@@ -29,14 +29,43 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Build
-        run: cargo build --release --features updater --target=${{ matrix.target }} && mv target/${{ matrix.target }}/release/aletheia target/${{ matrix.target }}/release/${{ matrix.artifact }}
+      - name: Build binary
+        run: cargo build --release --features updater --target=${{ matrix.target }}
 
-      - name: Upload
+      - name: Build AppImage
+        run: |
+          mkdir -p target/appimage/{deps,out}
+          mkdir -p target/appimage/out/usr/share/metainfo
+
+          ARCH=$(uname -m)
+          APPIMAGETOOL="target/appimage/deps/appimagetool-$ARCH.AppImage"
+          LINUXDEPLOY="target/appimage/deps/linuxdeploy-$ARCH.AppImage"
+          LINUXDEPLOY_PLUGIN_QT="target/appimage/deps/linuxdeploy-plugin-qt-$ARCH.AppImage"
+
+          wget -O "$APPIMAGETOOL" "https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-$ARCH.AppImage"
+          chmod +x "$APPIMAGETOOL"
+
+          wget -O "$LINUXDEPLOY" "https://github.com/linuxdeploy/linuxdeploy/releases/download/1-alpha-20250213-2/linuxdeploy-$ARCH.AppImage"
+          chmod +x "$LINUXDEPLOY"
+
+          wget -O "$LINUXDEPLOY_PLUGIN_QT" "https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/1-alpha-20250213-1/linuxdeploy-plugin-qt-$ARCH.AppImage"
+          chmod +x "$LINUXDEPLOY_PLUGIN_QT"
+
+          NO_STRIP=true EXTRA_QT_MODULES=waylandcompositor EXTRA_PLATFORM_PLUGINS="libqwayland-egl.so;libqwayland-generic.so" $LINUXDEPLOY --plugin qt --appdir target/appimage/out --executable target/${{ matrix.target }}/release/aletheia --desktop-file resources/linux/moe.spencer.Aletheia.desktop --icon-file resources/logo/moe.spencer.Aletheia.png
+          cp resources/linux/moe.spencer.Aletheia.metainfo.xml target/appimage/out/usr/share/metainfo
+          $APPIMAGETOOL target/appimage/out ./Aletheia.appimage
+
+      - name: Upload binary
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.artifact }}
-          path: target/${{ matrix.target }}/release/${{ matrix.artifact }}
+          path: target/${{ matrix.target }}/release/aletheia
+
+      - name: Upload AppImage
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact }}.appimage
+          path: Aletheia.appimage
 
   build_windows:
     strategy:

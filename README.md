@@ -4,7 +4,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 -->
 
 <p align="center">
-  <br><img src="https://raw.githubusercontent.com/Spencer-0003/aletheia/refs/heads/master/resources/logo/512x512.png" width="220" /><br/>
+  <br><img src="https://raw.githubusercontent.com/Spencer-0003/aletheia/refs/heads/master/resources/logo/moe.spencer.Aletheia.png" width="220" /><br/>
   <b>Aletheia</b>
 </p>
 
