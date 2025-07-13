@@ -11,7 +11,7 @@ use slint::{Model, ModelRc, SharedString, VecModel};
 use std::borrow::Borrow;
 use std::cell::RefCell;
 use std::collections::HashSet;
-use std::fs::read_to_string;
+use std::fs::File;
 use std::rc::Rc;
 
 #[cfg(all(feature = "updater", not(debug_assertions)))]
@@ -262,8 +262,7 @@ pub fn run(config: &AletheiaConfig) {
                         continue;
                     }
 
-                    let manifest_content = read_to_string(manifest_path).unwrap();
-                    let Ok(manifest) = serde_yaml::from_str::<gamedb::GameInfo>(&manifest_content) else {
+                    let Ok(manifest) = serde_yaml::from_reader::<File, gamedb::GameInfo>(File::open(manifest_path).unwrap()) else {
                         log::error!("Failed to parse {game_name}'s manifest.");
                         continue;
                     };

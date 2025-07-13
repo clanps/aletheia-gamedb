@@ -1,7 +1,8 @@
 // SPDX-FileCopyrightText: 2025 Spencer
 // SPDX-License-Identifier: AGPL-3.0-only
 
-use std::fs::read_to_string;
+use crate::gamedb;
+use std::fs::File;
 use std::path::{Path, PathBuf};
 use super::{Game, Scanner};
 
@@ -41,8 +42,7 @@ impl Scanner for GOGScanner {
                 continue;
             }
 
-            let content = read_to_string(&info_path).unwrap_or_else(|_| panic!("Failed to read GOG manifest in {}.", dir.display()));
-            let game_info: GOGameInfo = serde_json::from_str(&content).unwrap_or_else(|_| panic!("Malformed GOG manifest in {}.", dir.display()));
+            let game_info: GOGameInfo = serde_json::from_reader::<File, gamedb::GameInfo>(File::open(info_path).unwrap()).unwrap_or_else(|_| panic!("Malformed GOG manifest in {}.", dir.display()));
 
             games.push(Game { name: game_info.name, installation_dir: Some(dir), prefix: None, source: "GOG".to_owned() });
         }

@@ -3,9 +3,11 @@
 
 use crate::cli_helpers::ensure_steam_account_selected;
 use crate::config::Config;
+use crate::gamedb;
 use crate::infer;
 use crate::operations::restore_game;
 use super::{Args, Command};
+use std::fs::File;
 
 pub struct Restore;
 
@@ -16,7 +18,7 @@ impl Command for Restore {
             return;
         }
 
-        let installed_games = crate::gamedb::get_installed_games();
+        let installed_games = gamedb::get_installed_games();
 
         if config.steam_account_id.is_none() && installed_games.iter().any(|g| g.source == "Steam") {
             ensure_steam_account_selected(config);
@@ -43,8 +45,7 @@ impl Command for Restore {
                 continue;
             }
 
-            let manifest_content = std::fs::read_to_string(manifest_path).unwrap();
-            let Ok(manifest) = serde_yaml::from_str::<crate::gamedb::GameInfo>(&manifest_content) else {
+            let Ok(manifest) = serde_yaml::from_reader::<File, gamedb::GameInfo>(File::open(manifest_path).unwrap()) else {
                 eprintln!("Failed to parse {}'s manifest.", game_dir.file_name().unwrap().display());
                 continue;
             };

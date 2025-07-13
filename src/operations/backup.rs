@@ -6,7 +6,7 @@ use crate::dirs::{expand_path, shrink_path};
 use crate::file::hash_file;
 use crate::gamedb::{GameDbEntry, GameInfo, FileMetadata};
 use crate::scanner::Game;
-use std::fs::{copy, create_dir_all, metadata, read_to_string, write};
+use std::fs::{copy, create_dir_all, File, metadata, write};
 use std::path::Path;
 use glob::glob;
 
@@ -25,8 +25,8 @@ pub fn backup_game(game: &Game, config: &Config, entry: &GameDbEntry) -> Result<
     let backup_folder = config.save_dir.join(game.name.replace(':', "")); // NTFS doesn't support : and this makes sense on Unix for cross-OS syncing
     let manifest_path = backup_folder.join("aletheia_manifest.yaml");
     let existing_manifest = manifest_path.exists()
-        .then(|| read_to_string(&manifest_path).unwrap())
-        .map(|content| serde_yaml::from_str::<GameInfo>(&content).map_err(|_| Error::MalformedManifest))
+        .then(|| File::open(&manifest_path).unwrap())
+        .map(|file| serde_yaml::from_reader::<File, GameInfo>(file).map_err(|_| Error::MalformedManifest))
         .transpose()?;
 
     let mut changed = false;

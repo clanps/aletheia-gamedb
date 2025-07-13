@@ -3,7 +3,7 @@
 use crate::dirs::{config, home};
 use super::{Game, Scanner};
 use serde::Deserialize;
-use std::fs::read_to_string;
+use std::fs::File;
 
 pub struct HeroicScanner;
 
@@ -51,8 +51,7 @@ impl Scanner for HeroicScanner {
             return games;
         }
 
-        let content = read_to_string(gog_manifest).unwrap();
-        let gog_manifest: HeroicGOGManifest = serde_json::from_str(&content).unwrap();
+        let gog_manifest: HeroicGOGManifest = serde_json::from_reader(File::open(gog_manifest).unwrap()).unwrap();
 
         for game in gog_manifest.installed {
             let game_data = heroic_path.join("gogdlConfig/heroic_gogdl/manifests").join(&game.app_id);
@@ -61,8 +60,7 @@ impl Scanner for HeroicScanner {
                 continue;
             }
 
-            let game_data_content = read_to_string(game_data).unwrap();
-            let Ok(game_manifest) = serde_json::from_str::<HeroicGOGGameManifest>(&game_data_content) else {
+            let Ok(game_manifest) = serde_json::from_reader::<File, HeroicGOGGameManifest>(File::open(game_data).unwrap()) else {
                 continue;
             };
 
@@ -73,8 +71,7 @@ impl Scanner for HeroicScanner {
                     continue;
                 }
 
-                let game_config_file_content = read_to_string(&game_config).unwrap();
-                let Ok(game_config) = serde_json::from_str::<serde_json::Value>(&game_config_file_content) else {
+                let Ok(game_config) = serde_json::from_reader::<File, serde_json::Value>(File::open(game_config).unwrap()) else {
                     continue;
                 };
 

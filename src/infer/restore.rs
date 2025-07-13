@@ -6,7 +6,7 @@ use crate::gamedb;
 use crate::infer::Launcher;
 use crate::infer::launchers::Heroic;
 use crate::operations::restore_game;
-use std::fs::read_to_string;
+use std::fs::File;
 
 #[cfg(unix)]
 use crate::infer::launchers::Lutris;
@@ -37,8 +37,7 @@ pub fn restore(launcher: &str, config: &Config) {
             return;
         }
 
-        let manifest_content = read_to_string(manifest_path).unwrap();
-        let Ok(manifest) = serde_yaml::from_str::<crate::gamedb::GameInfo>(&manifest_content) else {
+        let Ok(manifest) = serde_yaml::from_reader::<File, gamedb::GameInfo>(File::open(manifest_path).unwrap()) else {
             log::error!("Failed to parse {}'s manifest.", game_dir.file_name().unwrap().display());
             return;
         };
