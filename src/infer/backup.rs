@@ -11,7 +11,6 @@ use crate::operations::backup_game;
 use crate::infer::launchers::Lutris;
 
 pub fn backup(launcher: &str, config: &Config) {
-    println!("{}", launcher.to_lowercase());
     let game = match launcher.to_lowercase().as_str() {
         "heroic" => Heroic::get_game(),
         #[cfg(unix)]
