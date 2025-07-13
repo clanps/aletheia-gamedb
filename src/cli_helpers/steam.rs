@@ -16,7 +16,9 @@ pub fn ensure_steam_account_selected(config: &Config) {
         Config::save(&Config {
             custom_databases: config.custom_databases.clone(),
             save_dir: config.save_dir.clone(),
-            steam_account_id: Some(SteamScanner::id64_to_id3(steam_id.parse::<u64>().unwrap()).to_string())
+            steam_account_id: Some(SteamScanner::id64_to_id3(steam_id.parse::<u64>().unwrap()).to_string()),
+            #[cfg(feature = "updater")]
+            check_for_updates: config.check_for_updates
         });
     } else {
         println!("Multiple Steam accounts found. Please choose one:");
@@ -45,7 +47,9 @@ pub fn ensure_steam_account_selected(config: &Config) {
                     Config::save(&Config {
                         custom_databases: config.custom_databases.clone(),
                         save_dir: config.save_dir.clone(),
-                        steam_account_id: Some(SteamScanner::id64_to_id3(steam_id.parse::<u64>().unwrap()).to_string())
+                        steam_account_id: Some(SteamScanner::id64_to_id3(steam_id.parse::<u64>().unwrap()).to_string()),
+                        #[cfg(feature = "updater")]
+                        check_for_updates: config.check_for_updates
                     });
                     break;
                 }
