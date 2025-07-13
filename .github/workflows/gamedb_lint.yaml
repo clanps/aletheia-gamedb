@@ -1,0 +1,18 @@
+name: Lint GameDB
+on:
+  pull_request:
+    paths:
+      - 'resources/gamedb.yaml'
+
+jobs:
+  lint:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install YAMLLint
+        run: sudo apt update && sudo apt install yamllint
+
+      - name: Lint GameDB
+        run: yamllint -d '{extends: default, rules: {line-length: disable, key-ordering: enable}}' -f github -s resources/gamedb.yaml
