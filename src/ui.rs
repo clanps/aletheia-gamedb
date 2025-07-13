@@ -199,11 +199,11 @@ pub fn run(config: &AletheiaConfig) {
                 selected_games.push(game);
             }
 
-            let selected_games_names: HashSet<String> = selected_games.iter().map(|g| g.name.to_string()).collect();
+            let selected_games_names: HashSet<&str> = selected_games.iter().map(|g| g.name.as_str()).collect();
 
             let filtered_games_model = games_screen_logic.get_filtered_games();
             let all_filtered_selected = filtered_games_model.row_count() > 0 &&
-                filtered_games_model.iter().all(|g| selected_games_names.contains(&g.name.to_string()));
+                filtered_games_model.iter().all(|g| selected_games_names.contains(g.name.as_str()));
 
             games_screen_logic.set_selected_games(ModelRc::new(VecModel::from(selected_games)));
             games_screen_logic.set_all_filtered_selected(all_filtered_selected);
