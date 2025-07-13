@@ -1,7 +1,6 @@
 // SPDX-FileCopyrightText: 2025 Spencer
 // SPDX-License-Identifier: AGPL-3.0-only
 
-import { ScrollView } from "std-widgets.slint";
 import { Button } from "../components/button.slint";
 import { GameCard } from "../components/game_card.slint";
 import { SearchBar } from "../components/search_bar.slint";
@@ -11,8 +10,8 @@ import { UiGame } from "../structs/ui_game.slint";
 
 export global GamesScreenLogic {
   in property <[UiGame]> filtered_games: [];
-  in-out property <[UiGame]> selected_games: [];
   in property <bool> all_filtered_selected: false;
+  in-out property <[UiGame]> selected_games: [];
   callback filter(string);
   callback select_all(bool);
   callback select_game(UiGame);
@@ -20,16 +19,16 @@ export global GamesScreenLogic {
 }
 
 export component Games {
-  callback search_changed(string);
   width: 100%;
   height: 100%;
 
   if (GameLogic.games.length == 0): VerticalLayout {
-    alignment: center;
     spacing: 16px;
+    alignment: center;
 
     Text {
       text: @tr("No games found");
+      color: white;
       font-family: "Inter";
       font-size: 20px;
       font-weight: 600;
@@ -40,24 +39,25 @@ export component Games {
       alignment: center;
 
       Button {
-        text: @tr("Refresh");
-        height: 40px;
         width: 160px;
+        height: 40px;
+        text: @tr("Refresh");
         clicked => { GameLogic.refresh_games(); }
       }
     }
   }
 
   if (GameLogic.games.length > 0): VerticalLayout {
-    alignment: start;
-    padding: 16px;
     spacing: 8px;
+    padding: 16px;
+    alignment: start;
 
     HorizontalLayout {
       alignment: center;
+
       search_bar := SearchBar {
-        height: 45px;
         width: 430px;
+        height: 45px;
         placeholder-text: @tr("Search games...");
         changed(text) => { GamesScreenLogic.filter(text); }
       }
@@ -68,24 +68,22 @@ export component Games {
             " / " +
             GameLogic.games.length +
             @tr(" games");
-      font-family: "Inter";
       color: white;
       opacity: 50%;
+      font-family: "Inter";
       horizontal-alignment: center;
     }
 
     HorizontalLayout {
-      alignment: center;
       spacing: 8px;
+      alignment: center;
 
       Button {
         width: 140px;
         height: 36px;
         text: @tr("Backup");
         enabled: GamesScreenLogic.selected_games.length > 0;
-        clicked => {
-          GamesScreenLogic.perform_operation("backup");
-        }
+        clicked => { GamesScreenLogic.perform_operation("backup"); }
       }
 
       Button {
@@ -93,30 +91,25 @@ export component Games {
         height: 36px;
         text: @tr("Restore");
         enabled: GamesScreenLogic.selected_games.length > 0;
-        clicked => {
-          GamesScreenLogic.perform_operation("restore");
-        }
+        clicked => { GamesScreenLogic.perform_operation("restore"); }
       }
 
       Button {
         width: 140px;
         height: 36px;
         text: search_bar.text.is-empty
-            ? GamesScreenLogic.all_filtered_selected ? @tr("Clear Selection") : @tr("Select All")
-            : @tr("{} Filtered", GamesScreenLogic.all_filtered_selected ? "Clear" : "Select");
+              ? GamesScreenLogic.all_filtered_selected ? @tr("Clear Selection") : @tr("Select All")
+              : @tr("{} Filtered", GamesScreenLogic.all_filtered_selected ? "Clear" : "Select");
         background: #2f2f49;
         enabled: GamesScreenLogic.filtered_games.length > 0;
-        clicked => {
-          GamesScreenLogic.select_all(!GamesScreenLogic.all_filtered_selected);
-        }
+        clicked => { GamesScreenLogic.select_all(!GamesScreenLogic.all_filtered_selected); }
       }
     }
 
     Flickable {
       VerticalLayout {
-        spacing: 8px;
         width: 50%;
-        // width: 430px;
+        spacing: 8px;
 
         for game in GamesScreenLogic.filtered_games: GameCard {
           game: game;

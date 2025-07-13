@@ -1,7 +1,9 @@
+// SPDX-FileCopyrightText: 2025 Spencer
+// SPDX-License-Identifier: AGPL-3.0-only
+
 export component CheckBox {
   in property <string> text;
   in-out property <bool> enabled;
-
   callback toggled();
 
   min-height: 22px;
@@ -18,7 +20,7 @@ export component CheckBox {
 
   HorizontalLayout {
     spacing: 8px;
-    alignment: start;
+    alignment: center;
 
     Rectangle {
       width: 18px;
@@ -27,10 +29,10 @@ export component CheckBox {
       checkbox_rect := Rectangle {
         width: 100%;
         height: 100%;
+        background: root.enabled ? #7678ed : transparent;
         border-radius: 3px;
         border-width: 1px;
         border-color: #6c7086;
-        background: root.enabled ? #7678ed : transparent;
 
         animate background { duration: 150ms; easing: ease-out; }
         animate border-color { duration: 150ms; easing: ease-out; }
@@ -42,15 +44,16 @@ export component CheckBox {
         ]
 
         if root.enabled: Image {
-          source: @image-url("../assets/checkmark.svg");
           width: 14px;
           height: 14px;
+          source: @image-url("../assets/checkmark.svg");
           colorize: white;
         }
       }
     }
 
     Text {
+      y: -2.5px;
       text: root.text;
       color: #cdd6f4;
       font-family: "Inter";

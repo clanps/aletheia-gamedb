@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2025 Spencer
+// SPDX-License-Identifier: AGPL-3.0-only
+
 import { Button } from "../components/button.slint";
 import { CheckBox } from "../components/check_box.slint";
 import { TextLabel } from "../components/text_label.slint";
@@ -26,11 +29,9 @@ export component Settings {
   height: 100%;
 
   VerticalLayout {
-    alignment: start;
     spacing: 24px;
     padding: 24px;
-
-    Rectangle { height: 1px; background: #45475a; }
+    alignment: start;
 
     VerticalLayout {
       spacing: 16px;
@@ -41,27 +42,28 @@ export component Settings {
         Rectangle {
           width: 24px;
           height: 24px;
+
           Image {
-            source: @image-url("../assets/folder.svg");
-            colorize: #cdd6f4;
             width: 100%;
             height: 100%;
+            source: @image-url("../assets/folder.svg");
+            colorize: #cdd6f4;
           }
         }
 
         Text {
           text: @tr("Game Data Location");
           color: #cdd6f4;
+          font-family: "Inter";
           font-size: 18px;
           font-weight: 600;
-          font-family: "Inter";
           vertical-alignment: center;
         }
       }
 
       VerticalLayout {
-        padding-left: 36px;
         spacing: 12px;
+        padding-left: 36px;
 
         Text {
           text: @tr("Choose where your games will be saved");
@@ -74,15 +76,15 @@ export component Settings {
           spacing: 8px;
 
           TextLabel {
-            height: 38px;
             width: 400px;
+            height: 38px;
             text: SettingsScreenLogic.config.save_dir;
           }
 
           Button {
-            text: @tr("Browse");
             width: 100px;
             height: 38px;
+            text: @tr("Browse");
             clicked => { SettingsScreenLogic.browse(); }
           }
         }
@@ -92,6 +94,7 @@ export component Settings {
     Rectangle { height: 1px; background: #45475a; }
 
     VerticalLayout {
+      z: 1; // Dropdown needs to render over other components.
       spacing: 16px;
 
       HorizontalLayout {
@@ -100,27 +103,28 @@ export component Settings {
         Rectangle {
           width: 24px;
           height: 24px;
+
           Image {
-            source: @image-url("../assets/switch_account.svg");
-            colorize: #cdd6f4;
             width: 100%;
             height: 100%;
+            source: @image-url("../assets/switch_account.svg");
+            colorize: #cdd6f4;
           }
         }
 
         Text {
           text: @tr("Steam Account");
           color: #cdd6f4;
+          font-family: "Inter";
           font-size: 18px;
           font-weight: 600;
-          font-family: "Inter";
           vertical-alignment: center;
         }
       }
 
       VerticalLayout {
-        padding-left: 36px;
         spacing: 12px;
+        padding-left: 36px;
 
         VerticalLayout {
           spacing: 4px;
@@ -128,15 +132,15 @@ export component Settings {
           Text {
             text: @tr("Choose the Steam account for your games");
             color: #a6adc8;
-            font-size: 14px;
             font-family: "Inter";
+            font-size: 14px;
           }
 
           Text {
             text: "Only affects games that save in the Steam userdata directory";
             opacity: 25%;
-            font-size: 10px;
             font-family: "Inter";
+            font-size: 10px;
           }
         }
 
@@ -146,9 +150,7 @@ export component Settings {
           options: SettingsScreenLogic.steam_account_options;
           value: SettingsScreenLogic.config.steam_account_id;
           placeholder: @tr("Select an account...");
-          changed(value) => {
-            SettingsScreenLogic.config.steam_account_id = value;
-          }
+          changed(value) => { SettingsScreenLogic.config.steam_account_id = value; }
         }
       }
     }
@@ -164,27 +166,28 @@ export component Settings {
         Rectangle {
           width: 24px;
           height: 24px;
+
           Image {
-            source: @image-url("../assets/database.svg");
-            colorize: #cdd6f4;
             width: 100%;
             height: 100%;
+            source: @image-url("../assets/database.svg");
+            colorize: #cdd6f4;
           }
         }
 
         Text {
           text: @tr("GameDB");
           color: #cdd6f4;
+          font-family: "Inter";
           font-size: 18px;
           font-weight: 600;
-          font-family: "Inter";
           vertical-alignment: center;
         }
       }
 
       VerticalLayout {
-        padding-left: 36px;
         spacing: 12px;
+        padding-left: 36px;
 
         Text {
           text: @tr("Download the latest copy of the GameDB");
@@ -194,9 +197,9 @@ export component Settings {
         }
 
         Button {
-          text: @tr("Update GameDB");
           width: 140px;
           height: 38px;
+          text: @tr("Update GameDB");
           clicked => { SettingsScreenLogic.update_gamedb(); }
         }
       }
@@ -213,27 +216,28 @@ export component Settings {
         Rectangle {
           width: 24px;
           height: 24px;
+
           Image {
-            source: @image-url("../assets/folder.svg");
-            colorize: #cdd6f4;
             width: 100%;
             height: 100%;
+            source: @image-url("../assets/folder.svg");
+            colorize: #cdd6f4;
           }
         }
 
         Text {
           text: @tr("Updates");
           color: #cdd6f4;
+          font-family: "Inter";
           font-size: 18px;
           font-weight: 600;
-          font-family: "Inter";
           vertical-alignment: center;
         }
       }
 
       VerticalLayout {
-        padding-left: 36px;
         spacing: 12px;
+        padding-left: 36px;
 
         Text {
           text: @tr("Configure automatic update checking");
@@ -258,14 +262,14 @@ export component Settings {
     Rectangle { height: 1px; background: #45475a; }
 
     HorizontalLayout {
-      alignment: end;
       padding-top: 12px;
       padding-bottom: 8px;
+      alignment: end;
 
       Button {
-        text: @tr("Save");
         width: 120px;
         height: 40px;
+        text: @tr("Save");
         enabled: SettingsScreenLogic.can_save;
         clicked => { SettingsScreenLogic.save_config(SettingsScreenLogic.config); }
       }

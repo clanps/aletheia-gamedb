@@ -7,7 +7,6 @@ import { UpdaterLogic } from "./logic/updater.slint";
 export component Updater inherits Window {
   width: 500px;
   height: 400px;
-
   title: "Aletheia - Updater";
   icon: @image-url("../resources/logo/moe.spencer.Aletheia.png");
 
@@ -17,9 +16,9 @@ export component Updater inherits Window {
     background: #1e1e2e;
 
     VerticalLayout {
-      alignment: start;
       spacing: 24px;
       padding: 24px;
+      alignment: start;
 
       VerticalLayout {
         spacing: 12px;
@@ -28,9 +27,9 @@ export component Updater inherits Window {
         Text {
           text: @tr("Update Available");
           color: #cdd6f4;
+          font-family: "Inter";
           font-size: 24px;
           font-weight: 700;
-          font-family: "Inter";
           horizontal-alignment: center;
         }
       }
@@ -45,8 +44,8 @@ export component Updater inherits Window {
           alignment: center;
 
           VerticalLayout {
-            alignment: center;
             spacing: 4px;
+            alignment: center;
 
             Text {
               text: @tr("Current");
@@ -70,13 +69,13 @@ export component Updater inherits Window {
           Text {
             text: "→";
             color: #a6adc8;
-            font-size: 20px;
             font-family: "Inter";
+            font-size: 20px;
           }
 
           VerticalLayout {
-            alignment: center;
             spacing: 4px;
+            alignment: center;
 
             Text {
               text: @tr("New");
@@ -105,9 +104,9 @@ export component Updater inherits Window {
         Text {
           text: @tr("What's New");
           color: #cdd6f4;
+          font-family: "Inter";
           font-size: 16px;
           font-weight: 600;
-          font-family: "Inter";
         }
 
         Rectangle {
@@ -122,33 +121,33 @@ export component Updater inherits Window {
             viewport-height: text.preferred-height + 12px;
 
             text := Text {
+              width: parent.width - 24px;
+              padding: 12px;
               text: UpdaterLogic.changelog;
               color: #cdd6f4;
               font-family: "Inter";
               font-size: 14px;
               wrap: word-wrap;
-              width: parent.width - 24px;
-              padding: 12px;
             }
           }
         }
       }
 
       HorizontalLayout {
-        alignment: end;
         spacing: 12px;
+        alignment: end;
 
         Button {
-          text: @tr("Skip");
           width: 80px;
           height: 36px;
+          text: @tr("Skip");
           clicked => { UpdaterLogic.skip_update(); }
         }
 
         Button {
-          text: @tr("Download");
           width: 140px;
           height: 36px;
+          text: @tr("Download");
           clicked => {
             UpdaterLogic.downloading = true;
             UpdaterLogic.download_update();

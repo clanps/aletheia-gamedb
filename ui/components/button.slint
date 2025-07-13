@@ -5,17 +5,19 @@ export component Button {
   in property <string> text;
   in property <color> background: #7678ed;
   in property <bool> enabled: true;
-  callback clicked();
+  callback clicked <=> touch_area.clicked;
 
   Rectangle {
     background: root.background;
+    opacity: root.enabled ? 100% : 50%;
     border-color: rgba(24, 24, 32, 0.75);
     border-radius: 8px;
     border-width: 1px;
-    opacity: root.enabled ? 100% : 50%;
     drop-shadow-blur: 8px;
     drop-shadow-color: rgba(0, 0, 0, 0.15);
     drop-shadow-offset-y: 4px;
+
+    animate opacity { duration: 200ms; easing: ease-out; }
 
     Text {
       text: root.text;
@@ -27,10 +29,9 @@ export component Button {
       vertical-alignment: center;
     }
 
-    TouchArea {
+    touch_area := TouchArea {
       enabled: root.enabled;
       mouse-cursor: pointer;
-      clicked => { root.clicked(); }
     }
   }
 }

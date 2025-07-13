@@ -17,14 +17,12 @@ export { AppLogic, GamesScreenLogic, GameLogic, NotificationLogic, SettingsScree
 export { Updater, UpdaterLogic }
 
 export component App inherits Window {
-  property <string> current_screen: "games";
+  private property <string> current_screen: "games";
 
   preferred-width: 1280px;
   preferred-height: 900px;
-
   min-width: 650px;
   min-height: 500px;
-
   title: "Aletheia";
   icon: @image-url("../resources/logo/moe.spencer.Aletheia.png");
 
@@ -33,8 +31,8 @@ export component App inherits Window {
 
     VerticalLayout {
       HorizontalLayout {
-        padding: 16px;
         spacing: 16px;
+        padding: 16px;
 
         NavItem {
           text: @tr("Games");
@@ -53,25 +51,21 @@ export component App inherits Window {
           text: @tr("Settings");
           icon: @image-url("./assets/settings.svg");
           active: root.current_screen == "settings";
-          clicked => {
-            root.current_screen = "settings";
-          }
+          clicked => { root.current_screen = "settings"; }
         }
 
         NavItem {
           text: @tr("About");
           icon: @image-url("./assets/about.svg");
           active: root.current_screen == "about";
-          clicked => {
-            root.current_screen = "about";
-          }
+          clicked => { root.current_screen = "about"; }
         }
       }
 
       Rectangle {
+        padding: 24px;
         background: #282838;
         border-radius: 8px;
-        padding: 24px;
 
         if (root.current_screen == "games"): Games {}
         if (root.current_screen == "settings"): Settings {}
@@ -81,12 +75,12 @@ export component App inherits Window {
   }
 
   Notification {
+    y: parent.height - self.height - 20px;
+    target_x: parent.width - self.width - 20px;
     visible: NotificationLogic.is_notification_visible;
     message: NotificationLogic.current_notification_message;
     notification_type: NotificationLogic.current_notification_type;
-    target_x: parent.width - self.width - 20px;
-    y: parent.height - self.height - 20px;
 
-    closed => { NotificationLogic.hide_notification() }
+    closed => { NotificationLogic.hide_notification(); }
   }
 }
