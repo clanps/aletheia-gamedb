@@ -291,10 +291,9 @@ pub fn run(config: &AletheiaConfig) {
                     .pick_folder()
                     .await
                 {
-                    let path = folder.path().to_string_lossy().to_string();
                     let mut cfg = app.global::<SettingsScreenLogic>().get_config();
 
-                    cfg.save_dir = path.into();
+                    cfg.save_dir = SharedString::from(folder.path().to_string_lossy().as_ref());
 
                     app.global::<SettingsScreenLogic>().set_config(cfg);
                 }
