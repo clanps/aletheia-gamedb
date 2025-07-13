@@ -52,7 +52,7 @@ jobs:
           chmod +x "$LINUXDEPLOY_PLUGIN_QT"
 
           NO_STRIP=true EXTRA_QT_MODULES=waylandcompositor EXTRA_PLATFORM_PLUGINS="libqwayland-egl.so;libqwayland-generic.so" $LINUXDEPLOY --plugin qt --appdir target/appimage/out --executable target/${{ matrix.target }}/release/aletheia --desktop-file resources/linux/moe.spencer.Aletheia.desktop --icon-file resources/logo/moe.spencer.Aletheia.png
-          cp resources/linux/moe.spencer.Aletheia.metainfo.xml target/appimage/out/usr/share/metainfo
+          cp resources/linux/moe.spencer.Aletheia.metainfo.xml target/appimage/out/usr/share/metainfo/moe.spencer.Aletheia.appdata.xml
           $APPIMAGETOOL target/appimage/out ./Aletheia.appimage
 
       - name: Upload binary
