@@ -42,7 +42,10 @@ impl Scanner for GOGScanner {
                 continue;
             }
 
-            let game_info: GOGameInfo = serde_json::from_reader::<File, gamedb::GameInfo>(File::open(info_path).unwrap()).unwrap_or_else(|_| panic!("Malformed GOG manifest in {}.", dir.display()));
+            let Ok(game_info) = serde_json::from_reader::<File, GOGameInfo>(File::open(info_path).unwrap()) else {
+                log::error!("Malformed GOG manifest in {}.", dir.display());
+                continue;
+            };
 
             games.push(Game { name: game_info.name, installation_dir: Some(dir), prefix: None, source: "GOG".to_owned() });
         }
