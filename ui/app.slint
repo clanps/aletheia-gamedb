@@ -17,7 +17,7 @@ export { AppLogic, GamesScreenLogic, GameLogic, NotificationLogic, SettingsScree
 export { Updater, UpdaterLogic }
 
 export component App inherits Window {
-  property <string> current_screen: "games";
+  private property <string> current_screen: "games";
 
   preferred-width: 1280px;
   preferred-height: 900px;
