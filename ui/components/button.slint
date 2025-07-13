@@ -9,10 +9,10 @@ export component Button {
 
   Rectangle {
     background: root.background;
+    opacity: root.enabled ? 100% : 50%;
     border-color: rgba(24, 24, 32, 0.75);
     border-radius: 8px;
     border-width: 1px;
-    opacity: root.enabled ? 100% : 50%;
     drop-shadow-blur: 8px;
     drop-shadow-color: rgba(0, 0, 0, 0.15);
     drop-shadow-offset-y: 4px;

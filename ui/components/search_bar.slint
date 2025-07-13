@@ -7,43 +7,43 @@ export component SearchBar inherits Rectangle {
   out property <string> text: input.text;
   callback changed(string);
 
+  background: #1e1e2e;
+  clip: true;
   border-radius: 20px;
   border-width: 1px;
   border-color: root.has_focus ? #27273a : #18182040;
-  background: #1e1e2e;
-  clip: true;
   drop-shadow-blur: 8px;
   drop-shadow-color: rgba(0, 0, 0, 0.15);
   drop-shadow-offset-y: 4px;
 
   HorizontalLayout {
+    spacing: 8px;
     padding-left: 12px;
     padding-right: 12px;
-    spacing: 8px;
 
     Image {
-      source: @image-url("../assets/search.svg");
       width: 24px;
+      source: @image-url("../assets/search.svg");
       opacity: 75%;
     }
 
     input := TextInput {
       single-line: true;
+      color: white;
+      opacity: 65%;
       font-family: "Inter";
       font-size: 14px;
       font-weight: 400;
-      color: white;
-      opacity: 65%;
       vertical-alignment: center;
 
       if (self.text.is-empty): Text {
         x: 0;
         text: root.placeholder_text;
         color: #ffffff80;
+        opacity: 50%;
         font-family: "Inter";
         font-size: 14px;
         font-weight: 400;
-        opacity: 50%;
       }
 
       edited => { root.changed(self.text); }

@@ -26,30 +26,30 @@ export component GameCard inherits Rectangle {
       }
 
       Image {
+        x: 0;
         source: @image-url("../assets/check.svg");
         opacity: root.game.selected ? 100% : 10%;
-        x: 0;
       }
     }
 
     HorizontalLayout {
-      alignment: start;
       spacing: 4px;
+      alignment: start;
 
       Text {
         text: game.name;
+        color: white;
         font-family: "Inter";
         font-size: 16px;
-        color: white;
         overflow: elide;
         vertical-alignment: center;
       }
 
       Text {
         y: 1px;
-        font-family: "Inter";
         text: "(" + game.source + ")";
         opacity: 25%;
+        font-family: "Inter";
         font-size: 10px;
         vertical-alignment: center;
       }
@@ -57,9 +57,9 @@ export component GameCard inherits Rectangle {
 
     Text {
       text: root.game.backup_size;
+      color: #a0a0a0;
       font-family: "Inter";
       font-size: 14px;
-      color: #a0a0a0;
       horizontal-alignment: right;
       vertical-alignment: center;
     }

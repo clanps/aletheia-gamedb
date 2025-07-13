@@ -23,11 +23,11 @@ export component Dropdown {
   }
 
   Rectangle {
+    background: #1e1e2e;
+    opacity: root.enabled ? 100% : 50%;
     border-radius: 4px;
     border-width: 1px;
     border-color: #18182040;
-    background: #1e1e2e;
-    opacity: root.enabled ? 100% : 50%;
     drop-shadow-blur: 8px;
     drop-shadow-color: rgba(0, 0, 0, 0.15);
     drop-shadow-offset-y: 4px;
@@ -40,21 +40,21 @@ export component Dropdown {
 
       Text {
         private property <bool> show_label: !root.label.is-empty;
+        text: show_label ? root.label : root.placeholder;
+        color: white;
+        opacity: show_label ? 65% : 40%;
         font-family: "Inter";
         font-size: 14px;
         font-weight: 400;
-        color: white;
-        opacity: show_label ? 65% : 40%;
         overflow: elide;
         vertical-alignment: center;
-        text: show_label ? root.label : root.placeholder;
       }
 
       Image {
         source: @image-url("../assets/arrow_drop_down.svg");
         colorize: #7678ed;
-        vertical-alignment: center;
         rotation-angle: root.expanded ? 180deg : 0deg;
+        vertical-alignment: center;
 
         animate rotation-angle { duration: 200ms; easing: ease-in-out; }
       }
@@ -68,14 +68,14 @@ export component Dropdown {
   }
 
   dropdown_menu := Rectangle {
-    visible: false;
     y: root.height + 4px;
     width: root.width;
     height: min(200px, (root.height * root.options.length) + 4px);
+    visible: false;
+    background: #1e1e2e;
     border-radius: 4px;
     border-width: 1px;
     border-color: #27273a;
-    background: #1e1e2e;
     drop-shadow-blur: 12px;
     drop-shadow-color: rgba(0, 0, 0, 0.25);
     drop-shadow-offset-y: 6px;
@@ -87,9 +87,9 @@ export component Dropdown {
       height: 100%;
 
       VerticalLayout {
+        width: 100%;
         spacing: 4px;
         padding: 4px;
-        width: 100%;
 
         for option[index] in root.options: Rectangle {
           private property <bool> is_current_value: option.value == root.value;
@@ -103,20 +103,20 @@ export component Dropdown {
           animate background { duration: 100ms; easing: ease-in-out; }
 
           HorizontalLayout {
+            width: 100%;
             padding-left: 8px;
             padding-right: 4px;
-            width: 100%;
 
             Text {
+              text: option.label;
+              color: white;
+              opacity: is_current_value ? 100% : 65%;
               font-family: "Inter";
               font-size: 14px;
               font-weight: 400;
-              color: white;
-              opacity: is_current_value ? 100% : 65%;
               overflow: elide;
-              vertical-alignment: center;
               horizontal-stretch: 1;
-              text: option.label;
+              vertical-alignment: center;
             }
 
             if is_current_value: Image {
