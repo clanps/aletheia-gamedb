@@ -92,6 +92,8 @@ export component Settings {
     Rectangle { height: 1px; background: #45475a; }
 
     VerticalLayout {
+      z: 1; // Dropdown needs to render over other components.
+
       spacing: 16px;
 
       HorizontalLayout {
@@ -146,9 +148,7 @@ export component Settings {
           options: SettingsScreenLogic.steam_account_options;
           value: SettingsScreenLogic.config.steam_account_id;
           placeholder: @tr("Select an account...");
-          changed(value) => {
-            SettingsScreenLogic.config.steam_account_id = value;
-          }
+          changed(value) => { SettingsScreenLogic.config.steam_account_id = value; }
         }
       }
     }
