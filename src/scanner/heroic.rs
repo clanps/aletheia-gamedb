@@ -51,7 +51,10 @@ impl Scanner for HeroicScanner {
             return games;
         }
 
-        let gog_manifest: HeroicGOGManifest = serde_json::from_reader(File::open(gog_manifest).unwrap()).unwrap();
+        let Ok(gog_manifest) = serde_json::from_reader::<File, HeroicGOGManifest>(File::open(gog_manifest).unwrap()) else {
+            log::error!("Failed to parse GOG manifest.");
+            return games;
+        };
 
         for game in gog_manifest.installed {
             let game_data = heroic_path.join("gogdlConfig/heroic_gogdl/manifests").join(&game.app_id);
