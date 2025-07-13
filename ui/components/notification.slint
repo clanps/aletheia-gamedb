@@ -13,7 +13,7 @@ export component Notification inherits Rectangle {
   in property <NotificationType> notification_type: NotificationType.INFO;
   in property <duration> show_duration: 2500ms;
   in property <length> target_x;
-  callback closed();
+  callback closed <=> close_timer.triggered;
 
   width: notification_layout.preferred-width + 24px;
   height: notification_layout.preferred-height + 16px;
@@ -42,12 +42,9 @@ export component Notification inherits Rectangle {
     }
   }
 
-  Timer {
+  close_timer := Timer {
     running: root.should_close;
     interval: 250ms;
-    triggered() => {
-      root.closed();
-    }
   }
 
   changed visible => {
