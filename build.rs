@@ -3,7 +3,8 @@
 
 fn main() {
     let config = slint_build::CompilerConfiguration::new()
-        .with_style("material-dark".into());
+        .with_style("material-dark".into())
+        .with_bundled_translations("ui/locale");
 
     slint_build::compile_with_config("ui/app.slint", config).expect("Slint build failed.");
 
