@@ -53,21 +53,21 @@ export component About {
         }
 
         Text {
-          text: @tr("Version: ") + AppLogic.version;
+          text: @tr("Version: {}", AppLogic.version) + AppLogic.version;
           color: #a6adc8;
           font-family: "Inter";
           font-size: 14px;
         }
 
         Text {
-          text: @tr("License: ") + "AGPL-3.0";
+          text: @tr("License: {}", "AGPL-3.0");
           color: #a6adc8;
           font-family: "Inter";
           font-size: 14px;
         }
 
         Text {
-          text: @tr("Logo by: ") + "@clanps:usesarchbtw.lol";
+          text: @tr("Logo by: {}", "@clanps:usesarchbtw.lol");
           color: #a6adc8;
           font-family: "Inter";
           font-size: 14px;

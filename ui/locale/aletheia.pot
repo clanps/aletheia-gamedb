@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2025-07-14 07:08+0000\n"
+"POT-Creation-Date: 2025-07-14 07:16+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -169,17 +169,17 @@ msgstr ""
 
 #: ui/screens/about.slint:56
 msgctxt "About"
-msgid "Version: "
+msgid "Version: {}"
 msgstr ""
 
 #: ui/screens/about.slint:63
 msgctxt "About"
-msgid "License: "
+msgid "License: {}"
 msgstr ""
 
 #: ui/screens/about.slint:70
 msgctxt "About"
-msgid "Logo by: "
+msgid "Logo by: {}"
 msgstr ""
 
 #: ui/screens/about.slint:83
