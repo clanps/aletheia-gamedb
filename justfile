@@ -23,8 +23,8 @@ uninstall_flatpak:
   flatpak uninstall moe.spencer.Aletheia
 
 generate_translations:
-  find -name \*.slint | xargs slint-tr-extractor -o aletheia.pot
+  find -name \*.slint | xargs slint-tr-extractor -o ui/locale/aletheia.pot
 
 update_translations:
-  find -name \*.slint | xargs slint-tr-extractor -o aletheia.pot
+  find -name \*.slint | xargs slint-tr-extractor -o ui/locale/aletheia.pot
   find ui/locale/*/LC_MESSAGES -name "aletheia.po" | xargs -I {} msgmerge -U {} aletheia.pot
