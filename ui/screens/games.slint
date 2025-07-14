@@ -58,7 +58,7 @@ export component Games {
       search_bar := SearchBar {
         width: 430px;
         height: 45px;
-        placeholder-text: @tr("Search games...");
+        placeholder-text: @tr("Search games…");
         changed(text) => { GamesScreenLogic.filter(text); }
       }
     }
