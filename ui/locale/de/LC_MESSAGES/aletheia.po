@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2025-07-14 02:24+0000\n"
+"POT-Creation-Date: 2025-07-14 07:16+0000\n"
 "PO-Revision-Date: 2025-07-14 05:16+0000\n"
 "Last-Translator: Spencer <spencer-0003@users.noreply.hosted.weblate.org>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/aletheia/ui/de/>\n"
@@ -67,9 +67,14 @@ msgctxt "Settings"
 msgid "Choose the Steam account for your games"
 msgstr ""
 
+#: ui/screens/settings.slint:140
+msgctxt "Settings"
+msgid "Only affects games that save in the Steam userdata directory"
+msgstr ""
+
 #: ui/screens/settings.slint:152
 msgctxt "Settings"
-msgid "Select an account..."
+msgid "Select an account…"
 msgstr ""
 
 #: ui/screens/settings.slint:179
@@ -119,40 +124,35 @@ msgstr ""
 
 #: ui/screens/games.slint:61
 msgctxt "Games"
-msgid "Search games..."
+msgid "Search games…"
 msgstr ""
 
 #: ui/screens/games.slint:67
 msgctxt "Games"
-msgid "Selecting "
+msgid "Selecting {} / {} games"
 msgstr ""
 
-#: ui/screens/games.slint:70
-msgctxt "Games"
-msgid " games"
-msgstr ""
-
-#: ui/screens/games.slint:84
+#: ui/screens/games.slint:81
 msgctxt "Games"
 msgid "Backup"
 msgstr ""
 
-#: ui/screens/games.slint:92
+#: ui/screens/games.slint:89
 msgctxt "Games"
 msgid "Restore"
 msgstr ""
 
-#: ui/screens/games.slint:101
+#: ui/screens/games.slint:98
 msgctxt "Games"
 msgid "Clear Selection"
 msgstr ""
 
-#: ui/screens/games.slint:101
+#: ui/screens/games.slint:98
 msgctxt "Games"
 msgid "Select All"
 msgstr ""
 
-#: ui/screens/games.slint:102
+#: ui/screens/games.slint:99
 msgctxt "Games"
 msgid "{} Filtered"
 msgstr ""
@@ -169,17 +169,17 @@ msgstr ""
 
 #: ui/screens/about.slint:56
 msgctxt "About"
-msgid "Version: "
+msgid "Version: {}"
 msgstr ""
 
 #: ui/screens/about.slint:63
 msgctxt "About"
-msgid "License: "
+msgid "License: {}"
 msgstr ""
 
 #: ui/screens/about.slint:70
 msgctxt "About"
-msgid "Logo by: "
+msgid "Logo by: {}"
 msgstr ""
 
 #: ui/screens/about.slint:83
