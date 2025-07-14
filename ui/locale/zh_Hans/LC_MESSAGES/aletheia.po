@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2025-07-14 02:53+0000\n"
+"POT-Creation-Date: 2025-07-14 07:16+0000\n"
 "PO-Revision-Date: 2025-07-14 06:52+0000\n"
 "Last-Translator: \"Alioc.\" <hit.177411245@gmail.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://hosted.weblate.org/"
@@ -68,9 +68,17 @@ msgctxt "Settings"
 msgid "Choose the Steam account for your games"
 msgstr "为您的游戏选择 Steam 账号"
 
-#: ui/screens/settings.slint:152
+#: ui/screens/settings.slint:140
 msgctxt "Settings"
-msgid "Select an account..."
+msgid "Only affects games that save in the Steam userdata directory"
+msgstr ""
+
+#: ui/screens/settings.slint:152
+#, fuzzy
+#| msgctxt "Settings"
+#| msgid "Select an account..."
+msgctxt "Settings"
+msgid "Select an account…"
 msgstr "选择一个账号…"
 
 #: ui/screens/settings.slint:179
@@ -119,41 +127,42 @@ msgid "Refresh"
 msgstr "刷新"
 
 #: ui/screens/games.slint:61
+#, fuzzy
+#| msgctxt "Games"
+#| msgid "Search games..."
 msgctxt "Games"
-msgid "Search games..."
+msgid "Search games…"
 msgstr "搜索游戏…"
 
 #: ui/screens/games.slint:67
+#, fuzzy
+#| msgctxt "Games"
+#| msgid "Selecting "
 msgctxt "Games"
-msgid "Selecting "
+msgid "Selecting {} / {} games"
 msgstr "选择 "
 
-#: ui/screens/games.slint:70
-msgctxt "Games"
-msgid " games"
-msgstr " 游戏"
-
-#: ui/screens/games.slint:84
+#: ui/screens/games.slint:81
 msgctxt "Games"
 msgid "Backup"
 msgstr "备份"
 
-#: ui/screens/games.slint:92
+#: ui/screens/games.slint:89
 msgctxt "Games"
 msgid "Restore"
 msgstr "恢复"
 
-#: ui/screens/games.slint:101
+#: ui/screens/games.slint:98
 msgctxt "Games"
 msgid "Clear Selection"
 msgstr "清除选择"
 
-#: ui/screens/games.slint:101
+#: ui/screens/games.slint:98
 msgctxt "Games"
 msgid "Select All"
 msgstr "全选"
 
-#: ui/screens/games.slint:102
+#: ui/screens/games.slint:99
 msgctxt "Games"
 msgid "{} Filtered"
 msgstr "{} 已过滤"
@@ -169,18 +178,27 @@ msgid "Aletheia is an open-source game save backup tool"
 msgstr "Aletheia 是一款开源的游戏保存备份工具"
 
 #: ui/screens/about.slint:56
+#, fuzzy
+#| msgctxt "About"
+#| msgid "Version: "
 msgctxt "About"
-msgid "Version: "
+msgid "Version: {}"
 msgstr "版本： "
 
 #: ui/screens/about.slint:63
+#, fuzzy
+#| msgctxt "About"
+#| msgid "License: "
 msgctxt "About"
-msgid "License: "
+msgid "License: {}"
 msgstr "许可证： "
 
 #: ui/screens/about.slint:70
+#, fuzzy
+#| msgctxt "About"
+#| msgid "Logo by: "
 msgctxt "About"
-msgid "Logo by: "
+msgid "Logo by: {}"
 msgstr "Logo 由： "
 
 #: ui/screens/about.slint:83
@@ -208,8 +226,9 @@ msgctxt "About"
 msgid ""
 "Slint is a declarative GUI toolkit to build native user interfaces for Rust, "
 "C++, or JavaScript apps"
-msgstr "Slint 是一个声明式 GUI 工具包，用于为 Rust、C++ 或 JavaScript "
-"应用程序构建本地用户界面"
+msgstr ""
+"Slint 是一个声明式 GUI 工具包，用于为 Rust、C++ 或 JavaScript 应用程序构建本"
+"地用户界面"
 
 #: ui/screens/about.slint:152
 msgctxt "About"
@@ -235,3 +254,7 @@ msgstr "关于"
 msgctxt "Dropdown"
 msgid "Select an option..."
 msgstr "选择一个选项…"
+
+#~ msgctxt "Games"
+#~ msgid " games"
+#~ msgstr " 游戏"
