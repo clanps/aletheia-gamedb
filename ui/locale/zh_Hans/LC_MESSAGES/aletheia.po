@@ -76,7 +76,7 @@ msgstr "选择一个账号…"
 #: ui/screens/settings.slint:179
 msgctxt "Settings"
 msgid "GameDB"
-msgstr "游戏数据库"
+msgstr "GameDB"
 
 #: ui/screens/settings.slint:193
 msgctxt "Settings"
@@ -96,7 +96,7 @@ msgstr "更新"
 #: ui/screens/settings.slint:243
 msgctxt "Settings"
 msgid "Configure automatic update checking"
-msgstr "配置自动更新检查"
+msgstr "配置自动检查更新"
 
 #: ui/screens/settings.slint:254
 msgctxt "Settings"
@@ -156,7 +156,7 @@ msgstr "全选"
 #: ui/screens/games.slint:102
 msgctxt "Games"
 msgid "{} Filtered"
-msgstr "{} 过滤"
+msgstr "{} 已过滤"
 
 #: ui/screens/about.slint:35
 msgctxt "About"
