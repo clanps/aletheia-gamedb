@@ -1,7 +1,6 @@
 // SPDX-FileCopyrightText: 2025 Spencer
 // SPDX-License-Identifier: AGPL-3.0-only
 
-use crate::gamedb;
 use std::fs::File;
 use std::path::{Path, PathBuf};
 use super::{Game, Scanner};
