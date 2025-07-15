@@ -1,16 +1,17 @@
 // SPDX-FileCopyrightText: 2025 Spencer
 // SPDX-License-Identifier: AGPL-3.0-only
 
-use sha2::{Sha512, Digest};
+use blake3::Hasher;
 use std::fs::File;
-use std::io::copy;
+use std::io::{BufReader, copy};
 use std::path::Path;
 
 pub fn hash_file(file_path: &Path) -> String {
-    let mut file_handle = File::open(file_path).unwrap();
-    let mut hasher = Sha512::new();
+    let file = File::open(file_path).unwrap();
+    let mut reader = BufReader::new(file);
+    let mut hasher = Hasher::new();
 
-    copy(&mut file_handle, &mut hasher).unwrap();
+    copy(&mut reader, &mut hasher).unwrap();
 
-    format!("{:x}", hasher.finalize())
+    hasher.finalize().to_hex().to_string()
 }
