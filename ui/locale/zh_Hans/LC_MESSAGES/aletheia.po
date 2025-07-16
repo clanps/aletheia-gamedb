@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2025-07-14 07:26+0000\n"
-"PO-Revision-Date: 2025-07-14 06:52+0000\n"
+"PO-Revision-Date: 2025-07-16 06:28+0000\n"
 "Last-Translator: \"Alioc.\" <hit.177411245@gmail.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://hosted.weblate.org/"
 "projects/aletheia/ui/zh_Hans/>\n"
@@ -71,7 +71,7 @@ msgstr "为您的游戏选择 Steam 账号"
 #: ui/screens/settings.slint:140
 msgctxt "Settings"
 msgid "Only affects games that save in the Steam userdata directory"
-msgstr ""
+msgstr "仅影响在 Steam 用户数据目录中保存的游戏"
 
 #: ui/screens/settings.slint:152
 #, fuzzy
@@ -140,7 +140,7 @@ msgstr "搜索游戏…"
 #| msgid "Selecting "
 msgctxt "Games"
 msgid "Selecting {} / {} games"
-msgstr "选择 "
+msgstr "选择 {} / {} 游戏"
 
 #: ui/screens/games.slint:81
 msgctxt "Games"
@@ -183,7 +183,7 @@ msgstr "Aletheia 是一款开源的游戏保存备份工具"
 #| msgid "Version: "
 msgctxt "About"
 msgid "Version: {}"
-msgstr "版本： "
+msgstr "版本: {}"
 
 #: ui/screens/about.slint:63
 #, fuzzy
@@ -191,7 +191,7 @@ msgstr "版本： "
 #| msgid "License: "
 msgctxt "About"
 msgid "License: {}"
-msgstr "许可证： "
+msgstr "许可证: {}"
 
 #: ui/screens/about.slint:70
 #, fuzzy
@@ -199,7 +199,7 @@ msgstr "许可证： "
 #| msgid "Logo by: "
 msgctxt "About"
 msgid "Logo by: {}"
-msgstr "Logo 由： "
+msgstr "Logo 由: {}"
 
 #: ui/screens/about.slint:83
 msgctxt "About"
@@ -226,9 +226,8 @@ msgctxt "About"
 msgid ""
 "Slint is a declarative GUI toolkit to build native user interfaces for Rust, "
 "C++, or JavaScript apps"
-msgstr ""
-"Slint 是一个声明式 GUI 工具包，用于为 Rust、C++ 或 JavaScript 应用程序构建本"
-"地用户界面"
+msgstr "Slint 是一个声明式 GUI 工具包，用于为 Rust、C++ 或 JavaScript "
+"应用程序构建本地用户界面"
 
 #: ui/screens/about.slint:152
 msgctxt "About"
