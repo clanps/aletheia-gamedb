@@ -214,29 +214,29 @@ msgid ""
 msgstr ""
 "Slint — це декларативний інструментарій графічного інтерфейсу користувача "
 "для створення нативних інтерфейсів користувача для застосунків на Rust, C++ "
-"або JavaScript."
+"або JavaScript"
 
 #: ui/screens/about.slint:152
 msgctxt "About"
 msgid "Learn more about Slint"
-msgstr ""
+msgstr "Детальніше про Slint"
 
 #: ui/app.slint:38
 msgctxt "App"
 msgid "Games"
-msgstr ""
+msgstr "Ігри"
 
 #: ui/app.slint:51
 msgctxt "App"
 msgid "Settings"
-msgstr ""
+msgstr "Налаштування"
 
 #: ui/app.slint:58
 msgctxt "App"
 msgid "About"
-msgstr ""
+msgstr "Про застосунок"
 
 #: ui/components/dropdown.slint:11
 msgctxt "Dropdown"
 msgid "Select an option…"
-msgstr ""
+msgstr "Оберіть варіант…"
