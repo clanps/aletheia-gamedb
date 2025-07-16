@@ -72,17 +72,17 @@ msgstr "Виберіть обліковий запис Steam для своїх �
 #: ui/screens/settings.slint:140
 msgctxt "Settings"
 msgid "Only affects games that save in the Steam userdata directory"
-msgstr "Впливає тільки на ігри, які зберігаються в каталозі userdata Steam."
+msgstr "Впливає тільки на ігри, які зберігаються в каталозі userdata Steam"
 
 #: ui/screens/settings.slint:152
 msgctxt "Settings"
 msgid "Select an account…"
-msgstr ""
+msgstr "Виберіть обліковий запис…"
 
 #: ui/screens/settings.slint:179
 msgctxt "Settings"
 msgid "GameDB"
-msgstr ""
+msgstr "GameDB"
 
 #: ui/screens/settings.slint:193
 msgctxt "Settings"
