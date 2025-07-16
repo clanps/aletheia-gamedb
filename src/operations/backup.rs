@@ -75,7 +75,7 @@ pub fn backup_game(game: &Game, config: &Config, entry: &GameDbEntry) -> Result<
         let should_backup = existing_manifest.as_ref().is_none_or(|manifest| {
             manifest.files.iter()
                 .find(|m| m.path == shrunk_file_path).is_none_or(|existing| {
-                    existing.hash != hash_file(&file) && metadata(&file).unwrap().modified().unwrap() > existing.modified
+                    metadata(&file).unwrap().modified().unwrap() > existing.modified && existing.hash != hash_file(&file)
                 })
         });
 
