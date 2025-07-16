@@ -78,37 +78,37 @@ msgstr ""
 #: ui/screens/settings.slint:152
 msgctxt "Settings"
 msgid "Select an account…"
-msgstr "Seleccione una cuenta"
+msgstr "Seleccione una cuenta…"
 
 #: ui/screens/settings.slint:179
 msgctxt "Settings"
 msgid "GameDB"
-msgstr ""
+msgstr "GameDB"
 
 #: ui/screens/settings.slint:193
 msgctxt "Settings"
 msgid "Download the latest copy of the GameDB"
-msgstr ""
+msgstr "Descargar la última copia de GameDB"
 
 #: ui/screens/settings.slint:202
 msgctxt "Settings"
 msgid "Update GameDB"
-msgstr ""
+msgstr "Actualizar GameDB"
 
 #: ui/screens/settings.slint:229
 msgctxt "Settings"
 msgid "Updates"
-msgstr ""
+msgstr "Actualizaciones"
 
 #: ui/screens/settings.slint:243
 msgctxt "Settings"
 msgid "Configure automatic update checking"
-msgstr ""
+msgstr "Configurar la comprobación automática de actualizaciones"
 
 #: ui/screens/settings.slint:254
 msgctxt "Settings"
 msgid "Check for updates automatically"
-msgstr ""
+msgstr "Comprobar las actualizaciones automáticamente"
 
 #: ui/screens/settings.slint:272
 msgctxt "Settings"
