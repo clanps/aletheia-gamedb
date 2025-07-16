@@ -6,7 +6,7 @@ use crate::dirs::{expand_path, shrink_path};
 use crate::file::hash_file;
 use crate::gamedb::{GameDbEntry, GameInfo, FileMetadata};
 use crate::scanner::Game;
-use std::fs::{copy, create_dir_all, File, metadata, write};
+use std::fs::{copy, create_dir_all, File, metadata};
 use std::path::Path;
 use glob::glob;
 
@@ -108,7 +108,7 @@ pub fn backup_game(game: &Game, config: &Config, entry: &GameDbEntry) -> Result<
         files: game_files
     };
 
-    write(&manifest_path, serde_yaml::to_string(&game_metadata).unwrap()).unwrap();
+    serde_yaml::to_writer(File::create(&manifest_path).unwrap(), &game_metadata).unwrap();
 
     Ok(true)
 }
