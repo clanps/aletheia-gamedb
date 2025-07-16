@@ -22,57 +22,57 @@ msgstr "Доступне оновлення"
 #: ui/updater.slint:51
 msgctxt "Updater"
 msgid "Current"
-msgstr "Поточний"
+msgstr "Поточне"
 
 #: ui/updater.slint:81
 msgctxt "Updater"
 msgid "New"
-msgstr ""
+msgstr "Нове"
 
 #: ui/updater.slint:105
 msgctxt "Updater"
 msgid "What's New"
-msgstr ""
+msgstr "Що нового"
 
 #: ui/updater.slint:143
 msgctxt "Updater"
 msgid "Skip"
-msgstr ""
+msgstr "Пропустити"
 
 #: ui/updater.slint:150
 msgctxt "Updater"
 msgid "Download"
-msgstr ""
+msgstr "Завантажити"
 
 #: ui/screens/settings.slint:55
 msgctxt "Settings"
 msgid "Game Data Location"
-msgstr ""
+msgstr "Розташування даних гри"
 
 #: ui/screens/settings.slint:69
 msgctxt "Settings"
 msgid "Choose where your games will be saved"
-msgstr ""
+msgstr "Виберіть, де будуть зберігатися ваші ігри"
 
 #: ui/screens/settings.slint:87
 msgctxt "Settings"
 msgid "Browse"
-msgstr ""
+msgstr "Переглянути"
 
 #: ui/screens/settings.slint:116
 msgctxt "Settings"
 msgid "Steam Account"
-msgstr ""
+msgstr "Обліковий запис Steam"
 
 #: ui/screens/settings.slint:133
 msgctxt "Settings"
 msgid "Choose the Steam account for your games"
-msgstr ""
+msgstr "Виберіть обліковий запис Steam для своїх ігор"
 
 #: ui/screens/settings.slint:140
 msgctxt "Settings"
 msgid "Only affects games that save in the Steam userdata directory"
-msgstr ""
+msgstr "Впливає тільки на ігри, які зберігаються в каталозі userdata Steam."
 
 #: ui/screens/settings.slint:152
 msgctxt "Settings"
