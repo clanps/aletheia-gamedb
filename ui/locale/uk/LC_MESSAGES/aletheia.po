@@ -169,42 +169,42 @@ msgctxt "About"
 msgid "Aletheia is an open-source game save backup tool"
 msgstr ""
 "Aletheia — це інструмент для резервного копіювання збережених ігор із "
-"відкритим кодом."
+"відкритим кодом"
 
 #: ui/screens/about.slint:56
 msgctxt "About"
 msgid "Version: {}"
-msgstr ""
+msgstr "Версія: {}"
 
 #: ui/screens/about.slint:63
 msgctxt "About"
 msgid "License: {}"
-msgstr ""
+msgstr "Ліцензія: {}"
 
 #: ui/screens/about.slint:70
 msgctxt "About"
 msgid "Logo by: {}"
-msgstr ""
+msgstr "Лого від: {}"
 
 #: ui/screens/about.slint:83
 msgctxt "About"
 msgid "View Source Code"
-msgstr ""
+msgstr "Переглянути відкритий код"
 
 #: ui/screens/about.slint:90
 msgctxt "About"
 msgid "View License"
-msgstr ""
+msgstr "Переглянути ліцензію"
 
 #: ui/screens/about.slint:97
 msgctxt "About"
 msgid "Support the Project"
-msgstr ""
+msgstr "Підтримати проєкт"
 
 #: ui/screens/about.slint:125
 msgctxt "About"
 msgid "Built with Slint"
-msgstr ""
+msgstr "Створено за допомогою Slint"
 
 #: ui/screens/about.slint:139
 msgctxt "About"
@@ -212,6 +212,9 @@ msgid ""
 "Slint is a declarative GUI toolkit to build native user interfaces for Rust, "
 "C++, or JavaScript apps"
 msgstr ""
+"Slint — це декларативний інструментарій графічного інтерфейсу користувача "
+"для створення нативних інтерфейсів користувача для застосунків на Rust, C++ "
+"або JavaScript."
 
 #: ui/screens/about.slint:152
 msgctxt "About"
