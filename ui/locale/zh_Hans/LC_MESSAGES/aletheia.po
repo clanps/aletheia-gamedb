@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2025-07-14 07:26+0000\n"
-"PO-Revision-Date: 2025-07-16 06:28+0000\n"
-"Last-Translator: \"Alioc.\" <hit.177411245@gmail.com>\n"
+"PO-Revision-Date: 2025-07-16 06:59+0000\n"
+"Last-Translator: Spencer <spencer-0003@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Chinese (Simplified Han script) <https://hosted.weblate.org/"
 "projects/aletheia/ui/zh_Hans/>\n"
 "Language: zh_Hans\n"
@@ -74,9 +74,6 @@ msgid "Only affects games that save in the Steam userdata directory"
 msgstr "仅影响在 Steam 用户数据目录中保存的游戏"
 
 #: ui/screens/settings.slint:152
-#, fuzzy
-#| msgctxt "Settings"
-#| msgid "Select an account..."
 msgctxt "Settings"
 msgid "Select an account…"
 msgstr "选择一个账号…"
@@ -127,17 +124,11 @@ msgid "Refresh"
 msgstr "刷新"
 
 #: ui/screens/games.slint:61
-#, fuzzy
-#| msgctxt "Games"
-#| msgid "Search games..."
 msgctxt "Games"
 msgid "Search games…"
 msgstr "搜索游戏…"
 
 #: ui/screens/games.slint:67
-#, fuzzy
-#| msgctxt "Games"
-#| msgid "Selecting "
 msgctxt "Games"
 msgid "Selecting {} / {} games"
 msgstr "选择 {} / {} 游戏"
@@ -178,25 +169,16 @@ msgid "Aletheia is an open-source game save backup tool"
 msgstr "Aletheia 是一款开源的游戏保存备份工具"
 
 #: ui/screens/about.slint:56
-#, fuzzy
-#| msgctxt "About"
-#| msgid "Version: "
 msgctxt "About"
 msgid "Version: {}"
 msgstr "版本: {}"
 
 #: ui/screens/about.slint:63
-#, fuzzy
-#| msgctxt "About"
-#| msgid "License: "
 msgctxt "About"
 msgid "License: {}"
 msgstr "许可证: {}"
 
 #: ui/screens/about.slint:70
-#, fuzzy
-#| msgctxt "About"
-#| msgid "Logo by: "
 msgctxt "About"
 msgid "Logo by: {}"
 msgstr "Logo 由: {}"
@@ -250,9 +232,6 @@ msgid "About"
 msgstr "关于"
 
 #: ui/components/dropdown.slint:11
-#, fuzzy
-#| msgctxt "Dropdown"
-#| msgid "Select an option..."
 msgctxt "Dropdown"
 msgid "Select an option…"
 msgstr "选择一个选项…"
