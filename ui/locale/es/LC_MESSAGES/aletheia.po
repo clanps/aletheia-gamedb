@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2025-07-14 07:26+0000\n"
-"PO-Revision-Date: 2025-07-15 04:28+0000\n"
+"PO-Revision-Date: 2025-07-16 06:28+0000\n"
 "Last-Translator: Sukaretto <sukarett2@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/aletheia/ui/es/>"
 "\n"
@@ -78,7 +78,7 @@ msgstr ""
 #: ui/screens/settings.slint:152
 msgctxt "Settings"
 msgid "Select an account…"
-msgstr ""
+msgstr "Seleccione una cuenta"
 
 #: ui/screens/settings.slint:179
 msgctxt "Settings"
