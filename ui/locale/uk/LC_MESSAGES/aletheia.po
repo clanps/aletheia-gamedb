@@ -87,87 +87,89 @@ msgstr "GameDB"
 #: ui/screens/settings.slint:193
 msgctxt "Settings"
 msgid "Download the latest copy of the GameDB"
-msgstr ""
+msgstr "Завантажити останню версію GameDB"
 
 #: ui/screens/settings.slint:202
 msgctxt "Settings"
 msgid "Update GameDB"
-msgstr ""
+msgstr "Оновити GameDB"
 
 #: ui/screens/settings.slint:229
 msgctxt "Settings"
 msgid "Updates"
-msgstr ""
+msgstr "Оновлення"
 
 #: ui/screens/settings.slint:243
 msgctxt "Settings"
 msgid "Configure automatic update checking"
-msgstr ""
+msgstr "Налаштування автоматичної перевірки оновлень"
 
 #: ui/screens/settings.slint:254
 msgctxt "Settings"
 msgid "Check for updates automatically"
-msgstr ""
+msgstr "Автоматично перевіряти наявність оновлень"
 
 #: ui/screens/settings.slint:272
 msgctxt "Settings"
 msgid "Save"
-msgstr ""
+msgstr "Зберегти"
 
 #: ui/screens/games.slint:30
 msgctxt "Games"
 msgid "No games found"
-msgstr ""
+msgstr "Ігор не знайдено"
 
 #: ui/screens/games.slint:44
 msgctxt "Games"
 msgid "Refresh"
-msgstr ""
+msgstr "Оновити"
 
 #: ui/screens/games.slint:61
 msgctxt "Games"
 msgid "Search games…"
-msgstr ""
+msgstr "Пошук ігор…"
 
 #: ui/screens/games.slint:67
 msgctxt "Games"
 msgid "Selecting {} / {} games"
-msgstr ""
+msgstr "Вибрано {} / {} ігор"
 
 #: ui/screens/games.slint:81
 msgctxt "Games"
 msgid "Backup"
-msgstr ""
+msgstr "Резервне копіювання"
 
 #: ui/screens/games.slint:89
 msgctxt "Games"
 msgid "Restore"
-msgstr ""
+msgstr "Відновити"
 
 #: ui/screens/games.slint:98
 msgctxt "Games"
 msgid "Clear Selection"
-msgstr ""
+msgstr "Зняти виділення"
 
 #: ui/screens/games.slint:98
 msgctxt "Games"
 msgid "Select All"
-msgstr ""
+msgstr "Вибрати все"
 
 #: ui/screens/games.slint:99
 msgctxt "Games"
 msgid "{} Filtered"
-msgstr ""
+msgstr "{} відфільтровано"
 
 #: ui/screens/about.slint:35
 msgctxt "About"
 msgid "Application Info"
-msgstr ""
+msgstr "Інформація про застосунок"
 
 #: ui/screens/about.slint:49
 msgctxt "About"
 msgid "Aletheia is an open-source game save backup tool"
 msgstr ""
+"Aletheia — це інструмент для резервного копіювання збережених ігор із "
+"відкритим кодом."
 
 #: ui/screens/about.slint:56
 msgctxt "About"
