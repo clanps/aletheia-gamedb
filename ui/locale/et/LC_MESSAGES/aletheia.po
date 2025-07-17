@@ -2,49 +2,51 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2025-07-14 07:26+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2025-07-17 08:34+0000\n"
+"Last-Translator: Priit Jõerüüt <jrthwlate@users.noreply.hosted.weblate.org>\n"
+"Language-Team: Estonian <https://hosted.weblate.org/projects/aletheia/ui/et/>"
+"\n"
 "Language: et\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.13-dev\n"
 
 #: ui/updater.slint:28
 msgctxt "Updater"
 msgid "Update Available"
-msgstr ""
+msgstr "Uus versioon on saadaval"
 
 #: ui/updater.slint:51
 msgctxt "Updater"
 msgid "Current"
-msgstr ""
+msgstr "Praegune"
 
 #: ui/updater.slint:81
 msgctxt "Updater"
 msgid "New"
-msgstr ""
+msgstr "Uus"
 
 #: ui/updater.slint:105
 msgctxt "Updater"
 msgid "What's New"
-msgstr ""
+msgstr "Mida on meil uut"
 
 #: ui/updater.slint:143
 msgctxt "Updater"
 msgid "Skip"
-msgstr ""
+msgstr "Jäta vahele"
 
 #: ui/updater.slint:150
 msgctxt "Updater"
 msgid "Download"
-msgstr ""
+msgstr "Laadi alla"
 
 #: ui/screens/settings.slint:55
 msgctxt "Settings"
 msgid "Game Data Location"
-msgstr ""
+msgstr "Mänguandmete asukoht"
 
 #: ui/screens/settings.slint:69
 msgctxt "Settings"
