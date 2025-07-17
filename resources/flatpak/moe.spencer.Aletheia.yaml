@@ -8,7 +8,7 @@ sdk-extensions:
 build-options:
   append-path: /usr/lib/sdk/rust-stable/bin
   env:
-    CARGO_HOME: ${FLATPAK_BUILDER_BUILDDIR}/cargo
+    CARGO_HOME: /run/build/aletheia/cargo
   build-args:
     - --share=network
 
@@ -39,11 +39,11 @@ modules:
     buildsystem: simple
     build-commands:
       - cargo build --release --features updater
-      - install -Dm755 target/release/aletheia ${FLATPAK_DEST}/bin/aletheia
+      - install -Dm755 ${FLATPAK_BUILDER_BUILDDIR}/target/release/aletheia ${FLATPAK_DEST}/bin/aletheia
     sources:
       - type: dir
         path: ../../
     post-install:
-      - install -Dm644 ${FLATPAK_BUILDER_BUILDDIR}/resources/linux/moe.spencer.Aletheia.desktop ${FLATPAK_DEST}/share/applications
-      - install -Dm644 ${FLATPAK_BUILDER_BUILDDIR}/resources/logo/moe.spencer.Aletheia.png ${FLATPAK_DEST}/share/icons/hicolor/512x512/apps
-      - install -Dm644 ${FLATPAK_BUILDER_BUILDDIR}/resources/linux/moe.spencer.Aletheia.metainfo.xml ${FLATPAK_DEST}/share/metainfo
+      - install -Dm644 ${FLATPAK_BUILDER_BUILDDIR}/resources/linux/moe.spencer.Aletheia.desktop ${FLATPAK_DEST}/share/applications/moe.spencer.Aletheia.desktop
+      - install -Dm644 ${FLATPAK_BUILDER_BUILDDIR}/resources/logo/moe.spencer.Aletheia.png ${FLATPAK_DEST}/share/icons/hicolor/512x512/apps/moe.spencer.Aletheia.png
+      - install -Dm644 ${FLATPAK_BUILDER_BUILDDIR}/resources/linux/moe.spencer.Aletheia.metainfo.xml ${FLATPAK_DEST}/share/metainfo/moe.spencer.Aletheia.metainfo.xml
