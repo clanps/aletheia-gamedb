@@ -23,16 +23,16 @@ jobs:
       - name: Setup Rust toolchain
         uses: dtolnay/rust-toolchain@stable
 
-      - name: Setup Rust cache
-        uses: Swatinem/rust-cache@v2
-        with:
-          key: ${{ matrix.os }}-${{ matrix.target }}
-
       - name: Install dependencies
         run: sudo apt update && sudo apt install -y qt6-base-dev
 
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Setup Rust cache
+        uses: Swatinem/rust-cache@v2
+        with:
+          key: ${{ matrix.os }}-${{ matrix.target }}
 
       - name: Build binary
         run: cargo build --release --features updater --target=${{ matrix.target }}
@@ -87,11 +87,6 @@ jobs:
       - name: Setup Rust toolchain
         uses: dtolnay/rust-toolchain@stable
 
-      - name: Setup Rust cache
-        uses: Swatinem/rust-cache@v2
-        with:
-          key: ${{ matrix.os }}-${{ matrix.target }}
-
       - name: Install SQLite
         shell: cmd
         run: |
@@ -102,6 +97,11 @@ jobs:
 
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Setup Rust cache
+        uses: Swatinem/rust-cache@v2
+        with:
+          key: ${{ matrix.os }}-${{ matrix.target }}
 
       - name: Build
         run: $env:SQLITE3_LIB_DIR="C:\ProgramData\chocolatey\lib\SQLite\tools"; cargo build --release --features updater --target=${{ matrix.target }}; Rename-Item "target\${{ matrix.target }}\release\aletheia.exe" "${{ matrix.artifact }}"
