@@ -247,7 +247,7 @@ pub fn run(config: &AletheiaConfig) {
                 }
 
                 for ui_game in &selected_games {
-                    let game_name = ui_game.name.to_string();
+                    let game_name = &ui_game.name;
                     let game_dir = cfg.save_dir.join(game_name.replace(':', ""));
 
                     if !game_dir.exists() || !game_dir.is_dir() {
@@ -291,11 +291,12 @@ pub fn run(config: &AletheiaConfig) {
                     .pick_folder()
                     .await
                 {
-                    let mut cfg = app.global::<SettingsScreenLogic>().get_config();
+                    let settings_screen_logic = app.global::<SettingsScreenLogic>();
+                    let mut cfg = settings_screen_logic.get_config();
 
                     cfg.save_dir = SharedString::from(folder.path().to_string_lossy().as_ref());
 
-                    app.global::<SettingsScreenLogic>().set_config(cfg);
+                    settings_screen_logic.set_config(cfg);
                 }
             }).unwrap();
         }
