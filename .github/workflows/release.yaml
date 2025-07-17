@@ -24,7 +24,7 @@ jobs:
         uses: dtolnay/rust-toolchain@stable
 
       - name: Install dependencies
-        run: sudo apt update && sudo apt install -y qt6-base-dev
+        run: sudo apt update && sudo apt install -y qt6-base-dev libwayland-dev
 
       - name: Checkout code
         uses: actions/checkout@v4
