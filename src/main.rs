@@ -7,6 +7,7 @@
 #![deny(clippy::allow_attributes_without_reason)]
 #![deny(clippy::string_to_string)]
 #![deny(clippy::get_unwrap)]
+#![deny(clippy::str_to_string)]
 #![allow(clippy::unreadable_literal, reason = "'Readable' literals are ugly")]
 
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]

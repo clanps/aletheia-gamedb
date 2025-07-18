@@ -75,9 +75,7 @@ pub fn parse() -> HashMap<String, GameDbEntry> {
         serde_yaml::from_str(GAMEDB_YAML).expect("Failed to parse GameDB.")
     };
 
-    for custom_db in load_custom_db_cache().databases.values() {
-        db.extend(custom_db.data.clone());
-    }
+    db.extend(load_custom_db_cache().databases.into_values().flat_map(|custom_db| custom_db.data));
 
     db
 }
@@ -97,7 +95,7 @@ pub fn get_installed_games() -> Vec<Game> {
 
     games.into_iter()
         .filter_map(|mut game| {
-            let clean_name = game.name.replace("™", "").replace("®", "").trim().to_string();
+            let clean_name = game.name.replace("™", "").replace("®", "").trim().to_owned();
             db.contains_key(&clean_name).then(|| {
                 game.name = clean_name;
                 game
@@ -153,7 +151,6 @@ fn load_custom_db_cache() -> CustomDbCache {
     }
 }
 
-// TODO: Make async
 pub fn update_custom(cfg: &Config) -> Result<bool> {
     if cfg.custom_databases.is_empty() {
         return Ok(false);
@@ -185,11 +182,9 @@ pub fn update_custom(cfg: &Config) -> Result<bool> {
             .and_then(|etag| etag.to_str().ok())
             .map(ToOwned::to_owned);
 
-        let db_data = serde_yaml::from_str::<HashMap<String, GameDbEntry>>(&response.text()?).unwrap();
-
         db_cache.databases.insert(db.clone(), CustomDbMetadata {
             etag,
-            data: db_data.clone()
+            data: serde_yaml::from_str::<HashMap<String, GameDbEntry>>(&response.text()?).unwrap()
         });
 
         updated = true;
