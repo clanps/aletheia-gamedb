@@ -45,7 +45,7 @@ pub fn restore_game(game_dir: &Path, manifest: &GameInfo, installed_games: &[Gam
         }
 
         let expanded_parent = expanded.parent().unwrap();
-        if !&expanded_parent.exists() {
+        if !expanded_parent.exists() {
             create_dir_all(expanded_parent).unwrap();
         }
 
