@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2025-07-14 07:26+0000\n"
-"PO-Revision-Date: 2025-07-17 08:34+0000\n"
+"PO-Revision-Date: 2025-07-20 13:02+0000\n"
 "Last-Translator: Priit Jõerüüt <jrthwlate@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Estonian <https://hosted.weblate.org/projects/aletheia/ui/et/>"
 "\n"
@@ -51,157 +51,159 @@ msgstr "Mänguandmete asukoht"
 #: ui/screens/settings.slint:69
 msgctxt "Settings"
 msgid "Choose where your games will be saved"
-msgstr ""
+msgstr "Määra asukoht oma mängude salvestamiseks"
 
 #: ui/screens/settings.slint:87
 msgctxt "Settings"
 msgid "Browse"
-msgstr ""
+msgstr "Sirvi"
 
 #: ui/screens/settings.slint:116
 msgctxt "Settings"
 msgid "Steam Account"
-msgstr ""
+msgstr "Steami kasutajakonto"
 
 #: ui/screens/settings.slint:133
 msgctxt "Settings"
 msgid "Choose the Steam account for your games"
-msgstr ""
+msgstr "Vali Steami kasutajakonto oma mängude jaoks"
 
 #: ui/screens/settings.slint:140
 msgctxt "Settings"
 msgid "Only affects games that save in the Steam userdata directory"
-msgstr ""
+msgstr "Mõjutab vaid mänge, mis salvestavad andmeid Steami kasutajakausta"
 
 #: ui/screens/settings.slint:152
 msgctxt "Settings"
 msgid "Select an account…"
-msgstr ""
+msgstr "Vali kasutajakonto…"
 
 #: ui/screens/settings.slint:179
 msgctxt "Settings"
 msgid "GameDB"
-msgstr ""
+msgstr "GameDB"
 
 #: ui/screens/settings.slint:193
 msgctxt "Settings"
 msgid "Download the latest copy of the GameDB"
-msgstr ""
+msgstr "Laadi alla GameDB viimane versioon"
 
 #: ui/screens/settings.slint:202
 msgctxt "Settings"
 msgid "Update GameDB"
-msgstr ""
+msgstr "Uuenda GameDB-d"
 
 #: ui/screens/settings.slint:229
 msgctxt "Settings"
 msgid "Updates"
-msgstr ""
+msgstr "Uuendused"
 
 #: ui/screens/settings.slint:243
 msgctxt "Settings"
 msgid "Configure automatic update checking"
-msgstr ""
+msgstr "Seadista uuenduste olemasolu automaatset kontrollimist"
 
 #: ui/screens/settings.slint:254
 msgctxt "Settings"
 msgid "Check for updates automatically"
-msgstr ""
+msgstr "Kontrolli uuendusi automaatselt"
 
 #: ui/screens/settings.slint:272
 msgctxt "Settings"
 msgid "Save"
-msgstr ""
+msgstr "Salvesta"
 
 #: ui/screens/games.slint:30
 msgctxt "Games"
 msgid "No games found"
-msgstr ""
+msgstr "Ühtegi mängu ei leidu"
 
 #: ui/screens/games.slint:44
 msgctxt "Games"
 msgid "Refresh"
-msgstr ""
+msgstr "Värskenda andmeid"
 
 #: ui/screens/games.slint:61
 msgctxt "Games"
 msgid "Search games…"
-msgstr ""
+msgstr "Otsi mänge…"
 
 #: ui/screens/games.slint:67
 msgctxt "Games"
 msgid "Selecting {} / {} games"
-msgstr ""
+msgstr "Valin mänge: {} / {}"
 
 #: ui/screens/games.slint:81
 msgctxt "Games"
 msgid "Backup"
-msgstr ""
+msgstr "Varundus"
 
 #: ui/screens/games.slint:89
 msgctxt "Games"
 msgid "Restore"
-msgstr ""
+msgstr "Taastamine"
 
 #: ui/screens/games.slint:98
 msgctxt "Games"
 msgid "Clear Selection"
-msgstr ""
+msgstr "Eemalda valik"
 
 #: ui/screens/games.slint:98
 msgctxt "Games"
 msgid "Select All"
-msgstr ""
+msgstr "Vali kõik"
 
 #: ui/screens/games.slint:99
 msgctxt "Games"
 msgid "{} Filtered"
-msgstr ""
+msgstr "Filtreeritud: {}"
 
 #: ui/screens/about.slint:35
 msgctxt "About"
 msgid "Application Info"
-msgstr ""
+msgstr "Rakenduse teave"
 
 #: ui/screens/about.slint:49
 msgctxt "About"
 msgid "Aletheia is an open-source game save backup tool"
 msgstr ""
+"Aletheia on avatud lähtekoodiga tarvik mängude salvestamise ja varundamise "
+"jaoks"
 
 #: ui/screens/about.slint:56
 msgctxt "About"
 msgid "Version: {}"
-msgstr ""
+msgstr "Versioon: {}"
 
 #: ui/screens/about.slint:63
 msgctxt "About"
 msgid "License: {}"
-msgstr ""
+msgstr "Litsents: {}"
 
 #: ui/screens/about.slint:70
 msgctxt "About"
 msgid "Logo by: {}"
-msgstr ""
+msgstr "Logo autor: {}"
 
 #: ui/screens/about.slint:83
 msgctxt "About"
 msgid "View Source Code"
-msgstr ""
+msgstr "Vaata lähtekoodi"
 
 #: ui/screens/about.slint:90
 msgctxt "About"
 msgid "View License"
-msgstr ""
+msgstr "Vaata litsentsi"
 
 #: ui/screens/about.slint:97
 msgctxt "About"
 msgid "Support the Project"
-msgstr ""
+msgstr "Toeta meie projekti"
 
 #: ui/screens/about.slint:125
 msgctxt "About"
 msgid "Built with Slint"
-msgstr ""
+msgstr "Kompileerimisel on kasutusel Slint"
 
 #: ui/screens/about.slint:139
 msgctxt "About"
@@ -209,28 +211,31 @@ msgid ""
 "Slint is a declarative GUI toolkit to build native user interfaces for Rust, "
 "C++, or JavaScript apps"
 msgstr ""
+"Slint on graafiliste kasutajaliideste jaoks mõeldud deklaratiivne "
+"tööriistakomplekt, mis võimaldab omakoodiga kasutajaliideseid luua Rusti, C++"
+" või JavaScripti rakenduste jaoks"
 
 #: ui/screens/about.slint:152
 msgctxt "About"
 msgid "Learn more about Slint"
-msgstr ""
+msgstr "Lisateave Slinti kohta"
 
 #: ui/app.slint:38
 msgctxt "App"
 msgid "Games"
-msgstr ""
+msgstr "Mängud"
 
 #: ui/app.slint:51
 msgctxt "App"
 msgid "Settings"
-msgstr ""
+msgstr "Seadistused"
 
 #: ui/app.slint:58
 msgctxt "App"
 msgid "About"
-msgstr ""
+msgstr "Rakenduse teave"
 
 #: ui/components/dropdown.slint:11
 msgctxt "Dropdown"
 msgid "Select an option…"
-msgstr ""
+msgstr "Vali oma eelistus…"
