@@ -44,11 +44,7 @@ pub fn restore_game(game_dir: &Path, manifest: &GameInfo, installed_games: &[Gam
             continue;
         }
 
-        let expanded_parent = expanded.parent().unwrap();
-        if !expanded_parent.exists() {
-            create_dir_all(expanded_parent).unwrap();
-        }
-
+        create_dir_all(expanded.parent().unwrap()).unwrap();
         copy(&src_file, &expanded).unwrap();
     }
 
