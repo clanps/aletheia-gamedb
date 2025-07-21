@@ -1,0 +1,17 @@
+name: Lint Code
+on:
+  pull_request:
+    paths:
+      - 'src/**/*.rs'
+
+env:
+  RUSTFLAGS: '-Dwarnings'
+
+jobs:
+  lint:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Lint code
+        run: cargo clippy --all-targets --all-features
