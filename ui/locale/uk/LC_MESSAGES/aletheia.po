@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2025-07-14 07:26+0000\n"
+"POT-Creation-Date: 2025-07-22 22:51+0000\n"
 "PO-Revision-Date: 2025-07-16 13:43+0000\n"
 "Last-Translator: Dan <jonweblin2205@protonmail.com>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/aletheia/ui/uk/"
@@ -201,37 +201,17 @@ msgctxt "About"
 msgid "Support the Project"
 msgstr "Підтримати проєкт"
 
-#: ui/screens/about.slint:125
-msgctxt "About"
-msgid "Built with Slint"
-msgstr "Створено за допомогою Slint"
-
-#: ui/screens/about.slint:139
-msgctxt "About"
-msgid ""
-"Slint is a declarative GUI toolkit to build native user interfaces for Rust, "
-"C++, or JavaScript apps"
-msgstr ""
-"Slint — це декларативний інструментарій графічного інтерфейсу користувача "
-"для створення нативних інтерфейсів користувача для застосунків на Rust, C++ "
-"або JavaScript"
-
-#: ui/screens/about.slint:152
-msgctxt "About"
-msgid "Learn more about Slint"
-msgstr "Детальніше про Slint"
-
-#: ui/app.slint:38
+#: ui/app.slint:42
 msgctxt "App"
 msgid "Games"
 msgstr "Ігри"
 
-#: ui/app.slint:51
+#: ui/app.slint:55
 msgctxt "App"
 msgid "Settings"
 msgstr "Налаштування"
 
-#: ui/app.slint:58
+#: ui/app.slint:62
 msgctxt "App"
 msgid "About"
 msgstr "Про застосунок"
@@ -240,3 +220,20 @@ msgstr "Про застосунок"
 msgctxt "Dropdown"
 msgid "Select an option…"
 msgstr "Оберіть варіант…"
+
+#~ msgctxt "About"
+#~ msgid "Built with Slint"
+#~ msgstr "Створено за допомогою Slint"
+
+#~ msgctxt "About"
+#~ msgid ""
+#~ "Slint is a declarative GUI toolkit to build native user interfaces for "
+#~ "Rust, C++, or JavaScript apps"
+#~ msgstr ""
+#~ "Slint — це декларативний інструментарій графічного інтерфейсу користувача "
+#~ "для створення нативних інтерфейсів користувача для застосунків на Rust, C+"
+#~ "+ або JavaScript"
+
+#~ msgctxt "About"
+#~ msgid "Learn more about Slint"
+#~ msgstr "Детальніше про Slint"

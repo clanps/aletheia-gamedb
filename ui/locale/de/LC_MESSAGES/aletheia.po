@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2025-07-14 07:26+0000\n"
+"POT-Creation-Date: 2025-07-22 22:51+0000\n"
 "PO-Revision-Date: 2025-07-16 06:43+0000\n"
 "Last-Translator: Spencer <spencer-0003@users.noreply.hosted.weblate.org>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/aletheia/ui/de/>\n"
@@ -197,34 +197,17 @@ msgctxt "About"
 msgid "Support the Project"
 msgstr ""
 
-#: ui/screens/about.slint:125
-msgctxt "About"
-msgid "Built with Slint"
-msgstr ""
-
-#: ui/screens/about.slint:139
-msgctxt "About"
-msgid ""
-"Slint is a declarative GUI toolkit to build native user interfaces for Rust, "
-"C++, or JavaScript apps"
-msgstr ""
-
-#: ui/screens/about.slint:152
-msgctxt "About"
-msgid "Learn more about Slint"
-msgstr ""
-
-#: ui/app.slint:38
+#: ui/app.slint:42
 msgctxt "App"
 msgid "Games"
 msgstr ""
 
-#: ui/app.slint:51
+#: ui/app.slint:55
 msgctxt "App"
 msgid "Settings"
 msgstr ""
 
-#: ui/app.slint:58
+#: ui/app.slint:62
 msgctxt "App"
 msgid "About"
 msgstr ""
