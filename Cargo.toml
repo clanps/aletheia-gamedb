@@ -7,7 +7,7 @@ version = "1.0.0"
 authors = ["Spencer"]
 description = "Game save backup tool"
 edition = "2024"
-license-file = "LICENSE"
+license = "AGPL-3.0-only"
 
 [profile.release]
 opt-level = 3
