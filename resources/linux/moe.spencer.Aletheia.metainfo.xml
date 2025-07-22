@@ -39,6 +39,15 @@
     </screenshot>
   </screenshots>
 
+  <releases>
+    <release version="1.0.0" date="2025-07-22">
+      <url type="details">https://github.com/Spencer-0003/aletheia/releases/tag/1.0.0</url>
+      <description>
+        <p>Initial release.</p>
+      </description>
+    </release>
+  </releases>
+
   <url type="homepage">https://github.com/Spencer-0003/aletheia</url>
   <url type="bugtracker">https://github.com/Spencer-0003/aletheia/issues</url>
   <url type="vcs-browser">https://github.com/Spencer-0003/aletheia</url>
