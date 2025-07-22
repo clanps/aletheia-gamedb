@@ -52,5 +52,7 @@ If you find Aletheia useful and would like to support its development, consider 
 - `@clanps:usesarchbtw.lol` -> Designed the logo
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/slint-ui/slint/e01e9685bed4e2a4bb7b657d4eb4bd362cfced0c/internal/compiler/widgets/common/MadeWithSlint-logo-dark.svg">
+  <a href="https://slint.dev">
+    <img src="https://raw.githubusercontent.com/slint-ui/slint/e01e9685bed4e2a4bb7b657d4eb4bd362cfced0c/internal/compiler/widgets/common/MadeWithSlint-logo-dark.svg">
+  </a>
 </p>
