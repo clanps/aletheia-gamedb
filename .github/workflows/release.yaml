@@ -35,7 +35,7 @@ jobs:
           key: ${{ matrix.os }}-${{ matrix.target }}
 
       - name: Build binary
-        run: cargo build --release --features updater --target=${{ matrix.target }}
+        run: cargo build --release --features updater --target=${{ matrix.target }} && cp target/${{ matrix.target }}/release/aletheia target/${{ matrix.target }}/release/${{ matrix.artifact }}
 
       - name: Build AppImage
         run: |
@@ -58,19 +58,19 @@ jobs:
 
           NO_STRIP=true EXTRA_QT_MODULES=waylandcompositor EXTRA_PLATFORM_PLUGINS="libqwayland-egl.so;libqwayland-generic.so" $LINUXDEPLOY --plugin qt --appdir target/appimage/out --executable target/${{ matrix.target }}/release/aletheia --desktop-file resources/linux/moe.spencer.Aletheia.desktop --icon-file resources/logo/moe.spencer.Aletheia.png
           cp resources/linux/moe.spencer.Aletheia.metainfo.xml target/appimage/out/usr/share/metainfo/moe.spencer.Aletheia.appdata.xml
-          $APPIMAGETOOL target/appimage/out ./Aletheia.appimage
+          $APPIMAGETOOL target/appimage/out aletheia-${{ matrix.target == 'x86_64-unknown-linux-gnu' && 'x64' || 'aarch64' }}.appimage
 
       - name: Upload binary
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.artifact }}
-          path: target/${{ matrix.target }}/release/aletheia
+          path: target/${{ matrix.target }}/release/${{ matrix.artifact }}
 
       - name: Upload AppImage
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.artifact }}.appimage
-          path: Aletheia.appimage
+          name: aletheia-${{ matrix.target == 'x86_64-unknown-linux-gnu' && 'x64' || 'aarch64' }}.appimage
+          path: aletheia-${{ matrix.target == 'x86_64-unknown-linux-gnu' && 'x64' || 'aarch64' }}.appimage
 
   build_windows:
     strategy:
@@ -139,8 +139,27 @@ jobs:
           name: aletheia-${{ matrix.arch }}.flatpak
           path: aletheia-${{ matrix.arch }}.flatpak
 
+  generate_license_file:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Install cargo-about
+        run: cargo install cargo-about
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Generate license file
+        run: |
+          cargo about generate about.hbs > THIRD_PARTY_LICENSES.html
+
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: THIRD_PARTY_LICENSES.html
+          path: THIRD_PARTY_LICENSES.html
+
   create_release:
-    needs: [build_linux, build_windows, build_flatpak]
+    needs: [build_linux, build_windows, build_flatpak, generate_license_file]
     runs-on: ubuntu-24.04
     permissions:
       contents: write
