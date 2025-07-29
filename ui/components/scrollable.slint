@@ -23,10 +23,10 @@ export component Scrollable inherits Rectangle {
   }
 
   if root.has_vertical_overflow: Rectangle {
-    x: parent.width - root.scrollbar_width - 4px;
     y: 4px;
+    x: parent.width - root.scrollbar_width - self.y;
     width: root.scrollbar_width;
-    height: parent.height - 4px;
+    height: parent.height - self.y;
 
     Rectangle {
       width: 100%;
@@ -37,15 +37,15 @@ export component Scrollable inherits Rectangle {
 
     thumb := Rectangle {
       private property <float> scroll_ratio: -flickable.viewport-y / (flickable.viewport-height - flickable.height);
-      private property <length> track_height: parent.height - 4px;
+      private property <length> track_height: parent.height - parent.y;
       private property <length> thumb_height: max(20px, (flickable.height / flickable.viewport-height) * track_height);
-      private property <length> thumb_y: 2px + scroll_ratio * (track_height - thumb_height);
+      private property <length> thumb_y: self.x + scroll_ratio * (track_height - thumb_height);
       x: 2px;
       y: self.thumb_y;
-      width: parent.width - 4px;
+      width: parent.width - parent.y;
       height: self.thumb_height;
       background: touch_area.has-hover ? root.scrollbar_thumb_hover_color : root.scrollbar_thumb_color;
-      border-radius: (root.scrollbar_width - 4px) / 2;
+      border-radius: (root.scrollbar_width - parent.y) / 2;
 
       animate y { duration: root.scroll_animation_duration; easing: ease-out; }
       animate background { duration: 150ms; }
@@ -65,7 +65,7 @@ export component Scrollable inherits Rectangle {
               self.press_start_viewport_y -
               (self.mouse-y - self.press_start_y) *
               (flickable.viewport-height - flickable.height) /
-              (parent.height - thumb.height - 4px)
+              (parent.height - thumb.height - parent.y)
             )
           );
         }
