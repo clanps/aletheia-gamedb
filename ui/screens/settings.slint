@@ -1,6 +1,7 @@
 // SPDX-FileCopyrightText: 2025 Spencer
 // SPDX-License-Identifier: AGPL-3.0-only
 
+import { Scrollable } from "../components/scrollable.slint";
 import { Button } from "../components/button.slint";
 import { CheckBox } from "../components/check_box.slint";
 import { TextLabel } from "../components/text_label.slint";
@@ -29,7 +30,7 @@ export component Settings {
   height: 100%;
 
   VerticalLayout {
-    Flickable {
+    Scrollable {
       VerticalLayout {
         spacing: 24px;
         padding: 24px;
@@ -267,7 +268,6 @@ export component Settings {
     HorizontalLayout {
       padding: 24px;
       padding-top: 12px;
-      padding-bottom: 8px;
       alignment: end;
 
       Button {

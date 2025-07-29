@@ -50,7 +50,7 @@ If you find Aletheia useful and would like to support its development, consider 
 ## Credits
 - `@unidentified:usesarchbtw.lol` -> Helped with UI design
 - `@clanps:usesarchbtw.lol` -> Designed the logo
-- [Sukaretto](https://github.com/Sukarett2) -> Introduced dropdowns to the UI and co-authored Steam account support
+- [Sukaretto](https://github.com/Sukarett2) -> Introduced dropdowns and custom scrollbars to the UI also co-authored Steam account support
 
 <p align="center">
   <a href="https://slint.dev">
