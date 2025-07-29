@@ -60,7 +60,7 @@ export component Scrollable inherits Rectangle {
               self.press_start_viewport_y -
               (self.mouse-y - self.press_start_y) *
               (flickable.viewport-height - flickable.height) /
-              (parent.height - thumb.height - parent.y) * 4 // Scroll multiplier
+              (parent.height - thumb.height - parent.y)
             )
           );
         }
