@@ -16,9 +16,6 @@ export component Scrollable inherits Rectangle {
     width: parent.width;
     height: parent.height;
     interactive: root.enabled;
-
-    animate viewport-y { duration: root.scroll_animation_duration; easing: ease-out; }
-
     @children
   }
 
@@ -47,25 +44,23 @@ export component Scrollable inherits Rectangle {
       background: touch_area.has-hover ? root.scrollbar_thumb_hover_color : root.scrollbar_thumb_color;
       border-radius: (root.scrollbar_width - parent.y) / 2;
 
-      animate y { duration: root.scroll_animation_duration; easing: ease-out; }
       animate background { duration: 150ms; }
     }
 
     touch_area := TouchArea {
       private property <length> press_start_y;
       private property <length> press_start_viewport_y;
-      private property <bool> is_dragging: false;
       width: parent.width;
       height: parent.height;
       moved => {
-        if (self.pressed && self.is_dragging) {
+        if (self.pressed) {
           flickable.viewport-y = max(
             flickable.height - flickable.viewport-height,
             min(0px,
               self.press_start_viewport_y -
               (self.mouse-y - self.press_start_y) *
               (flickable.viewport-height - flickable.height) /
-              (parent.height - thumb.height - parent.y)
+              (parent.height - thumb.height - parent.y) * 4 // Scroll multiplier
             )
           );
         }
@@ -74,9 +69,6 @@ export component Scrollable inherits Rectangle {
         if (event.kind == PointerEventKind.down) {
           self.press_start_y = self.mouse-y;
           self.press_start_viewport_y = flickable.viewport-y;
-          self.is_dragging = true;
-        } else if (event.kind == PointerEventKind.up) {
-          self.is_dragging = false;
         }
       }
     }
