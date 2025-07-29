@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2025 Spencer
+// SPDX-License-Identifier: AGPL-3.0-only
+
 export component Scrollable inherits Rectangle {
   in property <bool> enabled: true;
   in property <color> scrollbar_track_color: #1e1e2e;
@@ -49,35 +52,33 @@ export component Scrollable inherits Rectangle {
     }
 
     touch_area := TouchArea {
-        private property <length> press_start_y;
-        private property <length> press_start_viewport_y;
-        private property <bool> is_dragging: false;
-        width: parent.width;
-        height: parent.height;
-
-        moved => {
-          if (self.pressed && self.is_dragging) {
-            flickable.viewport-y = max(
-              flickable.height - flickable.viewport-height,
-              min(0px,
-                self.press_start_viewport_y -
-                (self.mouse-y - self.press_start_y) *
-                (flickable.viewport-height - flickable.height) /
-                (parent.height - thumb.height - 4px)
-              )
-            );
-          }
+      private property <length> press_start_y;
+      private property <length> press_start_viewport_y;
+      private property <bool> is_dragging: false;
+      width: parent.width;
+      height: parent.height;
+      moved => {
+        if (self.pressed && self.is_dragging) {
+          flickable.viewport-y = max(
+            flickable.height - flickable.viewport-height,
+            min(0px,
+              self.press_start_viewport_y -
+              (self.mouse-y - self.press_start_y) *
+              (flickable.viewport-height - flickable.height) /
+              (parent.height - thumb.height - 4px)
+            )
+          );
         }
-
-        pointer-event(event) => {
-          if (event.kind == PointerEventKind.down) {
-            self.press_start_y = self.mouse-y;
-            self.press_start_viewport_y = flickable.viewport-y;
-            self.is_dragging = true;
-          } else if (event.kind == PointerEventKind.up) {
-            self.is_dragging = false;
-          }
+      }
+      pointer-event(event) => {
+        if (event.kind == PointerEventKind.down) {
+          self.press_start_y = self.mouse-y;
+          self.press_start_viewport_y = flickable.viewport-y;
+          self.is_dragging = true;
+        } else if (event.kind == PointerEventKind.up) {
+          self.is_dragging = false;
         }
+      }
     }
   }
 }
