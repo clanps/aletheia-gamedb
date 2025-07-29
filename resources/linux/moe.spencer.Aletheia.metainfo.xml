@@ -26,21 +26,21 @@
 
   <screenshots>
     <screenshot type="default">
-      <image>https://raw.githubusercontent.com/Spencer-0003/aletheia/db07f6ccb60731c28a0b6861a1d65db672f8a987/screenshots/Games.png</image>
+      <image>https://raw.githubusercontent.com/Spencer-0003/aletheia/a9eddead801c6b4938d4585ee096c3b8b4cdb8b4/screenshots/Games.png</image>
       <caption>Games page</caption>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/Spencer-0003/aletheia/db07f6ccb60731c28a0b6861a1d65db672f8a987/screenshots/Settings.png</image>
+      <image>https://raw.githubusercontent.com/Spencer-0003/aletheia/a9eddead801c6b4938d4585ee096c3b8b4cdb8b4/screenshots/Settings.png</image>
       <caption>Settings page</caption>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/Spencer-0003/aletheia/db07f6ccb60731c28a0b6861a1d65db672f8a987/screenshots/About.png</image>
+      <image>https://raw.githubusercontent.com/Spencer-0003/aletheia/a9eddead801c6b4938d4585ee096c3b8b4cdb8b4/screenshots/About.png</image>
       <caption>About page</caption>
     </screenshot>
   </screenshots>
 
   <releases>
-    <release version="1.0.0" date="2025-07-22">
+    <release version="1.0.0" date="2025-07-29">
       <url type="details">https://github.com/Spencer-0003/aletheia/releases/tag/1.0.0</url>
       <description>
         <p>Initial release.</p>
