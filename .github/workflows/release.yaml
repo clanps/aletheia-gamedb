@@ -56,7 +56,7 @@ jobs:
           wget -O "$LINUXDEPLOY_PLUGIN_QT" "https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/1-alpha-20250213-1/linuxdeploy-plugin-qt-$ARCH.AppImage"
           chmod +x "$LINUXDEPLOY_PLUGIN_QT"
 
-          echo -e "/usr/lib/qt6/bin\n/usr/lib/$ARCH-linux-gnu" | sudo tee /usr/lib/x86_64-linux-gnu/qtchooser/qt6.conf > /dev/null # https://bugs.launchpad.net/ubuntu/+source/qtchooser/+bug/1964763 (TODO: Remove when upgrading to 24.04, also remove QT_SELECT)
+          echo -e "/usr/lib/qt6/bin\n/usr/lib/$ARCH-linux-gnu" | sudo tee "/usr/lib/$ARCH-linux-gnu/qtchooser/qt6.conf" > /dev/null # https://bugs.launchpad.net/ubuntu/+source/qtchooser/+bug/1964763 (TODO: Remove when upgrading to 24.04, also remove QT_SELECT)
 
           NO_STRIP=true EXTRA_QT_MODULES=waylandcompositor EXTRA_PLATFORM_PLUGINS="libqwayland-egl.so;libqwayland-generic.so" QT_SELECT=qt6 $LINUXDEPLOY --plugin qt --appdir target/appimage/out --executable target/${{ matrix.target }}/release/aletheia --desktop-file resources/linux/moe.spencer.Aletheia.desktop --icon-file resources/logo/moe.spencer.Aletheia.png
           cp resources/linux/moe.spencer.Aletheia.metainfo.xml target/appimage/out/usr/share/metainfo/moe.spencer.Aletheia.appdata.xml
