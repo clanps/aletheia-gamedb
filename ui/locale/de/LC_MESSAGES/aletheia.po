@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2025-07-22 22:51+0000\n"
-"PO-Revision-Date: 2025-07-16 06:43+0000\n"
-"Last-Translator: Spencer <spencer-0003@users.noreply.hosted.weblate.org>\n"
+"PO-Revision-Date: 2025-08-07 01:01+0000\n"
+"Last-Translator: Ulrich Heineke <weblate@casioargon.anonaddy.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/aletheia/ui/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -20,27 +20,27 @@ msgstr "Update Verfügbar"
 #: ui/updater.slint:51
 msgctxt "Updater"
 msgid "Current"
-msgstr ""
+msgstr "Aktuell"
 
 #: ui/updater.slint:81
 msgctxt "Updater"
 msgid "New"
-msgstr ""
+msgstr "Neu"
 
 #: ui/updater.slint:105
 msgctxt "Updater"
 msgid "What's New"
-msgstr ""
+msgstr "Das ist neu"
 
 #: ui/updater.slint:143
 msgctxt "Updater"
 msgid "Skip"
-msgstr ""
+msgstr "Überspringen"
 
 #: ui/updater.slint:150
 msgctxt "Updater"
 msgid "Download"
-msgstr ""
+msgstr "Herunterladen"
 
 #: ui/screens/settings.slint:55
 msgctxt "Settings"
@@ -50,57 +50,59 @@ msgstr ""
 #: ui/screens/settings.slint:69
 msgctxt "Settings"
 msgid "Choose where your games will be saved"
-msgstr ""
+msgstr "Entscheide, wo deine Spiele gespeichert werden"
 
 #: ui/screens/settings.slint:87
 msgctxt "Settings"
 msgid "Browse"
-msgstr ""
+msgstr "Suchen"
 
 #: ui/screens/settings.slint:116
+#, fuzzy
 msgctxt "Settings"
 msgid "Steam Account"
-msgstr ""
+msgstr "Steam Account"
 
 #: ui/screens/settings.slint:133
 msgctxt "Settings"
 msgid "Choose the Steam account for your games"
-msgstr ""
+msgstr "Wähle einen Steam Account für deine Spiele aus"
 
 #: ui/screens/settings.slint:140
 msgctxt "Settings"
 msgid "Only affects games that save in the Steam userdata directory"
-msgstr ""
+msgstr "Betrifft nur Spiele die im Steam Nutzerdaten-Verzeichnis speichern"
 
 #: ui/screens/settings.slint:152
 msgctxt "Settings"
 msgid "Select an account…"
-msgstr ""
+msgstr "Wähle einen Account aus…"
 
 #: ui/screens/settings.slint:179
+#, fuzzy
 msgctxt "Settings"
 msgid "GameDB"
-msgstr ""
+msgstr "GameDB"
 
 #: ui/screens/settings.slint:193
 msgctxt "Settings"
 msgid "Download the latest copy of the GameDB"
-msgstr ""
+msgstr "Lade die neueste Kopie der GameDB herunter"
 
 #: ui/screens/settings.slint:202
 msgctxt "Settings"
 msgid "Update GameDB"
-msgstr ""
+msgstr "Aktulisiere die GameDB"
 
 #: ui/screens/settings.slint:229
 msgctxt "Settings"
 msgid "Updates"
-msgstr ""
+msgstr "Aktualisierungen"
 
 #: ui/screens/settings.slint:243
 msgctxt "Settings"
 msgid "Configure automatic update checking"
-msgstr ""
+msgstr "Konfiguriere automatische Aktualisierungsüberprüfung"
 
 #: ui/screens/settings.slint:254
 msgctxt "Settings"
