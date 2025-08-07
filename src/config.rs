@@ -33,7 +33,6 @@ impl Config {
 
     pub fn load() -> Self {
         let dir = Self::get_dir();
-
         let config_path = dir.join("config.json");
 
         if config_path.exists() {
@@ -60,10 +59,9 @@ impl Config {
 
     pub fn save(cfg: &Self) {
         let dir = Self::get_dir();
-
         let config_path = dir.join("config.json");
-        create_dir_all(&dir).unwrap();
 
+        create_dir_all(&dir).unwrap();
         serde_json::to_writer_pretty(File::create(&config_path).unwrap(), &cfg).unwrap();
     }
 }
