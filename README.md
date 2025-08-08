@@ -18,24 +18,7 @@ Aletheia is a cross-platform game save sync tool designed to help you easily bac
 -   GOG Galaxy (Windows)
 
 ## Contributing
-### GameDB
-Add game save locations in `resources/gamedb.yaml`. Include Linux paths if the game supports Linux. Game titles are based on their GOG names, but Steam and itch.io games are also accepted. The following placeholders can be used:
-
-| Placeholder       | Description                                                                                   |
-|-------------------|-----------------------------------------------------------------------------------------------|
-| `{GameRoot}`      | Root directory of the game installation                                                       |
-| `{AppData}`       | Roaming AppData folder on Windows                                                             |
-| `{LocalAppData}`  | Local AppData folder on Windows                                                               |
-| `{LocalLow}`      | LocalLow AppData folder on Windows                                                            |
-| `{Documents}`     | User’s documents directory                                                                    |
-| `{Home}`          | User’s home directory                                                                         |
-| `{XDGConfig}`     | Linux XDG config directory                                                                    |
-| `{XDGData}`       | Linux XDG data directory                                                                      |
-| `{GOGAppData}`    | GOG application data directory                                                                |
-| `{SteamUserData}` | Steam userdata directory                                                                      |
-
-### Translations
-Translations are managed with [Weblate](https://weblate.org), you can contribute translations [here](https://hosted.weblate.org/projects/aletheia).
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) for full guidelines before making changes.
 
 ## Support the Project
 If you find Aletheia useful and would like to support its development, consider donating.
@@ -51,6 +34,7 @@ If you find Aletheia useful and would like to support its development, consider 
 - `@unidentified:usesarchbtw.lol` -> Helped with UI design
 - `@clanps:usesarchbtw.lol` -> Designed the logo
 - [Sukaretto](https://github.com/Sukarett2) -> Introduced dropdowns and custom scrollbars to the UI also co-authored Steam account support
+- [Weblate](https://weblate.org) -> Providing translation management
 
 <p align="center">
   <a href="https://slint.dev">
