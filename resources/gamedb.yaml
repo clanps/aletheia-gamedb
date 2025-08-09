@@ -42,6 +42,26 @@ Alone in the Dark:
     windows:
       - "{LocalAppData}/AloneInTheDark/Saved/SaveGames/profile.sav"
       - "{LocalAppData}/AloneInTheDark/Saved/SaveGames/save_*.sav"
+"Atelier Firis: The Alchemist and the Mysterious Journey DX":
+  files:
+    windows:
+      - "{Documents}/KoeiTecmo/Atelier Firis DX/SAVEDATA/*"
+"Atelier Lydie & Suelle: The Alchemists and the Mysterious Paintings DX":
+  files:
+    windows:
+      - "{Documents}/KoeiTecmo/Atelier Lydie and Suelle DX/SAVEDATA/*"
+"Atelier Meruru ~The Apprentice of Arland~ DX":
+  files:
+    windows:
+      - "{SteamUserData}/936190/remote/SAVEDATA/*"
+"Atelier Shallie: Alchemists of the Dusk Sea DX":
+  files:
+    windows:
+      - "{Documents}/KoeiTecmo/Atelier Shallie DX/SAVEDATA/*"
+"Atelier Sophie: The Alchemist of the Mysterious Book DX":
+  files:
+    windows:
+      - "{Documents}/KoeiTecmo/Atelier Sophie DX/SAVEDATA/*"
 BONEWORKS:
   files:
     windows:
