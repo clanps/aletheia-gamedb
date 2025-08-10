@@ -8,6 +8,7 @@ use crate::scanner::{HeroicScanner, SteamScanner};
 use std::collections::HashMap;
 use std::fs::{create_dir_all, File, read_to_string, write};
 use serde::{Deserialize, Serialize};
+use reqwest::{header, StatusCode};
 
 #[cfg(unix)]
 use crate::scanner::LutrisScanner;
@@ -118,18 +119,18 @@ pub fn update() -> Result<bool> {
     let mut request = client.get("https://raw.githubusercontent.com/Spencer-0003/aletheia/refs/heads/master/resources/gamedb.yaml");
 
     if let Some(ref etag) = previous_etag {
-        request = request.header(reqwest::header::IF_NONE_MATCH, etag);
+        request = request.header(header::IF_NONE_MATCH, etag);
     }
 
     let response = request.send()?.error_for_status()?;
     let status = response.status();
 
-    if status == reqwest::StatusCode::NOT_MODIFIED {
+    if status == StatusCode::NOT_MODIFIED {
         return Ok(false);
     }
 
     let current_etag = response.headers()
-        .get(reqwest::header::ETAG)
+        .get(header::ETAG)
         .map(|etag| etag.to_str().unwrap().to_owned());
 
     write(&gamedb_path, response.bytes()?)?;
@@ -169,16 +170,16 @@ pub fn update_custom(cfg: &Config) -> Result<bool> {
         let cached_etag = db_cache.databases.get(db).and_then(|meta| meta.etag.as_ref());
 
         if let Some(etag) = cached_etag {
-            request = request.header(reqwest::header::IF_NONE_MATCH, etag);
+            request = request.header(header::IF_NONE_MATCH, etag);
         }
 
         let response = request.send()?.error_for_status()?;
 
-        if response.status() == reqwest::StatusCode::NOT_MODIFIED {
+        if response.status() == StatusCode::NOT_MODIFIED {
             continue;
         }
 
-        let etag = response.headers().get(reqwest::header::ETAG)
+        let etag = response.headers().get(header::ETAG)
             .and_then(|etag| etag.to_str().ok())
             .map(ToOwned::to_owned);
 
