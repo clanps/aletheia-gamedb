@@ -184,7 +184,7 @@ pub fn update_custom(cfg: &Config) -> Result<bool> {
 
         db_cache.databases.insert(db.clone(), CustomDbMetadata {
             etag,
-            data: serde_yaml::from_str::<HashMap<String, GameDbEntry>>(&response.text()?).unwrap()
+            data: serde_yaml::from_reader(response).unwrap()
         });
 
         updated = true;
