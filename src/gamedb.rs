@@ -131,10 +131,10 @@ pub fn update() -> Result<bool> {
 
     let current_etag = response.headers()
         .get(header::ETAG)
-        .map(|etag| etag.to_str().unwrap().to_owned());
+        .unwrap();
 
+    write(&etag_path, current_etag.as_bytes())?;
     write(&gamedb_path, response.bytes()?)?;
-    write(&etag_path, current_etag.unwrap())?;
 
     Ok(true)
 }
