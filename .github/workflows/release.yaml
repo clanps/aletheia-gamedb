@@ -27,7 +27,7 @@ jobs:
         run: sudo apt update && sudo apt install -y qt6-base-dev libwayland-dev libgl1-mesa-dev qt6-wayland # TODO: Remove libgl1-mesa-dev and qt6-wayland when upgrading to 24.04
 
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup Rust cache
         uses: Swatinem/rust-cache@v2
@@ -98,7 +98,7 @@ jobs:
           lib /machine:x64 /def:sqlite3.def /out:sqlite3.lib
 
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup Rust cache
         uses: Swatinem/rust-cache@v2
@@ -128,7 +128,7 @@ jobs:
         run: sudo apt update && sudo apt install -y flatpak-builder && flatpak remote-add --if-not-exists --user flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Build
         run: |
@@ -148,7 +148,7 @@ jobs:
         run: cargo install cargo-about
 
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Generate license file
         run: cargo about generate about.hbs > THIRD_PARTY_LICENSES.html
