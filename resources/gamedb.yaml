@@ -260,6 +260,10 @@ Dead Rising 4:
   files:
     windows:
       - "{Documents}/My Games/Dead Rising 4/saves/*"
+Death end re;Quest:
+  files:
+    windows:
+      - "{SteamUserData}/990050/remote/*"
 "Detroit: Become Human":
   files:
     windows:
