@@ -82,13 +82,14 @@ pub fn setup(app: &slint::Weak<App>, config: &Rc<RefCell<AletheiaConfig>>) {
         }
     });
 
-    let steam_account_id = get_steam_id(config);
+    let config_ref = config.borrow();
+    let steam_account_id = get_steam_id(&config_ref);
 
     if let Some(id3) = &steam_account_id {
-        if config.borrow().steam_account_id.as_ref() != Some(id3) {
+        if config_ref.steam_account_id.as_ref() != Some(id3) {
             let new_config = AletheiaConfig {
                 steam_account_id: Some(id3.clone()),
-                ..config.borrow().clone()
+                ..config_ref.clone()
             };
 
             AletheiaConfig::save(&new_config);
@@ -97,14 +98,13 @@ pub fn setup(app: &slint::Weak<App>, config: &Rc<RefCell<AletheiaConfig>>) {
     }
 
     let steam_account_id_str = steam_account_id.as_deref().unwrap_or_default();
-    let config = config.borrow();
 
     settings_screen_logic.set_config(Config {
-        custom_databases: ModelRc::new(VecModel::from(config.custom_databases.iter().map(Into::into).collect::<Vec<_>>())),
-        save_dir: config.save_dir.to_string_lossy().to_string().into(),
+        custom_databases: ModelRc::new(VecModel::from(config_ref.custom_databases.iter().map(Into::into).collect::<Vec<_>>())),
+        save_dir: config_ref.save_dir.to_string_lossy().to_string().into(),
         steam_account_id: steam_account_id_str.into(),
         #[cfg(feature = "updater")]
-        check_for_updates: config.check_for_updates,
+        check_for_updates: config_ref.check_for_updates,
         #[cfg(not(feature = "updater"))]
         check_for_updates: false
     });
@@ -112,13 +112,13 @@ pub fn setup(app: &slint::Weak<App>, config: &Rc<RefCell<AletheiaConfig>>) {
     settings_screen_logic.invoke_get_steam_users();
 }
 
-fn get_steam_id(config: &Rc<RefCell<AletheiaConfig>>) -> Option<String> {
+fn get_steam_id(config: &AletheiaConfig) -> Option<String> {
     SteamScanner::get_users().and_then(|users| {
         if users.is_empty() {
             return None;
         }
 
-        if let Some(id3) = &config.borrow().steam_account_id {
+        if let Some(id3) = &config.steam_account_id {
             let config_user_exists = users.keys()
                 .filter_map(|id64_str| id64_str.parse::<u64>().ok())
                 .any(|id64| SteamScanner::id64_to_id3(id64).to_string() == *id3);
