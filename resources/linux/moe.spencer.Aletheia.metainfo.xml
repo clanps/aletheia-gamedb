@@ -40,6 +40,20 @@
   </screenshots>
 
   <releases>
+    <release version="1.0.1" date="2025-08-16">
+      <url type="details">https://github.com/Spencer-0003/aletheia/releases/tag/1.0.1</url>
+      <description>
+        <p>GameDB: Add Mary Skelter 2.</p>
+        <p>Lutris: Fix crash if game config file didn't exist.</p>
+        <p>GameDB: Add Death end re;Quest.</p>
+        <p>GameDB: Prevent allocation when saving etag.</p>
+        <p>GameDB: Use from_reader.</p>
+        <p>GameDB: Add some Atelier games.</p>
+        <p>Translations: Add more German translations.</p>
+        <p>GameDB: Add Bayonetta.</p>
+        <p>Flatpak: Add IPC permission.</p>
+      </description>
+    </release>
     <release version="1.0.0" date="2025-08-04">
       <url type="details">https://github.com/Spencer-0003/aletheia/releases/tag/1.0.0</url>
       <description>
