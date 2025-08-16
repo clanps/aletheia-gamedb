@@ -38,7 +38,7 @@ pub fn run(config: &AletheiaConfig) {
                     std::process::Command::new("xdg-open").arg(release.url.clone()).spawn().ok();
 
                     #[cfg(windows)]
-                    std::process::Command::new("cmd").args(["/c", "start", &release.url.clone()]).spawn().ok();
+                    std::process::Command::new("cmd").args(["/c", "start", &release.url.clone()]).creation_flags(0x08000000).spawn().ok();
 
                     updater_window.window().hide().unwrap();
                 }
