@@ -1,99 +1,22 @@
 // SPDX-FileCopyrightText: 2025 Spencer
 // SPDX-License-Identifier: AGPL-3.0-only
 
-slint::include_modules!();
-
 use crate::config::Config as AletheiaConfig;
+use crate::ui::app::{App, GameLogic, GamesScreenLogic, NotificationLogic, UiGame};
 use crate::gamedb;
 use crate::operations::{backup_game, restore_game};
-use crate::scanner::SteamScanner;
-use slint::{Model, ModelRc, SharedString, VecModel};
-use std::borrow::Borrow;
-use std::cell::RefCell;
+use slint::{ComponentHandle, Model, ModelRc, SharedString, VecModel};
 use std::collections::HashSet;
 use std::fs::File;
 use std::rc::Rc;
+use std::cell::RefCell;
 
-#[cfg(all(feature = "updater", not(debug_assertions)))]
-use crate::updater;
-
-#[allow(clippy::cast_precision_loss, reason = "Only used for UI")]
-fn format_size(size: u64) -> String {
-    const KB: u64 = 1024;
-    const MB: u64 = 1048576;
-    const GB: u64 = 1073741824;
-
-    if size < KB {
-        format!("{size}B")
-    } else if size < MB {
-        format!("{:.1}KB", size as f64 / KB as f64)
-    } else if size < GB {
-        format!("{:.1}MB", size as f64 / MB as f64)
-    } else {
-        format!("{:.2}GB", size as f64 / GB as f64)
-    }
-}
-
-#[allow(clippy::too_many_lines, reason = "I will refactor this 'at some point'")]
-pub fn run(config: &AletheiaConfig) {
-    #[cfg(all(feature = "updater", not(debug_assertions)))]
-    if config.check_for_updates {
-        if let Ok(updater::UpdateStatus::Available(release)) = updater::check() {
-            let updater_window = Updater::new().unwrap();
-            let updater_logic = updater_window.global::<UpdaterLogic>();
-
-            slint::set_xdg_app_id("moe.spencer.Aletheia").unwrap();
-
-            updater_logic.set_current_version(env!("CARGO_PKG_VERSION").into());
-            updater_logic.set_new_version(release.tag_name.into());
-            updater_logic.set_changelog(release.body.into());
-
-            updater_logic.on_skip_update({
-                let updater_window = updater_window.as_weak().unwrap();
-
-                move || updater_window.window().hide().unwrap()
-            });
-
-            updater_logic.on_download_update({
-                let updater_window = updater_window.as_weak().unwrap();
-
-                move || {
-                    #[cfg(unix)]
-                    std::process::Command::new("xdg-open").arg(release.url.clone()).spawn().ok();
-
-                    #[cfg(windows)]
-                    std::process::Command::new("cmd").args(["/c", "start", &release.url.clone()]).spawn().ok();
-
-                    updater_window.window().hide().unwrap();
-                }
-            });
-
-            updater_window.run().unwrap();
-
-            if updater_logic.get_downloading() {
-                return;
-            }
-        }
-    }
-
-    let app = App::new().unwrap();
-    let cfg = Rc::new(RefCell::new(config.clone()));
-    let save_dir = config.borrow().save_dir.clone();
-
-    let app_logic = app.global::<AppLogic>();
+#[allow(clippy::too_many_lines, reason = "This is as simple as it's going to get")]
+pub fn setup(app: &slint::Weak<App>, config: &Rc<RefCell<AletheiaConfig>>) {
+    let app = app.upgrade().unwrap();
     let game_logic = app.global::<GameLogic>();
     let games_screen_logic = app.global::<GamesScreenLogic>();
-    let settings_screen_logic = app.global::<SettingsScreenLogic>();
-
-    slint::set_xdg_app_id("moe.spencer.Aletheia").unwrap();
-
-    app_logic.on_open_url(move |url| {
-        #[cfg(unix)]
-        std::process::Command::new("xdg-open").arg(url).spawn().ok();
-
-        #[cfg(windows)]
-        std::process::Command::new("cmd").args(["/c", "start", &url]).spawn().ok();
-    });
+    let save_dir = config.borrow().save_dir.clone();
 
     game_logic.on_refresh_games({
         let app_weak = app.as_weak().unwrap();
@@ -212,7 +135,7 @@ pub fn run(config: &AletheiaConfig) {
 
     games_screen_logic.on_perform_operation({
         let app_weak = app.as_weak().unwrap();
-        let cfg = Rc::clone(&cfg);
+        let cfg = Rc::clone(config);
 
         move |action| {
             let cfg = cfg.as_ref().borrow();
@@ -279,154 +202,22 @@ pub fn run(config: &AletheiaConfig) {
         }
     });
 
-    settings_screen_logic.on_browse({
-        let app_weak = app.as_weak();
-
-        move || {
-            let app = app_weak.upgrade().unwrap();
-
-            slint::spawn_local(async move {
-                if let Some(folder) = rfd::AsyncFileDialog::new()
-                    .set_directory(crate::dirs::home())
-                    .pick_folder()
-                    .await
-                {
-                    let settings_screen_logic = app.global::<SettingsScreenLogic>();
-                    let mut cfg = settings_screen_logic.get_config();
-
-                    cfg.save_dir = SharedString::from(folder.path().to_string_lossy().as_ref());
-
-                    settings_screen_logic.set_config(cfg);
-                }
-            }).unwrap();
-        }
-    });
-
-    settings_screen_logic.on_save_config({
-        let app_weak = app.as_weak().unwrap();
-        let cfg = Rc::clone(&cfg);
-
-        move |ui_cfg| {
-            let notification_logic = app_weak.global::<NotificationLogic>();
-            let settings_logic = app_weak.global::<SettingsScreenLogic>();
-
-            let new_config = AletheiaConfig {
-                custom_databases: ui_cfg.custom_databases.iter().map(Into::into).collect(),
-                save_dir: (&ui_cfg.save_dir).into(),
-                steam_account_id: (!ui_cfg.steam_account_id.is_empty()).then(|| (&ui_cfg.steam_account_id).into()),
-                #[cfg(feature = "updater")]
-                check_for_updates: ui_cfg.check_for_updates
-            };
-
-            settings_logic.set_previous_save_dir(ui_cfg.save_dir.clone());
-            settings_logic.set_previous_steam_account_id(ui_cfg.steam_account_id.clone());
-            settings_logic.set_previous_check_for_updates(ui_cfg.check_for_updates);
-
-            AletheiaConfig::save(&new_config);
-            *cfg.borrow_mut() = new_config;
-
-            notification_logic.invoke_show_success("Successfully saved settings.".into());
-        }
-    });
-
-    settings_screen_logic.on_get_steam_users({
-        let app_weak = app.as_weak().unwrap();
-
-        move || {
-            let settings_logic = app_weak.global::<SettingsScreenLogic>();
-
-            if let Some(users) = SteamScanner::get_users() {
-                let mut options: Vec<DropdownOption> = users.into_iter()
-                    .map(|(steam_id, user)| DropdownOption {
-                        label: user.persona_name.into(),
-                        value: SteamScanner::id64_to_id3(steam_id.parse::<u64>().unwrap()).to_string().into()
-                    })
-                    .collect();
-
-                if options.len() > 1 {
-                    options.sort_by(|a, b| a.label.cmp(&b.label));
-                }
-                settings_logic.set_steam_account_options(ModelRc::new(VecModel::from(options)));
-            }
-        }
-    });
-
-    settings_screen_logic.on_update_gamedb({
-        let app_weak = app.as_weak().unwrap();
-
-        move || {
-            let notification_logic = app_weak.global::<NotificationLogic>();
-
-            match gamedb::update() {
-                Ok(true) => notification_logic.invoke_show_success("Successfully updated GameDB.".into()),
-                Ok(false) => notification_logic.invoke_show_info("GameDB is already up to date.".into()),
-                Err(e) => {
-                    notification_logic.invoke_show_error("Failed to update GameDB.".into());
-                    log::error!("Error updating GameDB: {e}");
-                }
-            }
-        }
-    });
-
     game_logic.invoke_refresh_games();
-    app_logic.set_version(env!("CARGO_PKG_VERSION").into());
+}
 
-    #[cfg(feature = "updater")]
-    settings_screen_logic.set_show_update_settings(true);
+#[allow(clippy::cast_precision_loss, reason = "Only used for UI")]
+fn format_size(size: u64) -> String {
+    const KB: u64 = 1024;
+    const MB: u64 = 1048576;
+    const GB: u64 = 1073741824;
 
-    settings_screen_logic.invoke_get_steam_users();
-
-    let steam_account_id = SteamScanner::get_users().and_then(|users| {
-        if users.is_empty() {
-            return None;
-        }
-
-        if let Some(id3) = &config.steam_account_id {
-            let config_user_exists = users.keys()
-                .filter_map(|id64_str| id64_str.parse::<u64>().ok())
-                .any(|id64| SteamScanner::id64_to_id3(id64).to_string() == *id3);
-
-            if config_user_exists {
-                return Some(id3.to_owned());
-            }
-        }
-
-        if users.len() == 1 {
-            let steam_id64 = users.keys().next()?.parse::<u64>().ok()?;
-            return Some(SteamScanner::id64_to_id3(steam_id64).to_string());
-        }
-
-        None
-    });
-
-    if let Some(id3) = &steam_account_id {
-        if config.steam_account_id.as_ref() != Some(id3) {
-            let new_config = AletheiaConfig {
-                steam_account_id: Some(id3.clone()),
-                ..config.clone()
-            };
-
-            AletheiaConfig::save(&new_config);
-            *cfg.borrow_mut() = new_config;
-        }
+    if size < KB {
+        format!("{size}B")
+    } else if size < MB {
+        format!("{:.1}KB", size as f64 / KB as f64)
+    } else if size < GB {
+        format!("{:.1}MB", size as f64 / MB as f64)
+    } else {
+        format!("{:.2}GB", size as f64 / GB as f64)
     }
-
-    let steam_account_id_str = steam_account_id.as_deref().unwrap_or_default();
-
-    settings_screen_logic.set_config(Config {
-        custom_databases: ModelRc::new(VecModel::from(config.custom_databases.iter().map(Into::into).collect::<Vec<_>>())),
-        save_dir: config.save_dir.to_string_lossy().to_string().into(),
-        steam_account_id: steam_account_id_str.into(),
-        #[cfg(feature = "updater")]
-        check_for_updates: config.check_for_updates,
-        #[cfg(not(feature = "updater"))]
-        check_for_updates: false
-    });
-
-    settings_screen_logic.set_previous_save_dir(config.save_dir.to_string_lossy().to_string().into());
-    settings_screen_logic.set_previous_steam_account_id(steam_account_id_str.into());
-    #[cfg(feature = "updater")]
-    settings_screen_logic.set_previous_check_for_updates(config.check_for_updates);
-
-    app.run().unwrap();
 }

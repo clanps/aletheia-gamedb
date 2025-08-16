@@ -50,7 +50,7 @@ impl Scanner for LutrisScanner {
         for row in rows {
             let (name, dir, platform, config_file) = row.unwrap();
 
-            if !dir.as_os_str().is_empty() && !dir.exists() { // Lutris leaves some directories empty (not sure why) and doesn't seem to remove the directory from the database after the game is uninstalled
+            if !dir.as_os_str().is_empty() && !dir.exists() || !config_file.exists() { // Lutris leaves some directories empty (not sure why) and doesn't seem to remove the directory from the database after the game is uninstalled
                 continue;
             }
 

@@ -1,6 +1,7 @@
 // SPDX-FileCopyrightText: 2025 Spencer
 // SPDX-License-Identifier: AGPL-3.0-only
 
+use crate::dirs;
 use std::fs::{create_dir_all, File};
 use std::path::PathBuf;
 
@@ -17,15 +18,15 @@ pub struct Config {
 impl Config {
     fn get_dir() -> PathBuf {
         if cfg!(unix) {
-            crate::dirs::config().join("aletheia")
+            dirs::config().join("aletheia")
         } else {
-            crate::dirs::app_data().join("aletheia")
+            dirs::app_data().join("aletheia")
         }
     }
 
     fn get_save_dir() -> PathBuf {
         if cfg!(unix) {
-            crate::dirs::app_data().join("aletheia")
+            dirs::app_data().join("aletheia")
         } else {
             Self::get_dir().join("saves")
         }
