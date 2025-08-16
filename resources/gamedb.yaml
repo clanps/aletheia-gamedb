@@ -571,6 +571,10 @@ Marvel's Spider-Man Remastered:
   files:
     windows:
       - "{Documents}/Marvel's Spider-Man Miles Morales/*"
+Mary Skelter 2:
+  files:
+    windows:
+      - "{Documents}/My Games/Ghostlight Ltd/Mary Skelter 2/*"
 "Master Detective Archives: Rain Code Plus":
   files:
     windows:
