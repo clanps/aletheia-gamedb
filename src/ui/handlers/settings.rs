@@ -9,6 +9,7 @@ use slint::{ComponentHandle, Model, ModelRc, SharedString, VecModel};
 use std::cell::RefCell;
 use std::rc::Rc;
 
+#[allow(clippy::too_many_lines, reason = "Only one line over the limit")]
 pub fn setup(app: &slint::Weak<App>, config: &Rc<RefCell<AletheiaConfig>>) {
     let app = app.upgrade().unwrap();
     let settings_screen_logic = app.global::<SettingsScreenLogic>();
@@ -105,20 +106,17 @@ pub fn setup(app: &slint::Weak<App>, config: &Rc<RefCell<AletheiaConfig>>) {
 
     let config_ref = config.borrow();
     let steam_account_id = get_steam_id(&config_ref);
-
-    if let Some(id3) = &steam_account_id {
-        if config_ref.steam_account_id.as_ref() != Some(id3) {
-            let new_config = AletheiaConfig {
-                steam_account_id: Some(id3.clone()),
-                ..config_ref.clone()
-            };
-
-            AletheiaConfig::save(&new_config);
-            *config.borrow_mut() = new_config;
-        }
-    }
-
     let steam_account_id_str = steam_account_id.as_deref().unwrap_or_default();
+
+    if let Some(id3) = &steam_account_id && config_ref.steam_account_id.as_ref() != Some(id3) {
+        let new_config = AletheiaConfig {
+            steam_account_id: Some(id3.clone()),
+            ..config_ref.clone()
+        };
+
+        AletheiaConfig::save(&new_config);
+        *config.borrow_mut() = new_config;
+    }
 
     settings_screen_logic.set_config(Config {
         custom_databases: ModelRc::new(VecModel::from(config_ref.custom_databases.iter().map(Into::into).collect::<Vec<_>>())),
