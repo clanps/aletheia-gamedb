@@ -9,7 +9,6 @@ use slint::{ComponentHandle, Model, ModelRc, SharedString, VecModel};
 use std::cell::RefCell;
 use std::rc::Rc;
 
-#[allow(clippy::too_many_lines, reason = "Only one line over the limit")]
 pub fn setup(app: &slint::Weak<App>, config: &Rc<RefCell<AletheiaConfig>>) {
     let app = app.upgrade().unwrap();
     let settings_screen_logic = app.global::<SettingsScreenLogic>();
@@ -78,10 +77,7 @@ pub fn setup(app: &slint::Weak<App>, config: &Rc<RefCell<AletheiaConfig>>) {
                     })
                     .collect();
 
-                if options.len() > 1 {
-                    options.sort_by(|a, b| a.label.cmp(&b.label));
-                }
-
+                options.sort_by(|a, b| a.label.cmp(&b.label));
                 settings_logic.set_steam_account_options(ModelRc::new(VecModel::from(options)));
             }
         }
