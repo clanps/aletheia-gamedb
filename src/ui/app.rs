@@ -8,6 +8,9 @@ use super::{games, settings};
 use std::cell::RefCell;
 use std::rc::Rc;
 
+#[cfg(all(feature = "updater", not(debug_assertions)))]
+use crate::updater;
+
 pub fn run(config: &AletheiaConfig) {
     #[cfg(all(feature = "updater", not(debug_assertions)))]
     if config.check_for_updates {
