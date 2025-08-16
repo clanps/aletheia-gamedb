@@ -13,12 +13,6 @@ pub fn setup(app: &slint::Weak<App>, config: &Rc<RefCell<AletheiaConfig>>) {
     let app = app.upgrade().unwrap();
     let settings_screen_logic = app.global::<SettingsScreenLogic>();
 
-    #[cfg(feature = "updater")]
-    {
-        settings_screen_logic.set_show_update_settings(true);
-        settings_screen_logic.set_previous_check_for_updates(config.check_for_updates);
-    }
-
     settings_screen_logic.on_browse({
         let app_weak = app.as_weak();
 
@@ -108,6 +102,15 @@ pub fn setup(app: &slint::Weak<App>, config: &Rc<RefCell<AletheiaConfig>>) {
         #[cfg(not(feature = "updater"))]
         check_for_updates: false
     });
+
+    settings_screen_logic.set_previous_save_dir(config_ref.save_dir.to_string_lossy().to_string().into());
+    settings_screen_logic.set_previous_steam_account_id(steam_account_id_str.into());
+
+    #[cfg(feature = "updater")]
+    {
+        settings_screen_logic.set_previous_check_for_updates(config_ref.check_for_updates);
+        settings_screen_logic.set_show_update_settings(true);
+    }
 
     settings_screen_logic.invoke_get_steam_users();
 }
