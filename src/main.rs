@@ -31,7 +31,7 @@ use commands::{Args, Command};
 fn main() {
     env_logger::init();
 
-    log::info!("Aletheia v{} (Flatpak: {})", env!("CARGO_PKG_VERSION"), cfg!(target_os = "linux") && std::env::var("FLATPAK_ID").is_ok() && std::fs::exists("/.flatpak-info").unwrap_or(false));
+    log::info!("Aletheia v{} (Flatpak: {}, AppImage: {})", env!("CARGO_PKG_VERSION"), cfg!(target_os = "linux") && std::env::var("FLATPAK_ID").is_ok() && std::fs::exists("/.flatpak-info").unwrap_or(false), cfg!(target_os = "linux") && std::env::var("APPIMAGE").is_ok());
 
     let config = config::Config::load();
     let mut args = std::env::args().skip(1);
