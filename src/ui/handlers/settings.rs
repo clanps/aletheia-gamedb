@@ -5,7 +5,7 @@ use crate::config::Config as AletheiaConfig;
 use crate::ui::app::{App, Config, DropdownOption, NotificationLogic, SettingsScreenLogic};
 use crate::gamedb;
 use crate::scanner::SteamScanner;
-use slint::{ComponentHandle, ModelRc, SharedString, VecModel};
+use slint::{ComponentHandle, Model, ModelRc, SharedString, VecModel};
 use std::cell::RefCell;
 use std::rc::Rc;
 
@@ -33,6 +33,33 @@ pub fn setup(app: &slint::Weak<App>, config: &Rc<RefCell<AletheiaConfig>>) {
                     settings_screen_logic.set_config(cfg);
                 }
             }).unwrap();
+        }
+    });
+
+    settings_screen_logic.on_save_config({
+        let app_weak = app.as_weak().unwrap();
+        let cfg = Rc::clone(config);
+
+        move |ui_cfg| {
+            let notification_logic = app_weak.global::<NotificationLogic>();
+            let settings_logic = app_weak.global::<SettingsScreenLogic>();
+
+            let new_config = AletheiaConfig {
+                custom_databases: ui_cfg.custom_databases.iter().map(Into::into).collect(),
+                save_dir: (&ui_cfg.save_dir).into(),
+                steam_account_id: (!ui_cfg.steam_account_id.is_empty()).then(|| (&ui_cfg.steam_account_id).into()),
+                #[cfg(feature = "updater")]
+                check_for_updates: ui_cfg.check_for_updates
+            };
+
+            settings_logic.set_previous_save_dir(ui_cfg.save_dir.clone());
+            settings_logic.set_previous_steam_account_id(ui_cfg.steam_account_id.clone());
+            settings_logic.set_previous_check_for_updates(ui_cfg.check_for_updates);
+
+            AletheiaConfig::save(&new_config);
+            *cfg.borrow_mut() = new_config;
+
+            notification_logic.invoke_show_success("Successfully saved settings.".into());
         }
     });
 
