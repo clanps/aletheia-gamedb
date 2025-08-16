@@ -11,7 +11,7 @@ use std::fs::File;
 use std::rc::Rc;
 use std::cell::RefCell;
 
-#[allow(clippy::too_many_lines, reason = "This will be refactored")]
+#[allow(clippy::too_many_lines, reason = "This is as simple as it's going to get")]
 pub fn setup(app: &slint::Weak<App>, config: &Rc<RefCell<AletheiaConfig>>) {
     let app = app.upgrade().unwrap();
     let game_logic = app.global::<GameLogic>();
