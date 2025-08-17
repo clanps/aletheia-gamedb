@@ -6,6 +6,7 @@ slint::include_modules!();
 use crate::config::Config as AletheiaConfig;
 use super::{games, settings};
 use std::cell::RefCell;
+use std::process::Command;
 use std::rc::Rc;
 
 #[cfg(all(feature = "updater", not(debug_assertions)))]
@@ -34,12 +35,7 @@ pub fn run(config: &AletheiaConfig) {
                 let updater_window = updater_window.as_weak().unwrap();
 
                 move || {
-                    #[cfg(unix)]
-                    std::process::Command::new("xdg-open").arg(release.url.clone()).spawn().ok();
-
-                    #[cfg(windows)]
-                    std::process::Command::new("cmd").args(["/c", "start", &release.url.clone()]).creation_flags(0x08000000).spawn().ok();
-
+                    open_url(&release.url);
                     updater_window.window().hide().unwrap();
                 }
             });
@@ -69,11 +65,16 @@ fn setup_app_handlers(app: &App) {
     let app_logic = app.global::<AppLogic>();
 
     app_logic.set_version(env!("CARGO_PKG_VERSION").into());
-    app_logic.on_open_url(move |url| {
-        #[cfg(unix)]
-        std::process::Command::new("xdg-open").arg(url).spawn().ok();
+    app_logic.on_open_url(|url| open_url(&url));
+}
 
-        #[cfg(windows)]
-        std::process::Command::new("cmd").args(["/c", "start", &url]).spawn().ok();
-    });
+fn open_url(url: &str) {
+    #[cfg(unix)]
+    Command::new("xdg-open").arg(url).spawn().ok();
+
+    #[cfg(windows)]
+    {
+        use std::os::windows::process::CommandExt;
+        Command::new("cmd").args(["/c", "start", url]).creation_flags(0x08000000).spawn().ok();
+    }
 }
