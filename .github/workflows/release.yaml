@@ -81,21 +81,13 @@ jobs:
           - os: windows-2022
             target: x86_64-pc-windows-msvc
             artifact: aletheia-windows-x64.exe
-          # - os: windows-11-arm # SQLite currently does not provide pre-built Windows ARM binaries
-          #  target: aarch64-pc-windows-msvc
-          #  artifact: aletheia-windows-aarch64.exe
+          - os: windows-11-arm
+            target: aarch64-pc-windows-msvc
+            artifact: aletheia-windows-aarch64.exe
     runs-on: ${{ matrix.os }}
     steps:
       - name: Setup Rust toolchain
         uses: dtolnay/rust-toolchain@stable
-
-      - name: Install SQLite
-        shell: cmd
-        run: |
-          choco install sqlite
-          cd /D C:\ProgramData\chocolatey\lib\SQLite\tools
-          call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
-          lib /machine:x64 /def:sqlite3.def /out:sqlite3.lib
 
       - name: Checkout code
         uses: actions/checkout@v5
@@ -106,7 +98,7 @@ jobs:
           key: ${{ matrix.os }}-${{ matrix.target }}
 
       - name: Build
-        run: $env:SQLITE3_LIB_DIR="C:\ProgramData\chocolatey\lib\SQLite\tools"; cargo build --release --features updater --target=${{ matrix.target }}; Rename-Item "target\${{ matrix.target }}\release\aletheia.exe" "${{ matrix.artifact }}"
+        run: cargo build --release --features updater --target=${{ matrix.target }}; Rename-Item "target\${{ matrix.target }}\release\aletheia.exe" "${{ matrix.artifact }}"
 
       - name: Upload
         uses: actions/upload-artifact@v4
