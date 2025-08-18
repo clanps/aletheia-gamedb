@@ -31,7 +31,12 @@ impl Config {
         dirs::app_data().join("aletheia")
     }
 
-    #[cfg(unix)]
+    #[cfg(target_os = "macos")]
+    fn get_save_dir() -> PathBuf {
+        dirs::app_data().join("moe.spencer.aletheia")
+    }
+
+    #[cfg(all(unix, not(target_os = "macos")))]
     fn get_save_dir() -> PathBuf {
         dirs::app_data().join("aletheia")
     }
