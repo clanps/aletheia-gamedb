@@ -5,10 +5,13 @@ use serde::Deserialize;
 use std::fs::File;
 
 #[cfg(all(unix, not(target_os = "macos")))]
-use crate::dirs::{config, home};
+use crate::dirs::home;
 
 #[cfg(target_os = "macos")]
 use crate::dirs::app_data;
+
+#[cfg(not(target_os = "macos"))]
+use crate::dirs::config;
 
 pub struct HeroicScanner;
 
