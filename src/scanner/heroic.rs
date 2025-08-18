@@ -1,9 +1,11 @@
 // SPDX-FileCopyrightText: 2025 Spencer
 // SPDX-License-Identifier: AGPL-3.0-only
-use crate::dirs::{config, home};
 use super::{Game, Scanner};
 use serde::Deserialize;
 use std::fs::File;
+
+#[cfg(all(unix, not(target_os = "macos")))]
+use crate::dirs::{config, home};
 
 #[cfg(target_os = "macos")]
 use crate::dirs::app_data;
