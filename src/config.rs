@@ -27,7 +27,7 @@ impl Config {
     }
 
     #[cfg(windows)]
-    fn get_dir -> PathBuf {
+    fn get_dir() -> PathBuf {
         dirs::app_data().join("aletheia")
     }
 
