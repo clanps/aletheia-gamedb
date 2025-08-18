@@ -9,8 +9,14 @@ use std::path::{Path, PathBuf};
 pub fn cache() -> PathBuf {
     if cfg!(unix) {
         var_os("XDG_CACHE_HOME")
-            .map_or_else(|| home().join(".cache"), PathBuf::from)
-            .join("aletheia")
+            .map_or_else(|| if cfg!(target_os = "macos") {
+                home().join("Library/caches")
+            } else {
+                home().join(".cache")
+            },
+            PathBuf::from
+        )
+        .join("aletheia")
     } else {
         app_data().join("aletheia/cache")
     }
@@ -19,7 +25,13 @@ pub fn cache() -> PathBuf {
 pub fn config() -> PathBuf {
     if cfg!(unix) {
         var_os("XDG_CONFIG_HOME")
-            .map_or_else(|| home().join(".config"), PathBuf::from)
+            .map_or_else(|| if cfg!(target_os = "macos") {
+                home().join("Library/Preferences")
+            } else {
+                home().join(".config")
+            },
+            PathBuf::from
+        )
     } else {
         var_os("APPDATA")
             .map(PathBuf::from)
@@ -30,7 +42,13 @@ pub fn config() -> PathBuf {
 pub fn app_data() -> PathBuf {
     if cfg!(unix) {
         var_os("XDG_DATA_HOME")
-            .map_or_else(|| home().join(".local/share"), PathBuf::from)
+            .map_or_else(|| if cfg!(target_os = "macos") {
+                home().join("Library")
+            } else {
+                home().join(".local/share")
+            },
+            PathBuf::from
+        )
     } else {
         var_os("LOCALAPPDATA")
             .map(PathBuf::from)
