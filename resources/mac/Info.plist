@@ -19,7 +19,7 @@
   <key>NSHumanReadableCopyright</key>
   <string>2025 Spencer-0003</string>
   <key>LSMinimumSystemVersion</key>
-  <string>15.0</string>
+  <string>14.0</string>
   <key>NSHighResolutionCapable</key>
   <true/>
   <key>CSResourcesFileMapped</key>
