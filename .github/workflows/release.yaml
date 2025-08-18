@@ -170,7 +170,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.artifact }}
-          path: target/${{ matrix.target }}/release/${{ matrix.artifact }}
+          path: ${{ matrix.artifact }}
 
   generate_license_file:
     runs-on: ubuntu-24.04
