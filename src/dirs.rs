@@ -47,7 +47,7 @@ pub fn config() -> PathBuf {
 #[cfg(target_os = "macos")]
 pub fn app_data() -> PathBuf {
     var_os("XDG_DATA_HOME")
-        .map_or_else(|| home().join("Library"), PathBuf::from)
+        .map_or_else(|| home().join("Library/Application Support"), PathBuf::from)
 }
 
 #[cfg(all(unix, not(target_os = "macos")))]

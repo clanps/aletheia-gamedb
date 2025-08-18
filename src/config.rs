@@ -16,20 +16,29 @@ pub struct Config {
 }
 
 impl Config {
+    #[cfg(target_os = "macos")]
     fn get_dir() -> PathBuf {
-        if cfg!(unix) {
-            dirs::config().join("aletheia")
-        } else {
-            dirs::app_data().join("aletheia")
-        }
+        dirs::config().join("moe.spencer.aletheia")
     }
 
+    #[cfg(all(unix, not(target_os = "macos")))]
+    fn get_dir() -> PathBuf {
+        dirs::config().join("aletheia")
+    }
+
+    #[cfg(windows)]
+    fn get_dir -> PathBuf {
+        dirs::app_data().join("aletheia")
+    }
+
+    #[cfg(unix)]
     fn get_save_dir() -> PathBuf {
-        if cfg!(unix) {
-            dirs::app_data().join("aletheia")
-        } else {
-            Self::get_dir().join("saves")
-        }
+        dirs::app_data().join("aletheia")
+    }
+
+    #[cfg(windows)]
+    fn get_save_dir() -> PathBuf {
+        Self::get_dir().join("saves")
     }
 
     pub fn load() -> Self {
