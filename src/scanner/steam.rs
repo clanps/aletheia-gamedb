@@ -31,7 +31,11 @@ impl SteamScanner {
             return None;
         };
 
-        let login_users: LoginUsersFile = keyvalues_serde::from_reader(File::open(steam_directory.path().join("config/loginusers.vdf")).unwrap()).unwrap();
+        let Ok(login_users_file) = File::open(steam_directory.path().join("config/loginusers.vdf")) else {
+            return None; // Installed Steam but never signed in
+        };
+
+        let login_users: LoginUsersFile = keyvalues_serde::from_reader(login_users_file).unwrap();
 
         Some(login_users.users)
     }
