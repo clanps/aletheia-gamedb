@@ -133,6 +133,45 @@ jobs:
           name: aletheia-${{ matrix.arch }}.flatpak
           path: aletheia-${{ matrix.arch }}.flatpak
 
+  build_mac:
+    strategy:
+      matrix:
+        include:
+          - os: macos-14
+            target: aarch64-apple-darwin
+            artifact: aletheia.app
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Setup Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install dependencies
+        run: brew update && brew install qt@6
+
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Setup Rust cache
+        uses: Swatinem/rust-cache@v2
+        with:
+          key: ${{ matrix.os }}-${{ matrix.target }}
+
+      - name: Build
+        run: cargo build --release --features updater --target=${{ matrix.target }}
+
+      - name: Create app bundle
+        run: |
+          mkdir -p ${{ matrix.artifact }}/Contents/{MacOS,Resources}
+          cp target/release/${{ matrix.target }}/aletheia Aletheia.app/Contents/MacOS/aletheia
+          cp resources/mac/aletheia.icns ${{ matrix.artifact }}/Contents/Resources
+          cp resources/mac/Info.plist ${{ matrix.artifact }}/Contents
+
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact }}
+          path: target/${{ matrix.target }}/release/${{ matrix.artifact }}
+
   generate_license_file:
     runs-on: ubuntu-24.04
     steps:
@@ -152,7 +191,7 @@ jobs:
           path: THIRD_PARTY_LICENSES.html
 
   create_release:
-    needs: [build_linux, build_windows, build_flatpak, generate_license_file]
+    needs: [build_linux, build_windows, build_flatpak, build_mac, generate_license_file]
     runs-on: ubuntu-24.04
     permissions:
       contents: write
