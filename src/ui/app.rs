@@ -67,8 +67,11 @@ fn setup_app_handlers(app: &App) {
 }
 
 fn open_url(url: &str) {
-    #[cfg(unix)]
+    #[cfg(all(unix, not(target_os = "macos")))]
     Command::new("xdg-open").arg(url).spawn().ok();
+
+    #[cfg(target_os = "macos")]
+    Command::new("open").arg(url).spawn().ok();
 
     #[cfg(windows)]
     {
