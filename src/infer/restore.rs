@@ -8,13 +8,13 @@ use crate::infer::launchers::Heroic;
 use crate::operations::restore_game;
 use std::fs::File;
 
-#[cfg(unix)]
+#[cfg(all(unix, not(target_os = "macos")))]
 use crate::infer::launchers::Lutris;
 
 pub fn restore(launcher: &str, config: &Config) {
     let game = match launcher.to_lowercase().as_str() {
         "heroic" => Heroic::get_game(),
-        #[cfg(unix)]
+        #[cfg(all(unix, not(target_os = "macos")))]
         "lutris" => Lutris::get_game(),
         _ => {
             log::warn!("Backup was ran with infer using an unsupported launcher.");

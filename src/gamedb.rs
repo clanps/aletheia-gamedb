@@ -10,7 +10,7 @@ use std::fs::{create_dir_all, File, read_to_string, write};
 use serde::{Deserialize, Serialize};
 use reqwest::{header, StatusCode};
 
-#[cfg(unix)]
+#[cfg(all(unix, not(target_os = "macos")))]
 use crate::scanner::LutrisScanner;
 
 #[cfg(windows)]
@@ -88,7 +88,7 @@ pub fn get_installed_games() -> Vec<Game> {
     let db = parse();
     let mut games = vec![];
 
-    #[cfg(unix)]
+    #[cfg(all(unix, not(target_os = "macos")))]
     games.extend(LutrisScanner::get_games());
 
     #[cfg(windows)]

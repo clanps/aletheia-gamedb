@@ -3,10 +3,10 @@
 
 mod heroic;
 
-#[cfg(unix)]
+#[cfg(all(unix, not(target_os = "macos")))]
 mod lutris;
 
 pub use heroic::Heroic;
 
-#[cfg(unix)]
+#[cfg(all(unix, not(target_os = "macos")))]
 pub use lutris::Lutris;

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 use std::path::PathBuf;
 
-#[cfg(unix)]
+#[cfg(all(unix, not(target_os = "macos")))]
 mod lutris;
 mod steam;
 
@@ -11,7 +11,7 @@ mod gog;
 
 mod heroic;
 
-#[cfg(unix)]
+#[cfg(all(unix, not(target_os = "macos")))]
 pub use lutris::LutrisScanner;
 pub use steam::SteamScanner;
 
