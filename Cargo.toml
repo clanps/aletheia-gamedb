@@ -40,6 +40,9 @@ slint = { version = "1.12.1", default-features = false, features = ["accessibili
 rusqlite = { version = "0.37.0", features = ["bundled"] }
 slint = { version = "1.12.1", default-features = false, features = ["accessibility", "backend-winit", "renderer-skia-opengl", "compat-1-2", "std"] }
 
+[target.'cfg(target_os = "macos")'.dependencies]
+plist = "1.7.4"
+
 [build-dependencies]
 slint-build = "1.12.1"
 

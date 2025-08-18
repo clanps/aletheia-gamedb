@@ -18,7 +18,7 @@ pub struct Config {
 impl Config {
     #[cfg(target_os = "macos")]
     fn get_dir() -> PathBuf {
-        dirs::config().join("moe.spencer.aletheia")
+        dirs::config()
     }
 
     #[cfg(all(unix, not(target_os = "macos")))]
@@ -46,6 +46,7 @@ impl Config {
         Self::get_dir().join("saves")
     }
 
+    #[cfg(not(target_os = "macos"))]
     pub fn load() -> Self {
         let dir = Self::get_dir();
         let config_path = dir.join("config.json");
@@ -72,12 +73,44 @@ impl Config {
         default
     }
 
+    #[cfg(target_os = "macos")]
+    pub fn load() -> Self {
+        let config_path = Self::get_dir().join("moe.spencer.aletheia.plist");
+
+        if config_path.exists() {
+            let config_file = File::open(&config_path).expect("Failed to read config file.");
+            let mut cfg: Self = plist::from_reader(&config_file).expect("Failed to parse config file.");
+
+            if !cfg.save_dir.exists() {
+                log::warn!("Save directory does not exist, resetting.");
+
+                cfg.save_dir = Self::get_save_dir();
+                Self::save(&cfg);
+            }
+
+            return cfg;
+        }
+
+        let default = Self::default();
+        plist::to_writer_xml(File::create(&config_path).unwrap(), &default).unwrap();
+
+        default
+    }
+
+    #[cfg(not(target_os = "macos"))]
     pub fn save(cfg: &Self) {
         let dir = Self::get_dir();
         let config_path = dir.join("config.json");
 
         create_dir_all(&dir).unwrap();
         serde_json::to_writer_pretty(File::create(&config_path).unwrap(), &cfg).unwrap();
+    }
+
+    #[cfg(target_os = "macos")]
+    pub fn save(cfg: &Self) {
+        let config_path = Self::get_dir().join("moe.spencer.aletheia.plist");
+
+        plist::to_writer_xml(File::create(&config_path).unwrap(), &cfg).unwrap();
     }
 }
 
