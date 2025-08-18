@@ -5,6 +5,9 @@ use super::{Game, Scanner};
 use serde::Deserialize;
 use std::fs::File;
 
+#[cfg(target_os = "macos")]
+use crate::dirs::app_data;
+
 pub struct HeroicScanner;
 
 #[derive(Deserialize, Debug)]
@@ -34,14 +37,24 @@ impl Scanner for HeroicScanner {
     fn get_games() -> Vec<Game> {
         let mut games = vec![];
 
-        let Some(heroic_path) = (if cfg!(unix) {
-            [config().join("heroic"), home().join(".var/app/com.heroicgameslauncher.hgl")]
-                .into_iter()
-                .find(|p| p.exists())
-        } else {
+        #[cfg(all(unix, not(target_os = "macos")))]
+        let heroic_path = [config().join("heroic"), home().join(".var/app/com.heroicgameslauncher.hgl")]
+            .into_iter()
+            .find(|p| p.exists());
+
+        #[cfg(target_os = "macos")]
+        let heroic_path = {
+            let path = app_data().join("heroic");
+            path.exists().then_some(path)
+        };
+
+        #[cfg(windows)]
+        let heroic_path = {
             let path = config().join("heroic");
             path.exists().then_some(path)
-        }) else {
+        };
+
+        let Some(heroic_path) = heroic_path else {
             return games;
         };
 
