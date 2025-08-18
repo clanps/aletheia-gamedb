@@ -2,8 +2,13 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 
 use crate::dirs;
-use std::fs::{create_dir_all, File};
 use std::path::PathBuf;
+
+#[cfg(not(target_os = "macos"))]
+use std::fs::{create_dir_all, File};
+
+#[cfg(target_os = "macos")]
+use std::fs::File;
 
 #[derive(Clone, PartialEq, serde::Deserialize, serde::Serialize)]
 #[serde(default)]
