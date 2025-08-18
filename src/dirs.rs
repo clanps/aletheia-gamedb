@@ -141,6 +141,8 @@ pub fn expand_path(path: &Path, installation_dir: Option<&Path>, prefix: Option<
                 ("{GOGAppData}", windows_app_data.join("Local").join("GOG.com/Galaxy/Applications")),
                 ("{SteamUserData}", steam_user_data)
             ]);
+        } else if cfg!(target_os = "macos") {
+            replacements.push(("{GOGAppData}", linux_app_data.join("GOG.com/Galaxy/Applications")));
         }
 
         replacements.extend([
@@ -206,6 +208,8 @@ pub fn shrink_path(path: &Path, installation_dir: Option<&Path>, prefix: Option<
                 ("{GOGAppData}", windows_app_data.join("Local").join("GOG.com/Galaxy/Applications")),
                 ("{SteamUserData}", steam_user_data)
             ]);
+        } else if cfg!(target_os = "macos") {
+            replacements.push(("{GOGAppData}", linux_app_data.join("GOG.com/Galaxy/Applications")));
         }
 
         replacements.extend([
