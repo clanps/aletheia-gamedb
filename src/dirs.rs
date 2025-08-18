@@ -6,54 +6,61 @@ use std::ffi::OsString;
 use std::fs::read_dir;
 use std::path::{Path, PathBuf};
 
+#[cfg(target_os = "macos")]
 pub fn cache() -> PathBuf {
-    if cfg!(unix) {
-        var_os("XDG_CACHE_HOME")
-            .map_or_else(|| if cfg!(target_os = "macos") {
-                home().join("Library/caches")
-            } else {
-                home().join(".cache")
-            },
-            PathBuf::from
-        )
+    var_os("XDG_CACHE_HOME")
+        .map_or_else(|| home().join("Library/caches"), PathBuf::from)
+        .join("moe.spencer.aletheia")
+}
+
+#[cfg(all(unix, not(target_os = "macos")))]
+pub fn cache() -> PathBuf {
+    var_os("XDG_CACHE_HOME")
+        .map_or_else(|| home().join(".cache"), PathBuf::from)
         .join("aletheia")
-    } else {
-        app_data().join("aletheia/cache")
-    }
 }
 
+#[cfg(windows)]
+pub fn cache() -> PathBuf {
+    app_data().join("aletheia/cache")
+}
+
+#[cfg(target_os = "macos")]
 pub fn config() -> PathBuf {
-    if cfg!(unix) {
-        var_os("XDG_CONFIG_HOME")
-            .map_or_else(|| if cfg!(target_os = "macos") {
-                home().join("Library/Preferences")
-            } else {
-                home().join(".config")
-            },
-            PathBuf::from
-        )
-    } else {
-        var_os("APPDATA")
-            .map(PathBuf::from)
-            .unwrap()
-    }
+    var_os("XDG_CONFIG_HOME")
+        .map_or_else(|| home().join("Library/Preferences"), PathBuf::from)
 }
 
+#[cfg(all(unix, not(target_os = "macos")))]
+pub fn config() -> PathBuf {
+    var_os("XDG_CONFIG_HOME")
+         .map_or_else(|| home().join(".config"), PathBuf::from)
+}
+
+#[cfg(windows)]
+pub fn config() -> PathBuf {
+    var_os("APPDATA")
+        .map(PathBuf::from)
+        .unwrap()
+}
+
+#[cfg(target_os = "macos")]
 pub fn app_data() -> PathBuf {
-    if cfg!(unix) {
-        var_os("XDG_DATA_HOME")
-            .map_or_else(|| if cfg!(target_os = "macos") {
-                home().join("Library")
-            } else {
-                home().join(".local/share")
-            },
-            PathBuf::from
-        )
-    } else {
-        var_os("LOCALAPPDATA")
-            .map(PathBuf::from)
-            .unwrap()
-    }
+    var_os("XDG_DATA_HOME")
+        .map_or_else(|| home().join("Library"), PathBuf::from)
+}
+
+#[cfg(all(unix, not(target_os = "macos")))]
+pub fn app_data() -> PathBuf {
+    var_os("XDG_DATA_HOME")
+        .map_or_else(|| home().join(".local/share"), PathBuf::from)
+}
+
+#[cfg(windows)]
+pub fn app_data() -> PathBuf {
+    var_os("LOCALAPPDATA")
+        .map(PathBuf::from)
+        .unwrap()
 }
 
 pub fn home() -> PathBuf {
