@@ -37,9 +37,14 @@ pub fn backup_game(game: &Game, config: &Config, entry: &GameDbEntry) -> Result<
         paths.extend(windows_paths);
     }
 
-    #[cfg(unix)]
+    #[cfg(all(unix, not(target_os = "macos")))]
     if let Some(ref linux_paths) = entry.files.linux {
         paths.extend(linux_paths);
+    }
+
+    #[cfg(target_os = "macos")]
+    if let Some(ref mac_paths) = entry.files.mac {
+        paths.extend(mac_paths);
     }
 
     let mut files = vec![];

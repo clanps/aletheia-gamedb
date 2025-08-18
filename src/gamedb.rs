@@ -36,7 +36,10 @@ pub struct GameDbEntry {
 #[derive(Clone, Debug, Deserialize, Serialize)]
 pub struct GameFiles {
     pub windows: Option<Vec<String>>,
-    pub linux: Option<Vec<String>>
+    #[cfg(all(unix, not(target_os = "macos")))]
+    pub linux: Option<Vec<String>>,
+    #[cfg(target_os = "macos")]
+    pub mac: Option<Vec<String>>
 }
 
 #[derive(Deserialize, Serialize)]
