@@ -12,7 +12,7 @@ Add game save locations in `resources/gamedb.yaml`; entries must be alphabetical
 | Placeholder       | Description                                                                                   |
 |-------------------|-----------------------------------------------------------------------------------------------|
 | `{GameRoot}`      | Root directory of the game installation                                                       |
-| `{AppData}`       | Roaming AppData folder on Windows                                                             |
+| `{AppData}`       | Roaming AppData folder on Windows and Application Support on MacOS                            |
 | `{LocalAppData}`  | Local AppData folder on Windows                                                               |
 | `{LocalLow}`      | LocalLow AppData folder on Windows                                                            |
 | `{Documents}`     | User’s documents directory                                                                    |
