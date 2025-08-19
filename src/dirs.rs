@@ -361,3 +361,24 @@ pub fn get_size(path: &Path) -> u64 {
 
     size
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_path_expansion() {
+        let home_dir = home();
+        let save_file = Path::new("{LocalLow}/AllianceArts/All in Abyss/SaveData/EXAMPLE_STEAM_ID/GameData/GameSaveData_0.sav");
+
+        #[cfg(unix)]
+        {
+            let username = var_os("USER").unwrap();
+            let prefix = home_dir.join("Games/UnitTest");
+            assert_eq!(expand_path(save_file, None, Some(&prefix), None), prefix.join("drive_c/users").join(username).join("AppData/LocalLow/AllianceArts/All in Abyss/SaveData/EXAMPLE_STEAM_ID/GameData/GameSaveData_0.sav"));
+        }
+
+        #[cfg(windows)]
+        assert_eq!(expand_path(save_file, None, None), home_dir.join("AppData/LocalLow/AllianceArts/All in Abyss/SaveData/EXAMPLE_STEAM_ID/GameData/GameSaveData_0.sav"));
+    }
+}
