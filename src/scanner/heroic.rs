@@ -20,6 +20,7 @@ struct HeroicGOGGame {
     #[serde(rename = "appName")]
     app_id: String,
     install_path: String,
+    #[cfg(unix)]
     platform: String
 }
 
