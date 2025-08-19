@@ -412,4 +412,17 @@ mod tests {
             assert_eq!(expand_path(save_file_3, None, None), home_dir.join("Documents/My Games/Terraria/Players/UnitTest.plr"));
         }
     }
+
+    #[test]
+    fn test_path_shrinkage() {
+        let home_dir = home();
+
+        #[cfg(all(unix, not(target_os = "macos")))]
+        {
+            let save_file_1 = home_dir.join(".local/share/Steam/steamapps/common/Sonic Adventure DX/SAVEDATA/SonicDX01.snc");
+            let installation_dir = home_dir.join(".local/share/Steam/steamapps/common/Sonic Adventure DX");
+
+            assert_eq!(shrink_path(&save_file_1, Some(&installation_dir), None, None), Path::new("{GameRoot}/SAVEDATA/SonicDX01.snc"));
+        }
+    }
 }
