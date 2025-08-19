@@ -42,7 +42,7 @@ pub fn restore_game(game_dir: &Path, manifest: &GameInfo, installed_games: &[Gam
         let expanded = expand_path(file_path, game.installation_dir.as_deref(), game.prefix.as_deref(), steam_id);
 
         #[cfg(windows)]
-        let expanded = expand_path(file_path, game.installation_dir.as_deref(), game.prefix.as_deref(), steam_id);
+        let expanded = expand_path(file_path, game.installation_dir.as_deref(), steam_id);
 
         let src_file = game_dir.join(file_path.file_name().unwrap());
 
