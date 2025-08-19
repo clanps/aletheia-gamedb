@@ -213,7 +213,7 @@ pub fn expand_path(path: &Path, installation_dir: Option<&Path>, prefix: Option<
         ]);
     } else {
         replacements.extend([
-            ("{AppData}", app_lication_support.clone()),
+            ("{AppData}", application_support.clone()),
             ("{GOGAppData}", application_support.join("GOG.com/Galaxy/Applications"))
         ]);
     }
