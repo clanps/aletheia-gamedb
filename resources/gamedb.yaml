@@ -920,6 +920,9 @@ Terraria:
     linux:
       - "{XDGData}/Terraria/Players/*"
       - "{XDGData}/Terraria/Worlds/*"
+    mac:
+      - "{AppData}/Terraria/Players/*"
+      - "{AppData}/Terraria/Worlds/*"
     windows:
       - "{Documents}/My Games/Terraria/Players/*"
       - "{Documents}/My Games/Terraria/Worlds/*"
