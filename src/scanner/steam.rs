@@ -75,7 +75,7 @@ impl Scanner for SteamScanner {
 
                         prefix_directory.exists().then_some(prefix_directory)
                     },
-                    #[cfg(any(windows, target_os = "macos"))]
+                    #[cfg(target_os = "macos")]
                     prefix: None,
                     source: "Steam".into()
                 });
@@ -88,15 +88,14 @@ impl Scanner for SteamScanner {
             games.push(Game {
                 name: shortcut.app_name,
                 installation_dir: Some(shortcut.start_dir.into()),
-                prefix: if cfg!(unix) {
+                #[cfg(unix)]
+                prefix: {
                     let prefix_directory = steam_directory.path()
                         .join("steamapps/compatdata")
                         .join(shortcut.app_id.to_string())
                         .join("pfx");
 
                     prefix_directory.exists().then_some(prefix_directory)
-                } else {
-                    None
                 },
                 source: "Steam".into()
             });

@@ -46,7 +46,7 @@ impl Scanner for GOGScanner {
                 continue;
             };
 
-            games.push(Game { name: game_info.name, installation_dir: Some(dir), prefix: None, source: "GOG".to_owned() });
+            games.push(Game { name: game_info.name, installation_dir: Some(dir), source: "GOG".to_owned() });
         }
 
         games

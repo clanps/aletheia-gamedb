@@ -155,7 +155,7 @@ pub fn expand_path(path: &Path, installation_dir: Option<&Path>, prefix: Option<
 }
 
 #[cfg(windows)]
-pub fn expand_path(path: &Path, installation_dir: Option<&Path>, prefix: Option<&Path>, steam_account_id: Option<&str>) -> PathBuf {
+pub fn expand_path(path: &Path, installation_dir: Option<&Path>, steam_account_id: Option<&str>) -> PathBuf {
     let mut replacements: Vec<(&str, PathBuf)> = vec![];
 
     if let Some(install_dir) = installation_dir {
@@ -272,7 +272,7 @@ pub fn shrink_path(path: &Path, installation_dir: Option<&Path>, prefix: Option<
 }
 
 #[cfg(windows)]
-pub fn shrink_path(path: &Path, installation_dir: Option<&Path>, prefix: Option<&Path>, steam_account_id: Option<&str>) -> PathBuf {
+pub fn shrink_path(path: &Path, installation_dir: Option<&Path>, steam_account_id: Option<&str>) -> PathBuf {
     let mut replacements: Vec<(&str, PathBuf)> = vec![];
 
     if let Some(install_dir) = installation_dir {

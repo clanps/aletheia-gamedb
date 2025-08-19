@@ -85,7 +85,8 @@ impl Scanner for HeroicScanner {
                 continue;
             };
 
-            let prefix = if cfg!(unix) && game.platform == "windows" {
+            #[cfg(unix)]
+            let prefix = if game.platform == "windows" {
                 let game_config = heroic_path.join("GamesConfig").join(format!("{}.json", &game.app_id));
 
                 if !game_config.exists() {
@@ -105,7 +106,11 @@ impl Scanner for HeroicScanner {
                 None
             };
 
+            #[cfg(unix)]
             games.push(Game { name: game_manifest.products[0].name.clone(), installation_dir: Some(game.install_path.into()), prefix, source: "Heroic".into() });
+
+            #[cfg(windows)]
+            games.push(Game { name: game_manifest.products[0].name.clone(), installation_dir: Some(game.install_path.into()), source: "Heroic".into() });
         }
 
         games

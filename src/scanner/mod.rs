@@ -24,6 +24,7 @@ pub use heroic::HeroicScanner;
 pub struct Game {
     pub name: String,
     pub installation_dir: Option<PathBuf>,
+    #[cfg(unix)]
     pub prefix: Option<PathBuf>,
     pub source: String
 }
