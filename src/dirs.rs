@@ -368,17 +368,43 @@ mod tests {
 
     #[test]
     fn test_path_expansion() {
+        #[cfg(unix)]
+        let username = var_os("USER").unwrap();
+
         let home_dir = home();
-        let save_file = Path::new("{LocalLow}/AllianceArts/All in Abyss/SaveData/EXAMPLE_STEAM_ID/GameData/GameSaveData_0.sav");
+        let root_dir = home_dir.join("Games/Unit Test");
+
+        let save_file_1 = Path::new("{LocalLow}/AllianceArts/All in Abyss/SaveData/EXAMPLE_STEAM_ID/GameData/GameSaveData_0.sav");
+        let save_file_2 = Path::new("{GameRoot}/SAVEDATA/SonicDX01.snc");
 
         #[cfg(unix)]
         {
-            let username = var_os("USER").unwrap();
+            let save_file_3 = Path::new("{XDGData}/Terraria/Players/UnitTest.plr");
+
+            let xdg_data = app_data();
             let prefix = home_dir.join("Games/UnitTest");
-            assert_eq!(expand_path(save_file, None, Some(&prefix), None), prefix.join("drive_c/users").join(username).join("AppData/LocalLow/AllianceArts/All in Abyss/SaveData/EXAMPLE_STEAM_ID/GameData/GameSaveData_0.sav"));
+
+            assert_eq!(expand_path(save_file_1, None, Some(&prefix), None), prefix.join("drive_c/users").join(username).join("AppData/LocalLow/AllianceArts/All in Abyss/SaveData/EXAMPLE_STEAM_ID/GameData/GameSaveData_0.sav"));
+            assert_eq!(expand_path(save_file_2, Some(&root_dir), None, None), root_dir.join("SAVEDATA/SonicDX01.snc"));
+            assert_eq!(expand_path(save_file_3, None, None, None), xdg_data.join("Terraria/Players/UnitTest.plr"));
+        }
+
+        #[cfg(target_os = "macos")]
+        {
+            let save_file_3 = Path::new("{AppData}/Terraria/Players/UnitTest.plr");
+
+            let application_support = home_dir.join("Library/Application Support");
+
+            assert_eq!(expand_path(save_file_3, None, None, None), application_support.join("Terraria/Players/UnitTest.plr"));
         }
 
         #[cfg(windows)]
-        assert_eq!(expand_path(save_file, None, None), home_dir.join("AppData/LocalLow/AllianceArts/All in Abyss/SaveData/EXAMPLE_STEAM_ID/GameData/GameSaveData_0.sav"));
+        {
+            let save_file_3 = Path::new("{Documents}/My Games/Terraria/Players/UnitTest.plr");
+
+            assert_eq!(expand_path(save_file_1, None, None), home_dir.join("AppData/LocalLow/AllianceArts/All in Abyss/SaveData/EXAMPLE_STEAM_ID/GameData/GameSaveData_0.sav"));
+            assert_eq!(expand_path(save_file_2, Some(&root_dir), None), root_dir.join("SAVEDATA/SonicDX01.snc"));
+            assert_eq!(expand_path(save_file_3, None, None), home_dir.join("Documents/My Games/Terraria/Players/UnitTest.plr"));
+        }
     }
 }
