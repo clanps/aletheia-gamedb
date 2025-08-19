@@ -379,13 +379,18 @@ mod tests {
 
         #[cfg(unix)]
         {
-            let save_file_3 = Path::new("{XDGData}/Terraria/Players/UnitTest.plr");
-
-            let xdg_data = app_data();
             let prefix = home_dir.join("Games/UnitTest");
 
             assert_eq!(expand_path(save_file_1, None, Some(&prefix), None), prefix.join("drive_c/users").join(username).join("AppData/LocalLow/AllianceArts/All in Abyss/SaveData/EXAMPLE_STEAM_ID/GameData/GameSaveData_0.sav"));
             assert_eq!(expand_path(save_file_2, Some(&root_dir), None, None), root_dir.join("SAVEDATA/SonicDX01.snc"));
+        }
+
+        #[cfg(all(unix, not(target_os = "macos")))]
+        {
+            let save_file_3 = Path::new("{XDGData}/Terraria/Players/UnitTest.plr");
+
+            let xdg_data = app_data();
+
             assert_eq!(expand_path(save_file_3, None, None, None), xdg_data.join("Terraria/Players/UnitTest.plr"));
         }
 
