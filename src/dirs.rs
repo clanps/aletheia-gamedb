@@ -194,6 +194,16 @@ pub fn expand_path(path: &Path, installation_dir: Option<&Path>, prefix: Option<
 
     let application_support = home().join("Library/Application Support"); // app_data is not used here as most games don't use the XDG spec on MacOS
 
+    let steam_user_data = {
+        let base_path = steamlocate::SteamDir::locate()
+            .map_or_else(|_| application_support.join("Steam"), |dir| dir.path().to_path_buf());
+
+        let userdata_path = base_path.join("userdata");
+        steam_account_id.map_or_else(|| userdata_path.join("[0-9]*"), |id| userdata_path.join(id))
+    };
+
+    replacements.push(("{SteamUserData}", steam_user_data));
+
     if let Some(wine_prefix) = prefix {
         let username = std::env::var_os("USER").unwrap();
 
@@ -208,8 +218,7 @@ pub fn expand_path(path: &Path, installation_dir: Option<&Path>, prefix: Option<
             ("{Home}", user),
             ("{LocalAppData}", windows_app_data.join("Local")),
             ("{LocalLow}", windows_app_data.join("LocalLow")),
-            ("{GOGAppData}", windows_app_data.join("Local").join("GOG.com/Galaxy/Applications")),
-            // ("{SteamUserData}", steam_user_data) // TODO: Find out where steam user data is stored on MacOS
+            ("{GOGAppData}", windows_app_data.join("Local").join("GOG.com/Galaxy/Applications"))
         ]);
     } else {
         replacements.extend([
