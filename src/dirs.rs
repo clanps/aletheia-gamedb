@@ -192,7 +192,7 @@ pub fn expand_path(path: &Path, installation_dir: Option<&Path>, prefix: Option<
         replacements.push(("{GameRoot}", install_dir.to_owned()));
     }
 
-    let application_support = home_dir().join("Library/Application Support"); // app_data is not used here as most games don't use the XDG spec on MacOS
+    let application_support = home().join("Library/Application Support"); // app_data is not used here as most games don't use the XDG spec on MacOS
 
     if let Some(wine_prefix) = prefix {
         let username = std::env::var_os("USER").unwrap();
