@@ -2,9 +2,11 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 
 use std::env::{home_dir, var_os};
-use std::ffi::OsString;
 use std::fs::read_dir;
 use std::path::{Path, PathBuf};
+
+#[cfg(all(unix, not(target_os = "macos")))]
+use std::ffi::OsString;
 
 #[cfg(target_os = "macos")]
 pub fn cache() -> PathBuf {
@@ -102,6 +104,7 @@ fn shrink_path_components(path: &Path, replacements: &[(&str, PathBuf)]) -> Path
     path.to_path_buf()
 }
 
+#[cfg(all(unix, not(target_os = "macos")))]
 fn path_contains_subpath(haystack: &Path, needle: &str) -> bool {
     haystack
         .ancestors()
