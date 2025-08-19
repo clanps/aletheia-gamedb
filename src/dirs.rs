@@ -192,7 +192,8 @@ pub fn expand_path(path: &Path, installation_dir: Option<&Path>, prefix: Option<
         replacements.push(("{GameRoot}", install_dir.to_owned()));
     }
 
-    let application_support = home().join("Library/Application Support"); // app_data is not used here as most games don't use the XDG spec on MacOS
+    let home_dir = home();
+    let application_support = home_dir.join("Library/Application Support"); // app_data is not used here as most games don't use the XDG spec on MacOS
 
     let steam_user_data = {
         let base_path = steamlocate::SteamDir::locate()
@@ -223,6 +224,8 @@ pub fn expand_path(path: &Path, installation_dir: Option<&Path>, prefix: Option<
     } else {
         replacements.extend([
             ("{AppData}", application_support.clone()),
+            ("{Documents}", home_dir.join("Documents")),
+            ("{Home}", home_dir),
             ("{GOGAppData}", application_support.join("GOG.com/Galaxy/Applications"))
         ]);
     }
