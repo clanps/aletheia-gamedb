@@ -122,7 +122,7 @@ pub fn expand_path(path: &Path, installation_dir: Option<&Path>, prefix: Option<
         let username = if path_contains_subpath(wine_prefix, "Steam/steamapps/compatdata") {
             OsString::from("steamuser")
         } else {
-            std::env::var_os("USER").unwrap()
+            var_os("USER").unwrap()
         };
 
         let drive_c = wine_prefix.join("drive_c");
@@ -194,19 +194,12 @@ pub fn expand_path(path: &Path, installation_dir: Option<&Path>, prefix: Option<
 
     let home_dir = home();
     let application_support = home_dir.join("Library/Application Support"); // app_data is not used here as most games don't use the XDG spec on MacOS
-
-    let steam_user_data = {
-        let base_path = steamlocate::SteamDir::locate()
-            .map_or_else(|_| application_support.join("Steam"), |dir| dir.path().to_path_buf());
-
-        let userdata_path = base_path.join("userdata");
-        steam_account_id.map_or_else(|| userdata_path.join("[0-9]*"), |id| userdata_path.join(id))
-    };
+    let steam_user_data = steam_account_id.map_or_else(|| application_support.join("Steam/userdata/[0-9]*"), |id| application_support.join("Steam/userdata").join(id));
 
     replacements.push(("{SteamUserData}", steam_user_data));
 
     if let Some(wine_prefix) = prefix {
-        let username = std::env::var_os("USER").unwrap();
+        let username = var_os("USER").unwrap();
 
         let drive_c = wine_prefix.join("drive_c");
         let user = drive_c.join("users").join(username);
@@ -233,6 +226,7 @@ pub fn expand_path(path: &Path, installation_dir: Option<&Path>, prefix: Option<
     expand_path_components(path, &replacements)
 }
 
+#[cfg(all(unix, not(target_os = "macos")))]
 pub fn shrink_path(path: &Path, installation_dir: Option<&Path>, prefix: Option<&Path>, steam_account_id: Option<&str>) -> PathBuf {
     let mut replacements: Vec<(&str, PathBuf)> = vec![];
 
@@ -240,60 +234,108 @@ pub fn shrink_path(path: &Path, installation_dir: Option<&Path>, prefix: Option<
         replacements.push(("{GameRoot}", install_dir.to_owned()));
     }
 
-    if cfg!(unix) {
-        let linux_app_data = app_data();
+    let linux_app_data = app_data();
 
-        if let Some(wine_prefix) = prefix {
-            let username = if path_contains_subpath(wine_prefix, "Steam/steamapps/compatdata") {
-                OsString::from("steamuser")
-            } else {
-                var_os("USER").unwrap()
-            };
-
-            let drive_c = wine_prefix.join("drive_c");
-            let user = drive_c.join("users").join(username);
-            let windows_app_data = user.join("AppData");
-
-            let steam_user_data = steam_account_id.map_or_else(|| linux_app_data.join("Steam/userdata/[0-9]*"), |id| linux_app_data.join("Steam/userdata").join(id));
-
-            replacements.extend([
-                ("{LocalLow}", windows_app_data.join("LocalLow")),
-                ("{LocalAppData}", windows_app_data.join("Local")),
-                ("{AppData}", windows_app_data.join("Roaming")),
-                ("{Documents}", user.join("Documents")),
-                ("{Home}", user),
-                ("{GOGAppData}", windows_app_data.join("Local").join("GOG.com/Galaxy/Applications")),
-                ("{SteamUserData}", steam_user_data)
-            ]);
-        } else if cfg!(target_os = "macos") {
-            replacements.push(("{GOGAppData}", linux_app_data.join("GOG.com/Galaxy/Applications")));
-        }
-
-        replacements.extend([
-            ("{XDGConfig}", config()),
-            ("{XDGData}", linux_app_data)
-        ]);
-    } else {
-        let roaming_app_data = config();
-        let local_app_data = config();
-        let home_dir = home();
-
-        let steam_user_data = {
-            let base_path = steamlocate::SteamDir::locate()
-                .map_or_else(|_| PathBuf::from("C:/Program Files (x86)/Steam"), |dir| dir.path().to_path_buf());
-
-            let userdata_path = base_path.join("userdata");
-            steam_account_id.map_or_else(|| userdata_path.join("[0-9]*"), |id| userdata_path.join(id))
+    if let Some(wine_prefix) = prefix {
+        let username = if path_contains_subpath(wine_prefix, "Steam/steamapps/compatdata") {
+            OsString::from("steamuser")
+        } else {
+            var_os("USER").unwrap()
         };
 
+        let drive_c = wine_prefix.join("drive_c");
+        let user = drive_c.join("users").join(username);
+        let windows_app_data = user.join("AppData");
+
+        let steam_user_data = steam_account_id.map_or_else(|| linux_app_data.join("Steam/userdata/[0-9]*"), |id| linux_app_data.join("Steam/userdata").join(id));
+
         replacements.extend([
-            ("{LocalLow}", local_app_data.parent().unwrap().join("LocalLow")),
-            ("{LocalAppData}", local_app_data.clone()),
-            ("{AppData}", roaming_app_data),
+            ("{LocalLow}", windows_app_data.join("LocalLow")),
+            ("{LocalAppData}", windows_app_data.join("Local")),
+            ("{AppData}", windows_app_data.join("Roaming")),
+            ("{Documents}", user.join("Documents")),
+            ("{Home}", user),
+            ("{GOGAppData}", windows_app_data.join("Local").join("GOG.com/Galaxy/Applications")),
+            ("{SteamUserData}", steam_user_data)
+        ]);
+    }
+
+    replacements.extend([
+        ("{XDGConfig}", config()),
+        ("{XDGData}", linux_app_data)
+    ]);
+
+    shrink_path_components(path, &replacements)
+}
+
+#[cfg(windows)]
+pub fn shrink_path(path: &Path, installation_dir: Option<&Path>, prefix: Option<&Path>, steam_account_id: Option<&str>) -> PathBuf {
+    let mut replacements: Vec<(&str, PathBuf)> = vec![];
+
+    if let Some(install_dir) = installation_dir {
+        replacements.push(("{GameRoot}", install_dir.to_owned()));
+    }
+
+    let roaming_app_data = config();
+    let local_app_data = config();
+    let home_dir = home();
+
+    let steam_user_data = {
+        let base_path = steamlocate::SteamDir::locate()
+            .map_or_else(|_| PathBuf::from("C:/Program Files (x86)/Steam"), |dir| dir.path().to_path_buf());
+
+        let userdata_path = base_path.join("userdata");
+        steam_account_id.map_or_else(|| userdata_path.join("[0-9]*"), |id| userdata_path.join(id))
+    };
+
+    replacements.extend([
+        ("{LocalLow}", local_app_data.parent().unwrap().join("LocalLow")),
+        ("{LocalAppData}", local_app_data.clone()),
+        ("{AppData}", roaming_app_data),
+        ("{Documents}", home_dir.join("Documents")),
+        ("{Home}", home_dir),
+        ("{GOGAppData}", local_app_data.join("GOG.com/Galaxy/Applications")),
+        ("{SteamUserData}", steam_user_data)
+    ]);
+
+    shrink_path_components(path, &replacements)
+}
+
+#[cfg(target_os = "macos")]
+pub fn shrink_path(path: &Path, installation_dir: Option<&Path>, prefix: Option<&Path>, steam_account_id: Option<&str>) -> PathBuf {
+    let mut replacements: Vec<(&str, PathBuf)> = vec![];
+
+    if let Some(install_dir) = installation_dir {
+        replacements.push(("{GameRoot}", install_dir.to_owned()));
+    }
+
+    let home_dir = home();
+    let application_support = home_dir.join("Library/Application Support");
+    let steam_user_data = steam_account_id.map_or_else(|| application_support.join("Steam/userdata/[0-9]*"), |id| application_support.join("Steam/userdata").join(id));
+
+    replacements.push(("{SteamUserData}", steam_user_data));
+
+    if let Some(wine_prefix) = prefix {
+        let username = var_os("USER").unwrap();
+
+        let drive_c = wine_prefix.join("drive_c");
+        let user = drive_c.join("users").join(username);
+        let windows_app_data = user.join("AppData");
+
+        replacements.extend([
+            ("{LocalLow}", windows_app_data.join("LocalLow")),
+            ("{LocalAppData}", windows_app_data.join("Local")),
+            ("{AppData}", windows_app_data.join("Roaming")),
+            ("{Documents}", user.join("Documents")),
+            ("{Home}", user),
+            ("{GOGAppData}", windows_app_data.join("Local").join("GOG.com/Galaxy/Applications"))
+        ]);
+    } else {
+        replacements.extend([
+            ("{AppData}", application_support.clone()),
             ("{Documents}", home_dir.join("Documents")),
             ("{Home}", home_dir),
-            ("{GOGAppData}", local_app_data.join("GOG.com/Galaxy/Applications")),
-            ("{SteamUserData}", steam_user_data)
+            ("{GOGAppData}", application_support.join("GOG.com/Galaxy/Applications"))
         ]);
     }
 
