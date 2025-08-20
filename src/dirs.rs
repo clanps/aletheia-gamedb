@@ -438,7 +438,7 @@ mod tests {
             let save_file_1 = home_dir.join("Games/Sonic Adventure DX/SAVEDATA/SonicDX01.snc");
             let installation_dir = home_dir.join("Games/Sonic Adventure DX");
 
-            assert_eq!(shrink_path(&save_file_1, None, None), Path::new("{GameRoot}/SAVEDATA/SonicDX01.snc"));
+            assert_eq!(shrink_path(&save_file_1, Some(&installation_dir), None), Path::new("{GameRoot}/SAVEDATA/SonicDX01.snc"));
         }
     }
 }
