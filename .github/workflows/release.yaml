@@ -165,12 +165,13 @@ jobs:
           cp target/${{ matrix.target }}/release/aletheia ${{ matrix.artifact }}/Contents/MacOS/aletheia
           cp resources/mac/aletheia.icns ${{ matrix.artifact }}/Contents/Resources
           cp resources/mac/Info.plist ${{ matrix.artifact }}/Contents
+          tar -czf ${{ matrix.artifact }}.tar.gz ${{ matrix.artifact }}
 
       - name: Upload
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.artifact }}
-          path: ${{ matrix.artifact }}
+          name: ${{ matrix.artifact }}.tar.gz
+          path: ${{ matrix.artifact }}.tar.gz
 
   generate_license_file:
     runs-on: ubuntu-24.04
