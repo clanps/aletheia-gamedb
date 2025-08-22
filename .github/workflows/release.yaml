@@ -165,6 +165,7 @@ jobs:
           cp target/${{ matrix.target }}/release/aletheia ${{ matrix.artifact }}/Contents/MacOS/aletheia
           cp resources/mac/aletheia.icns ${{ matrix.artifact }}/Contents/Resources
           cp resources/mac/Info.plist ${{ matrix.artifact }}/Contents
+          macdeployqt ${{ matrix.artifact }} -no-plugins
           tar -czf ${{ matrix.artifact }}.tar.gz ${{ matrix.artifact }}
 
       - name: Upload
