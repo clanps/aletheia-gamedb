@@ -40,6 +40,15 @@
   </screenshots>
 
   <releases>
+    <release version="1.0.2" date="2025-08-22">
+      <url type="details">https://github.com/Spencer-0003/aletheia/releases/tag/1.0.2</url>
+      <description>
+        <p>Translations: Add French</p>
+        <p>Translations: Adding missing German strings</p>
+        <p>MacOS: Add support</p>
+        <p>Windows: Bundle SQLite3</p>
+      </description>
+    </release>
     <release version="1.0.1" date="2025-08-16">
       <url type="details">https://github.com/Spencer-0003/aletheia/releases/tag/1.0.1</url>
       <description>
