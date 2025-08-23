@@ -43,6 +43,7 @@ jobs:
           mkdir -p target/appimage/out/usr/share/metainfo
 
           ARCH=$(uname -m)
+          RELEASE_ARCH=${{ matrix.target == 'x86_64-unknown-linux-gnu' && 'x64' || 'aarch64' }}
           APPIMAGETOOL="target/appimage/deps/appimagetool-$ARCH.AppImage"
           LINUXDEPLOY="target/appimage/deps/linuxdeploy-$ARCH.AppImage"
           LINUXDEPLOY_PLUGIN_QT="target/appimage/deps/linuxdeploy-plugin-qt-$ARCH.AppImage"
@@ -60,7 +61,7 @@ jobs:
 
           NO_STRIP=true EXTRA_QT_MODULES=waylandcompositor EXTRA_PLATFORM_PLUGINS="libqwayland-egl.so;libqwayland-generic.so" QT_SELECT=qt6 $LINUXDEPLOY --plugin qt --appdir target/appimage/out --executable target/${{ matrix.target }}/release/aletheia --desktop-file resources/linux/moe.spencer.Aletheia.desktop --icon-file resources/logo/moe.spencer.Aletheia.png
           cp resources/linux/moe.spencer.Aletheia.metainfo.xml target/appimage/out/usr/share/metainfo/moe.spencer.Aletheia.appdata.xml
-          $APPIMAGETOOL target/appimage/out aletheia-${{ matrix.target == 'x86_64-unknown-linux-gnu' && 'x64' || 'aarch64' }}.appimage
+          $APPIMAGETOOL -u "gh-releases-zsync|${{ github.repository_owner }}|${{ github.event.repository.name }}|latest|aletheia-$RELEASE_ARCH.appimage" target/appimage/out aletheia-$RELEASE_ARCH.appimage
 
       - name: Upload binary
         uses: actions/upload-artifact@v4
@@ -72,7 +73,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: aletheia-${{ matrix.target == 'x86_64-unknown-linux-gnu' && 'x64' || 'aarch64' }}.appimage
-          path: aletheia-${{ matrix.target == 'x86_64-unknown-linux-gnu' && 'x64' || 'aarch64' }}.appimage
+          path: |
+            aletheia-${{ matrix.target == 'x86_64-unknown-linux-gnu' && 'x64' || 'aarch64' }}.appimage
+            aletheia-${{ matrix.target == 'x86_64-unknown-linux-gnu' && 'x64' || 'aarch64' }}.appimage.zsync
 
   build_windows:
     strategy:
