@@ -32,7 +32,10 @@ fn main() {
     env_logger::init();
 
     #[cfg(all(unix, not(target_os = "macos")))]
-    log::info!("Aletheia v{} (Linux) (Flatpak: {}, AppImage: {})", env!("CARGO_PKG_VERSION"), std::env::var("FLATPAK_ID").is_ok() && std::fs::exists("/.flatpak-info").unwrap_or(false), std::env::var("APPIMAGE").is_ok());
+    {
+        let flatpak = std::env::var("FLATPAK_ID").is_ok() && std::fs::exists("/.flatpak-info").unwrap_or(false);
+        log::info!("Aletheia v{} (Linux) (Flatpak: {}, AppImage: {})", env!("CARGO_PKG_VERSION"), flatpak, !flatpak && std::env::var("APPIMAGE").is_ok());
+    }
 
     #[cfg(target_os = "macos")]
     log::info!("Aletheia v{} (MacOS)", env!("CARGO_PKG_VERSION"));
