@@ -71,7 +71,7 @@ impl Args {
         Self { positional, flags }
     }
 
-    #[allow(unused, reason = "Will be used in the future")]
+    #[expect(unused, reason = "Will be used in the future")]
     pub fn has_flag(&self, name: &str) -> bool {
         self.flags.iter().any(|f| f.name == name)
     }
@@ -81,10 +81,10 @@ impl Args {
     }
 
     pub fn get_flag_value(&self, name: &str) -> Option<&String> {
-        self.get_flag(name).and_then(|f| f.value.as_ref())
+        self.get_flag(name)?.value.as_ref()
     }
 
-    #[allow(unused, reason = "Will be used in the future")]
+    #[expect(unused, reason = "Will be used in the future")]
     pub fn flags_map(&self) -> std::collections::HashMap<String, Option<String>> {
         self.flags.iter()
             .map(|f| (f.name.clone(), f.value.clone()))

@@ -11,7 +11,7 @@ use std::fs::File;
 use std::rc::Rc;
 use std::cell::RefCell;
 
-#[allow(clippy::too_many_lines, reason = "This is as simple as it's going to get")]
+#[expect(clippy::too_many_lines, reason = "This is as simple as it's going to get")]
 pub fn setup(app: &slint::Weak<App>, config: &Rc<RefCell<AletheiaConfig>>) {
     let app = app.upgrade().unwrap();
     let game_logic = app.global::<GameLogic>();
@@ -205,7 +205,7 @@ pub fn setup(app: &slint::Weak<App>, config: &Rc<RefCell<AletheiaConfig>>) {
     game_logic.invoke_refresh_games();
 }
 
-#[allow(clippy::cast_precision_loss, reason = "Only used for UI")]
+#[expect(clippy::cast_precision_loss, reason = "Only used for UI")]
 fn format_size(size: u64) -> String {
     const KB: u64 = 1024;
     const MB: u64 = 1048576;

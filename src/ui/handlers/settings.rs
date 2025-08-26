@@ -104,7 +104,7 @@ pub fn setup(app: &slint::Weak<App>, config: &Rc<RefCell<AletheiaConfig>>) {
     let steam_account_id = get_steam_id(&config_ref);
     let steam_account_id_str = steam_account_id.as_deref().unwrap_or_default();
 
-    if let Some(id3) = &steam_account_id && config_ref.steam_account_id.as_ref() != Some(id3) {
+    if let Some(ref id3) = steam_account_id && config_ref.steam_account_id.as_ref() != Some(id3) {
         let new_config = AletheiaConfig {
             steam_account_id: Some(id3.clone()),
             ..config_ref.clone()
@@ -137,26 +137,26 @@ pub fn setup(app: &slint::Weak<App>, config: &Rc<RefCell<AletheiaConfig>>) {
 }
 
 fn get_steam_id(config: &AletheiaConfig) -> Option<String> {
-    SteamScanner::get_users().and_then(|users| {
-        if users.is_empty() {
-            return None;
+    let users = SteamScanner::get_users()?;
+
+    if users.is_empty() {
+        return None;
+    }
+
+    if let Some(ref id3) = config.steam_account_id {
+        let config_user_exists = users.keys()
+            .filter_map(|id64_str| id64_str.parse::<u64>().ok())
+            .any(|id64| SteamScanner::id64_to_id3(id64).to_string() == *id3);
+
+        if config_user_exists {
+            return Some(id3.to_owned());
         }
+    }
 
-        if let Some(id3) = &config.steam_account_id {
-            let config_user_exists = users.keys()
-                .filter_map(|id64_str| id64_str.parse::<u64>().ok())
-                .any(|id64| SteamScanner::id64_to_id3(id64).to_string() == *id3);
+    if users.len() == 1 {
+        let steam_id64 = users.keys().next()?.parse::<u64>().ok()?;
+        return Some(SteamScanner::id64_to_id3(steam_id64).to_string());
+    }
 
-            if config_user_exists {
-                return Some(id3.to_owned());
-            }
-        }
-
-        if users.len() == 1 {
-            let steam_id64 = users.keys().next()?.parse::<u64>().ok()?;
-            return Some(SteamScanner::id64_to_id3(steam_id64).to_string());
-        }
-
-        None
-    })
+    None
 }
