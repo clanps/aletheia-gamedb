@@ -66,7 +66,7 @@ impl Scanner for XboxScanner {
 
             games.push(Game {
                 name: config.shell_visuals.default_display_name,
-                installation_dir: Some(path.to_owned()),
+                installation_dir: Some(path),
                 source: "Xbox".into()
             });
         }
