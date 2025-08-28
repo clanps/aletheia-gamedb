@@ -40,7 +40,7 @@ impl Scanner for XboxScanner {
         for entry in entries.flatten() {
             let path = entry.path();
 
-            if !path.is_dir() {
+            if !path.is_dir() || path.file_name().unwrap() == "GameSave" {
                 continue;
             }
 
