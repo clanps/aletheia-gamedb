@@ -16,6 +16,9 @@ use crate::scanner::LutrisScanner;
 #[cfg(windows)]
 use crate::scanner::GOGScanner;
 
+#[cfg(windows)]
+use crate::scanner::XboxScanner;
+
 const GAMEDB_YAML: &str = include_str!("../resources/gamedb.yaml");
 
 #[derive(Debug, thiserror::Error)]
@@ -92,7 +95,10 @@ pub fn get_installed_games() -> Vec<Game> {
     games.extend(LutrisScanner::get_games());
 
     #[cfg(windows)]
-    games.extend(GOGScanner::get_games());
+    {
+        games.extend(GOGScanner::get_games());
+        games.extend(XboxScanner::get_games());
+    }
 
     games.extend(HeroicScanner::get_games());
     games.extend(SteamScanner::get_games());

@@ -9,6 +9,9 @@ mod steam;
 #[cfg(windows)]
 mod gog;
 
+#[cfg(windows)]
+mod xbox;
+
 mod heroic;
 
 #[cfg(all(unix, not(target_os = "macos")))]
@@ -17,6 +20,9 @@ pub use steam::SteamScanner;
 
 #[cfg(windows)]
 pub use gog::GOGScanner;
+
+#[cfg(windows)]
+pub use xbox::XboxScanner;
 
 pub use heroic::HeroicScanner;
 
