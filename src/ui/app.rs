@@ -4,7 +4,7 @@
 slint::include_modules!();
 
 use crate::config::Config as AletheiaConfig;
-use super::{games, settings};
+use super::handlers::{games, settings};
 use std::cell::RefCell;
 use std::process::Command;
 use std::rc::Rc;
