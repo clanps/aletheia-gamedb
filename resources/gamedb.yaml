@@ -409,6 +409,10 @@ Gaming Cafe Simulator:
   files:
     windows:
       - "{LocalAppData}/GamingCafeSimulator/Saved/SaveGames/*"
+"Gears of War: Reloaded":
+  files:
+    windows:
+      - "{LocalAppData}/Packages/Microsoft.Pender_8wekyb3d8bbwe/SystemAppData/xgs/*_0000000000000000000000006D1197D0/WarGame/SaveData/*.ue3profile"
 Ghostrunner:
   files:
     windows:
