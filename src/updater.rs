@@ -5,6 +5,8 @@
 pub struct Release {
     pub body: String,
     pub tag_name: String,
+    #[serde(rename = "prerelease")]
+    pub pre_release: bool,
     #[serde(rename = "html_url")]
     pub url: String
 }
@@ -30,8 +32,7 @@ pub fn check() -> Result<UpdateStatus> {
         .error_for_status()?;
 
     let releases: Vec<Release> = response.json()?;
-
-    let Some(latest_release) = releases.first() else {
+    let Some(latest_release) = releases.iter().find(|r| !r.pre_release) else {
         return Ok(UpdateStatus::UpToDate);
     };
 
