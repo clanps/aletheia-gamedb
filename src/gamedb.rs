@@ -71,7 +71,7 @@ struct CustomDbCache {
 }
 
 pub fn parse() -> HashMap<String, GameDbEntry> {
-    let gamedb_path = cache().join("aletheia/gamedb.yaml");
+    let gamedb_path = cache().join("gamedb.yaml");
 
     let mut db: HashMap<String, GameDbEntry> = if gamedb_path.exists() {
         serde_yaml::from_reader(File::open(gamedb_path).unwrap()).unwrap_or_else(|_| {
@@ -83,7 +83,6 @@ pub fn parse() -> HashMap<String, GameDbEntry> {
     };
 
     db.extend(load_custom_db_cache().databases.into_values().flat_map(|custom_db| custom_db.data));
-
     db
 }
 
