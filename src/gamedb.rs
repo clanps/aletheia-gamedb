@@ -105,6 +105,10 @@ pub fn get_installed_games() -> Vec<Game> {
 
     games.into_iter()
         .filter_map(|mut game| {
+            if db.contains_key(&game.name) {
+                return Some(game);
+            }
+
             let clean_name = game.name.replace("™", "").replace("®", "").trim().to_owned();
             db.contains_key(&clean_name).then(|| {
                 game.name = clean_name;
