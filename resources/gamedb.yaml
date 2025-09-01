@@ -18,6 +18,10 @@ AI Limit:
     windows:
       - "{AppData}/SpikeChunsoft/AI The Somnium Files/PSYNCAUTOSAVE"
       - "{AppData}/SpikeChunsoft/AI The Somnium Files/PSYNCDEF*"
+"AKIBA'S TRIP: Undead & Undressed":
+  files:
+    windows:
+      - "{Documents}/AKIBA'S TRIP/savedata/*"
 "AKIBA’S TRIP: Hellbound & Debriefed":
   files:
     windows:
