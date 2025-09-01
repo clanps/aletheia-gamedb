@@ -45,6 +45,7 @@
       <description>
         <p>AppImage: Implement zsync update support.</p>
         <p>Linux: Require Flatpak to be false to be marked as an AppImage.</p>
+        <p>Updater: Ignore pre-releases.</p>
         <p>Windows: Add Xbox support</p>
         <p>GameDB: Add Gears of War: Reloaded.</p>
         <p>GameDB: Add AKIBA’S Trip: Hellbound &amp; Debriefed.</p>
