@@ -40,13 +40,26 @@
   </screenshots>
 
   <releases>
+    <release version="1.0.3" date="2025-09-01">
+      <url type="details">https://github.com/Spencer-0003/aletheia/releases/tag/1.0.3</url>
+      <description>
+        <p>AppImage: Implement zsync update support.</p>
+        <p>Linux: Require Flatpak to be false to be marked as an AppImage.</p>
+        <p>Windows: Add Xbox support</p>
+        <p>GameDB: Add Gears of War: Reloaded.</p>
+        <p>GameDB: Add AKIBA’S Trip: Hellbound &amp; Debriefed.</p>
+        <p>GameDB: Reduce allocations in get_installed_games.</p>
+        <p>GameDB: Fix parse using wrong cache location.</p>
+        <p>GameDB: Add AKIBA'S TRIP: Undead &amp; Undressed.</p>
+      </description>
+    </release>
     <release version="1.0.2" date="2025-08-22">
       <url type="details">https://github.com/Spencer-0003/aletheia/releases/tag/1.0.2</url>
       <description>
-        <p>Translations: Add French</p>
-        <p>Translations: Adding missing German strings</p>
-        <p>MacOS: Add support</p>
-        <p>Windows: Bundle SQLite3</p>
+        <p>Translations: Add French.</p>
+        <p>Translations: Adding missing German strings.</p>
+        <p>MacOS: Add support.</p>
+        <p>Windows: Bundle SQLite3.</p>
       </description>
     </release>
     <release version="1.0.1" date="2025-08-16">
