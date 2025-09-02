@@ -13,6 +13,8 @@ pub struct Release {
 
 #[derive(Debug, thiserror::Error)]
 pub enum Error {
+    #[error("Failed to deserialize: {0}")]
+    Deserialize(#[from] serde_json::Error),
     #[error("Network error: {0}")]
     Network(#[from] reqwest::Error)
 }
@@ -31,7 +33,7 @@ pub fn check() -> Result<UpdateStatus> {
         .send()?
         .error_for_status()?;
 
-    let releases: Vec<Release> = response.json()?;
+    let releases: Vec<Release> = serde_json::from_reader(response)?;
     let Some(latest_release) = releases.iter().find(|r| !r.pre_release) else {
         return Ok(UpdateStatus::UpToDate);
     };
