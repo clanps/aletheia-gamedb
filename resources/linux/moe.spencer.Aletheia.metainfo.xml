@@ -40,7 +40,7 @@
   </screenshots>
 
   <releases>
-    <release version="1.0.3" date="2025-09-01">
+    <release version="1.0.3" date="2025-09-02">
       <url type="details">https://github.com/Spencer-0003/aletheia/releases/tag/1.0.3</url>
       <description>
         <p>AppImage: Implement zsync update support.</p>
