@@ -39,7 +39,12 @@ impl Scanner for GOGScanner {
 
         for row in rows {
             let (product_id, dir) = row.unwrap();
+
+            #[cfg(windows)]
             let info_path = dir.join(format!("goggame-{product_id}.info"));
+
+            #[cfg(target_os = "macos")]
+            let info_path = dir.join(format!("Contents/Resources/goggame-{product_id}.info"));
 
             if !info_path.exists() {
                 log::error!("{} is missing a GOG info file.", dir.display());
