@@ -15,7 +15,7 @@ Aletheia is a cross-platform game save sync tool designed to help you easily bac
 -   Heroic Games - GOG (Linux, Windows & MacOS)
 -   Lutris (Linux)
 -   Steam (Linux, Windows & MacOS)
--   GOG Galaxy (Windows)
+-   GOG Galaxy (Windows & MacOS)
 -   Xbox (Windows)
 
 ## Contributing

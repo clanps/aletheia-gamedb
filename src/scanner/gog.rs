@@ -15,7 +15,12 @@ struct GOGameInfo {
 impl Scanner for GOGScanner {
     fn get_games() -> Vec<Game> {
         let mut games = vec![];
+
+        #[cfg(windows)]
         let gog_db_path = Path::new("C:/ProgramData/GOG.com/Galaxy/storage/galaxy-2.0.db");
+
+        #[cfg(target_os = "macos")]
+        let gog_db_path = Path::new("/Users/Shared/GOG.com/Galaxy/Storage/galaxy-2.0.db");
 
         if !gog_db_path.exists() {
             return games;
@@ -46,7 +51,11 @@ impl Scanner for GOGScanner {
                 continue;
             };
 
+            #[cfg(windows)]
             games.push(Game { name: game_info.name, installation_dir: Some(dir), source: "GOG".to_owned() });
+
+            #[cfg(target_os = "macos")]
+            games.push(Game { name: game_info.name, installation_dir: Some(dir), prefix: None, source: "GOG".to_owned() });
         }
 
         games

@@ -6,7 +6,7 @@ use std::path::PathBuf;
 mod lutris;
 mod steam;
 
-#[cfg(windows)]
+#[cfg(any(windows, target_os = "macos"))]
 mod gog;
 
 #[cfg(windows)]
@@ -18,7 +18,7 @@ mod heroic;
 pub use lutris::LutrisScanner;
 pub use steam::SteamScanner;
 
-#[cfg(windows)]
+#[cfg(any(windows, target_os = "macos"))]
 pub use gog::GOGScanner;
 
 #[cfg(windows)]

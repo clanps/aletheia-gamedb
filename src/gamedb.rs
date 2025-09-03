@@ -13,7 +13,7 @@ use reqwest::{header, StatusCode};
 #[cfg(all(unix, not(target_os = "macos")))]
 use crate::scanner::LutrisScanner;
 
-#[cfg(windows)]
+#[cfg(any(windows, target_os = "macos"))]
 use crate::scanner::GOGScanner;
 
 #[cfg(windows)]
@@ -93,11 +93,11 @@ pub fn get_installed_games() -> Vec<Game> {
     #[cfg(all(unix, not(target_os = "macos")))]
     games.extend(LutrisScanner::get_games());
 
+    #[cfg(any(windows, target_os = "macos"))]
+    games.extend(GOGScanner::get_games());
+
     #[cfg(windows)]
-    {
-        games.extend(GOGScanner::get_games());
-        games.extend(XboxScanner::get_games());
-    }
+    games.extend(XboxScanner::get_games());
 
     games.extend(HeroicScanner::get_games());
     games.extend(SteamScanner::get_games());
