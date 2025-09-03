@@ -81,21 +81,21 @@ export component About {
             width: 180px;
             height: 38px;
             text: @tr("View Source Code");
-            clicked => { AppLogic.open_url("https://github.com/Spencer-0003/aletheia"); }
+            clicked => AppLogic.open_url("https://github.com/Spencer-0003/aletheia");
           }
 
           Button {
             width: 180px;
             height: 38px;
             text: @tr("View License");
-            clicked => { AppLogic.open_url("https://github.com/Spencer-0003/aletheia/blob/master/LICENSE"); }
+            clicked => AppLogic.open_url("https://github.com/Spencer-0003/aletheia/blob/master/LICENSE");
           }
 
           Button {
             width: 180px;
             height: 38px;
             text: @tr("Support the Project");
-            clicked => { AppLogic.open_url("https://github.com/Spencer-0003/aletheia?tab=readme-ov-file#support-the-project"); }
+            clicked => AppLogic.open_url("https://github.com/Spencer-0003/aletheia?tab=readme-ov-file#support-the-project");
           }
         }
       }

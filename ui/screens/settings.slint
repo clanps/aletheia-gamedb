@@ -89,7 +89,7 @@ export component Settings {
                 width: 100px;
                 height: 38px;
                 text: @tr("Browse");
-                clicked => { SettingsScreenLogic.browse(); }
+                clicked => SettingsScreenLogic.browse();
               }
             }
           }
@@ -204,7 +204,7 @@ export component Settings {
               width: 140px;
               height: 38px;
               text: @tr("Update GameDB");
-              clicked => { SettingsScreenLogic.update_gamedb(); }
+              clicked => SettingsScreenLogic.update_gamedb();
             }
           }
         }
@@ -275,7 +275,7 @@ export component Settings {
         height: 40px;
         text: @tr("Save");
         enabled: SettingsScreenLogic.dirty;
-        clicked => { SettingsScreenLogic.save_config(SettingsScreenLogic.config); }
+        clicked => SettingsScreenLogic.save_config(SettingsScreenLogic.config);
       }
     }
   }

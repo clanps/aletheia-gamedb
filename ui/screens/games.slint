@@ -42,7 +42,7 @@ export component Games {
         width: 160px;
         height: 40px;
         text: @tr("Refresh");
-        clicked => { GameLogic.refresh_games(); }
+        clicked => GameLogic.refresh_games();
       }
     }
   }
@@ -59,7 +59,7 @@ export component Games {
         width: 430px;
         height: 45px;
         placeholder-text: @tr("Search games…");
-        changed(text) => { GamesScreenLogic.filter(text); }
+        changed(text) => GamesScreenLogic.filter(text);
       }
     }
 
@@ -80,7 +80,7 @@ export component Games {
         height: 36px;
         text: @tr("Backup");
         enabled: GamesScreenLogic.selected_games.length > 0;
-        clicked => { GamesScreenLogic.perform_operation("backup"); }
+        clicked => GamesScreenLogic.perform_operation("backup");
       }
 
       Button {
@@ -88,7 +88,7 @@ export component Games {
         height: 36px;
         text: @tr("Restore");
         enabled: GamesScreenLogic.selected_games.length > 0;
-        clicked => { GamesScreenLogic.perform_operation("restore"); }
+        clicked => GamesScreenLogic.perform_operation("restore");
       }
 
       Button {
@@ -99,7 +99,7 @@ export component Games {
               : @tr("{} Filtered", GamesScreenLogic.all_filtered_selected ? "Clear" : "Select");
         background: #2f2f49;
         enabled: GamesScreenLogic.filtered_games.length > 0;
-        clicked => { GamesScreenLogic.select_all(!GamesScreenLogic.all_filtered_selected); }
+        clicked => GamesScreenLogic.select_all(!GamesScreenLogic.all_filtered_selected);
       }
     }
 

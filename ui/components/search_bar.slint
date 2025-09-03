@@ -46,7 +46,7 @@ export component SearchBar inherits Rectangle {
         font-weight: 400;
       }
 
-      edited => { root.changed(self.text); }
+      edited => root.changed(self.text);
     }
   }
 }
