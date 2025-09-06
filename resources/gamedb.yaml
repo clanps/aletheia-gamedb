@@ -477,7 +477,7 @@ High on Life:
 Hogwarts Legacy:
   files:
     windows:
-      - "{LocalAppData}/Hogwarts Legacy/Saved/SaveGames/*"
+      - "{LocalAppData}/Hogwarts Legacy/Saved/SaveGames/*/*"
 Hollow Knight:
   files:
     linux:
