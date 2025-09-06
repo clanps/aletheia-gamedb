@@ -240,6 +240,10 @@ Dark Souls Remastered:
   files:
     windows:
       - "{Documents}/NBGI/DARK SOULS REMASTERED/*"
+Dead End Aegis:
+  files:
+    windows:
+      - "{Documents}/metalogiq/DeadEndAegis/sav/*"
 Dead Island:
   files:
     windows:
