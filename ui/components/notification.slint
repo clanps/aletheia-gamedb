@@ -49,8 +49,17 @@ export component Notification inherits Rectangle {
 
   changed visible => {
     if (self.visible) {
-      animated_in = true;
-      should_close = false;
+      root.animated_in = true;
+      root.should_close = false;
+    }
+  }
+
+  TouchArea {
+    mouse-cursor: root.should_close ? default : pointer;
+
+    clicked() => {
+      root.should_close = true;
+      root.animated_in = false;
     }
   }
 
