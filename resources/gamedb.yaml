@@ -1011,6 +1011,10 @@ The Sims 4:
   files:
     windows:
       - "{Documents}/Electronic Arts/The Sims 4/saves/*"
+The Song of Saya:
+  files:
+    windows:
+      - "{AppData}/Nitroplus/saya_en/*"
 "The Stanley Parable: Ultra Deluxe":
   files:
     linux:
