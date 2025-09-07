@@ -1,219 +1,219 @@
-
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2025-07-22 22:51+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2025-09-07 00:28+0000\n"
+"Last-Translator: Anonymous <noreply@weblate.org>\n"
+"Language-Team: English <https://hosted.weblate.org/projects/aletheia/ui/en/>"
+"\n"
+"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.14-dev\n"
 
 #: ui/updater.slint:28
 msgctxt "Updater"
 msgid "Update Available"
-msgstr ""
+msgstr "Update Available"
 
 #: ui/updater.slint:51
 msgctxt "Updater"
 msgid "Current"
-msgstr ""
+msgstr "Current"
 
 #: ui/updater.slint:81
 msgctxt "Updater"
 msgid "New"
-msgstr ""
+msgstr "New"
 
 #: ui/updater.slint:105
 msgctxt "Updater"
 msgid "What's New"
-msgstr ""
+msgstr "What's New"
 
 #: ui/updater.slint:143
 msgctxt "Updater"
 msgid "Skip"
-msgstr ""
+msgstr "Skip"
 
 #: ui/updater.slint:150
 msgctxt "Updater"
 msgid "Download"
-msgstr ""
+msgstr "Download"
 
 #: ui/screens/settings.slint:55
 msgctxt "Settings"
 msgid "Game Data Location"
-msgstr ""
+msgstr "Game Data Location"
 
 #: ui/screens/settings.slint:69
 msgctxt "Settings"
 msgid "Choose where your games will be saved"
-msgstr ""
+msgstr "Choose where your games will be saved"
 
 #: ui/screens/settings.slint:87
 msgctxt "Settings"
 msgid "Browse"
-msgstr ""
+msgstr "Browse"
 
 #: ui/screens/settings.slint:116
 msgctxt "Settings"
 msgid "Steam Account"
-msgstr ""
+msgstr "Steam Account"
 
 #: ui/screens/settings.slint:133
 msgctxt "Settings"
 msgid "Choose the Steam account for your games"
-msgstr ""
+msgstr "Choose the Steam account for your games"
 
 #: ui/screens/settings.slint:140
 msgctxt "Settings"
 msgid "Only affects games that save in the Steam userdata directory"
-msgstr ""
+msgstr "Only affects games that save in the Steam userdata directory"
 
 #: ui/screens/settings.slint:152
 msgctxt "Settings"
 msgid "Select an account…"
-msgstr ""
+msgstr "Select an account…"
 
 #: ui/screens/settings.slint:179
 msgctxt "Settings"
 msgid "GameDB"
-msgstr ""
+msgstr "GameDB"
 
 #: ui/screens/settings.slint:193
 msgctxt "Settings"
 msgid "Download the latest copy of the GameDB"
-msgstr ""
+msgstr "Download the latest copy of the GameDB"
 
 #: ui/screens/settings.slint:202
 msgctxt "Settings"
 msgid "Update GameDB"
-msgstr ""
+msgstr "Update GameDB"
 
 #: ui/screens/settings.slint:229
 msgctxt "Settings"
 msgid "Updates"
-msgstr ""
+msgstr "Updates"
 
 #: ui/screens/settings.slint:243
 msgctxt "Settings"
 msgid "Configure automatic update checking"
-msgstr ""
+msgstr "Configure automatic update checking"
 
 #: ui/screens/settings.slint:254
 msgctxt "Settings"
 msgid "Check for updates automatically"
-msgstr ""
+msgstr "Check for updates automatically"
 
 #: ui/screens/settings.slint:272
 msgctxt "Settings"
 msgid "Save"
-msgstr ""
+msgstr "Save"
 
 #: ui/screens/games.slint:30
 msgctxt "Games"
 msgid "No games found"
-msgstr ""
+msgstr "No games found"
 
 #: ui/screens/games.slint:44
 msgctxt "Games"
 msgid "Refresh"
-msgstr ""
+msgstr "Refresh"
 
 #: ui/screens/games.slint:61
 msgctxt "Games"
 msgid "Search games…"
-msgstr ""
+msgstr "Search games…"
 
 #: ui/screens/games.slint:67
 msgctxt "Games"
 msgid "Selecting {} / {} games"
-msgstr ""
+msgstr "Selecting {} / {} games"
 
 #: ui/screens/games.slint:81
 msgctxt "Games"
 msgid "Backup"
-msgstr ""
+msgstr "Backup"
 
 #: ui/screens/games.slint:89
 msgctxt "Games"
 msgid "Restore"
-msgstr ""
+msgstr "Restore"
 
 #: ui/screens/games.slint:98
 msgctxt "Games"
 msgid "Clear Selection"
-msgstr ""
+msgstr "Clear Selection"
 
 #: ui/screens/games.slint:98
 msgctxt "Games"
 msgid "Select All"
-msgstr ""
+msgstr "Select All"
 
 #: ui/screens/games.slint:99
 msgctxt "Games"
 msgid "{} Filtered"
-msgstr ""
+msgstr "{} Filtered"
 
 #: ui/screens/about.slint:35
 msgctxt "About"
 msgid "Application Info"
-msgstr ""
+msgstr "Application Info"
 
 #: ui/screens/about.slint:49
 msgctxt "About"
 msgid "Aletheia is an open-source game save backup tool"
-msgstr ""
+msgstr "Aletheia is an open-source game save backup tool"
 
 #: ui/screens/about.slint:56
 msgctxt "About"
 msgid "Version: {}"
-msgstr ""
+msgstr "Version: {}"
 
 #: ui/screens/about.slint:63
 msgctxt "About"
 msgid "License: {}"
-msgstr ""
+msgstr "License: {}"
 
 #: ui/screens/about.slint:70
 msgctxt "About"
 msgid "Logo by: {}"
-msgstr ""
+msgstr "Logo by: {}"
 
 #: ui/screens/about.slint:83
 msgctxt "About"
 msgid "View Source Code"
-msgstr ""
+msgstr "View Source Code"
 
 #: ui/screens/about.slint:90
 msgctxt "About"
 msgid "View License"
-msgstr ""
+msgstr "View License"
 
 #: ui/screens/about.slint:97
 msgctxt "About"
 msgid "Support the Project"
-msgstr ""
+msgstr "Support the Project"
 
 #: ui/app.slint:42
 msgctxt "App"
 msgid "Games"
-msgstr ""
+msgstr "Games"
 
 #: ui/app.slint:55
 msgctxt "App"
 msgid "Settings"
-msgstr ""
+msgstr "Settings"
 
 #: ui/app.slint:62
 msgctxt "App"
 msgid "About"
-msgstr ""
+msgstr "About"
 
 #: ui/components/dropdown.slint:11
 msgctxt "Dropdown"
 msgid "Select an option…"
-msgstr ""
-
+msgstr "Select an option…"
