@@ -78,16 +78,7 @@ jobs:
             aletheia-${{ matrix.target == 'x86_64-unknown-linux-gnu' && 'x64' || 'aarch64' }}.appimage.zsync
 
   build_windows:
-    strategy:
-      matrix:
-        include:
-          - os: windows-2022
-            target: x86_64-pc-windows-msvc
-            artifact: aletheia-windows-x64.exe
-          - os: windows-11-arm
-            target: aarch64-pc-windows-msvc
-            artifact: aletheia-windows-aarch64.exe
-    runs-on: ${{ matrix.os }}
+    runs-on: windows-2022
     steps:
       - name: Setup Rust toolchain
         uses: dtolnay/rust-toolchain@stable
@@ -97,17 +88,24 @@ jobs:
 
       - name: Setup Rust cache
         uses: Swatinem/rust-cache@v2
-        with:
-          key: ${{ matrix.os }}-${{ matrix.target }}
 
-      - name: Build
-        run: cargo build --release --features updater --target=${{ matrix.target }}; Rename-Item "target\${{ matrix.target }}\release\aletheia.exe" "${{ matrix.artifact }}"
+      - name: Build x64
+        run: cargo build --release --features updater --target=x86_64-pc-windows-msvc; Rename-Item "target\x86_64-pc-windows-msvc\release\aletheia.exe" "aletheia-windows-x64.exe"
 
-      - name: Upload
+      - name: Build ARM
+        run: rustup target add aarch64-pc-windows-msvc; cargo build --release --features updater --target aarch64-pc-windows-msvc; Rename-Item "target\aarch64-pc-windows-msvc\release\aletheia.exe" "aletheia-windows-aarch64.exe"
+
+      - name: Upload x64 artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.artifact }}
-          path: target/${{ matrix.target }}/release/${{ matrix.artifact }}
+          name: aletheia-windows-x64.exe
+          path: target/x86_64-pc-windows-msvc/release/aletheia-windows-x64.exe
+
+      - name: Upload ARM artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: aletheia-windows-aarch64.exe
+          path: target/aarch64-pc-windows-msvc/release/aletheia-windows-aarch64.exe
 
   build_flatpak:
     strategy:
