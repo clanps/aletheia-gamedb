@@ -88,6 +88,8 @@ jobs:
 
       - name: Setup Rust cache
         uses: Swatinem/rust-cache@v2
+        with:
+          key: windows
 
       - name: Build x64
         run: cargo build --release --features updater --target=x86_64-pc-windows-msvc; Rename-Item "target\x86_64-pc-windows-msvc\release\aletheia.exe" "aletheia-windows-x64.exe"
