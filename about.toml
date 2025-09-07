@@ -9,8 +9,8 @@ accepted = [
   "NCSA",
   "Apache-2.0",
   "Apache-2.0 WITH LLVM-exception",
-  "GPL-3.0",
-  "AGPL-3.0"
+  "GPL-3.0-only",
+  "AGPL-3.0-only"
 ]
 
 targets = [
@@ -19,5 +19,3 @@ targets = [
   "aarch64-unknown-linux-gnu",
   "aarch64-apple-darwin"
 ]
-
-no-clearly-defined = true # https://github.com/EmbarkStudios/cargo-about/issues/269
