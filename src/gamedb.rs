@@ -128,7 +128,9 @@ pub fn update() -> Result<bool> {
     let previous_etag = etag_path.exists().then(|| read_to_string(&etag_path).ok()).flatten();
 
     let client = reqwest::blocking::Client::new();
-    let mut request = client.get("https://raw.githubusercontent.com/Spencer-0003/aletheia/refs/heads/master/resources/gamedb.yaml");
+    let mut request = client
+        .get("https://raw.githubusercontent.com/Spencer-0003/aletheia/refs/heads/master/resources/gamedb.yaml")
+        .header(reqwest::header::USER_AGENT, concat!(env!("CARGO_PKG_NAME"), "/", env!("CARGO_PKG_VERSION")));
 
     if let Some(ref etag) = previous_etag {
         request = request.header(header::IF_NONE_MATCH, etag);
@@ -178,7 +180,7 @@ pub fn update_custom(cfg: &Config) -> Result<bool> {
     create_dir_all(&cache_dir)?;
 
     for db in &cfg.custom_databases {
-        let mut request = client.get(db);
+        let mut request = client.get(db).header(reqwest::header::USER_AGENT, concat!(env!("CARGO_PKG_NAME"), "/", env!("CARGO_PKG_VERSION")));
         let cached_etag = db_cache.databases.get(db).and_then(|meta| meta.etag.as_ref());
 
         if let Some(etag) = cached_etag {
