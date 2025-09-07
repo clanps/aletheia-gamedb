@@ -17,10 +17,10 @@ jobs:
       - name: Lint GameDB
         run: |
           yamllint -d '{
-            extends: "default",
+            extends: default,
             rules: {
-              document-start: {enabled: false},
-              line-length: {enabled: false},
-              key-ordering: {enabled: true}
+              document-start: disable,
+              line-length: disable,
+              key-ordering: enable
             }
           }' -f github -s resources/gamedb.yaml
