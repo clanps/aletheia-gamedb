@@ -33,7 +33,13 @@ pub fn backup_game(game: &Game, config: &Config, entry: &GameDbEntry) -> Result<
     let mut game_files: Vec<FileMetadata> = vec![];
     let mut paths = vec![];
 
+    #[cfg(windows)]
     if let Some(ref windows_paths) = entry.files.windows {
+        paths.extend(windows_paths);
+    }
+
+    #[cfg(unix)]
+    if game.prefix.is_some() && let Some(ref windows_paths) = entry.files.windows {
         paths.extend(windows_paths);
     }
 
