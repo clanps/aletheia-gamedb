@@ -115,8 +115,8 @@ pub fn setup(app: &slint::Weak<App>, config: &Rc<RefCell<AletheiaConfig>>) {
     }
 
     settings_screen_logic.set_config(Config {
-        custom_databases: ModelRc::new(VecModel::from(config_ref.custom_databases.iter().map(Into::into).collect::<Vec<_>>())),
-        save_dir: config_ref.save_dir.to_string_lossy().to_string().into(),
+        custom_databases: ModelRc::new(VecModel::from_iter(config_ref.custom_databases.iter().map(Into::into))),
+        save_dir: config_ref.save_dir.to_string_lossy().as_ref().into(),
         steam_account_id: steam_account_id_str.into(),
         #[cfg(feature = "updater")]
         check_for_updates: config_ref.check_for_updates,
@@ -124,7 +124,7 @@ pub fn setup(app: &slint::Weak<App>, config: &Rc<RefCell<AletheiaConfig>>) {
         check_for_updates: false
     });
 
-    settings_screen_logic.set_previous_save_dir(config_ref.save_dir.to_string_lossy().to_string().into());
+    settings_screen_logic.set_previous_save_dir(config_ref.save_dir.to_string_lossy().as_ref().into());
     settings_screen_logic.set_previous_steam_account_id(steam_account_id_str.into());
 
     #[cfg(feature = "updater")]
