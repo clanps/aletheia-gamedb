@@ -115,7 +115,7 @@ pub fn setup(app: &slint::Weak<App>, config: &Rc<RefCell<AletheiaConfig>>) {
     }
 
     settings_screen_logic.set_config(Config {
-        custom_databases: ModelRc::new(VecModel::from_iter(config_ref.custom_databases.iter().map(Into::into))),
+        custom_databases: ModelRc::new(config_ref.custom_databases.iter().map(Into::into).collect::<VecModel<_>>()),
         save_dir: config_ref.save_dir.to_string_lossy().as_ref().into(),
         steam_account_id: steam_account_id_str.into(),
         #[cfg(feature = "updater")]

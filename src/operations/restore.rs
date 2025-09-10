@@ -23,9 +23,7 @@ pub fn restore_game(game_dir: &Path, manifest: &GameInfo, installed_games: &[Gam
     let steam_id = config.steam_account_id.as_deref();
     let game_name = &manifest.name;
 
-    let Some(game) = installed_games.iter().find(|g| g.name == *game_name) else {
-        return Err(Error::GameNotFound);
-    };
+    let game = installed_games.iter().find(|g| g.name == *game_name).ok_or(Error::GameNotFound)?;
 
     for file in &manifest.files {
         let src_file = game_dir.join(Path::new(&file.path).file_name().unwrap());
