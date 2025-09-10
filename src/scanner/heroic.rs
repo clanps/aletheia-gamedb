@@ -3,6 +3,7 @@
 use super::{Game, Scanner};
 use serde::Deserialize;
 use std::fs::File;
+use std::path::Path;
 
 #[cfg(all(unix, not(target_os = "macos")))]
 use crate::dirs::home;
@@ -37,6 +38,60 @@ struct HeroicGOGGameManifest {
 #[derive(Deserialize, Debug)]
 struct HeroicGOGManifest {
     installed: Vec<HeroicGOGGame>
+}
+
+#[cfg(all(unix, not(target_os = "macos")))]
+#[derive(Deserialize, Debug)]
+struct GOGLibraryEntry {
+    #[serde(rename = "app_name")]
+    app_id: String,
+    title: String
+}
+
+#[cfg(all(unix, not(target_os = "macos")))]
+#[derive(Deserialize, Debug)]
+struct GOGLibrary {
+    games: Vec<GOGLibraryEntry>
+}
+
+impl HeroicScanner {
+    fn get_game_name(heroic_path: &Path, game: &HeroicGOGGame) -> Option<String> {
+        let manifest_path = heroic_path.join("gogdlConfig/heroic_gogdl/manifests").join(&game.app_id);
+
+        if manifest_path.exists() {
+            let Ok(manifest) = serde_json::from_reader::<File, HeroicGOGGameManifest>(File::open(manifest_path).unwrap()) else {
+                return None;
+            };
+
+            return Some(manifest.products[0].name.clone());
+        }
+
+        #[cfg(all(unix, not(target_os = "macos")))]
+        {
+            // Heroic doesn't store manifests for Linux games
+            let gog_library = heroic_path.join("store_cache/gog_library.json");
+
+            if !gog_library.exists() {
+                log::error!("GOG library JSON file not found.");
+                return None;
+            }
+
+            let Ok(library_data) = serde_json::from_reader::<File, GOGLibrary>(File::open(gog_library).unwrap()) else {
+                log::error!("Failed to parse GOG library.");
+                return None;
+            };
+
+            let Some(game_info) = library_data.games.iter().find(|g| g.app_id == game.app_id) else {
+                log::warn!("Failed to find game in GOG library.");
+                return None;
+            };
+
+            Some(game_info.title.clone())
+        }
+
+        #[cfg(any(windows, target_os = "macos"))]
+        None
+    }
 }
 
 impl Scanner for HeroicScanner {
@@ -76,13 +131,7 @@ impl Scanner for HeroicScanner {
         };
 
         for game in gog_manifest.installed {
-            let game_data = heroic_path.join("gogdlConfig/heroic_gogdl/manifests").join(&game.app_id);
-
-            if !game_data.exists() {
-                continue;
-            }
-
-            let Ok(game_manifest) = serde_json::from_reader::<File, HeroicGOGGameManifest>(File::open(game_data).unwrap()) else {
+            let Some(game_name) = Self::get_game_name(&heroic_path, &game) else {
                 continue;
             };
 
@@ -108,10 +157,10 @@ impl Scanner for HeroicScanner {
             };
 
             #[cfg(unix)]
-            games.push(Game { name: game_manifest.products[0].name.clone(), installation_dir: Some(game.install_path.into()), prefix, source: "Heroic".into() });
+            games.push(Game { name: game_name, installation_dir: Some(game.install_path.into()), prefix, source: "Heroic".into() });
 
             #[cfg(windows)]
-            games.push(Game { name: game_manifest.products[0].name.clone(), installation_dir: Some(game.install_path.into()), source: "Heroic".into() });
+            games.push(Game { name: game_name, installation_dir: Some(game.install_path.into()), source: "Heroic".into() });
         }
 
         games
