@@ -369,6 +369,12 @@ Fallout 4 VR:
   files:
     windows:
       - "{Documents}/My Games/FalloutNV/Saves/*"
+Fatal Twelve:
+  files:
+    linux:
+      - "{GameRoot}/game/game/saves/*"
+    windows:
+      - "{GameRoot}/game/game/saves/*"
 Find Love or Die Trying:
   files:
     windows:
