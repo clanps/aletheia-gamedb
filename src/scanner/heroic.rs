@@ -3,7 +3,7 @@
 use super::{Game, Scanner};
 use serde::Deserialize;
 use std::fs::File;
-use std::path::Path;
+use std::path::{Path, PathBuf};
 
 #[cfg(all(unix, not(target_os = "macos")))]
 use crate::dirs::home;
@@ -20,7 +20,7 @@ pub struct HeroicScanner;
 struct HeroicGOGGame {
     #[serde(rename = "appName")]
     app_id: String,
-    install_path: String,
+    install_path: PathBuf,
     #[cfg(unix)]
     platform: String
 }
@@ -40,20 +40,6 @@ struct HeroicGOGManifest {
     installed: Vec<HeroicGOGGame>
 }
 
-#[cfg(all(unix, not(target_os = "macos")))]
-#[derive(Deserialize, Debug)]
-struct GOGLibraryEntry {
-    #[serde(rename = "app_name")]
-    app_id: String,
-    title: String
-}
-
-#[cfg(all(unix, not(target_os = "macos")))]
-#[derive(Deserialize, Debug)]
-struct GOGLibrary {
-    games: Vec<GOGLibraryEntry>
-}
-
 impl HeroicScanner {
     fn get_game_name(heroic_path: &Path, game: &HeroicGOGGame) -> Option<String> {
         let manifest_path = heroic_path.join("gogdlConfig/heroic_gogdl/manifests").join(&game.app_id);
@@ -69,24 +55,10 @@ impl HeroicScanner {
         #[cfg(all(unix, not(target_os = "macos")))]
         {
             // Heroic doesn't store manifests for Linux games
-            let gog_library = heroic_path.join("store_cache/gog_library.json");
-
-            if !gog_library.exists() {
-                log::error!("GOG library JSON file not found.");
-                return None;
-            }
-
-            let Ok(library_data) = serde_json::from_reader::<File, GOGLibrary>(File::open(gog_library).unwrap()) else {
-                log::error!("Failed to parse GOG library.");
-                return None;
-            };
-
-            let Some(game_info) = library_data.games.iter().find(|g| g.app_id == game.app_id) else {
-                log::warn!("Failed to find game in GOG library.");
-                return None;
-            };
-
-            Some(game_info.title.clone())
+            game.install_path
+                .file_name()
+                .and_then(|n| n.to_str())
+                .map(ToOwned::to_owned)
         }
 
         #[cfg(any(windows, target_os = "macos"))]
@@ -157,10 +129,10 @@ impl Scanner for HeroicScanner {
             };
 
             #[cfg(unix)]
-            games.push(Game { name: game_name, installation_dir: Some(game.install_path.into()), prefix, source: "Heroic".into() });
+            games.push(Game { name: game_name, installation_dir: Some(game.install_path), prefix, source: "Heroic".into() });
 
             #[cfg(windows)]
-            games.push(Game { name: game_name, installation_dir: Some(game.install_path.into()), source: "Heroic".into() });
+            games.push(Game { name: game_name, installation_dir: Some(game.install_path), source: "Heroic".into() });
         }
 
         games
