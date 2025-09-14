@@ -5,8 +5,7 @@ use crate::config::Config as AletheiaConfig;
 use crate::ui::app::{App, GameLogic, GamesScreenLogic, NotificationLogic, UiGame};
 use crate::gamedb;
 use crate::operations::{backup_game, restore_game};
-use slint::{ComponentHandle, Model, ModelRc, SharedString, VecModel};
-use std::collections::HashSet;
+use slint::{ComponentHandle, Model, ModelRc, VecModel};
 use std::fs::File;
 use std::rc::Rc;
 use std::cell::RefCell;
@@ -23,9 +22,8 @@ pub fn setup(app: &slint::Weak<App>, config: &Rc<RefCell<AletheiaConfig>>) {
 
         move || {
             let games_screen_logic = app_weak.global::<GamesScreenLogic>();
-            let selected_names: HashSet<String> = games_screen_logic
-                .get_selected_games().iter().map(|g| g.name.to_string()).collect();
-            let select_all = selected_names.is_empty();
+            let selected_games = games_screen_logic.get_selected_games();
+            let select_all = selected_games.row_count() == 0;
 
             let mut games = gamedb::get_installed_games();
             games.sort_by(|a, b| a.name.to_lowercase().cmp(&b.name.to_lowercase()));
@@ -42,7 +40,7 @@ pub fn setup(app: &slint::Weak<App>, config: &Rc<RefCell<AletheiaConfig>>) {
                         "0B".into()
                     },
                     source: g.source.into(),
-                    selected: select_all || selected_names.contains(&name)
+                    selected: select_all || selected_games.iter().any(|selected| selected.name.as_str() == name)
                 }
             }).collect();
 
@@ -63,16 +61,14 @@ pub fn setup(app: &slint::Weak<App>, config: &Rc<RefCell<AletheiaConfig>>) {
         let app_weak = app.as_weak().unwrap();
 
         move |query| {
-            let lower_query = query.to_lowercase();
+            let query_lower = query.to_lowercase();
             let games_screen_logic = app_weak.global::<GamesScreenLogic>();
             let games = app_weak.global::<GameLogic>().get_games();
-            let selected_names: HashSet<String> = games_screen_logic
-                .get_selected_games().iter().map(|g| g.name.to_string()).collect();
-
+            let selected_games = games_screen_logic.get_selected_games();
             let filtered_games: Vec<UiGame> = games.iter()
-                .filter(|g| query.is_empty() || g.name.to_lowercase().contains(&lower_query))
+                .filter(|g| query.is_empty() || g.name.to_lowercase().contains(&query_lower))
                 .map(|mut g| {
-                    g.selected = selected_names.contains(g.name.as_str());
+                    g.selected = selected_games.iter().any(|selected| selected.name == g.name);
                     g
                 })
                 .collect();
@@ -94,10 +90,9 @@ pub fn setup(app: &slint::Weak<App>, config: &Rc<RefCell<AletheiaConfig>>) {
                 g.selected = enabled;
                 g
             }).collect();
-            let updated_games_names: HashSet<&SharedString> = updated_games.iter().map(|g| &g.name).collect();
             let mut selected_games: Vec<UiGame> = games_screen_logic.get_selected_games().iter().collect();
 
-            selected_games.retain(|g| !updated_games_names.contains(&g.name));
+            selected_games.retain(|g| !updated_games.iter().any(|updated| updated.name == g.name));
             if enabled {
                 selected_games.extend(updated_games.iter().cloned());
             }
@@ -123,11 +118,9 @@ pub fn setup(app: &slint::Weak<App>, config: &Rc<RefCell<AletheiaConfig>>) {
                 selected_games.push(game);
             }
 
-            let selected_games_names: HashSet<&str> = selected_games.iter().map(|g| g.name.as_str()).collect();
-
             let filtered_games_model = games_screen_logic.get_filtered_games();
             let all_filtered_selected = filtered_games_model.row_count() > 0 &&
-                filtered_games_model.iter().all(|g| selected_games_names.contains(g.name.as_str()));
+                filtered_games_model.iter().all(|g| selected_games.iter().any(|selected| selected.name == g.name));
 
             games_screen_logic.set_selected_games(ModelRc::new(VecModel::from(selected_games)));
             games_screen_logic.set_all_filtered_selected(all_filtered_selected);
