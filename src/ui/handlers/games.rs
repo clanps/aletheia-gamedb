@@ -63,13 +63,14 @@ pub fn setup(app: &slint::Weak<App>, config: &Rc<RefCell<AletheiaConfig>>) {
         let app_weak = app.as_weak().unwrap();
 
         move |query| {
+            let lower_query = query.to_lowercase();
             let games_screen_logic = app_weak.global::<GamesScreenLogic>();
             let games = app_weak.global::<GameLogic>().get_games();
             let selected_names: HashSet<String> = games_screen_logic
                 .get_selected_games().iter().map(|g| g.name.to_string()).collect();
 
             let filtered_games: Vec<UiGame> = games.iter()
-                .filter(|g| query.is_empty() || g.name.to_lowercase().contains(&query.to_lowercase()))
+                .filter(|g| query.is_empty() || g.name.to_lowercase().contains(&lower_query))
                 .map(|mut g| {
                     g.selected = selected_names.contains(g.name.as_str());
                     g
