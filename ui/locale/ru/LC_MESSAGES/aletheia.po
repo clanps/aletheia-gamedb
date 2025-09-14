@@ -2,218 +2,221 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2025-07-22 22:51+0000\n"
-"PO-Revision-Date: 2025-09-07 00:28+0000\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2025-09-14 16:41+0000\n"
+"Last-Translator: Alex Brohovsky <san4ito94@gmail.com>\n"
+"Language-Team: Russian <https://hosted.weblate.org/projects/aletheia/ui/ru/>"
+"\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Weblate 5.14-dev\n"
 
 #: ui/updater.slint:28
 msgctxt "Updater"
 msgid "Update Available"
-msgstr ""
+msgstr "Доступно обновление"
 
 #: ui/updater.slint:51
 msgctxt "Updater"
 msgid "Current"
-msgstr ""
+msgstr "Текущий"
 
 #: ui/updater.slint:81
 msgctxt "Updater"
 msgid "New"
-msgstr ""
+msgstr "Новый"
 
 #: ui/updater.slint:105
 msgctxt "Updater"
 msgid "What's New"
-msgstr ""
+msgstr "Что нового"
 
 #: ui/updater.slint:143
 msgctxt "Updater"
 msgid "Skip"
-msgstr ""
+msgstr "Пропустить"
 
 #: ui/updater.slint:150
 msgctxt "Updater"
 msgid "Download"
-msgstr ""
+msgstr "Скачать"
 
 #: ui/screens/settings.slint:55
 msgctxt "Settings"
 msgid "Game Data Location"
-msgstr ""
+msgstr "Расположение игровых данных"
 
 #: ui/screens/settings.slint:69
 msgctxt "Settings"
 msgid "Choose where your games will be saved"
-msgstr ""
+msgstr "Выберите, где будут сохранены ваши игры"
 
 #: ui/screens/settings.slint:87
 msgctxt "Settings"
 msgid "Browse"
-msgstr ""
+msgstr "Обзор"
 
 #: ui/screens/settings.slint:116
 msgctxt "Settings"
 msgid "Steam Account"
-msgstr ""
+msgstr "Учетная запись Steam"
 
 #: ui/screens/settings.slint:133
 msgctxt "Settings"
 msgid "Choose the Steam account for your games"
-msgstr ""
+msgstr "Выберите учетную запись Steam для своих игр"
 
 #: ui/screens/settings.slint:140
 msgctxt "Settings"
 msgid "Only affects games that save in the Steam userdata directory"
-msgstr ""
+msgstr "Влияет только на те игры, которые сохранены в каталоге userdata Steam"
 
 #: ui/screens/settings.slint:152
 msgctxt "Settings"
 msgid "Select an account…"
-msgstr ""
+msgstr "Выберите учетную запись…"
 
 #: ui/screens/settings.slint:179
 msgctxt "Settings"
 msgid "GameDB"
-msgstr ""
+msgstr "GameDB"
 
 #: ui/screens/settings.slint:193
 msgctxt "Settings"
 msgid "Download the latest copy of the GameDB"
-msgstr ""
+msgstr "Скачать последнюю версию GameDB"
 
 #: ui/screens/settings.slint:202
 msgctxt "Settings"
 msgid "Update GameDB"
-msgstr ""
+msgstr "Обновить GameDB"
 
 #: ui/screens/settings.slint:229
 msgctxt "Settings"
 msgid "Updates"
-msgstr ""
+msgstr "Обновления"
 
 #: ui/screens/settings.slint:243
 msgctxt "Settings"
 msgid "Configure automatic update checking"
-msgstr ""
+msgstr "Настройка автоматической проверки обновлений"
 
 #: ui/screens/settings.slint:254
 msgctxt "Settings"
 msgid "Check for updates automatically"
-msgstr ""
+msgstr "Проверять обновления автоматически"
 
 #: ui/screens/settings.slint:272
 msgctxt "Settings"
 msgid "Save"
-msgstr ""
+msgstr "Сохранить"
 
 #: ui/screens/games.slint:30
 msgctxt "Games"
 msgid "No games found"
-msgstr ""
+msgstr "Игр не найдено"
 
 #: ui/screens/games.slint:44
 msgctxt "Games"
 msgid "Refresh"
-msgstr ""
+msgstr "Обновить"
 
 #: ui/screens/games.slint:61
 msgctxt "Games"
 msgid "Search games…"
-msgstr ""
+msgstr "Поиск игр…"
 
 #: ui/screens/games.slint:67
 msgctxt "Games"
 msgid "Selecting {} / {} games"
-msgstr ""
+msgstr "Выбрано {} / {} игр"
 
 #: ui/screens/games.slint:81
 msgctxt "Games"
 msgid "Backup"
-msgstr ""
+msgstr "Резервная копия"
 
 #: ui/screens/games.slint:89
 msgctxt "Games"
 msgid "Restore"
-msgstr ""
+msgstr "Восстановить"
 
 #: ui/screens/games.slint:98
 msgctxt "Games"
 msgid "Clear Selection"
-msgstr ""
+msgstr "Очистить выбор"
 
 #: ui/screens/games.slint:98
 msgctxt "Games"
 msgid "Select All"
-msgstr ""
+msgstr "Выбрать всё"
 
 #: ui/screens/games.slint:99
 msgctxt "Games"
 msgid "{} Filtered"
-msgstr ""
+msgstr "{} отфильтровано"
 
 #: ui/screens/about.slint:35
 msgctxt "About"
 msgid "Application Info"
-msgstr ""
+msgstr "Информация о приложении"
 
 #: ui/screens/about.slint:49
 msgctxt "About"
 msgid "Aletheia is an open-source game save backup tool"
 msgstr ""
+"Aletheia - это инструмент с открытым исходным кодом для резервного "
+"копирования игровых сохранений"
 
 #: ui/screens/about.slint:56
 msgctxt "About"
 msgid "Version: {}"
-msgstr ""
+msgstr "Версия: {}"
 
 #: ui/screens/about.slint:63
 msgctxt "About"
 msgid "License: {}"
-msgstr ""
+msgstr "Лицензия: {}"
 
 #: ui/screens/about.slint:70
 msgctxt "About"
 msgid "Logo by: {}"
-msgstr ""
+msgstr "Логотип от: {}"
 
 #: ui/screens/about.slint:83
 msgctxt "About"
 msgid "View Source Code"
-msgstr ""
+msgstr "Посмотреть исходный код"
 
 #: ui/screens/about.slint:90
 msgctxt "About"
 msgid "View License"
-msgstr ""
+msgstr "Посмотреть лицензию"
 
 #: ui/screens/about.slint:97
 msgctxt "About"
 msgid "Support the Project"
-msgstr ""
+msgstr "Поддержать проект"
 
 #: ui/app.slint:42
 msgctxt "App"
 msgid "Games"
-msgstr ""
+msgstr "Игры"
 
 #: ui/app.slint:55
 msgctxt "App"
 msgid "Settings"
-msgstr ""
+msgstr "Настройки"
 
 #: ui/app.slint:62
 msgctxt "App"
 msgid "About"
-msgstr ""
+msgstr "О приложении"
 
 #: ui/components/dropdown.slint:11
 msgctxt "Dropdown"
 msgid "Select an option…"
-msgstr ""
+msgstr "Выберите один из вариантов…"
