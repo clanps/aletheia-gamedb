@@ -77,11 +77,6 @@ impl Args {
     pub fn get_flag_value(&self, name: &str) -> Option<&String> {
         self.get_flag(name)?.value.as_ref()
     }
-
-    #[expect(unused, reason = "Will be used in the future")]
-    pub fn flags_map(&self) -> std::collections::HashMap<String, Option<String>> {
-        self.flags.iter().map(|f| (f.name.clone(), f.value.clone())).collect()
-    }
 }
 
 pub trait Command {
