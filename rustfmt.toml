@@ -1,0 +1,5 @@
+fn_params_layout = "Compressed"
+max_width = 135
+struct_lit_width = 100
+trailing_comma = "Never"
+use_small_heuristics = "Off"
