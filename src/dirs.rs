@@ -378,7 +378,6 @@ mod tests {
         #[cfg(all(unix, not(target_os = "macos")))]
         {
             let save_file_3 = Path::new("{XDGData}/Terraria/Players/UnitTest.plr");
-
             let xdg_data = app_data();
 
             assert_eq!(expand_path(save_file_3, None, None, None), xdg_data.join("Terraria/Players/UnitTest.plr"));
@@ -387,7 +386,6 @@ mod tests {
         #[cfg(target_os = "macos")]
         {
             let save_file_3 = Path::new("{AppData}/Terraria/Players/UnitTest.plr");
-
             let application_support = home_dir.join("Library/Application Support");
 
             assert_eq!(expand_path(save_file_3, None, None, None), application_support.join("Terraria/Players/UnitTest.plr"));
