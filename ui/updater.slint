@@ -140,7 +140,7 @@ export component Updater inherits Window {
           width: 80px;
           height: 36px;
           text: @tr("Skip");
-          clicked => { UpdaterLogic.skip_update(); }
+          clicked => UpdaterLogic.skip_update();
         }
 
         Button {
