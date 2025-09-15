@@ -55,6 +55,9 @@
         <p>UI: Reduce allocations on filter.</p>
         <p>UI: Remove HashSets entirely and reduce allocations.</p>
         <p>Translations: Add Russian.</p>
+        <p>Backup: Use CoW strings to avoid allocations.</p>
+        <p>Backup: Avoid allocations when querying manifest.</p>
+        <p>Args: Remove flags_map.</p>
       </description>
     </release>
     <release version="1.1.0" date="2025-09-03">
