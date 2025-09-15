@@ -5,10 +5,10 @@ use crate::config::Config;
 use crate::dirs::cache;
 use crate::scanner::{Game, Scanner};
 use crate::scanner::{HeroicScanner, SteamScanner};
-use std::collections::HashMap;
-use std::fs::{create_dir_all, File, read_to_string, write};
+use reqwest::{StatusCode, header};
 use serde::{Deserialize, Serialize};
-use reqwest::{header, StatusCode};
+use std::collections::HashMap;
+use std::fs::{File, create_dir_all, read_to_string, write};
 
 #[cfg(all(unix, not(target_os = "macos")))]
 use crate::scanner::LutrisScanner;
@@ -67,7 +67,7 @@ struct CustomDbMetadata {
 
 #[derive(Debug, Default, Deserialize, Serialize)]
 struct CustomDbCache {
-    databases: HashMap<String, CustomDbMetadata>,
+    databases: HashMap<String, CustomDbMetadata>
 }
 
 pub fn parse() -> HashMap<String, GameDbEntry> {
@@ -102,7 +102,8 @@ pub fn get_installed_games() -> Vec<Game> {
     games.extend(HeroicScanner::get_games());
     games.extend(SteamScanner::get_games());
 
-    games.into_iter()
+    games
+        .into_iter()
         .filter_map(|mut game| {
             if db.contains_key(&game.name) {
                 return Some(game);
@@ -143,9 +144,7 @@ pub fn update() -> Result<bool> {
         return Ok(false);
     }
 
-    let current_etag = response.headers()
-        .get(header::ETAG)
-        .unwrap();
+    let current_etag = response.headers().get(header::ETAG).unwrap();
 
     write(&etag_path, current_etag.as_bytes())?;
     write(&gamedb_path, response.bytes()?)?;
@@ -180,7 +179,9 @@ pub fn update_custom(cfg: &Config) -> Result<bool> {
     create_dir_all(&cache_dir)?;
 
     for db in &cfg.custom_databases {
-        let mut request = client.get(db).header(reqwest::header::USER_AGENT, concat!(env!("CARGO_PKG_NAME"), "/", env!("CARGO_PKG_VERSION")));
+        let mut request = client
+            .get(db)
+            .header(reqwest::header::USER_AGENT, concat!(env!("CARGO_PKG_NAME"), "/", env!("CARGO_PKG_VERSION")));
         let cached_etag = db_cache.databases.get(db).and_then(|meta| meta.etag.as_ref());
 
         if let Some(etag) = cached_etag {
@@ -193,14 +194,11 @@ pub fn update_custom(cfg: &Config) -> Result<bool> {
             continue;
         }
 
-        let etag = response.headers().get(header::ETAG)
-            .and_then(|etag| etag.to_str().ok())
-            .map(ToOwned::to_owned);
+        let etag = response.headers().get(header::ETAG).and_then(|etag| etag.to_str().ok()).map(ToOwned::to_owned);
 
-        db_cache.databases.insert(db.clone(), CustomDbMetadata {
-            etag,
-            data: serde_yaml::from_reader(response).unwrap()
-        });
+        db_cache
+            .databases
+            .insert(db.clone(), CustomDbMetadata { etag, data: serde_yaml::from_reader(response).unwrap() });
 
         updated = true;
     }

@@ -5,7 +5,7 @@ use crate::dirs;
 use std::path::PathBuf;
 
 #[cfg(not(target_os = "macos"))]
-use std::fs::{create_dir_all, File};
+use std::fs::{File, create_dir_all};
 
 #[cfg(target_os = "macos")]
 use std::fs::File;

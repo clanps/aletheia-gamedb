@@ -1,12 +1,12 @@
 // SPDX-FileCopyrightText: 2025 Spencer
 // SPDX-License-Identifier: AGPL-3.0-only
 
+use super::{Args, Command};
 use crate::cli_helpers::ensure_steam_account_selected;
 use crate::config::Config;
 use crate::gamedb;
 use crate::infer;
 use crate::operations::backup_game;
-use super::{Args, Command};
 
 pub struct Backup;
 
@@ -33,16 +33,13 @@ impl Command for Backup {
                 }
             }
         } else {
-            installed_games.iter()
-                .filter(|game| args.positional.contains(&game.name))
-                .for_each(|game| {
-                    if let Err(e) = backup_game(game, config, &game_db[&game.name]) {
-                        eprintln!("Failed to backup {}: {}", game.name, e);
-                    } else {
-                        println!("Backed up {}.", game.name);
-                    }
-                });
+            installed_games.iter().filter(|game| args.positional.contains(&game.name)).for_each(|game| {
+                if let Err(e) = backup_game(game, config, &game_db[&game.name]) {
+                    eprintln!("Failed to backup {}: {}", game.name, e);
+                } else {
+                    println!("Backed up {}.", game.name);
+                }
+            });
         }
     }
 }
-

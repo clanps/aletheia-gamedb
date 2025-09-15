@@ -2,13 +2,13 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 
 use crate::config::Config as AletheiaConfig;
-use crate::ui::app::{App, GameLogic, GamesScreenLogic, NotificationLogic, UiGame};
 use crate::gamedb;
 use crate::operations::{backup_game, restore_game};
+use crate::ui::app::{App, GameLogic, GamesScreenLogic, NotificationLogic, UiGame};
 use slint::{ComponentHandle, Model, ModelRc, VecModel};
+use std::cell::RefCell;
 use std::fs::File;
 use std::rc::Rc;
-use std::cell::RefCell;
 
 #[expect(clippy::too_many_lines, reason = "This is as simple as it's going to get")]
 pub fn setup(app: &slint::Weak<App>, config: &Rc<RefCell<AletheiaConfig>>) {
@@ -28,32 +28,34 @@ pub fn setup(app: &slint::Weak<App>, config: &Rc<RefCell<AletheiaConfig>>) {
             let mut games = gamedb::get_installed_games();
             games.sort_by(|a, b| a.name.to_lowercase().cmp(&b.name.to_lowercase()));
 
-            let ui_games: Vec<UiGame> = games.into_iter().map(|g| {
-                let name = g.name;
-                let backup_path = save_dir.join(name.replace(':', ""));
+            let ui_games: Vec<UiGame> = games
+                .into_iter()
+                .map(|g| {
+                    let name = g.name;
+                    let backup_path = save_dir.join(name.replace(':', ""));
 
-                UiGame {
-                    name: name.clone().into(),
-                    backup_size: if backup_path.exists() {
-                        format_size(crate::dirs::get_size(&backup_path)).into()
-                    } else {
-                        "0B".into()
-                    },
-                    source: g.source.into(),
-                    selected: select_all || selected_games.iter().any(|selected| selected.name.as_str() == name)
-                }
-            }).collect();
+                    UiGame {
+                        name: name.clone().into(),
+                        backup_size: if backup_path.exists() {
+                            format_size(crate::dirs::get_size(&backup_path)).into()
+                        } else {
+                            "0B".into()
+                        },
+                        source: g.source.into(),
+                        selected: select_all || selected_games.iter().any(|selected| selected.name.as_str() == name)
+                    }
+                })
+                .collect();
 
             let ui_games_model = ModelRc::new(VecModel::from(ui_games));
-            let ui_selected_games: Vec<UiGame> = ui_games_model.iter()
-                .filter(|game| game.selected)
-                .collect();
+            let ui_selected_games: Vec<UiGame> = ui_games_model.iter().filter(|game| game.selected).collect();
 
             // In a perfect world, Slint would have a way to filter in their markdown language so I could avoid this
             app_weak.global::<GameLogic>().set_games(ui_games_model.clone());
             games_screen_logic.set_filtered_games(ui_games_model.clone());
             games_screen_logic.set_selected_games(ModelRc::new(VecModel::from(ui_selected_games)));
-            games_screen_logic.set_all_filtered_selected(ui_games_model.row_count() > 0 && ui_games_model.iter().all(|game| game.selected));
+            games_screen_logic
+                .set_all_filtered_selected(ui_games_model.row_count() > 0 && ui_games_model.iter().all(|game| game.selected));
         }
     });
 
@@ -65,7 +67,8 @@ pub fn setup(app: &slint::Weak<App>, config: &Rc<RefCell<AletheiaConfig>>) {
             let games_screen_logic = app_weak.global::<GamesScreenLogic>();
             let games = app_weak.global::<GameLogic>().get_games();
             let selected_games = games_screen_logic.get_selected_games();
-            let filtered_games: Vec<UiGame> = games.iter()
+            let filtered_games: Vec<UiGame> = games
+                .iter()
                 .filter(|g| query.is_empty() || g.name.to_lowercase().contains(&query_lower))
                 .map(|mut g| {
                     g.selected = selected_games.iter().any(|selected| selected.name == g.name);
@@ -86,10 +89,13 @@ pub fn setup(app: &slint::Weak<App>, config: &Rc<RefCell<AletheiaConfig>>) {
         move |enabled| {
             let games_screen_logic = app_weak.global::<GamesScreenLogic>();
             let filtered_games_model = games_screen_logic.get_filtered_games();
-            let updated_games: Vec<UiGame> = filtered_games_model.iter().map(|mut g| {
-                g.selected = enabled;
-                g
-            }).collect();
+            let updated_games: Vec<UiGame> = filtered_games_model
+                .iter()
+                .map(|mut g| {
+                    g.selected = enabled;
+                    g
+                })
+                .collect();
             let mut selected_games: Vec<UiGame> = games_screen_logic.get_selected_games().iter().collect();
 
             selected_games.retain(|g| !updated_games.iter().any(|updated| updated.name == g.name));
@@ -119,8 +125,10 @@ pub fn setup(app: &slint::Weak<App>, config: &Rc<RefCell<AletheiaConfig>>) {
             }
 
             let filtered_games_model = games_screen_logic.get_filtered_games();
-            let all_filtered_selected = filtered_games_model.row_count() > 0 &&
-                filtered_games_model.iter().all(|g| selected_games.iter().any(|selected| selected.name == g.name));
+            let all_filtered_selected = filtered_games_model.row_count() > 0
+                && filtered_games_model
+                    .iter()
+                    .all(|g| selected_games.iter().any(|selected| selected.name == g.name));
 
             games_screen_logic.set_selected_games(ModelRc::new(VecModel::from(selected_games)));
             games_screen_logic.set_all_filtered_selected(all_filtered_selected);

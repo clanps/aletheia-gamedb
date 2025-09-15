@@ -1,9 +1,9 @@
 // SPDX-FileCopyrightText: 2025 Spencer
 // SPDX-License-Identifier: AGPL-3.0-only
 
+use super::{Args, Command};
 use crate::config::Config;
 use crate::gamedb;
-use super::{Args, Command};
 
 pub struct UpdateCustom;
 

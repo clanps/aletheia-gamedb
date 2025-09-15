@@ -3,8 +3,8 @@
 
 slint::include_modules!();
 
-use crate::config::Config as AletheiaConfig;
 use super::handlers::{games, settings};
+use crate::config::Config as AletheiaConfig;
 use std::cell::RefCell;
 use std::process::Command;
 use std::rc::Rc;
@@ -14,7 +14,9 @@ use crate::updater;
 
 pub fn run(config: &AletheiaConfig) {
     #[cfg(all(feature = "updater", not(debug_assertions)))]
-    if config.check_for_updates && let Ok(updater::UpdateStatus::Available(release)) = updater::check() {
+    if config.check_for_updates
+        && let Ok(updater::UpdateStatus::Available(release)) = updater::check()
+    {
         let updater_window = Updater::new().unwrap();
         let updater_logic = updater_window.global::<UpdaterLogic>();
 

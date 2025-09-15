@@ -9,7 +9,6 @@
 #![deny(clippy::get_unwrap)]
 #![deny(clippy::str_to_string)]
 #![allow(clippy::unreadable_literal, reason = "'Readable' literals are ugly")]
-
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 mod cli_helpers;
@@ -34,7 +33,12 @@ fn main() {
     #[cfg(all(unix, not(target_os = "macos")))]
     {
         let flatpak = std::env::var("FLATPAK_ID").is_ok() && std::fs::exists("/.flatpak-info").unwrap_or(false);
-        log::info!("Aletheia v{} (Linux) (Flatpak: {}, AppImage: {})", env!("CARGO_PKG_VERSION"), flatpak, !flatpak && std::env::var("APPIMAGE").is_ok());
+        log::info!(
+            "Aletheia v{} (Linux) (Flatpak: {}, AppImage: {})",
+            env!("CARGO_PKG_VERSION"),
+            flatpak,
+            !flatpak && std::env::var("APPIMAGE").is_ok()
+        );
     }
 
     #[cfg(target_os = "macos")]

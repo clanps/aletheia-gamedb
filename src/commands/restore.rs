@@ -1,12 +1,12 @@
 // SPDX-FileCopyrightText: 2025 Spencer
 // SPDX-License-Identifier: AGPL-3.0-only
 
+use super::{Args, Command};
 use crate::cli_helpers::ensure_steam_account_selected;
 use crate::config::Config;
 use crate::gamedb;
 use crate::infer;
 use crate::operations::restore_game;
-use super::{Args, Command};
 use std::fs::File;
 
 pub struct Restore;

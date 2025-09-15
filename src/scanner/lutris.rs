@@ -1,8 +1,8 @@
 // SPDX-FileCopyrightText: 2025 Spencer
 // SPDX-License-Identifier: AGPL-3.0-only
 
-use crate::dirs::{app_data, config, home};
 use super::{Game, Scanner};
+use crate::dirs::{app_data, config, home};
 use std::path::PathBuf;
 
 pub struct LutrisScanner;
@@ -50,7 +50,8 @@ impl Scanner for LutrisScanner {
         for row in rows {
             let (name, dir, platform, config_file) = row.unwrap();
 
-            if !dir.as_os_str().is_empty() && !dir.exists() || !config_file.exists() { // Lutris leaves some directories empty (not sure why) and doesn't seem to remove the directory from the database after the game is uninstalled
+            if !dir.as_os_str().is_empty() && !dir.exists() || !config_file.exists() {
+                // Lutris leaves some directories empty (not sure why) and doesn't seem to remove the directory from the database after the game is uninstalled
                 continue;
             }
 

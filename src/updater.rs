@@ -23,12 +23,13 @@ pub type Result<T> = core::result::Result<T, Error>;
 
 pub enum UpdateStatus {
     UpToDate,
-    Available(Release),
+    Available(Release)
 }
 
 pub fn check() -> Result<UpdateStatus> {
     let client = reqwest::blocking::Client::new();
-    let response = client.get("https://api.github.com/repos/Spencer-0003/aletheia/releases")
+    let response = client
+        .get("https://api.github.com/repos/Spencer-0003/aletheia/releases")
         .header(reqwest::header::USER_AGENT, concat!(env!("CARGO_PKG_NAME"), "/", env!("CARGO_PKG_VERSION")))
         .send()?
         .error_for_status()?;

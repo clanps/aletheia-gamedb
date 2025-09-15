@@ -1,9 +1,9 @@
 // SPDX-FileCopyrightText: 2025 Spencer
 // SPDX-License-Identifier: AGPL-3.0-only
 
+use super::{Game, Scanner};
 use std::fs::File;
 use std::path::{Path, PathBuf};
-use super::{Game, Scanner};
 
 pub struct GOGScanner;
 
@@ -66,4 +66,3 @@ impl Scanner for GOGScanner {
         games
     }
 }
-

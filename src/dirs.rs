@@ -17,9 +17,7 @@ pub fn cache() -> PathBuf {
 
 #[cfg(all(unix, not(target_os = "macos")))]
 pub fn cache() -> PathBuf {
-    var_os("XDG_CACHE_HOME")
-        .map_or_else(|| home().join(".cache"), PathBuf::from)
-        .join("aletheia")
+    var_os("XDG_CACHE_HOME").map_or_else(|| home().join(".cache"), PathBuf::from).join("aletheia")
 }
 
 #[cfg(windows)]
@@ -29,40 +27,32 @@ pub fn cache() -> PathBuf {
 
 #[cfg(target_os = "macos")]
 pub fn config() -> PathBuf {
-    var_os("XDG_CONFIG_HOME")
-        .map_or_else(|| home().join("Library/Preferences"), PathBuf::from)
+    var_os("XDG_CONFIG_HOME").map_or_else(|| home().join("Library/Preferences"), PathBuf::from)
 }
 
 #[cfg(all(unix, not(target_os = "macos")))]
 pub fn config() -> PathBuf {
-    var_os("XDG_CONFIG_HOME")
-         .map_or_else(|| home().join(".config"), PathBuf::from)
+    var_os("XDG_CONFIG_HOME").map_or_else(|| home().join(".config"), PathBuf::from)
 }
 
 #[cfg(windows)]
 pub fn config() -> PathBuf {
-    var_os("APPDATA")
-        .map(PathBuf::from)
-        .unwrap()
+    var_os("APPDATA").map(PathBuf::from).unwrap()
 }
 
 #[cfg(target_os = "macos")]
 pub fn app_data() -> PathBuf {
-    var_os("XDG_DATA_HOME")
-        .map_or_else(|| home().join("Library/Application Support"), PathBuf::from)
+    var_os("XDG_DATA_HOME").map_or_else(|| home().join("Library/Application Support"), PathBuf::from)
 }
 
 #[cfg(all(unix, not(target_os = "macos")))]
 pub fn app_data() -> PathBuf {
-    var_os("XDG_DATA_HOME")
-        .map_or_else(|| home().join(".local/share"), PathBuf::from)
+    var_os("XDG_DATA_HOME").map_or_else(|| home().join(".local/share"), PathBuf::from)
 }
 
 #[cfg(windows)]
 pub fn app_data() -> PathBuf {
-    var_os("LOCALAPPDATA")
-        .map(PathBuf::from)
-        .unwrap()
+    var_os("LOCALAPPDATA").map(PathBuf::from).unwrap()
 }
 
 pub fn home() -> PathBuf {
@@ -106,9 +96,7 @@ fn shrink_path_components(path: &Path, replacements: &[(&str, PathBuf)]) -> Path
 
 #[cfg(all(unix, not(target_os = "macos")))]
 fn path_contains_subpath(haystack: &Path, needle: &str) -> bool {
-    haystack
-        .ancestors()
-        .any(|ancestor| ancestor.ends_with(needle))
+    haystack.ancestors().any(|ancestor| ancestor.ends_with(needle))
 }
 
 #[cfg(all(unix, not(target_os = "macos")))]
@@ -133,7 +121,8 @@ pub fn expand_path(path: &Path, installation_dir: Option<&Path>, prefix: Option<
         let windows_app_data = user.join("AppData");
         let documents = user.join("Documents");
 
-        let steam_user_data = steam_account_id.map_or_else(|| linux_app_data.join("Steam/userdata/[0-9]*"), |id| linux_app_data.join("Steam/userdata").join(id));
+        let steam_user_data = steam_account_id
+            .map_or_else(|| linux_app_data.join("Steam/userdata/[0-9]*"), |id| linux_app_data.join("Steam/userdata").join(id));
 
         replacements.extend([
             ("{AppData}", windows_app_data.join("Roaming")),
@@ -146,10 +135,7 @@ pub fn expand_path(path: &Path, installation_dir: Option<&Path>, prefix: Option<
         ]);
     }
 
-    replacements.extend([
-        ("{XDGConfig}", config()),
-        ("{XDGData}", linux_app_data)
-    ]);
+    replacements.extend([("{XDGConfig}", config()), ("{XDGData}", linux_app_data)]);
 
     expand_path_components(path, &replacements)
 }
@@ -197,7 +183,8 @@ pub fn expand_path(path: &Path, installation_dir: Option<&Path>, prefix: Option<
 
     let home_dir = home();
     let application_support = home_dir.join("Library/Application Support"); // app_data is not used here as most games don't use the XDG spec on MacOS
-    let steam_user_data = steam_account_id.map_or_else(|| application_support.join("Steam/userdata/[0-9]*"), |id| application_support.join("Steam/userdata").join(id));
+    let steam_user_data = steam_account_id
+        .map_or_else(|| application_support.join("Steam/userdata/[0-9]*"), |id| application_support.join("Steam/userdata").join(id));
 
     replacements.push(("{SteamUserData}", steam_user_data));
 
@@ -250,7 +237,8 @@ pub fn shrink_path(path: &Path, installation_dir: Option<&Path>, prefix: Option<
         let user = drive_c.join("users").join(username);
         let windows_app_data = user.join("AppData");
 
-        let steam_user_data = steam_account_id.map_or_else(|| linux_app_data.join("Steam/userdata/[0-9]*"), |id| linux_app_data.join("Steam/userdata").join(id));
+        let steam_user_data = steam_account_id
+            .map_or_else(|| linux_app_data.join("Steam/userdata/[0-9]*"), |id| linux_app_data.join("Steam/userdata").join(id));
 
         replacements.extend([
             ("{LocalLow}", windows_app_data.join("LocalLow")),
@@ -263,10 +251,7 @@ pub fn shrink_path(path: &Path, installation_dir: Option<&Path>, prefix: Option<
         ]);
     }
 
-    replacements.extend([
-        ("{XDGConfig}", config()),
-        ("{XDGData}", linux_app_data)
-    ]);
+    replacements.extend([("{XDGConfig}", config()), ("{XDGData}", linux_app_data)]);
 
     shrink_path_components(path, &replacements)
 }
@@ -314,7 +299,8 @@ pub fn shrink_path(path: &Path, installation_dir: Option<&Path>, prefix: Option<
 
     let home_dir = home();
     let application_support = home_dir.join("Library/Application Support");
-    let steam_user_data = steam_account_id.map_or_else(|| application_support.join("Steam/userdata/[0-9]*"), |id| application_support.join("Steam/userdata").join(id));
+    let steam_user_data = steam_account_id
+        .map_or_else(|| application_support.join("Steam/userdata/[0-9]*"), |id| application_support.join("Steam/userdata").join(id));
 
     replacements.push(("{SteamUserData}", steam_user_data));
 
@@ -381,7 +367,13 @@ mod tests {
         {
             let prefix = home_dir.join("Games/UnitTest");
 
-            assert_eq!(expand_path(save_file_1, None, Some(&prefix), None), prefix.join("drive_c/users").join(username).join("AppData/LocalLow/AllianceArts/All in Abyss/SaveData/EXAMPLE_STEAM_ID/GameData/GameSaveData_0.sav"));
+            assert_eq!(
+                expand_path(save_file_1, None, Some(&prefix), None),
+                prefix
+                    .join("drive_c/users")
+                    .join(username)
+                    .join("AppData/LocalLow/AllianceArts/All in Abyss/SaveData/EXAMPLE_STEAM_ID/GameData/GameSaveData_0.sav")
+            );
             assert_eq!(expand_path(save_file_2, Some(&root_dir), None, None), root_dir.join("SAVEDATA/SonicDX01.snc"));
         }
 
@@ -407,7 +399,10 @@ mod tests {
         {
             let save_file_3 = Path::new("{Documents}/My Games/Terraria/Players/UnitTest.plr");
 
-            assert_eq!(expand_path(save_file_1, None, None), home_dir.join("AppData/LocalLow/AllianceArts/All in Abyss/SaveData/EXAMPLE_STEAM_ID/GameData/GameSaveData_0.sav"));
+            assert_eq!(
+                expand_path(save_file_1, None, None),
+                home_dir.join("AppData/LocalLow/AllianceArts/All in Abyss/SaveData/EXAMPLE_STEAM_ID/GameData/GameSaveData_0.sav")
+            );
             assert_eq!(expand_path(save_file_2, Some(&root_dir), None), root_dir.join("SAVEDATA/SonicDX01.snc"));
             assert_eq!(expand_path(save_file_3, None, None), home_dir.join("Documents/My Games/Terraria/Players/UnitTest.plr"));
         }

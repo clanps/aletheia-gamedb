@@ -1,11 +1,11 @@
 // SPDX-FileCopyrightText: 2025 Spencer
 // SPDX-License-Identifier: AGPL-3.0-only
 
-use serde::Deserialize;
-use steamlocate::SteamDir;
 use super::{Game, Scanner};
+use serde::Deserialize;
 use std::collections::HashMap;
 use std::fs::File;
+use steamlocate::SteamDir;
 
 #[derive(Deserialize, Debug)]
 struct LoginUsersFile {
@@ -68,10 +68,8 @@ impl Scanner for SteamScanner {
                     installation_dir: Some(install_dir),
                     #[cfg(all(unix, not(target_os = "macos")))]
                     prefix: {
-                        let prefix_directory = steam_directory.path()
-                            .join("steamapps/compatdata")
-                            .join(game.app_id.to_string())
-                            .join("pfx");
+                        let prefix_directory =
+                            steam_directory.path().join("steamapps/compatdata").join(game.app_id.to_string()).join("pfx");
 
                         prefix_directory.exists().then_some(prefix_directory)
                     },
@@ -90,7 +88,8 @@ impl Scanner for SteamScanner {
                 installation_dir: Some(shortcut.start_dir.into()),
                 #[cfg(unix)]
                 prefix: {
-                    let prefix_directory = steam_directory.path()
+                    let prefix_directory = steam_directory
+                        .path()
                         .join("steamapps/compatdata")
                         .join(shortcut.app_id.to_string())
                         .join("pfx");
@@ -104,4 +103,3 @@ impl Scanner for SteamScanner {
         games
     }
 }
-

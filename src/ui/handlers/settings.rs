@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 
 use crate::config::Config as AletheiaConfig;
-use crate::ui::app::{App, Config, DropdownOption, NotificationLogic, SettingsScreenLogic};
 use crate::gamedb;
 use crate::scanner::SteamScanner;
+use crate::ui::app::{App, Config, DropdownOption, NotificationLogic, SettingsScreenLogic};
 use slint::{ComponentHandle, Model, ModelRc, SharedString, VecModel};
 use std::cell::RefCell;
 use std::rc::Rc;
@@ -20,11 +20,7 @@ pub fn setup(app: &slint::Weak<App>, config: &Rc<RefCell<AletheiaConfig>>) {
             let app = app_weak.upgrade().unwrap();
 
             slint::spawn_local(async move {
-                if let Some(folder) = rfd::AsyncFileDialog::new()
-                    .set_directory(crate::dirs::home())
-                    .pick_folder()
-                    .await
-                {
+                if let Some(folder) = rfd::AsyncFileDialog::new().set_directory(crate::dirs::home()).pick_folder().await {
                     let settings_screen_logic = app.global::<SettingsScreenLogic>();
                     let mut cfg = settings_screen_logic.get_config();
 
@@ -32,7 +28,8 @@ pub fn setup(app: &slint::Weak<App>, config: &Rc<RefCell<AletheiaConfig>>) {
 
                     settings_screen_logic.set_config(cfg);
                 }
-            }).unwrap();
+            })
+            .unwrap();
         }
     });
 
@@ -70,7 +67,8 @@ pub fn setup(app: &slint::Weak<App>, config: &Rc<RefCell<AletheiaConfig>>) {
             let settings_logic = app_weak.global::<SettingsScreenLogic>();
 
             if let Some(users) = SteamScanner::get_users() {
-                let mut options: Vec<DropdownOption> = users.into_iter()
+                let mut options: Vec<DropdownOption> = users
+                    .into_iter()
                     .map(|(steam_id, user)| DropdownOption {
                         label: user.persona_name.into(),
                         value: SteamScanner::id64_to_id3(steam_id.parse::<u64>().unwrap()).to_string().into()
@@ -104,11 +102,10 @@ pub fn setup(app: &slint::Weak<App>, config: &Rc<RefCell<AletheiaConfig>>) {
     let steam_account_id = get_steam_id(&config_ref);
     let steam_account_id_str = steam_account_id.as_deref().unwrap_or_default();
 
-    if let Some(ref id3) = steam_account_id && config_ref.steam_account_id.as_ref() != Some(id3) {
-        let new_config = AletheiaConfig {
-            steam_account_id: Some(id3.clone()),
-            ..config_ref.clone()
-        };
+    if let Some(ref id3) = steam_account_id
+        && config_ref.steam_account_id.as_ref() != Some(id3)
+    {
+        let new_config = AletheiaConfig { steam_account_id: Some(id3.clone()), ..config_ref.clone() };
 
         AletheiaConfig::save(&new_config);
         *config.borrow_mut() = new_config;
@@ -144,7 +141,8 @@ fn get_steam_id(config: &AletheiaConfig) -> Option<String> {
     }
 
     if let Some(ref id3) = config.steam_account_id {
-        let config_user_exists = users.keys()
+        let config_user_exists = users
+            .keys()
             .filter_map(|id64_str| id64_str.parse::<u64>().ok())
             .any(|id64| SteamScanner::id64_to_id3(id64).to_string() == *id3);
 

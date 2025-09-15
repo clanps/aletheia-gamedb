@@ -54,4 +54,3 @@ pub fn restore_game(game_dir: &Path, manifest: &GameInfo, installed_games: &[Gam
 
     Ok(true)
 }
-

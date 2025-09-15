@@ -4,11 +4,11 @@
 use crate::config::Config;
 use crate::dirs::{expand_path, shrink_path};
 use crate::file::hash_file;
-use crate::gamedb::{GameDbEntry, GameInfo, FileMetadata};
+use crate::gamedb::{FileMetadata, GameDbEntry, GameInfo};
 use crate::scanner::Game;
-use std::fs::{copy, create_dir_all, File, metadata};
-use std::path::Path;
 use glob::glob;
+use std::fs::{File, copy, create_dir_all, metadata};
+use std::path::Path;
 
 #[derive(Debug, thiserror::Error)]
 pub enum Error {
@@ -24,7 +24,8 @@ pub fn backup_game(game: &Game, config: &Config, entry: &GameDbEntry) -> Result<
     let steam_id = config.steam_account_id.as_deref();
     let backup_folder = config.save_dir.join(game.name.replace(':', "")); // NTFS doesn't support : and this makes sense on Unix for cross-OS syncing
     let manifest_path = backup_folder.join("aletheia_manifest.yaml");
-    let existing_manifest = manifest_path.exists()
+    let existing_manifest = manifest_path
+        .exists()
         .then(|| File::open(&manifest_path).unwrap())
         .map(|file| serde_yaml::from_reader::<File, GameInfo>(file).map_err(|_| Error::MalformedManifest))
         .transpose()?;
@@ -39,7 +40,9 @@ pub fn backup_game(game: &Game, config: &Config, entry: &GameDbEntry) -> Result<
     }
 
     #[cfg(unix)]
-    if game.prefix.is_some() && let Some(ref windows_paths) = entry.files.windows {
+    if game.prefix.is_some()
+        && let Some(ref windows_paths) = entry.files.windows
+    {
         paths.extend(windows_paths);
     }
 
@@ -88,33 +91,28 @@ pub fn backup_game(game: &Game, config: &Config, entry: &GameDbEntry) -> Result<
 
     for file in files {
         #[cfg(unix)]
-        let shrunk_file_path = shrink_path(file.as_path(), game.installation_dir.as_deref(), game.prefix.as_deref(), steam_id).to_string_lossy().to_string();
+        let shrunk_file_path = shrink_path(file.as_path(), game.installation_dir.as_deref(), game.prefix.as_deref(), steam_id)
+            .to_string_lossy()
+            .to_string();
 
         #[cfg(windows)]
-        let shrunk_file_path = shrink_path(file.as_path(), game.installation_dir.as_deref(), steam_id).to_string_lossy().to_string();
+        let shrunk_file_path = shrink_path(file.as_path(), game.installation_dir.as_deref(), steam_id)
+            .to_string_lossy()
+            .to_string();
 
         let should_backup = existing_manifest.as_ref().is_none_or(|manifest| {
-            manifest.files.iter()
-                .find(|m| m.path == shrunk_file_path).is_none_or(|existing| {
-                    metadata(&file).unwrap().modified().unwrap() > existing.modified && existing.hash != hash_file(&file)
-                })
+            manifest.files.iter().find(|m| m.path == shrunk_file_path).is_none_or(|existing| {
+                metadata(&file).unwrap().modified().unwrap() > existing.modified && existing.hash != hash_file(&file)
+            })
         });
 
         if should_backup {
-            let file_metadata = process_file(
-                &file,
-                &backup_folder.join(file.file_name().unwrap()),
-                game,
-                steam_id
-            );
+            let file_metadata = process_file(&file, &backup_folder.join(file.file_name().unwrap()), game, steam_id);
 
             game_files.push(file_metadata);
             changed = true;
         } else {
-            let existing_metadata = existing_manifest.as_ref().unwrap().files
-                .iter()
-                .find(|m| m.path == shrunk_file_path)
-                .unwrap();
+            let existing_metadata = existing_manifest.as_ref().unwrap().files.iter().find(|m| m.path == shrunk_file_path).unwrap();
 
             game_files.push(existing_metadata.to_owned());
         }
@@ -124,10 +122,7 @@ pub fn backup_game(game: &Game, config: &Config, entry: &GameDbEntry) -> Result<
         return Ok(false);
     }
 
-    let game_metadata = GameInfo {
-        name: game.name.clone(),
-        files: game_files
-    };
+    let game_metadata = GameInfo { name: game.name.clone(), files: game_files };
 
     serde_yaml::to_writer(File::create(&manifest_path).unwrap(), &game_metadata).unwrap();
 
@@ -142,11 +137,14 @@ fn process_file(file_path: &Path, dest: &Path, game: &Game, steam_id: Option<&st
     FileMetadata {
         modified: file_metadata.modified().unwrap(),
         #[cfg(unix)]
-        path: shrink_path(file_path, game.installation_dir.as_deref(), game.prefix.as_deref(), steam_id).to_string_lossy().to_string(),
+        path: shrink_path(file_path, game.installation_dir.as_deref(), game.prefix.as_deref(), steam_id)
+            .to_string_lossy()
+            .to_string(),
         #[cfg(windows)]
-        path: shrink_path(file_path, game.installation_dir.as_deref(), steam_id).to_string_lossy().to_string(),
+        path: shrink_path(file_path, game.installation_dir.as_deref(), steam_id)
+            .to_string_lossy()
+            .to_string(),
         hash: hash_file(file_path),
         size: file_metadata.len()
     }
 }
-

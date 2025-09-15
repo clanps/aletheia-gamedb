@@ -6,16 +6,16 @@ mod update;
 
 mod backup;
 mod restore;
-mod update_gamedb;
 mod update_custom;
+mod update_gamedb;
 
 #[cfg(all(feature = "updater", not(debug_assertions)))]
 pub use update::Update;
 
 pub use backup::Backup;
 pub use restore::Restore;
-pub use update_gamedb::UpdateGameDb;
 pub use update_custom::UpdateCustom;
+pub use update_gamedb::UpdateGameDb;
 
 pub struct Args {
     pub positional: Vec<String>,
@@ -29,17 +29,11 @@ pub struct Flag {
 
 impl Flag {
     pub fn new(name: &str) -> Self {
-        Self {
-            name: name.to_owned(),
-            value: None
-        }
+        Self { name: name.to_owned(), value: None }
     }
 
     pub fn with_value(name: &str, value: &str) -> Self {
-        Self {
-            name: name.to_owned(),
-            value: Some(value.to_owned())
-        }
+        Self { name: name.to_owned(), value: Some(value.to_owned()) }
     }
 }
 
@@ -86,9 +80,7 @@ impl Args {
 
     #[expect(unused, reason = "Will be used in the future")]
     pub fn flags_map(&self) -> std::collections::HashMap<String, Option<String>> {
-        self.flags.iter()
-            .map(|f| (f.name.clone(), f.value.clone()))
-            .collect()
+        self.flags.iter().map(|f| (f.name.clone(), f.value.clone())).collect()
     }
 }
 

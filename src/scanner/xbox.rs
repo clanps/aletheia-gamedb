@@ -1,11 +1,11 @@
 // SPDX-FileCopyrightText: 2025 Spencer
 // SPDX-License-Identifier: AGPL-3.0-only
 
+use super::{Game, Scanner};
 use serde::Deserialize;
 use std::fs::{File, read_dir};
 use std::io::BufReader;
 use std::path::Path;
-use super::{Game, Scanner};
 
 pub struct XboxScanner;
 
@@ -64,11 +64,7 @@ impl Scanner for XboxScanner {
                 continue;
             }
 
-            games.push(Game {
-                name: config.shell_visuals.default_display_name,
-                installation_dir: Some(path),
-                source: "Xbox".into()
-            });
+            games.push(Game { name: config.shell_visuals.default_display_name, installation_dir: Some(path), source: "Xbox".into() });
         }
 
         games

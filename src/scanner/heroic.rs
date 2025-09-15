@@ -55,10 +55,7 @@ impl HeroicScanner {
         #[cfg(all(unix, not(target_os = "macos")))]
         {
             // Heroic doesn't store manifests for Linux games
-            game.install_path
-                .file_name()
-                .and_then(|n| n.to_str())
-                .map(ToOwned::to_owned)
+            game.install_path.file_name().and_then(|n| n.to_str()).map(ToOwned::to_owned)
         }
 
         #[cfg(any(windows, target_os = "macos"))]

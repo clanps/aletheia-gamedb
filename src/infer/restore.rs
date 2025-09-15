@@ -49,4 +49,3 @@ pub fn restore(launcher: &str, config: &Config) {
         }
     }
 }
-
