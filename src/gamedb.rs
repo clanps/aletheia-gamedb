@@ -179,9 +179,8 @@ pub fn update_custom(cfg: &Config) -> Result<bool> {
     create_dir_all(&cache_dir)?;
 
     for db in &cfg.custom_databases {
-        let mut request = client
-            .get(db)
-            .header(reqwest::header::USER_AGENT, concat!(env!("CARGO_PKG_NAME"), "/", env!("CARGO_PKG_VERSION")));
+        let mut request =
+            client.get(db).header(reqwest::header::USER_AGENT, concat!(env!("CARGO_PKG_NAME"), "/", env!("CARGO_PKG_VERSION")));
         let cached_etag = db_cache.databases.get(db).and_then(|meta| meta.etag.as_ref());
 
         if let Some(etag) = cached_etag {
@@ -196,9 +195,7 @@ pub fn update_custom(cfg: &Config) -> Result<bool> {
 
         let etag = response.headers().get(header::ETAG).and_then(|etag| etag.to_str().ok()).map(ToOwned::to_owned);
 
-        db_cache
-            .databases
-            .insert(db.clone(), CustomDbMetadata { etag, data: serde_yaml::from_reader(response).unwrap() });
+        db_cache.databases.insert(db.clone(), CustomDbMetadata { etag, data: serde_yaml::from_reader(response).unwrap() });
 
         updated = true;
     }

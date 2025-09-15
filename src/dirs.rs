@@ -10,9 +10,7 @@ use std::ffi::OsString;
 
 #[cfg(target_os = "macos")]
 pub fn cache() -> PathBuf {
-    var_os("XDG_CACHE_HOME")
-        .map_or_else(|| home().join("Library/caches"), PathBuf::from)
-        .join("moe.spencer.aletheia")
+    var_os("XDG_CACHE_HOME").map_or_else(|| home().join("Library/caches"), PathBuf::from).join("moe.spencer.aletheia")
 }
 
 #[cfg(all(unix, not(target_os = "macos")))]

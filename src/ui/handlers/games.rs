@@ -126,9 +126,7 @@ pub fn setup(app: &slint::Weak<App>, config: &Rc<RefCell<AletheiaConfig>>) {
 
             let filtered_games_model = games_screen_logic.get_filtered_games();
             let all_filtered_selected = filtered_games_model.row_count() > 0
-                && filtered_games_model
-                    .iter()
-                    .all(|g| selected_games.iter().any(|selected| selected.name == g.name));
+                && filtered_games_model.iter().all(|g| selected_games.iter().any(|selected| selected.name == g.name));
 
             games_screen_logic.set_selected_games(ModelRc::new(VecModel::from(selected_games)));
             games_screen_logic.set_all_filtered_selected(all_filtered_selected);

@@ -88,11 +88,8 @@ impl Scanner for SteamScanner {
                 installation_dir: Some(shortcut.start_dir.into()),
                 #[cfg(unix)]
                 prefix: {
-                    let prefix_directory = steam_directory
-                        .path()
-                        .join("steamapps/compatdata")
-                        .join(shortcut.app_id.to_string())
-                        .join("pfx");
+                    let prefix_directory =
+                        steam_directory.path().join("steamapps/compatdata").join(shortcut.app_id.to_string()).join("pfx");
 
                     prefix_directory.exists().then_some(prefix_directory)
                 },

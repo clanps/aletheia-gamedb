@@ -96,9 +96,7 @@ pub fn backup_game(game: &Game, config: &Config, entry: &GameDbEntry) -> Result<
             .to_string();
 
         #[cfg(windows)]
-        let shrunk_file_path = shrink_path(file.as_path(), game.installation_dir.as_deref(), steam_id)
-            .to_string_lossy()
-            .to_string();
+        let shrunk_file_path = shrink_path(file.as_path(), game.installation_dir.as_deref(), steam_id).to_string_lossy().to_string();
 
         let should_backup = existing_manifest.as_ref().is_none_or(|manifest| {
             manifest.files.iter().find(|m| m.path == shrunk_file_path).is_none_or(|existing| {
@@ -137,13 +135,9 @@ fn process_file(file_path: &Path, dest: &Path, game: &Game, steam_id: Option<&st
     FileMetadata {
         modified: file_metadata.modified().unwrap(),
         #[cfg(unix)]
-        path: shrink_path(file_path, game.installation_dir.as_deref(), game.prefix.as_deref(), steam_id)
-            .to_string_lossy()
-            .to_string(),
+        path: shrink_path(file_path, game.installation_dir.as_deref(), game.prefix.as_deref(), steam_id).to_string_lossy().to_string(),
         #[cfg(windows)]
-        path: shrink_path(file_path, game.installation_dir.as_deref(), steam_id)
-            .to_string_lossy()
-            .to_string(),
+        path: shrink_path(file_path, game.installation_dir.as_deref(), steam_id).to_string_lossy().to_string(),
         hash: hash_file(file_path),
         size: file_metadata.len()
     }
