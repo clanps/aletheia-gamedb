@@ -22,7 +22,8 @@ pub enum Error {
 pub type Result<T> = core::result::Result<T, Error>;
 
 fn sanitize_game_name(name: &str) -> Cow<'_, str> {
-    if name.contains(':') { // NTFS doesn't support : and this makes sense on Unix for cross-OS syncing
+    if name.contains(':') {
+        // NTFS doesn't support : and this makes sense on Unix for cross-OS syncing
         Cow::Owned(name.replace(':', ""))
     } else {
         Cow::Borrowed(name)
@@ -100,13 +101,12 @@ pub fn backup_game(game: &Game, config: &Config, entry: &GameDbEntry) -> Result<
 
     for file in files {
         #[cfg(unix)]
-        let shrunk_file_path = shrink_path(file.as_path(), game.installation_dir.as_deref(), game.prefix.as_deref(), steam_id)
-            .to_string_lossy()
-            .to_string();
+        let shrunk_file = shrink_path(file.as_path(), game.installation_dir.as_deref(), game.prefix.as_deref(), steam_id);
 
         #[cfg(windows)]
-        let shrunk_file_path = shrink_path(file.as_path(), game.installation_dir.as_deref(), steam_id).to_string_lossy().to_string();
+        let shrunk_file = shrink_path(file.as_path(), game.installation_dir.as_deref(), steam_id);
 
+        let shrunk_file_path = shrunk_file.to_string_lossy();
         let should_backup = existing_manifest.as_ref().is_none_or(|manifest| {
             manifest.files.iter().find(|m| m.path == shrunk_file_path).is_none_or(|existing| {
                 metadata(&file).unwrap().modified().unwrap() > existing.modified && existing.hash != hash_file(&file)
