@@ -40,6 +40,23 @@
   </screenshots>
 
   <releases>
+    <release version="1.1.1" date="25-09-15">
+      <url type="details">https://github.com/Spencer-0003/aletheia/releases/tag/1.1.1</url>
+      <description>
+        <p>GameDB: Fix Hogwarts Legacy save path.</p>
+        <p>GameDB: Add Dead End Aegis.</p>
+        <p>GameDB: Add The Song of Saya.</p>
+        <p>HTTP: Fix missing user agents.</p>
+        <p>UI: Add click to close for notifications.</p>
+        <p>UI: Reduce allocations in settings handler.</p>
+        <p>GameDB: Add Fatal Twelve.</p>
+        <p>Heroic: Fix Linux games not being detected.</p>
+        <p>Backup: Fix Linux games using Windows paths.</p>
+        <p>UI: Reduce allocations on filter.</p>
+        <p>UI: Remove HashSets entirely and reduce allocations.</p>
+        <p>Translations: Add Russian.</p>
+      </description>
+    </release>
     <release version="1.1.0" date="2025-09-03">
       <url type="details">https://github.com/Spencer-0003/aletheia/releases/tag/1.1.0</url>
       <description>
