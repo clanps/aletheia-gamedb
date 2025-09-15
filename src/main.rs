@@ -51,7 +51,7 @@ fn main() {
     let mut args = std::env::args().skip(1);
 
     if let Some(cmd) = args.next() {
-        let args = Args::parse(&args.collect::<Vec<String>>());
+        let args = Args::parse(args);
         match cmd.as_str() {
             "backup" => commands::Backup::run(args, &config),
             "restore" => commands::Restore::run(args, &config),

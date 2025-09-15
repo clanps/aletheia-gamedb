@@ -32,33 +32,25 @@ impl Flag {
         Self { name: name.to_owned(), value: None }
     }
 
-    pub fn with_value(name: &str, value: &str) -> Self {
-        Self { name: name.to_owned(), value: Some(value.to_owned()) }
+    pub fn with_value(name: &str, value: String) -> Self {
+        Self { name: name.to_owned(), value: Some(value) }
     }
 }
 
 impl Args {
-    pub fn parse(args: &[String]) -> Self {
+    pub fn parse(mut args: impl Iterator<Item = String>) -> Self {
         let mut positional = Vec::new();
         let mut flags = Vec::new();
 
-        let mut i = 0;
-        while i < args.len() {
-            let arg = &args[i];
-
+        while let Some(arg) = args.next() {
             if let Some(name) = arg.strip_prefix("--") {
-                let has_value = i + 1 < args.len() && !args[i + 1].starts_with('-');
-
-                if has_value {
-                    flags.push(Flag::with_value(name, &args[i + 1]));
-                    i += 2;
+                if let Some(value) = args.next().filter(|next| !next.starts_with('-')) {
+                    flags.push(Flag::with_value(name, value));
                 } else {
                     flags.push(Flag::new(name));
-                    i += 1;
                 }
             } else {
-                positional.push(arg.clone());
-                i += 1;
+                positional.push(arg);
             }
         }
 
