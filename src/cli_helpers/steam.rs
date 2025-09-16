@@ -23,8 +23,7 @@ pub fn ensure_steam_account_selected(config: &Config) {
     } else {
         println!("Multiple Steam accounts found. Please choose one:");
 
-        let users_vec: Vec<_> = users.iter().collect();
-        for (i, (steam_id, user)) in users_vec.iter().enumerate() {
+        for (i, (steam_id, user)) in users.iter().enumerate() {
             println!("{}. {} ({})", i + 1, user.persona_name, steam_id);
         }
 
@@ -40,8 +39,8 @@ pub fn ensure_steam_account_selected(config: &Config) {
 
             let choice = input.trim().parse::<usize>();
             match choice {
-                Ok(num) if num >= 1 && num <= users_vec.len() => {
-                    let (steam_id, user) = users_vec[num - 1];
+                Ok(num) if num >= 1 && num <= user_count => {
+                    let (steam_id, user) = users.iter().nth(num - 1).unwrap();
                     println!("Selected {} ({steam_id})", user.persona_name);
 
                     Config::save(&Config {
@@ -53,7 +52,7 @@ pub fn ensure_steam_account_selected(config: &Config) {
                     });
                     break;
                 }
-                _ => eprintln!("Invalid choice. Please enter a number between 1 and {}.", users_vec.len())
+                _ => eprintln!("Invalid choice. Please enter a number between 1 and {user_count}.")
             }
         }
     }
