@@ -140,8 +140,7 @@ pub fn setup(app: &slint::Weak<App>, config: &Rc<RefCell<AletheiaConfig>>) {
         move |action| {
             let cfg = cfg.as_ref().borrow();
             let notification_logic = app_weak.global::<NotificationLogic>();
-            let selected_games_model = app_weak.global::<GamesScreenLogic>().get_selected_games();
-            let selected_games: Vec<UiGame> = selected_games_model.iter().collect();
+            let selected_games = app_weak.global::<GamesScreenLogic>().get_selected_games();
             let installed_games = gamedb::get_installed_games();
 
             if cfg.steam_account_id.is_none() && selected_games.iter().any(|g| g.source == "Steam") {
@@ -151,25 +150,28 @@ pub fn setup(app: &slint::Weak<App>, config: &Rc<RefCell<AletheiaConfig>>) {
 
             if action == "backup" {
                 let game_db = gamedb::parse();
+                let mut backed_up = 0;
 
-                for ui_game in &selected_games {
+                for ui_game in selected_games.iter() {
                     let game = installed_games.iter().find(|g| *g.name == *ui_game.name).unwrap();
                     if let Err(e) = backup_game(game, &cfg, &game_db[&game.name]) {
                         log::error!("Failed to backup {}.\n{e}", &game.name);
                     } else {
                         log::info!("Successfully backed up {}.", &game.name);
+                        backed_up += 1;
                     }
                 }
 
                 app_weak.global::<GameLogic>().invoke_refresh_games();
-                notification_logic.invoke_show_success(format!("Backed up {} games", selected_games.len()).into());
+                notification_logic.invoke_show_success(format!("Backed up {backed_up} games").into());
             } else {
                 if !cfg.save_dir.exists() {
                     notification_logic.invoke_show_error("Backup directory does not exist.".into());
                     return;
                 }
 
-                for ui_game in &selected_games {
+                let mut restored = 0;
+                for ui_game in selected_games.iter() {
                     let game_name = &ui_game.name;
                     let game_dir = cfg.save_dir.join(game_name.replace(':', ""));
 
@@ -194,10 +196,11 @@ pub fn setup(app: &slint::Weak<App>, config: &Rc<RefCell<AletheiaConfig>>) {
                         log::error!("Failed to restore {}: {e}", manifest.name);
                     } else {
                         log::info!("Successfully restored {game_name}.");
+                        restored += 1;
                     }
                 }
 
-                notification_logic.invoke_show_success(format!("Restored {} games", selected_games.len()).into());
+                notification_logic.invoke_show_success(format!("Restored {restored} games").into());
             }
         }
     });
