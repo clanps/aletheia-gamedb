@@ -60,7 +60,7 @@ impl Scanner for SteamScanner {
 
             for app in lib.apps() {
                 let game = app.unwrap();
-                let install_dir = steamlocate::Library::resolve_app_dir(&lib, &game);
+                let install_dir = lib.resolve_app_dir(&game);
                 let game_name = game.name.unwrap();
 
                 games.push(Game {
