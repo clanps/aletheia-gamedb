@@ -323,6 +323,10 @@ Dying Light 2:
   files:
     windows:
       - "{SteamUserData}/534380/remote/out/save/*"
+"Dying Light: The Beast":
+  files:
+    windows:
+      - "{SteamUserData}/3008130/remote/out/save/*"
 Elden Bling:
   files:
     windows:
