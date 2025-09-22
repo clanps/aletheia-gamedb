@@ -27,12 +27,12 @@ export global NotificationLogic {
   }
 
   pure function translate(key: string) -> string {
-    key == "STEAM_ACCOUNT_MISSING" ? @tr("Set your Steam account in settings.")
-      : key == "BACKUP_DIRECTORY_MISSING" ? @tr("Backup directory does not exist.")
-      : key == "SAVED_SETTINGS" ? @tr("Successfully saved settings.")
-      : key == "GAMEDB_UPDATED" ? @tr("Successfully updated GameDB.")
-      : key == "GAMEDB_UP_TO_DATE" ? @tr("GameDB is already up to date.")
-      : key == "GAMEDB_UPDATE_FAILED" ? @tr("Failed to update GameDB.")
+    key == "STEAM_ACCOUNT_MISSING" ? @tr("Set your Steam account in settings")
+      : key == "BACKUP_DIRECTORY_MISSING" ? @tr("Backup directory does not exist")
+      : key == "SAVED_SETTINGS" ? @tr("Successfully saved settings")
+      : key == "GAMEDB_UPDATED" ? @tr("Successfully updated GameDB")
+      : key == "GAMEDB_UP_TO_DATE" ? @tr("GameDB is already up to date")
+      : key == "GAMEDB_UPDATE_FAILED" ? @tr("Failed to update GameDB")
       : key
   }
 
