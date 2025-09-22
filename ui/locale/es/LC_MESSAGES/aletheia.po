@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2025-07-22 22:51+0000\n"
+"POT-Creation-Date: 2025-09-22 17:32+0000\n"
 "PO-Revision-Date: 2025-09-07 00:28+0000\n"
 "Last-Translator: Spencer <git@spencer.moe>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/aletheia/ui/es/"
@@ -33,84 +33,84 @@ msgctxt "Updater"
 msgid "What's New"
 msgstr "Qué hay de nuevo"
 
-#: ui/updater.slint:143
+#: ui/updater.slint:142
 msgctxt "Updater"
 msgid "Skip"
 msgstr "Brincar"
 
-#: ui/updater.slint:150
+#: ui/updater.slint:149
 msgctxt "Updater"
 msgid "Download"
 msgstr "Descargar"
 
-#: ui/screens/settings.slint:55
+#: ui/screens/settings.slint:59
 msgctxt "Settings"
 msgid "Game Data Location"
 msgstr "Ubicación de los datos del juego"
 
-#: ui/screens/settings.slint:69
+#: ui/screens/settings.slint:73
 msgctxt "Settings"
 msgid "Choose where your games will be saved"
 msgstr "Elige dónde se guardarán tus juegos"
 
-#: ui/screens/settings.slint:87
+#: ui/screens/settings.slint:91
 msgctxt "Settings"
 msgid "Browse"
 msgstr "Ojear"
 
-#: ui/screens/settings.slint:116
+#: ui/screens/settings.slint:120
 msgctxt "Settings"
 msgid "Steam Account"
 msgstr "Steam Cuenta"
 
-#: ui/screens/settings.slint:133
+#: ui/screens/settings.slint:137
 msgctxt "Settings"
 msgid "Choose the Steam account for your games"
 msgstr "Elige la cuenta de Steam para tus juegos"
 
-#: ui/screens/settings.slint:140
+#: ui/screens/settings.slint:144
 msgctxt "Settings"
 msgid "Only affects games that save in the Steam userdata directory"
 msgstr ""
 "Solo afecta a los juegos que están en el directorio de datos de usuario de "
 "Steam"
 
-#: ui/screens/settings.slint:152
+#: ui/screens/settings.slint:156
 msgctxt "Settings"
 msgid "Select an account…"
 msgstr "Seleccione una cuenta…"
 
-#: ui/screens/settings.slint:179
+#: ui/screens/settings.slint:183
 msgctxt "Settings"
 msgid "GameDB"
 msgstr "GameDB"
 
-#: ui/screens/settings.slint:193
+#: ui/screens/settings.slint:197
 msgctxt "Settings"
 msgid "Download the latest copy of the GameDB"
 msgstr "Descargar la última copia de GameDB"
 
-#: ui/screens/settings.slint:202
+#: ui/screens/settings.slint:206
 msgctxt "Settings"
 msgid "Update GameDB"
 msgstr "Actualizar GameDB"
 
-#: ui/screens/settings.slint:229
+#: ui/screens/settings.slint:233
 msgctxt "Settings"
 msgid "Updates"
 msgstr "Actualizaciones"
 
-#: ui/screens/settings.slint:243
+#: ui/screens/settings.slint:247
 msgctxt "Settings"
 msgid "Configure automatic update checking"
 msgstr "Configurar la comprobación automática de actualizaciones"
 
-#: ui/screens/settings.slint:254
+#: ui/screens/settings.slint:258
 msgctxt "Settings"
 msgid "Check for updates automatically"
 msgstr "Comprobar las actualizaciones automáticamente"
 
-#: ui/screens/settings.slint:272
+#: ui/screens/settings.slint:276
 msgctxt "Settings"
 msgid "Save"
 msgstr ""
@@ -214,6 +214,39 @@ msgstr ""
 msgctxt "App"
 msgid "About"
 msgstr ""
+
+#: ui/logic/notification.slint:30
+msgctxt "NotificationLogic"
+msgid "Set your Steam account in settings."
+msgstr ""
+
+#: ui/logic/notification.slint:31
+msgctxt "NotificationLogic"
+msgid "Backup directory does not exist."
+msgstr ""
+
+#: ui/logic/notification.slint:32
+msgctxt "NotificationLogic"
+msgid "Successfully saved settings."
+msgstr ""
+
+#: ui/logic/notification.slint:33
+msgctxt "NotificationLogic"
+msgid "Successfully updated GameDB."
+msgstr ""
+
+#: ui/logic/notification.slint:34
+msgctxt "NotificationLogic"
+msgid "GameDB is already up to date."
+msgstr ""
+
+#: ui/logic/notification.slint:35
+#, fuzzy
+#| msgctxt "Settings"
+#| msgid "Update GameDB"
+msgctxt "NotificationLogic"
+msgid "Failed to update GameDB."
+msgstr "Actualizar GameDB"
 
 #: ui/components/dropdown.slint:11
 msgctxt "Dropdown"
