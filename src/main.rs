@@ -21,6 +21,7 @@ mod infer;
 mod operations;
 mod scanner;
 mod ui;
+mod utils;
 
 #[cfg(all(feature = "updater", not(debug_assertions)))]
 mod updater;

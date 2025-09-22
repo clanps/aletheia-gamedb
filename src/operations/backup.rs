@@ -6,8 +6,8 @@ use crate::dirs::{expand_path, shrink_path};
 use crate::file::hash_file;
 use crate::gamedb::{FileMetadata, GameDbEntry, GameInfo};
 use crate::scanner::Game;
+use crate::utils;
 use glob::glob;
-use std::borrow::Cow;
 use std::fs::{File, copy, create_dir_all, metadata};
 use std::path::Path;
 
@@ -21,18 +21,9 @@ pub enum Error {
 
 pub type Result<T> = core::result::Result<T, Error>;
 
-fn sanitize_game_name(name: &str) -> Cow<'_, str> {
-    if name.contains(':') {
-        // NTFS doesn't support : and this makes sense on Unix for cross-OS syncing
-        Cow::Owned(name.replace(':', ""))
-    } else {
-        Cow::Borrowed(name)
-    }
-}
-
 pub fn backup_game(game: &Game, config: &Config, entry: &GameDbEntry) -> Result<bool> {
     let steam_id = config.steam_account_id.as_deref();
-    let backup_folder = config.save_dir.join(sanitize_game_name(&game.name).as_ref());
+    let backup_folder = config.save_dir.join(utils::sanitize_game_name(&game.name).as_ref());
     let manifest_path = backup_folder.join("aletheia_manifest.yaml");
     let existing_manifest = manifest_path
         .exists()

@@ -6,6 +6,7 @@ use crate::gamedb;
 use crate::infer::Launcher;
 use crate::infer::launchers::Heroic;
 use crate::operations::restore_game;
+use crate::utils;
 use std::fs::File;
 
 #[cfg(all(unix, not(target_os = "macos")))]
@@ -23,7 +24,7 @@ pub fn restore(launcher: &str, config: &Config) {
     };
 
     if let Some(game) = game {
-        let game_dir = config.save_dir.join(&game.name);
+        let game_dir = config.save_dir.join(utils::sanitize_game_name(&game.name).as_ref());
 
         if !game_dir.exists() || !game_dir.is_dir() {
             log::warn!("No backups found for {}.", game.name);

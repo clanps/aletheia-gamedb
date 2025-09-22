@@ -5,6 +5,7 @@ use crate::config::Config as AletheiaConfig;
 use crate::gamedb;
 use crate::operations::{backup_game, restore_game};
 use crate::ui::app::{App, GameLogic, GamesScreenLogic, NotificationLogic, UiGame};
+use crate::utils;
 use slint::{ComponentHandle, Model, ModelRc, VecModel};
 use std::cell::RefCell;
 use std::fs::File;
@@ -31,7 +32,7 @@ pub fn setup(app: &slint::Weak<App>, config: &Rc<RefCell<AletheiaConfig>>) {
             let ui_games: Vec<UiGame> = games
                 .into_iter()
                 .map(|g| {
-                    let backup_path = save_dir.join(&g.name);
+                    let backup_path = save_dir.join(utils::sanitize_game_name(&g.name).as_ref());
                     let selected = select_all || selected_games.iter().any(|selected| selected.name.as_str() == g.name);
 
                     UiGame {
@@ -171,7 +172,7 @@ pub fn setup(app: &slint::Weak<App>, config: &Rc<RefCell<AletheiaConfig>>) {
                 let mut restored = 0;
                 for ui_game in selected_games.iter() {
                     let game_name = &ui_game.name;
-                    let game_dir = cfg.save_dir.join(game_name);
+                    let game_dir = cfg.save_dir.join(utils::sanitize_game_name(game_name).as_ref());
 
                     if !game_dir.exists() || !game_dir.is_dir() {
                         log::warn!("Attempted to restore {game_name} without any previous backups.");
