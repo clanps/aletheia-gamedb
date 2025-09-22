@@ -32,7 +32,7 @@ pub fn setup(app: &slint::Weak<App>, config: &Rc<RefCell<AletheiaConfig>>) {
                 .into_iter()
                 .map(|g| {
                     let name = g.name;
-                    let backup_path = save_dir.join(name.replace(':', ""));
+                    let backup_path = save_dir.join(&name);
 
                     UiGame {
                         name: name.clone().into(),
