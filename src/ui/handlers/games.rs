@@ -171,7 +171,7 @@ pub fn setup(app: &slint::Weak<App>, config: &Rc<RefCell<AletheiaConfig>>) {
                 let mut restored = 0;
                 for ui_game in selected_games.iter() {
                     let game_name = &ui_game.name;
-                    let game_dir = cfg.save_dir.join(game_name.replace(':', ""));
+                    let game_dir = cfg.save_dir.join(game_name);
 
                     if !game_dir.exists() || !game_dir.is_dir() {
                         log::warn!("Attempted to restore {game_name} without any previous backups.");
