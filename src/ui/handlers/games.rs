@@ -174,7 +174,7 @@ pub fn setup(app: &slint::Weak<App>, config: &Rc<RefCell<AletheiaConfig>>) {
                     let game_dir = cfg.save_dir.join(game_name.replace(':', ""));
 
                     if !game_dir.exists() || !game_dir.is_dir() {
-                        log::error!("Backup directory for {game_name} doesn't exist.");
+                        log::warn!("Attempted to restore {game_name} without any previous backups.");
                         continue;
                     }
 
