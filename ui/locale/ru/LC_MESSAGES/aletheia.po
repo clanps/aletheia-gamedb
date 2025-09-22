@@ -218,27 +218,27 @@ msgstr "О приложении"
 
 #: ui/logic/notification.slint:30
 msgctxt "NotificationLogic"
-msgid "Set your Steam account in settings."
+msgid "Set your Steam account in settings"
 msgstr ""
 
 #: ui/logic/notification.slint:31
 msgctxt "NotificationLogic"
-msgid "Backup directory does not exist."
+msgid "Backup directory does not exist"
 msgstr ""
 
 #: ui/logic/notification.slint:32
 msgctxt "NotificationLogic"
-msgid "Successfully saved settings."
+msgid "Successfully saved settings"
 msgstr ""
 
 #: ui/logic/notification.slint:33
 msgctxt "NotificationLogic"
-msgid "Successfully updated GameDB."
+msgid "Successfully updated GameDB"
 msgstr ""
 
 #: ui/logic/notification.slint:34
 msgctxt "NotificationLogic"
-msgid "GameDB is already up to date."
+msgid "GameDB is already up to date"
 msgstr ""
 
 #: ui/logic/notification.slint:35
@@ -246,7 +246,7 @@ msgstr ""
 #| msgctxt "Settings"
 #| msgid "Update GameDB"
 msgctxt "NotificationLogic"
-msgid "Failed to update GameDB."
+msgid "Failed to update GameDB"
 msgstr "Обновить GameDB"
 
 #: ui/components/dropdown.slint:11
