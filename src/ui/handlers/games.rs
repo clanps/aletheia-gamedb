@@ -31,18 +31,18 @@ pub fn setup(app: &slint::Weak<App>, config: &Rc<RefCell<AletheiaConfig>>) {
             let ui_games: Vec<UiGame> = games
                 .into_iter()
                 .map(|g| {
-                    let name = g.name;
-                    let backup_path = save_dir.join(&name);
+                    let backup_path = save_dir.join(&g.name);
+                    let selected = select_all || selected_games.iter().any(|selected| selected.name.as_str() == g.name);
 
                     UiGame {
-                        name: name.clone().into(),
+                        name: g.name.into(),
                         backup_size: if backup_path.exists() {
                             format_size(crate::dirs::get_size(&backup_path)).into()
                         } else {
                             "0B".into()
                         },
                         source: g.source.into(),
-                        selected: select_all || selected_games.iter().any(|selected| selected.name.as_str() == name)
+                        selected
                     }
                 })
                 .collect();
