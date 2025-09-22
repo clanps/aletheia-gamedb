@@ -143,7 +143,7 @@ pub fn setup(app: &slint::Weak<App>, config: &Rc<RefCell<AletheiaConfig>>) {
             let installed_games = gamedb::get_installed_games();
 
             if cfg.steam_account_id.is_none() && selected_games.iter().any(|g| g.source == "Steam") {
-                notification_logic.invoke_show_warning("Set your Steam account in Settings.".into());
+                notification_logic.invoke_show_warning("STEAM_ACCOUNT_MISSING".into());
                 return;
             }
 
@@ -165,7 +165,7 @@ pub fn setup(app: &slint::Weak<App>, config: &Rc<RefCell<AletheiaConfig>>) {
                 notification_logic.invoke_show_success(format!("Backed up {backed_up} games").into());
             } else {
                 if !cfg.save_dir.exists() {
-                    notification_logic.invoke_show_error("Backup directory does not exist.".into());
+                    notification_logic.invoke_show_error("BACKUP_DIRECTORY_MISSING".into());
                     return;
                 }
 

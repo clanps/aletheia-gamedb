@@ -56,7 +56,7 @@ pub fn setup(app: &slint::Weak<App>, config: &Rc<RefCell<AletheiaConfig>>) {
             AletheiaConfig::save(&new_config);
             *cfg.borrow_mut() = new_config;
 
-            notification_logic.invoke_show_success("Successfully saved settings.".into());
+            notification_logic.invoke_show_success("SAVED_SETTINGS".into());
         }
     });
 
@@ -88,10 +88,10 @@ pub fn setup(app: &slint::Weak<App>, config: &Rc<RefCell<AletheiaConfig>>) {
             let notification_logic = app_weak.global::<NotificationLogic>();
 
             match gamedb::update() {
-                Ok(true) => notification_logic.invoke_show_success("Successfully updated GameDB.".into()),
-                Ok(false) => notification_logic.invoke_show_info("GameDB is already up to date.".into()),
+                Ok(true) => notification_logic.invoke_show_success("GAMEDB_UPDATED".into()),
+                Ok(false) => notification_logic.invoke_show_info("GAMEDB_UP_TO_DATE".into()),
                 Err(e) => {
-                    notification_logic.invoke_show_error("Failed to update GameDB.".into());
+                    notification_logic.invoke_show_error("GAMEDB_UPDATE_FAILED".into());
                     log::error!("Error updating GameDB: {e}");
                 }
             }
