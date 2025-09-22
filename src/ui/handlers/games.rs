@@ -175,6 +175,7 @@ pub fn setup(app: &slint::Weak<App>, config: &Rc<RefCell<AletheiaConfig>>) {
 
                     if !game_dir.exists() || !game_dir.is_dir() {
                         log::warn!("Attempted to restore {game_name} without any previous backups.");
+                        notification_logic.invoke_show_warning(format!("No backups found for {game_name}.").into());
                         continue;
                     }
 
@@ -182,11 +183,13 @@ pub fn setup(app: &slint::Weak<App>, config: &Rc<RefCell<AletheiaConfig>>) {
 
                     if !manifest_path.exists() {
                         log::error!("{game_name} is missing a manifest file.");
+                        notification_logic.invoke_show_error(format!("No manifest found for {game_name}.").into());
                         continue;
                     }
 
                     let Ok(manifest) = serde_yaml::from_reader::<File, gamedb::GameInfo>(File::open(manifest_path).unwrap()) else {
                         log::error!("Failed to parse {game_name}'s manifest.");
+                        notification_logic.invoke_show_error(format!("{game_name}'s manifest is corrupted.").into());
                         continue;
                     };
 
@@ -198,7 +201,9 @@ pub fn setup(app: &slint::Weak<App>, config: &Rc<RefCell<AletheiaConfig>>) {
                     }
                 }
 
-                notification_logic.invoke_show_success(format!("Restored {restored} games").into());
+                if restored > 0 {
+                    notification_logic.invoke_show_success(format!("Restored {restored} games").into());
+                }
             }
         }
     });
