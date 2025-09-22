@@ -9,17 +9,10 @@ pub fn ensure_steam_account_selected(config: &Config) {
     let users = SteamScanner::get_users().unwrap();
     let user_count = users.len();
 
-    if user_count == 1 {
+    let steam_id = if user_count == 1 {
         let (steam_id, user) = users.iter().next().unwrap();
         println!("Steam account ID not set, setting as {} ({steam_id})", user.persona_name);
-
-        Config::save(&Config {
-            custom_databases: config.custom_databases.clone(),
-            save_dir: config.save_dir.clone(),
-            steam_account_id: Some(SteamScanner::id64_to_id3(steam_id.parse::<u64>().unwrap()).to_string()),
-            #[cfg(feature = "updater")]
-            check_for_updates: config.check_for_updates
-        });
+        steam_id
     } else {
         println!("Multiple Steam accounts found. Please choose one:");
 
@@ -42,18 +35,15 @@ pub fn ensure_steam_account_selected(config: &Config) {
                 Ok(num) if num >= 1 && num <= user_count => {
                     let (steam_id, user) = users.iter().nth(num - 1).unwrap();
                     println!("Selected {} ({steam_id})", user.persona_name);
-
-                    Config::save(&Config {
-                        custom_databases: config.custom_databases.clone(),
-                        save_dir: config.save_dir.clone(),
-                        steam_account_id: Some(SteamScanner::id64_to_id3(steam_id.parse::<u64>().unwrap()).to_string()),
-                        #[cfg(feature = "updater")]
-                        check_for_updates: config.check_for_updates
-                    });
-                    break;
+                    break steam_id;
                 }
                 _ => eprintln!("Invalid choice. Please enter a number between 1 and {user_count}.")
             }
         }
-    }
+    };
+
+    Config::save(&Config {
+        steam_account_id: Some(SteamScanner::id64_to_id3(steam_id.parse::<u64>().unwrap()).to_string()),
+        ..config.clone()
+    });
 }
