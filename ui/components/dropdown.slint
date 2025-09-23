@@ -31,6 +31,12 @@ export component Dropdown {
     drop-shadow-blur: 8px;
     drop-shadow-color: rgba(0, 0, 0, 0.15);
     drop-shadow-offset-y: 4px;
+    accessible-role: button;
+    accessible-description: @tr("Dropdown menu, press to expand options");
+    accessible-enabled: root.enabled;
+    accessible-expandable: true;
+    accessible-expanded: root.expanded;
+    accessible-label: root.label;
 
     HorizontalLayout {
       padding-left: 12px;
@@ -79,6 +85,8 @@ export component Dropdown {
     drop-shadow-blur: 12px;
     drop-shadow-color: rgba(0, 0, 0, 0.25);
     drop-shadow-offset-y: 6px;
+    accessible-role: list;
+    accessible-label: @tr("Dropdown options");
 
     Flickable {
       width: 100%;
@@ -97,6 +105,9 @@ export component Dropdown {
                       is_current_value ? rgba(255, 255, 255, 0.05) :
                       transparent;
           border-radius: 2px;
+          accessible-role: button;
+          accessible-label: option.label;
+          accessible-item-selected: is_current_value;
 
           animate background { duration: 100ms; easing: ease-in-out; }
 
@@ -121,6 +132,7 @@ export component Dropdown {
               source: @image-url("../assets/checkmark.svg");
               colorize: #7678ed;
               vertical-alignment: center;
+              accessible-label: @tr("Selected");
             }
           }
 
