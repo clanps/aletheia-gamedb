@@ -7,7 +7,6 @@ export component Scrollable inherits Rectangle {
   in property <color> scrollbar_thumb_color: #45475a;
   in property <color> scrollbar_thumb_hover_color: #7678ed;
   in property <length> scrollbar_width: 12px;
-  in property <duration> scroll_animation_duration: 150ms;
   in-out property <length> viewport_height <=> flickable.viewport-height;
   in-out property <length> viewport_y <=> flickable.viewport-y;
   private property <bool> has_vertical_overflow: viewport_height > flickable.height;
