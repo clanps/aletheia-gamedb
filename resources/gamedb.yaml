@@ -811,6 +811,10 @@ SILENT HILL 2:
   files:
     windows:
       - "{LocalAppData}/SilentHill2/Saved/SaveGames/*/*.sav"
+SILENT HILL f:
+  files:
+    windows:
+      - "{LocalAppData}/SHf/Saved/SaveGames/*/*.sav"
 SUPERHOT:
   files:
     linux:
