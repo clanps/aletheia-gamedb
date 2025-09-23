@@ -2,10 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2025-09-22 17:32+0000\n"
-"PO-Revision-Date: 2025-09-07 00:28+0000\n"
+"PO-Revision-Date: 2025-09-23 19:25+0000\n"
 "Last-Translator: Priit Jõerüüt <jrthwlate@users.noreply.hosted.weblate.org>\n"
-"Language-Team: Estonian <https://hosted.weblate.org/projects/aletheia/ui/et/"
-">\n"
+"Language-Team: Estonian <https://hosted.weblate.org/projects/aletheia/ui/et/>"
+"\n"
 "Language: et\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -218,35 +218,32 @@ msgstr "Rakenduse teave"
 #: ui/logic/notification.slint:30
 msgctxt "NotificationLogic"
 msgid "Set your Steam account in settings"
-msgstr ""
+msgstr "Lisa seadistustes oma Steami kasutajakonto"
 
 #: ui/logic/notification.slint:31
 msgctxt "NotificationLogic"
 msgid "Backup directory does not exist"
-msgstr ""
+msgstr "Varunduskausta pole olemas"
 
 #: ui/logic/notification.slint:32
 msgctxt "NotificationLogic"
 msgid "Successfully saved settings"
-msgstr ""
+msgstr "Seadistuste salvestamine õnnestus"
 
 #: ui/logic/notification.slint:33
 msgctxt "NotificationLogic"
 msgid "Successfully updated GameDB"
-msgstr ""
+msgstr "GameDB uuendamine õnnestus"
 
 #: ui/logic/notification.slint:34
 msgctxt "NotificationLogic"
 msgid "GameDB is already up to date"
-msgstr ""
+msgstr "GameDB on juba uuendatud"
 
 #: ui/logic/notification.slint:35
-#, fuzzy
-#| msgctxt "Settings"
-#| msgid "Update GameDB"
 msgctxt "NotificationLogic"
 msgid "Failed to update GameDB"
-msgstr "Uuenda GameDB-d"
+msgstr "GameDB uuendamine ei õnnestunud"
 
 #: ui/components/dropdown.slint:11
 msgctxt "Dropdown"
