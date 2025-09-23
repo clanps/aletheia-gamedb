@@ -36,7 +36,7 @@ export component Dropdown {
     accessible-enabled: root.enabled;
     accessible-expandable: true;
     accessible-expanded: root.expanded;
-    accessible-label: root.label;
+    accessible-label: root.label.is-empty ? root.placeholder : root.label;
 
     HorizontalLayout {
       padding-left: 12px;
