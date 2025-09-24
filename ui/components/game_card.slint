@@ -12,6 +12,8 @@ export component GameCard inherits Rectangle {
   accessible-role: button;
   accessible-action-default => clicked();
 
+  forward-focus: scope;
+
   HorizontalLayout {
     padding: 12px;
     spacing: 8px;
@@ -70,4 +72,5 @@ export component GameCard inherits Rectangle {
   }
 
   touch_area := TouchArea {}
+  scope := FocusScope {}
 }

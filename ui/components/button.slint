@@ -12,6 +12,8 @@ export component Button {
   accessible-label: root.text;
   accessible-action-default => clicked();
 
+  forward-focus: scope;
+
   Rectangle {
     background: root.background;
     opacity: root.enabled ? 100% : 50%;
@@ -38,5 +40,7 @@ export component Button {
       enabled: root.enabled;
       mouse-cursor: pointer;
     }
+
+    scope := FocusScope {}
   }
 }
