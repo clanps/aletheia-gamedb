@@ -9,7 +9,9 @@ export component GameCard inherits Rectangle {
 
   background: #1e1e2e;
   border-radius: 20px;
-  accessible-role: button;
+  accessible-role: checkbox;
+  accessible-checkable: true;
+  accessible-checked: root.game.selected;
   accessible-action-default => clicked();
 
   forward-focus: scope;
