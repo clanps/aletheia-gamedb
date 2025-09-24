@@ -35,6 +35,7 @@ export component SearchBar inherits Rectangle {
       font-size: 14px;
       font-weight: 400;
       vertical-alignment: center;
+      accessible-label: root.placeholder_text;
 
       if (self.text.is-empty): Text {
         x: 0;
