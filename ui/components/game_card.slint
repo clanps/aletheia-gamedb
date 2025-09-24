@@ -9,6 +9,8 @@ export component GameCard inherits Rectangle {
 
   background: #1e1e2e;
   border-radius: 20px;
+  accessible-role: button;
+  accessible-action-default => clicked();
 
   HorizontalLayout {
     padding: 12px;

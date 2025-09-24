@@ -7,6 +7,11 @@ export component Button {
   in property <bool> enabled: true;
   callback clicked <=> touch_area.clicked;
 
+  accessible-role: button;
+  accessible-enabled: root.enabled;
+  accessible-label: root.text;
+  accessible-action-default => clicked();
+
   Rectangle {
     background: root.background;
     opacity: root.enabled ? 100% : 50%;
