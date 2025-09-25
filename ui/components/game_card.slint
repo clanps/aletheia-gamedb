@@ -14,8 +14,6 @@ export component GameCard inherits Rectangle {
   accessible-checked: root.game.selected;
   accessible-action-default => clicked();
 
-  forward-focus: scope;
-
   HorizontalLayout {
     padding: 12px;
     spacing: 8px;
@@ -74,5 +72,4 @@ export component GameCard inherits Rectangle {
   }
 
   touch_area := TouchArea { mouse-cursor: pointer; }
-  scope := FocusScope {}
 }
