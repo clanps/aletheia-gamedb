@@ -890,6 +890,10 @@ Sonic Lost World:
   files:
     windows:
       - "{GameRoot}/*.sdat"
+"Sonic Racing: CrossWorlds":
+  files:
+    windows:
+      - "{AppData}/SEGA/SonicRacingCrossWorlds/steam/*/*.sav"
 Sonic X Shadow Generations:
   files:
     windows:
