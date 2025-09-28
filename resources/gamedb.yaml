@@ -1085,6 +1085,14 @@ Tormented Souls:
   files:
     windows:
       - "{LocalLow}/duale-abstractd/Tormented Souls Release/Saves/*"
+tModLoader:
+  files:
+    linux:
+      - "{XDGData}/Terraria/tModLoader/Players/*/*"
+      - "{XDGData}/Terraria/tModLoader/Worlds/*/*"
+    windows:
+      - "{Documents}/My Games/Terraria/tModLoader/Players/*/*"
+      - "{Documents}/My Games/Terraria/tModLoader/Worlds/*/*"
 ULTRAKILL:
   files:
     linux:
@@ -1167,11 +1175,3 @@ Zombie Army Trilogy:
   files:
     windows:
       - "{SteamUserData}/301640/remote/PC_ProfileSaves/*"
-tModLoader:
-  files:
-    linux:
-      - "{XDGData}/Terraria/tModLoader/Players/*/*"
-      - "{XDGData}/Terraria/tModLoader/Worlds/*/*"
-    windows:
-      - "{Documents}/My Games/Terraria/tModLoader/Players/*/*"
-      - "{Documents}/My Games/Terraria/tModLoader/Worlds/*/*"
