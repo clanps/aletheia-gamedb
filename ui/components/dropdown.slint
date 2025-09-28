@@ -47,7 +47,7 @@ export component Dropdown {
       Text {
         private property <bool> show_label: !root.label.is-empty;
         text: show_label ? root.label : root.placeholder;
-        color: ThemeLogic.colors.text_primary;
+        color: show_label ? ThemeLogic.colors.text_primary : ThemeLogic.colors.text_placeholder;
         opacity: show_label ? 65% : 40%;
         font-family: "Inter";
         font-size: 14px;
