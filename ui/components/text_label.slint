@@ -1,15 +1,17 @@
 // SPDX-FileCopyrightText: 2025 Spencer
 // SPDX-License-Identifier: AGPL-3.0-only
 
+import { ThemeLogic } from "../logic/theme.slint";
+
 export component TextLabel inherits Rectangle {
   in property <string> text;
 
-  background: #1e1e2e;
+  background: ThemeLogic.colors.surface;
   border-radius: 4px;
   border-width: 1px;
-  border-color: #18182040;
+  border-color: ThemeLogic.colors.surface_border;
   drop-shadow-blur: 8px;
-  drop-shadow-color: rgba(0, 0, 0, 0.15);
+  drop-shadow-color: ThemeLogic.colors.surface_shadow;
   drop-shadow-offset-y: 4px;
 
   HorizontalLayout {
@@ -19,7 +21,7 @@ export component TextLabel inherits Rectangle {
 
     Text {
       text: root.text;
-      color: white;
+      color: ThemeLogic.colors.text_primary;
       opacity: 65%;
       font-family: "Inter";
       font-size: 14px;

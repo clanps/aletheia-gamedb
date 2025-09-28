@@ -1,11 +1,10 @@
 // SPDX-FileCopyrightText: 2025 Spencer
 // SPDX-License-Identifier: AGPL-3.0-only
 
+import { ThemeLogic } from "../logic/theme.slint";
+
 export component Scrollable inherits Rectangle {
   in property <bool> enabled: true;
-  in property <color> scrollbar_track_color: #1e1e2e;
-  in property <color> scrollbar_thumb_color: #45475a;
-  in property <color> scrollbar_thumb_hover_color: #7678ed;
   in property <length> scrollbar_width: 12px;
   in-out property <length> viewport_height <=> flickable.viewport-height;
   in-out property <length> viewport_y <=> flickable.viewport-y;
@@ -27,7 +26,7 @@ export component Scrollable inherits Rectangle {
     Rectangle {
       width: 100%;
       height: 100%;
-      background: root.scrollbar_track_color;
+      background: ThemeLogic.colors.surface;
       border-radius: root.scrollbar_width / 2;
     }
 
@@ -40,7 +39,7 @@ export component Scrollable inherits Rectangle {
       y: self.thumb_y;
       width: parent.width - parent.y;
       height: self.thumb_height;
-      background: touch_area.has-hover ? root.scrollbar_thumb_hover_color : root.scrollbar_thumb_color;
+      background: touch_area.has-hover ? ThemeLogic.colors.primary : ThemeLogic.colors.secondary_hover;
       border-radius: (root.scrollbar_width - parent.y) / 2;
 
       animate background { duration: 150ms; }

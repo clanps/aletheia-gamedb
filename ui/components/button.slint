@@ -1,9 +1,11 @@
 // SPDX-FileCopyrightText: 2025 Spencer
 // SPDX-License-Identifier: AGPL-3.0-only
 
+import { ThemeLogic } from "../logic/theme.slint";
+
 export component Button {
   in property <string> text;
-  in property <color> background: #7678ed;
+  in property <color> background: ThemeLogic.colors.primary;
   in property <bool> enabled: true;
   callback clicked <=> touch_area.clicked;
 
@@ -15,18 +17,18 @@ export component Button {
   Rectangle {
     background: root.background;
     opacity: root.enabled ? 100% : 50%;
-    border-color: rgba(24, 24, 32, 0.75);
+    border-color: ThemeLogic.colors.border;
     border-radius: 8px;
     border-width: 1px;
     drop-shadow-blur: 8px;
-    drop-shadow-color: rgba(0, 0, 0, 0.15);
+    drop-shadow-color: ThemeLogic.colors.surface_shadow;
     drop-shadow-offset-y: 4px;
 
     animate opacity { duration: 200ms; easing: ease-out; }
 
     Text {
       text: root.text;
-      color: white;
+      color: ThemeLogic.colors.text_primary;
       font-family: "Inter";
       font-size: 14px;
       font-weight: 600;

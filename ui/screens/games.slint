@@ -6,6 +6,7 @@ import { GameCard } from "../components/game_card.slint";
 import { SearchBar } from "../components/search_bar.slint";
 import { GameLogic } from "../logic/game.slint";
 import { NotificationLogic } from "../logic/notification.slint";
+import { ThemeLogic } from "../logic/theme.slint";
 import { UiGame } from "../structs/ui_game.slint";
 
 export global GamesScreenLogic {
@@ -28,7 +29,7 @@ export component Games {
 
     Text {
       text: @tr("No games found");
-      color: white;
+      color: ThemeLogic.colors.text_primary;
       font-family: "Inter";
       font-size: 20px;
       font-weight: 600;
@@ -65,7 +66,7 @@ export component Games {
 
     if (GamesScreenLogic.selected_games.length > 0): Text {
       text: @tr("Selecting {} / {} games", GamesScreenLogic.selected_games.length, GameLogic.games.length);
-      color: white;
+      color: ThemeLogic.colors.text_primary;
       opacity: 50%;
       font-family: "Inter";
       horizontal-alignment: center;
@@ -97,7 +98,7 @@ export component Games {
         text: search_bar.text.is-empty
               ? GamesScreenLogic.all_filtered_selected ? @tr("Clear Selection") : @tr("Select All")
               : @tr("{} Filtered", GamesScreenLogic.all_filtered_selected ? "Clear" : "Select");
-        background: #2f2f49;
+        background: ThemeLogic.colors.secondary;
         enabled: GamesScreenLogic.filtered_games.length > 0;
         clicked => GamesScreenLogic.select_all(!GamesScreenLogic.all_filtered_selected);
       }

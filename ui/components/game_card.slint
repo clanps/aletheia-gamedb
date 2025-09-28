@@ -1,13 +1,14 @@
 // SPDX-FileCopyrightText: 2025 Spencer
 // SPDX-License-Identifier: AGPL-3.0-only
 
+import { ThemeLogic } from "../logic/theme.slint";
 import { UiGame } from "../structs/ui_game.slint";
 
 export component GameCard inherits Rectangle {
   in property <UiGame> game;
   callback clicked <=> touch_area.clicked;
 
-  background: #1e1e2e;
+  background: ThemeLogic.colors.surface;
   border-radius: 20px;
   accessible-role: checkbox;
   accessible-checkable: true;
@@ -23,8 +24,8 @@ export component GameCard inherits Rectangle {
       height: 24px;
 
       icon_container := Rectangle {
-        background: rgba(47, 47, 70, 0.75);
-        border-color: rgba(24, 24, 32, 0.25);
+        background: ThemeLogic.colors.surface_variant;
+        border-color: ThemeLogic.colors.surface_border;
         border-radius: 2px;
         border-width: 1px;
       }
@@ -44,7 +45,7 @@ export component GameCard inherits Rectangle {
 
       Text {
         text: game.name;
-        color: white;
+        color: ThemeLogic.colors.text_primary;
         font-family: "Inter";
         font-size: 16px;
         overflow: elide;
@@ -63,7 +64,7 @@ export component GameCard inherits Rectangle {
 
     Text {
       text: root.game.backup_size;
-      color: #a0a0a0;
+      color: ThemeLogic.colors.text_muted;
       font-family: "Inter";
       font-size: 14px;
       horizontal-alignment: right;

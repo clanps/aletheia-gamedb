@@ -14,6 +14,7 @@ import { UpdaterLogic } from "./logic/updater.slint";
 import { About } from "./screens/about.slint";
 import { Games, GamesScreenLogic } from "./screens/games.slint";
 import { Settings, SettingsScreenLogic } from "./screens/settings.slint";
+import { ThemeLogic } from "./logic/theme.slint";
 import { Updater } from "./updater.slint";
 import { UiGame } from "./structs/ui_game.slint";
 
@@ -31,7 +32,7 @@ export component App inherits Window {
   icon: @image-url("../resources/logo/moe.spencer.Aletheia.png");
 
   Rectangle {
-    background: #1e1e2e;
+    background: ThemeLogic.colors.surface;
 
     VerticalLayout {
       HorizontalLayout {
@@ -67,7 +68,7 @@ export component App inherits Window {
       }
 
       Rectangle {
-        background: #282838;
+        background: ThemeLogic.colors.background;
         border-radius: 8px;
 
         if (root.current_screen == "games"): Games {}

@@ -1,6 +1,8 @@
 // SPDX-FileCopyrightText: 2025 Spencer
 // SPDX-License-Identifier: AGPL-3.0-only
 
+import { ThemeLogic } from "../logic/theme.slint";
+
 export enum NotificationType {
   SUCCESS,
   ERROR,
@@ -18,10 +20,10 @@ export component Notification inherits Rectangle {
   width: notification_layout.preferred-width + 24px;
   height: notification_layout.preferred-height + 16px;
   x: animated_in ? target_x : target_x + self.width + 20px;
-  background: #1e1e2e;
+  background: ThemeLogic.colors.surface;
   border-radius: 8px;
   drop-shadow-blur: 8px;
-  drop-shadow-color: rgba(0, 0, 0, 0.15);
+  drop-shadow-color: ThemeLogic.colors.surface_shadow;
   drop-shadow-offset-y: 4px;
 
   animate x { duration: 225ms; easing: ease-out; }
@@ -74,7 +76,7 @@ export component Notification inherits Rectangle {
 
     Text {
       text: root.message;
-      color: white;
+      color: ThemeLogic.colors.text_primary;
       font-family: "Inter";
       font-size: 14px;
       font-weight: 500;

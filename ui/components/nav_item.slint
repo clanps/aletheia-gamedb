@@ -1,6 +1,8 @@
 // SPDX-FileCopyrightText: 2025 Spencer
 // SPDX-License-Identifier: AGPL-3.0-only
 
+import { ThemeLogic } from "../logic/theme.slint";
+
 export component NavItem inherits Rectangle {
   in property <string> text;
   in property <bool> active;
@@ -8,13 +10,13 @@ export component NavItem inherits Rectangle {
   callback clicked <=> touch_area.clicked;
 
   height: 40px;
-  background: #7c7cff;
+  background: ThemeLogic.colors.primary_variant;
   opacity: root.active ? 100% : 50%;
-  border-color: rgba(24, 24, 32, 0.75);
+  border-color: ThemeLogic.colors.border;
   border-radius: 4px;
   border-width: 1px;
   drop-shadow-blur: 8px;
-  drop-shadow-color: rgba(0, 0, 0, 0.15);
+  drop-shadow-color: ThemeLogic.colors.surface_shadow;
   drop-shadow-offset-y: 4px;
   accessible-role: button;
   accessible-action-default => clicked();
@@ -23,9 +25,9 @@ export component NavItem inherits Rectangle {
     x: 0;
     width: 40px;
     height: 40px;
-    background: #43438B;
+    background: ThemeLogic.colors.primary_active;
     opacity: root.active ? 25% : 50%;
-    border-color: rgba(24, 24, 32, 0.5);
+    border-color: ThemeLogic.colors.surface_border_alt;
     border-radius: 3px;
     border-width: 1px;
   }
@@ -41,7 +43,7 @@ export component NavItem inherits Rectangle {
     x: icon_container.width;
     width: parent.width - icon_container.width;
     text: root.text;
-    color: white;
+    color: ThemeLogic.colors.text_primary;
     opacity: root.active ? 100% : 50%;
     font-family: "Inter";
     font-weight: root.active ? 700 : 400;

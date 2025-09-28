@@ -6,6 +6,7 @@ import { Button } from "../components/button.slint";
 import { CheckBox } from "../components/check_box.slint";
 import { TextLabel } from "../components/text_label.slint";
 import { Dropdown } from "../components/dropdown.slint";
+import { ThemeLogic } from "../logic/theme.slint";
 import { DropdownOption } from "../structs/dropdown_option.slint";
 import { Config } from "../structs/config.slint";
 
@@ -51,13 +52,13 @@ export component Settings {
                 width: 100%;
                 height: 100%;
                 source: @image-url("../assets/folder.svg");
-                colorize: #cdd6f4;
+                colorize: ThemeLogic.colors.text_secondary;
               }
             }
 
             Text {
               text: @tr("Game Data Location");
-              color: #cdd6f4;
+              color: ThemeLogic.colors.text_secondary;
               font-family: "Inter";
               font-size: 18px;
               font-weight: 600;
@@ -71,7 +72,7 @@ export component Settings {
 
             Text {
               text: @tr("Choose where your games will be saved");
-              color: #a6adc8;
+              color: ThemeLogic.colors.text_tertiary;
               font-family: "Inter";
               font-size: 14px;
             }
@@ -95,7 +96,7 @@ export component Settings {
           }
         }
 
-        Rectangle { height: 1px; background: #45475a; }
+        Rectangle { height: 1px; background: ThemeLogic.colors.secondary_hover; }
 
         VerticalLayout {
           z: 1; // Dropdown needs to render over other components.
@@ -112,13 +113,13 @@ export component Settings {
                 width: 100%;
                 height: 100%;
                 source: @image-url("../assets/switch_account.svg");
-                colorize: #cdd6f4;
+                colorize: ThemeLogic.colors.text_secondary;
               }
             }
 
             Text {
               text: @tr("Steam Account");
-              color: #cdd6f4;
+              color: ThemeLogic.colors.text_secondary;
               font-family: "Inter";
               font-size: 18px;
               font-weight: 600;
@@ -135,7 +136,7 @@ export component Settings {
 
               Text {
                 text: @tr("Choose the Steam account for your games");
-                color: #a6adc8;
+                color: ThemeLogic.colors.text_tertiary;
                 font-family: "Inter";
                 font-size: 14px;
               }
@@ -159,7 +160,7 @@ export component Settings {
           }
         }
 
-        Rectangle { height: 1px; background: #45475a; }
+        Rectangle { height: 1px; background: ThemeLogic.colors.secondary_hover; }
 
         VerticalLayout {
           spacing: 16px;
@@ -175,13 +176,13 @@ export component Settings {
                 width: 100%;
                 height: 100%;
                 source: @image-url("../assets/database.svg");
-                colorize: #cdd6f4;
+                colorize: ThemeLogic.colors.text_secondary;
               }
             }
 
             Text {
               text: @tr("GameDB");
-              color: #cdd6f4;
+              color: ThemeLogic.colors.text_secondary;
               font-family: "Inter";
               font-size: 18px;
               font-weight: 600;
@@ -195,7 +196,7 @@ export component Settings {
 
             Text {
               text: @tr("Download the latest copy of the GameDB");
-              color: #a6adc8;
+              color: ThemeLogic.colors.text_tertiary;
               font-family: "Inter";
               font-size: 14px;
             }
@@ -209,7 +210,7 @@ export component Settings {
           }
         }
 
-        if SettingsScreenLogic.show_update_settings: Rectangle { height: 1px; background: #45475a; }
+        if SettingsScreenLogic.show_update_settings: Rectangle { height: 1px; background: ThemeLogic.colors.secondary_hover; }
 
         if SettingsScreenLogic.show_update_settings: VerticalLayout {
           spacing: 16px;
@@ -225,13 +226,13 @@ export component Settings {
                 width: 100%;
                 height: 100%;
                 source: @image-url("../assets/folder.svg");
-                colorize: #cdd6f4;
+                colorize: ThemeLogic.colors.text_secondary;
               }
             }
 
             Text {
               text: @tr("Updates");
-              color: #cdd6f4;
+              color: ThemeLogic.colors.text_secondary;
               font-family: "Inter";
               font-size: 18px;
               font-weight: 600;
@@ -245,7 +246,7 @@ export component Settings {
 
             Text {
               text: @tr("Configure automatic update checking");
-              color: #a6adc8;
+              color: ThemeLogic.colors.text_tertiary;
               font-family: "Inter";
               font-size: 14px;
             }

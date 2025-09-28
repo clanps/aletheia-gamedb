@@ -1,19 +1,21 @@
 // SPDX-FileCopyrightText: 2025 Spencer
 // SPDX-License-Identifier: AGPL-3.0-only
 
+import { ThemeLogic } from "../logic/theme.slint";
+
 export component SearchBar inherits Rectangle {
   in property <string> placeholder_text;
   out property <bool> has_focus: input.has-focus;
   out property <string> text: input.text;
   callback changed(string);
 
-  background: #1e1e2e;
+  background: ThemeLogic.colors.surface;
   clip: true;
   border-radius: 20px;
   border-width: 1px;
-  border-color: root.has_focus ? #27273a : #18182040;
+  border-color: root.has_focus ? ThemeLogic.colors.border_hover : ThemeLogic.colors.surface_border;
   drop-shadow-blur: 8px;
-  drop-shadow-color: rgba(0, 0, 0, 0.15);
+  drop-shadow-color: ThemeLogic.colors.surface_shadow;
   drop-shadow-offset-y: 4px;
 
   HorizontalLayout {
@@ -29,7 +31,7 @@ export component SearchBar inherits Rectangle {
 
     input := TextInput {
       single-line: true;
-      color: white;
+      color: ThemeLogic.colors.text_primary;
       opacity: 65%;
       font-family: "Inter";
       font-size: 14px;
@@ -40,7 +42,7 @@ export component SearchBar inherits Rectangle {
       if (self.text.is-empty): Text {
         x: 0;
         text: root.placeholder_text;
-        color: #ffffff80;
+        color: ThemeLogic.colors.search_bar_text;
         opacity: 50%;
         font-family: "Inter";
         font-size: 14px;

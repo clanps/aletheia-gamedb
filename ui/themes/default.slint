@@ -1,0 +1,41 @@
+import { Theme } from "../structs/theme.slint";
+
+export global Default {
+  out property <Theme> colors: {
+    primary: #7678ed,
+    primary_hover: #5d5fd1,
+    primary_active: #43438b,
+    primary_variant: #7c7cff,
+
+    secondary: #2f2f49,
+    secondary_hover: #45475a,
+
+    background: #282838,
+    surface: #1e1e2e,
+    surface_border: #18182040,
+    surface_border_alt: #18182080,
+    surface_hover: rgba(255, 255, 255, 0.1),
+    surface_shadow: rgba(0, 0, 0, 0.15),
+    surface_variant: rgba(47, 47, 70, 0.75),
+
+    text_primary: #ffffff,
+    text_secondary: #cdd6f4,
+    text_tertiary: #a6adc8,
+    text_muted: #a0a0a0,
+
+    border: rgba(24, 24, 32, 0.75),
+    border_hover: #27273a,
+
+    check_box_border: #6c7086,
+    check_box_border_active: #7678ed4d,
+
+    dropdown_selected: rgba(255, 255, 255, 0.05),
+    dropdown_shadow: rgba(0, 0, 0, 0.25),
+
+    search_bar_text: #ffffff80,
+
+    updater_changelog: #313244,
+    updater_current: #f38ba8,
+    updater_new: #a6e3a1
+  };
+}
